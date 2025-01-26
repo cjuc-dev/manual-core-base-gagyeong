@@ -43,257 +43,101 @@
             <h3>여기에 클릭된 메뉴의 내용이 표시됩니다.</h3>
         </div>
     </div>
-
-<script>
-function loadContent(section) {
-    var contentArea = document.getElementById("content-area");
-
-    function loadContent(section) {
-    var contentArea = document.getElementById("content-area");
-
-    if (section === 'update') {
-        contentArea.innerHTML = `<iframe src="https://manual-5d03dc.gitlab.io/updatecontainer/updatecontainer_main.html" 
-                                style="width:100%; height:100vh; border:none;"></iframe>`;
-    }
-}
-
-        case 'facility':
-            fetch("https://manual-5d03dc.gitlab.io/facility.html")
-                .then(response => response.text())
-                .then(data => contentArea.innerHTML = data)
-                .catch(error => {
-                    contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
-                    console.error('Error loading the content:', error);
-                });
-            break;
-
-        case 'cheongjuSwimming':
-            fetch("https://manual-5d03dc.gitlab.io/guide/cheongju_swimming_pool_guide.html")
-                .then(response => response.text())
-                .then(data => contentArea.innerHTML = data);
-            break;
-
-        case 'purmi':
-            fetch("https://manual-5d03dc.gitlab.io/guide/purmi_guide.html")
-                .then(response => response.text())
-                .then(data => contentArea.innerHTML = data);
-            break;
-
-        case 'youngun_sportscenter':
-            fetch("https://manual-5d03dc.gitlab.io/guide/youngun_sportscenter_guide.html")
-                .then(response => response.text())
-                .then(data => contentArea.innerHTML = data);
-            break;
-
-        case 'bokdae_sportscenter':
-            fetch("https://manual-5d03dc.gitlab.io/guide/bokdae_sportscenter_guide.html")
-                .then(response => response.text())
-                .then(data => contentArea.innerHTML = data);
-            break;
-
-        case 'gagyeong_sportscenter':
-            fetch("https://manual-5d03dc.gitlab.io/guide/gagyeong_sportscenter_guide.html")
-                .then(response => response.text())
-                .then(data => contentArea.innerHTML = data);
-            break;
-
-        case 'voc':
-            contentArea.innerHTML = '<h2>VOC</h2><p>고객의 소리를 확인하세요.</p>';
-            break;
-
-        default:
-            contentArea.innerHTML = '<p>올바른 섹션이 아닙니다.</p>';
-    }
-    switch (section) {
-        case 'admin':
-            contentArea.innerHTML = `
-                <p>
-                    <!-- <span class="hidden-text">2.1.1.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    청주수영장 행정분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                <p>
-                    <!-- <span class="hidden-text">2.1.2.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    푸르미스포츠센터 행정분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                <p>
-                    <!-- <span class="hidden-text">2.1.3.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    영운국민체육센터 행정분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                <p>
-                    <!-- <span class="hidden-text">2.1.4.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    복대국민체유센터 행정분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                <p>
-                    <!-- <span class="hidden-text">2.1.5.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    가경국민체육센터 행정분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                <p>
-                    <!-- <span class="hidden-text">2.1.6.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    공통 행정분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-            `;
-            break;
-
-        case 'tech':
-            contentArea.innerHTML = `
-                <p>
-                    <!-- <span class="hidden-text">2.2.1.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    청주수영장 기술분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                <p>
-                    <!-- <span class="hidden-text">2.2.2.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    푸르미스포츠센터 기술분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                <p>
-                    <!-- <span class="hidden-text">2.2.3.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    영운국민체육센터 기술분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                <p>
-                    <!-- <span class="hidden-text">2.2.4.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    복대국민체유센터 기술분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                <p>
-                    <!-- <span class="hidden-text">2.2.5.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="https://cjsisul.github.io/manual_1.0/gagyeong_sportscenter/manual_2_2_5_main.html" class="custom-link">
-                    가경국민체육센터 기술분야
-                    </a>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. 
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                    
-            `;
-            break;
+    <script>
+        function loadContent(section) {
+            var contentArea = document.getElementById("content-area");
         
-        case 'phy':
-            contentArea.innerHTML = `
-                <p>
-                    <!-- <span class="hidden-text">2.3.1.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    체육분야
-                    </a>를 클릭하면 해당 페이지로 이동합니다. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                
-                    
-            `;
-            break;
-
-        case 'voc':
-            contentArea.innerHTML = `
-                <p>
-                    <!-- <span class="hidden-text">2.4.1.</span> -->
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" 
-                    alt="info icon" class="fixed-icon">
-                    <a href="#" class="custom-link" onclick="location.href='tech2.html';">
-                    VOC
-                    </a>를 클릭하면 해당 페이지로 이동합니다. 고객의 소리를 확인하세요. <미구현>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" 
-                    alt="info icon" class="hover-icon">
-                </p>
-                
-                    
-            `;
-            break;
-
-
-        default:
-            contentArea.innerHTML = '<p>올바른 섹션이 아닙니다.</p>';
-    }
-}
-
-function toggleMenu(menuId) {
-    var menu = document.getElementById(menuId);
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
+            if (section === 'update') {
+                contentArea.innerHTML = `<iframe src="https://manual-5d03dc.gitlab.io/updatecontainer/updatecontainer_main.html" 
+                                         style="width:100%; height:100vh; border:none;"></iframe>`;
+            } else {
+                switch (section) {
+                    case 'facility':
+                        fetch("https://manual-5d03dc.gitlab.io/facility.html")
+                            .then(response => response.text())
+                            .then(data => contentArea.innerHTML = data)
+                            .catch(error => {
+                                contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
+                                console.error('Error loading the content:', error);
+                            });
+                        break;
+        
+                    case 'cheongjuSwimming':
+                        fetch("https://manual-5d03dc.gitlab.io/guide/cheongju_swimming_pool_guide.html")
+                            .then(response => response.text())
+                            .then(data => contentArea.innerHTML = data);
+                        break;
+        
+                    case 'purmi':
+                        fetch("https://manual-5d03dc.gitlab.io/guide/purmi_guide.html")
+                            .then(response => response.text())
+                            .then(data => contentArea.innerHTML = data);
+                        break;
+        
+                    case 'youngun_sportscenter':
+                        fetch("https://manual-5d03dc.gitlab.io/guide/youngun_sportscenter_guide.html")
+                            .then(response => response.text())
+                            .then(data => contentArea.innerHTML = data);
+                        break;
+        
+                    case 'bokdae_sportscenter':
+                        fetch("https://manual-5d03dc.gitlab.io/guide/bokdae_sportscenter_guide.html")
+                            .then(response => response.text())
+                            .then(data => contentArea.innerHTML = data);
+                        break;
+        
+                    case 'gagyeong_sportscenter':
+                        fetch("https://manual-5d03dc.gitlab.io/guide/gagyeong_sportscenter_guide.html")
+                            .then(response => response.text())
+                            .then(data => contentArea.innerHTML = data);
+                        break;
+        
+                    case 'voc':
+                        contentArea.innerHTML = '<h2>VOC</h2><p>고객의 소리를 확인하세요.</p>';
+                        break;
+        
+                    case 'admin':
+                    case 'tech':
+                    case 'phy':
+                        contentArea.innerHTML = generateContent(section);
+                        break;
+        
+                    default:
+                        contentArea.innerHTML = '<p>올바른 섹션이 아닙니다.</p>';
+                }
+            }
         }
-        else {
-        menu.classList.add('hidden');
+        
+        function generateContent(section) {
+            const contentTemplates = {
+                admin: `
+                    <p><img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png">
+                    <a href="#" class="custom-link">청주수영장 행정분야</a>를 클릭하면 이동합니다. <미구현></p>
+                `,
+                tech: `
+                    <p><img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png">
+                    <a href="#" class="custom-link">청주수영장 기술분야</a>를 클릭하면 이동합니다. <미구현></p>
+                `,
+                phy: `
+                    <p><img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png">
+                    <a href="#" class="custom-link">체육분야</a>를 클릭하면 이동합니다. <미구현></p>
+                `
+            };
+            return contentTemplates[section] || '<p>올바른 섹션이 아닙니다.</p>';
         }
-}
-function toggleMenu(menuId) {
-            // 모든 메뉴를 숨기기
+        
+        function toggleMenu(menuId) {
             var menus = document.querySelectorAll('.sidebar ul ul');
-            menus.forEach(function(menu) {
+            menus.forEach(menu => {
                 if (menu.id !== menuId) {
                     menu.classList.add('hidden');
                 }
             });
-            
-            // 클릭한 메뉴만 펼치기
-            var menu = document.getElementById(menuId);
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-            } else {
-                menu.classList.add('hidden');
-            }
-        }
-</script>
         
+            var menu = document.getElementById(menuId);
+            menu.classList.toggle('hidden');
+        }
+        </script>
 
 
 
