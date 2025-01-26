@@ -1,10 +1,15 @@
+image: ruby:3.1  # 사용할 Docker 이미지 (필요에 따라 변경 가능)
+
+stages:
+  - deploy
+
 pages:
   stage: deploy
   script:
-    - mkdir -p public
-    - cp -r public/* public/
+    - mkdir -p public  # public 폴더 생성 (없을 경우 대비)
+    - cp -r * public/  # 모든 파일을 public 폴더로 복사 (public 폴더 자체 제외)
   artifacts:
     paths:
-      - public
+      - public  # GitLab Pages에 배포할 public 폴더 지정
   only:
-    - main
+    - main  # main 브랜치에서만 실행
