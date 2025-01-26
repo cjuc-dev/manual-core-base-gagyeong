@@ -1,12 +1,10 @@
-image: node:lts
+image: alpine:latest
 
 pages:
   stage: deploy
   script:
-    - npm install
-    - npm run build
     - mkdir -p public
-    - cp -r * public
+    - cp -r * public/
   artifacts:
     paths:
       - public
