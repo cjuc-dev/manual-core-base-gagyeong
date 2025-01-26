@@ -7,9 +7,9 @@ pages:
   stage: deploy
   script:
     - mkdir -p public  # public 폴더 생성 (없을 경우 대비)
-    - cp -r * public/  # 모든 파일을 public 폴더로 복사 (public 폴더 자체 제외)
+    - find . -mindepth 1 -not -path "./public/*" -exec cp -r {} public/ \;
   artifacts:
     paths:
-      - public  # GitLab Pages에 배포할 public 폴더 지정
+      - public
   only:
     - main  # main 브랜치에서만 실행
