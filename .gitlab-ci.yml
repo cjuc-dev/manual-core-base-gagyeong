@@ -1,9 +1,10 @@
+image: alpine:latest
+
 pages:
   stage: deploy
   script:
-  - rm -rf public
-  - mkdir -p public
-  - cp -r * public/
+    - mkdir -p public
+    - echo "<h1>GitLab Pages 테스트</h1>" > public/index.html
   artifacts:
     paths:
       - public
