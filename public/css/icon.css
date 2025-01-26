@@ -1,0 +1,39 @@
+/* icon.css */
+.fixed-icon {
+    width: 16px;  /* 아이콘 크기 조정 */
+    height: 16px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.hover-icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+    display: none;
+}
+
+/* 링크 스타일링 */
+.custom-link {
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+}
+
+/* 마우스 오버 시 뒤쪽 아이콘 표시 */
+p:hover .hover-icon {
+    display: inline;
+}
+
+.fixed-icon {
+    width: 16px !important; 
+    height: 16px !important;
+}
+
+.hover-icon {
+    display: none !important;
+}
+
+p:hover .hover-icon {
+    display: inline !important;
+}
