@@ -1,8 +1,8 @@
 pages:
   stage: deploy
   script:
-    - mkdir -p public
-    - cp -r !(public) public/  # public 디렉토리를 제외하고 복사
+  - mkdir -p public
+  - cp -r . public/
   artifacts:
     paths:
       - public
