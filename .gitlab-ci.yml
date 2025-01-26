@@ -1,6 +1,13 @@
-# The Docker image that will be used to build your app
-image: alpine:latest
-# Functions that should be executed before the build script is run
-before_script:
-  - "pages:"
-  - "stage: deploy"
+image: node:lts  # Node.js 환경 설정
+
+pages:
+  script:
+    - npm install
+    - npm run build
+    - mkdir -p public
+    - cp -r * public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
