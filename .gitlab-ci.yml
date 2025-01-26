@@ -1,6 +1,7 @@
-image: node:lts  # Node.js 환경 설정
+image: node:lts
 
 pages:
+  stage: deploy
   script:
     - npm install
     - npm run build
@@ -9,5 +10,5 @@ pages:
   artifacts:
     paths:
       - public
-  rules:
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  only:
+    - main
