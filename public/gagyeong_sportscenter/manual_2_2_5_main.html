@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가경국민체육센터 기술 매뉴얼</title>
+    <link rel="stylesheet" href="https://manual-flame.vercel.app/css/styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>가경국민체육센터<br>
+                기술 매뉴얼</h2>
+        <ul>
+            <li><a href="#" onclick="loadContent('update')">업데이트 현황</a></li>
+            <li>
+                <a href="#" onclick="toggleMenu('2_2_5_1')">기계</a>
+                <ul id="2_2_5_1" class="hidden">
+                    <li><a href="#" onclick="loadContent('Boiler')">보일러</a></li>
+                    <li><a href="#" onclick="loadContent('2_2_5_1_2')">수영장 제어설비</a></li>
+                    <li><a href="#" onclick="loadContent('2_2_5_1_3')">온수가열기</a></li>
+                    <li><a href="#" onclick="loadContent('2_2_5_1_4')">공조기</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="toggleMenu('2_2_5_2')">전기</a>
+                <ul id="2_2_5_2" class="hidden">
+                    <li><a href="#" onclick="loadContent('2_2_5_2_1')">정전</a></li>
+                    <li><a href="#" onclick="loadContent('2_2_5_2_2')">복전</a></li>
+                    <li><a href="#" onclick="loadContent('2_2_5_2_3')">기타</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="toggleMenu('2_2_5_3')">소방</a>
+                <ul id="2_2_5_3" class="hidden">
+                    <li><a href="#" onclick="loadContent('2_2_5_3_1')">화재감지기 작동 및 화재발생 대응응</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="toggleMenu('2_2_5_4')">수질</a>
+                <ul id="2_2_5_4" class="hidden">
+                    <li><a href="#" onclick="loadContent('2_2_5_4_1')">수영장 수질 자동측정 장치</a></li>
+                    <li><a href="#" onclick="loadContent('2_2_5_4_2')">수영장 염소 측정</a></li>
+                    <li><a href="#" onclick="loadContent('2_2_5_4_3')">수영장 약품관리</a></li>
+                    <li><a href="#" onclick="loadContent('2_2_5_4_4')">수영장 배수 및 담수</a></li>
+                    <li><a href="#" onclick="loadContent('2_2_5_4_5')">저수조 청소</a></li>
+                    <li><a href="#" onclick="loadContent('2_2_5_4_6')">수영장 수온 관리</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="toggleMenu('2_2_5_5')">가스</a>
+                <ul id="2_2_5_5" class="hidden">
+                    <li><a href="#" onclick="loadContent('2_2_5_5_1')">정압기실 기록지 교체체</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="toggleMenu('2_2_5_6')">건축</a>
+                <ul id="2_2_5_6" class="hidden">
+                    <li><a href="#" onclick="loadContent('2_2_5_6_1')">건축</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="toggleMenu('2_2_5_7')">기타 주요업무</a>
+                <ul id="2_2_5_7" class="hidden">
+                    <li><a href="#" onclick="loadContent('2_2_5_7_1')">기타</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="toggleMenu('2_2_5_8')">업체 연락처</a>
+                <ul id="2_2_5_8" class="hidden">
+                    <li><a href="#" onclick="loadContent('2_2_5_8_1')">업체 연락처</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+        <p>v1.08</p>
+        <p>creator: 박영규, 박현수</p>
+        </div>
+    </div>
+    
+    <div id="main-content" class="main-content">
+        
+        <div id="content-area">
+            <h3>여기에 클릭된 메뉴의 내용이 표시됩니다.</h3>
+        </div>
+    </div>
+
+<script>
+
+function loadContent(section) {
+    var contentArea = document.getElementById("content-area");
+
+    switch (section) {
+        case 'update':
+            fetch("https://raw.githubusercontent.com/cjsisul/manual_1.0/main/updatecontainer/updatecontainer_gagyeong_sportscenter_tech.html")
+            .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.text();
+            })
+            .then(data => contentArea.innerHTML = data)
+            .catch(error => {
+            contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
+            console.error('Error loading the content:', error);
+            });
+            break;
+        case 'Boiler':
+            fetch("https://raw.githubusercontent.com/cjsisul/manual_1.0/main/gagyeong_sportscenter/manual2_2_5_1_1.html")
+            .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.text();
+            })
+            .then(data => contentArea.innerHTML = data)
+            .catch(error => {
+            contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
+            console.error('Error loading the content:', error);
+            });
+            break;
+        case 'cheongjuSwimming':
+            fetch("https://raw.githubusercontent.com/cjsisul/manual_1.0/main/gagyeong_sportscenter/cheongju_swimming_pool_guide.html")
+            .then(response => response.text())
+            .then(data => contentArea.innerHTML = data)
+            .catch(error => {
+                contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
+                console.error('Error loading the content:', error);
+            });
+            break;
+        case 'purmi':
+            fetch("https://raw.githubusercontent.com/cjsisul/manual_1.0/main/gagyeong_sportscenter/purmi_guide.html")
+            .then(response => response.text())
+            .then(data => contentArea.innerHTML = data)
+            .catch(error => {
+                contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
+                console.error('Error loading the content:', error);
+            });
+            break;
+        case 'youngun_sportscenter':
+            fetch("https://raw.githubusercontent.com/cjsisul/manual_1.0/main/gagyeong_sportscenter/youngun_sportscenter_guide.html")
+            .then(response => response.text())
+            .then(data => contentArea.innerHTML = data)
+            .catch(error => {
+                contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
+                console.error('Error loading the content:', error);
+            });
+            break;
+        case 'manual':
+            contentArea.innerHTML = '<h2>매뉴얼</h2><p>체육시설 사용 매뉴얼입니다.</p>';
+            break;
+        case 'voc':
+            contentArea.innerHTML = '<h2>VOC</h2><p>고객의 소리를 확인하세요.</p>';
+            break;
+        default:
+            contentArea.innerHTML = '<p>올바른 섹션이 아닙니다.</p>';
+    }
+}
+function toggleMenu(menuId) {
+    var menu = document.getElementById(menuId);
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+        }
+        else {
+        menu.classList.add('hidden');
+        }
+}
+function toggleMenu(menuId) {
+    var menu = document.getElementById(menuId);
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+        }
+        else {
+        menu.classList.add('hidden');
+        }
+}
+function toggleMenu(menuId) {
+            // 모든 메뉴를 숨기기
+            var menus = document.querySelectorAll('.sidebar ul ul');
+            menus.forEach(function(menu) {
+                if (menu.id !== menuId) {
+                    menu.classList.add('hidden');
+                }
+            });
+            
+            // 클릭한 메뉴만 펼치기
+            var menu = document.getElementById(menuId);
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+}
+    </script>
+        <table>
+            <thead>
+                <tr>
+                    <th>상태</th>
+                    <th>타입</th>
+                    <th>제목</th>
+                    <th>작성일시</th>
+                    <th>임시저장목록</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><span class="status">목록형</span></td>
+                    <td>저수조 위생점검</td>
+                    <td>2024-01-21</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><span class="status green">서식형</span></td>
+                    <td>시설 보수보고서</td>
+                    <td>2024-01-21</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button>&laquo;</button>
+            <button>&lt;</button>
+            <span>1</span>
+            <button>&gt;</button>
+            <button>&raquo;</button>
+        </div>
+    </div>
+</body>
+</html>
