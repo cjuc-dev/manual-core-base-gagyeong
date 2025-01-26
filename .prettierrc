@@ -1,0 +1,7 @@
+{
+    "useTabs": true,         // 탭을 사용하도록 설정
+    "tabWidth": 4,           // 탭 간격 설정 (원하는 크기로 변경 가능)
+    "semi": true,            // 세미콜론 추가 여부 (원하는 스타일로 설정)
+    "singleQuote": true,     // 작은따옴표 사용 여부
+    "printWidth": 80         // 줄바꿈 길이 설정
+}
