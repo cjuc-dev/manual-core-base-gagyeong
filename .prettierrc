@@ -1,7 +1,10 @@
 {
-    "useTabs": true,         // 탭을 사용하도록 설정
-    "tabWidth": 4,           // 탭 간격 설정 (원하는 크기로 변경 가능)
-    "semi": true,            // 세미콜론 추가 여부 (원하는 스타일로 설정)
-    "singleQuote": true,     // 작은따옴표 사용 여부
-    "printWidth": 80         // 줄바꿈 길이 설정
+	"useTabs": true, // 탭을 사용하도록 설정
+	"htmlWhitespaceSensitivity": "ignore", // 공백 감도를 조정
+	"tabWidth": 4, // 탭 간격 설정 (원하는 크기로 변경 가능)
+	"semi": true, // 세미콜론 추가 여부 (원하는 스타일로 설정)
+	"singleQuote": true, // 작은따옴표 사용 여부
+	"printWidth": 120, // 줄바꿈 길이 설정
+	"singleAttributePerLine": false, // 여러 속성을 한 줄에 유지 (true로 하면 각 속성을 별도 줄에 배치)
+	"bracketSameLine": true // 닫는 꺾쇠괄호 `>`를 같은 줄에 배치하여 코드의 가독성을 향상
 }
