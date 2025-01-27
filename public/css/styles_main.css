@@ -67,8 +67,9 @@ body {
     padding: 20px;
     background-color: #fff;
     border-left: 1px solid #ddd;
-    height: 100vh;
-    overflow-y: auto;
+    min-height: 100vh; /* 최소 높이 설정 */
+    width: calc(100% - 250px); /* 전체 화면 너비에서 사이드바만큼 제외한 너비 */
+    box-sizing: border-box; /* 패딩과 보더를 포함하여 너비 계산 */
 }
 
 h1 {
