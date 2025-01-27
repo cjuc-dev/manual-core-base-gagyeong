@@ -3,21 +3,22 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f5f5f5;
+    overflow: hidden; /* 페이지 전체 스크롤 방지 */
+    display: flex;
 }
 
 .sidebar {
     width: 250px;
-    height: 100vh; /* 전체 높이 유지 */
+    height: 100vh;
     background-color: #2c3e50;
     color: white;
     position: fixed;
-    left: 0; /* 왼쪽 여백 제거 */
-    top: 0; /* 상단 여백 제거 */
+    left: 0;
+    top: 0;
+    border-radius: 0 10px 10px 0;
     padding: 20px;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 0 20px 20px 0; /* 왼쪽 모서리는 직각, 오른쪽만 둥글게 처리 */
-    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2); /* 오른쪽 그림자 추가 */
 }
 
 /* 사이드바 푸터 스타일 조정 */
@@ -62,16 +63,13 @@ body {
 }
 
 .main-content {
-    position: fixed;  /* 화면에 고정 */
-    left: 270px;  /* 사이드바 너비만큼 왼쪽에 여백 추가 */
-    top: 0;
-    width: calc(100% - 270px);  /* 전체 화면에서 사이드바 너비를 뺀 만큼 설정 */
-    height: 100vh;  /* 전체 화면 높이 유지 */
+    flex: 1; /* 나머지 공간을 차지하도록 설정 */
     padding: 20px;
+    margin-left: 250px; /* 사이드바 너비만큼 여백 */
     background-color: #fff;
-    border-left: 1px solid #ddd; /* 사이드바와의 구분선 추가 */
-    overflow-y: auto;  /* 세로 스크롤 가능 */
-    box-sizing: border-box;  /* 패딩 포함 크기 계산 */
+    border-left: 1px solid #ddd;
+    height: 100vh;
+    overflow-y: auto; /* 내용만 스크롤 가능하게 설정 */
 }
 
 h1 {
