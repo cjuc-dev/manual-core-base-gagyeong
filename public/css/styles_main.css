@@ -17,19 +17,23 @@ body {
 	top: 0;
 	border-radius: 0 10px 10px 0;
 	padding: 20px;
+	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	box-sizing: border-box; /* 패딩을 포함하여 크기 조정 */
 }
 
-/* 사이드바 푸터 스타일 조정 */
 .sidebar-footer {
-	text-align: right;
+	text-align: right; /* 오른쪽 정렬 */
 	font-size: 14px;
 	color: white;
 	margin-top: auto; /* 하단 정렬 */
 	padding-top: 20px;
+	padding-bottom: 10px;
+	padding-right: 20px; /* 오른쪽 여백 추가로 가독성 향상 */
 	border-top: 1px solid #ccc;
-	border-radius: 0 0 20px 0; /* 푸터의 오른쪽 하단 둥글게 처리 */
+	border-radius: 0 0 20px 0; /* 푸터의 오른쪽 하단 모서리 둥글게 처리 */
+	width: 100%; /* 전체 너비 사용 */
 }
 
 .sidebar h2 {
