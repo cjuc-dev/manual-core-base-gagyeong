@@ -65,7 +65,6 @@ body {
 .main-content {
     flex: 1; /* 나머지 공간을 차지하도록 설정 */
     padding: 20px;
-    margin-left: 250px; /* 사이드바 너비만큼 여백 */
     background-color: #fff;
     border-left: 1px solid #ddd;
     height: 100vh;
