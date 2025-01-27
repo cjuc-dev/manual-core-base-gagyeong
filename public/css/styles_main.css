@@ -1,178 +1,178 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-    overflow: hidden; /* 페이지 전체 스크롤 방지 */
-    display: flex;
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f5f5f5;
+	overflow: hidden; /* 페이지 전체 스크롤 방지 */
+	display: flex;
 }
 
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background-color: #2c3e50;
-    color: white;
-    position: fixed;
-    left: 0;
-    top: 0;
-    border-radius: 0 10px 10px 0;
-    padding: 20px;
-    flex-direction: column;
-    justify-content: space-between;
+	width: 250px;
+	height: 100vh;
+	background-color: #2c3e50;
+	color: white;
+	position: fixed;
+	left: 0;
+	top: 0;
+	border-radius: 0 10px 10px 0;
+	padding: 20px;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 /* 사이드바 푸터 스타일 조정 */
 .sidebar-footer {
-    text-align: right;
-    font-size: 14px;
-    color: white;
-    margin-top: auto; /* 하단 정렬 */
-    padding-top: 20px;
-    border-top: 1px solid #ccc;
-    border-radius: 0 0 20px 0; /* 푸터의 오른쪽 하단 둥글게 처리 */
+	text-align: right;
+	font-size: 14px;
+	color: white;
+	margin-top: auto; /* 하단 정렬 */
+	padding-top: 20px;
+	border-top: 1px solid #ccc;
+	border-radius: 0 0 20px 0; /* 푸터의 오른쪽 하단 둥글게 처리 */
 }
 
-
 .sidebar h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
+	font-size: 20px;
+	margin-bottom: 20px;
 }
 
 .sidebar ul {
-    list-style: none;
-    padding: 0;
+	list-style: none;
+	padding: 0;
 }
 
 .sidebar ul ul {
-    padding-left: 15px;
+	padding-left: 15px;
 }
 
 .sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px 0;
+	color: white;
+	text-decoration: none;
+	display: block;
+	padding: 10px 0;
 }
 
 .sidebar ul li a:hover {
-    background-color: #1abc9c;
+	background-color: #1abc9c;
 }
 
 .sidebar ul ul li {
-    border-bottom: none;
+	border-bottom: none;
 }
 
 .main-content {
-    position: absolute;
-    top: 0;
-    left: 250px; /* 사이드바 너비만큼 */
-    padding: 20px;
-    background-color: #fff;
-    border-left: 1px solid #ddd;
-    min-height: 100vh;
-    width: calc(100% - 250px);
-    box-sizing: border-box;
+	position: absolute;
+	top: 0;
+	left: 250px; /* 사이드바 너비만큼 */
+	padding: 20px;
+	background-color: #fff;
+	border-left: 1px solid #ddd;
+	min-height: 100vh;
+	width: calc(100% - 250px);
+	box-sizing: border-box;
 }
 
 h1 {
-    font-size: 24px;
-    color: #2c3e50;
+	font-size: 24px;
+	color: #2c3e50;
 }
 
 .filter-section {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .filter-section input {
-    padding: 10px;
-    margin-right: 10px;
+	padding: 10px;
+	margin-right: 10px;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
 }
 
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
+table th,
+table td {
+	border: 1px solid #ddd;
+	padding: 10px;
+	text-align: center;
 }
 
 table th {
-    background-color: #34495e;
-    color: white;
+	background-color: #34495e;
+	color: white;
 }
 
 .status {
-    background-color: #3498db;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
+	background-color: #3498db;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 5px;
 }
 
 .status.green {
-    background-color: #2ecc71;
+	background-color: #2ecc71;
 }
 
 .pagination {
-    margin-top: 20px;
-    text-align: center;
+	margin-top: 20px;
+	text-align: center;
 }
 
 .pagination button {
-    padding: 5px 15px;
-    margin: 5px;
+	padding: 5px 15px;
+	margin: 5px;
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 /* 숫자 숨기기 */
 .hidden-text {
-    display: none;
+	display: none;
 }
 
 /* 링크 스타일 - 밑줄 제거, 파란색 및 굵은 글씨 */
 .custom-link {
-    text-decoration: none;
-    color: blue;
-    font-weight: bold;
+	text-decoration: none;
+	color: blue;
+	font-weight: bold;
 }
 
 /* 방문한 링크 스타일 */
 .custom-link:visited {
-    color: blue;
+	color: blue;
 }
 
 /* 마우스 클릭 시 링크 색상 유지 */
 .custom-link:active,
 .custom-link:focus {
-    color: blue;
+	color: blue;
 }
 
 /* 앞쪽 아이콘 (항상 보이는 아이콘) */
 .fixed-icon {
-    width: 20px;  /* 원하는 크기로 조정 */
-    height: 20px;
-    margin-right: 5px;
-    margin-left: 10px;
-    vertical-align: middle;
+	width: 20px; /* 원하는 크기로 조정 */
+	height: 20px;
+	margin-right: 5px;
+	margin-left: 10px;
+	vertical-align: middle;
 }
 
 /* 뒤쪽 아이콘 (마우스 오버 시 보이는 아이콘) */
 .hover-icon {
-    width: 16px;  /* 원하는 크기로 조정 */
-    height: 16px;
-    margin-left: 5px;
-    display: none;  /* 기본적으로 숨김 */
-    background: none;  /* 배경 없애기 */
-    background-color: transparent; /* 배경을 투명하게 */
+	width: 16px; /* 원하는 크기로 조정 */
+	height: 16px;
+	margin-left: 5px;
+	display: none; /* 기본적으로 숨김 */
+	background: none; /* 배경 없애기 */
+	background-color: transparent; /* 배경을 투명하게 */
 }
 
 /* 마우스 오버 시 뒤쪽 아이콘 보이도록 설정 */
 p:hover .hover-icon {
-    display: inline;  /* 아이콘 표시 */
+	display: inline; /* 아이콘 표시 */
 }
