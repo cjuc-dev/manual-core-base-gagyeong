@@ -62,15 +62,17 @@ body {
 }
 
 .main-content {
-    margin-left: 270px; /* 사이드바 너비와 일치하도록 조정 */
+    position: fixed;  /* 화면에 고정 */
+    left: 270px;  /* 사이드바 너비만큼 왼쪽에 여백 추가 */
+    top: 0;
+    width: calc(100% - 270px);  /* 전체 화면에서 사이드바 너비를 뺀 만큼 설정 */
+    height: 100vh;  /* 전체 화면 높이 유지 */
     padding: 20px;
     background-color: #fff;
-    border-left: 1px solid #ddd; /* 왼쪽 경계선 추가 */
-    height: 100vh; /* 화면 높이에 맞게 고정 */
-    overflow-y: auto; /* 내용이 많아지면 스크롤 추가 */
-    box-sizing: border-box; /* padding이 전체 너비에 포함되도록 설정 */
+    border-left: 1px solid #ddd; /* 사이드바와의 구분선 추가 */
+    overflow-y: auto;  /* 세로 스크롤 가능 */
+    box-sizing: border-box;  /* 패딩 포함 크기 계산 */
 }
-
 
 h1 {
     font-size: 24px;
