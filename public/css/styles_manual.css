@@ -77,10 +77,11 @@ p {
 }
 
 .image-container img {
-	height: 200px; /* ✅ 세로 200px로 고정 */
-	width: auto; /* ✅ 가로 자동 조정(비율 유지) */
-	max-width: 100%; /* 부모 요소보다 커지지 않도록 제한 */
-	object-fit: cover; /* 이미지가 찌그러지지 않도록 처리 */
+	width: auto; /* ✅ 가로 자동 조정 (비율 유지) */
+	height: auto; /* ✅ 세로 자동 조정 */
+	max-width: 100%; /* ✅ 부모 요소보다 커지지 않도록 제한 */
+	max-height: 200px; /* ✅ 최대 높이를 200px로 제한 */
+	object-fit: contain; /* ✅ 이미지가 비율을 유지하면서 부모 크기에 맞춤 */
 	border-radius: 5px; /* 둥근 모서리 */
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 	cursor: pointer;
@@ -88,7 +89,7 @@ p {
 }
 
 .image-container img:hover {
-	transform: scale(1.1); /* 마우스 오버 시 확대 */
+	transform: scale(1.1); /* ✅ 마우스 오버 시 확대 */
 }
 
 /* 테이블 기본 스타일 */
