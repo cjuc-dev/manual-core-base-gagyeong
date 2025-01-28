@@ -69,21 +69,20 @@ p {
 
 .image-container {
 	display: flex;
-	justify-content: left; /* 가운데 정렬 */
-	flex-wrap: wrap; /* 줄바꿈 자동 */
-	gap: 10px; /* 이미지 간격 */
-	max-width: 100%; /* 부모 요소보다 커지지 않도록 제한 */
-	overflow: hidden; /* 넘치는 부분 감춤 */
+	justify-content: flex-start; /* 왼쪽 정렬 ✅ */
+	flex-wrap: wrap; /* 줄바꿈 허용 ✅ */
+	gap: 10px; /* 이미지 간격 ✅ */
+	max-width: 100%; /* 부모 요소보다 커지지 않도록 제한 ✅ */
+	overflow: hidden; /* 넘치는 부분 감춤 ✅ */
 }
 
 .image-container img {
-	width: auto; /* ✅ 가로 자동 조정 (비율 유지) */
-	height: auto; /* ✅ 세로 자동 조정 */
+	width: 200px; /* ✅ 가로 200px 고정 */
+	height: auto; /* ✅ 비율 유지 */
 	max-width: 100%; /* ✅ 부모 요소보다 커지지 않도록 제한 */
-	max-height: 200px; /* ✅ 최대 높이를 200px로 제한 */
-	object-fit: contain; /* ✅ 이미지가 비율을 유지하면서 부모 크기에 맞춤 */
-	border-radius: 5px; /* 둥근 모서리 */
-	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+	object-fit: cover; /* ✅ 이미지가 깨지지 않도록 처리 */
+	border-radius: 5px; /* ✅ 둥근 모서리 */
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* ✅ 그림자 효과 */
 	cursor: pointer;
 	transition: transform 0.3s ease;
 }
