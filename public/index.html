@@ -4,10 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>체육시설 통합 매뉴얼</title>
-		<link
-			rel="stylesheet"
-			href="https://manual-5d03dc.gitlab.io/css/styles_main.css"
-		/>
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/styles_main.css" />
 	</head>
 	<body>
 		<div class="sidebar">
@@ -19,29 +16,19 @@
 					<a href="#" onclick="toggleMenu('guide')">시설안내</a>
 					<ul id="guide" class="hidden">
 						<li>
-							<a href="#" onclick="loadContent('cheongjuSwimming_guide')"
-								>청주수영장</a
-							>
+							<a href="#" onclick="loadContent('cheongjuSwimming_guide')">청주수영장</a>
 						</li>
 						<li>
-							<a href="#" onclick="loadContent('purmi_guide')"
-								>푸르미스포츠센터</a
-							>
+							<a href="#" onclick="loadContent('purmi_guide')">푸르미스포츠센터</a>
 						</li>
 						<li>
-							<a href="#" onclick="loadContent('youngun_sportscenter_guide')"
-								>영운국민체육센터</a
-							>
+							<a href="#" onclick="loadContent('youngun_sportscenter_guide')">영운국민체육센터</a>
 						</li>
 						<li>
-							<a href="#" onclick="loadContent('bokdae_sportscenter_guide')"
-								>복대국민체육센터</a
-							>
+							<a href="#" onclick="loadContent('bokdae_sportscenter_guide')">복대국민체육센터</a>
 						</li>
 						<li>
-							<a href="#" onclick="loadContent('gagyeong_sportscenter_guide')"
-								>가경국민체육센터</a
-							>
+							<a href="#" onclick="loadContent('gagyeong_sportscenter_guide')">가경국민체육센터</a>
 						</li>
 					</ul>
 				</li>
@@ -69,36 +56,32 @@
 
 		<script>
 			function loadContent(section) {
-				var contentArea = document.getElementById("content-area");
+				var contentArea = document.getElementById('content-area');
 
 				const contentPaths = {
-					update: "updatecontainer/updatecontainer_main.html",
-					facility: "facility.html",
-					cheongjuSwimming_guide: "guide/cheongju_swimming_pool_guide.html",
-					purmi_guide: "guide/purmi_guide.html",
-					youngun_sportscenter_guide: "guide/youngun_sportscenter_guide.html",
-					bokdae_sportscenter_guide: "guide/bokdae_sportscenter_guide.html",
-					gagyeong_sportscenter_guide: "guide/gagyeong_sportscenter_guide.html",
-					gagyeong_sportscenter_manual_2_2_5:
-						"gagyeong_sportscenter/manual_2_2_5_main.html",
+					update: 'updatecontainer/updatecontainer_main.html',
+					facility: 'facility.html',
+					cheongjuSwimming_guide: 'guide/cheongju_swimming_pool_guide.html',
+					purmi_guide: 'guide/purmi_guide.html',
+					youngun_sportscenter_guide: 'guide/youngun_sportscenter_guide.html',
+					bokdae_sportscenter_guide: 'guide/bokdae_sportscenter_guide.html',
+					gagyeong_sportscenter_guide: 'guide/gagyeong_sportscenter_guide.html',
+					gagyeong_sportscenter_manual_2_2_5: 'gagyeong_sportscenter/manual_2_2_5_main.html',
 				};
 
 				if (contentPaths[section]) {
 					// URL 확인을 위한 로그 출력
-					console.log(
-						`Fetching URL: https://manual-5d03dc.gitlab.io/${contentPaths[section]}`
-					);
+					console.log(`Fetching URL: https://manual-5d03dc.gitlab.io/${contentPaths[section]}`);
 
 					fetch(`https://manual-5d03dc.gitlab.io/${contentPaths[section]}`)
 						.then((response) => {
-							if (!response.ok) throw new Error("Network response was not ok");
+							if (!response.ok) throw new Error('Network response was not ok');
 							return response.text();
 						})
 						.then((data) => (contentArea.innerHTML = data))
 						.catch((error) => {
-							contentArea.innerHTML =
-								"<p>콘텐츠를 불러오는 데 실패했습니다.</p>";
-							console.error("Error loading the content:", error);
+							contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
+							console.error('Error loading the content:', error);
 						});
 				} else {
 					contentArea.innerHTML = generateContent(section);
@@ -232,18 +215,18 @@
 						</p>
 					`,
 				};
-				return contentTemplates[section] || "<p>올바른 섹션이 아닙니다.</p>";
+				return contentTemplates[section] || '<p>올바른 섹션이 아닙니다.</p>';
 			}
 
 			function toggleMenu(menuId) {
-				var menus = document.querySelectorAll(".sidebar ul ul");
+				var menus = document.querySelectorAll('.sidebar ul ul');
 				menus.forEach((menu) => {
 					if (menu.id !== menuId) {
-						menu.classList.add("hidden");
+						menu.classList.add('hidden');
 					}
 				});
 				var menu = document.getElementById(menuId);
-				menu.classList.toggle("hidden");
+				menu.classList.toggle('hidden');
 			}
 		</script>
 
