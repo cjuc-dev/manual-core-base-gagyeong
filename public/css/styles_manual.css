@@ -70,24 +70,25 @@ p {
 .image-container {
 	display: flex;
 	justify-content: center; /* 가운데 정렬 */
-	flex-wrap: wrap; /* 화면 크기에 따라 자동 줄바꿈 */
+	flex-wrap: wrap; /* 자동 줄바꿈 */
 	gap: 10px; /* 이미지 간격 */
 	max-width: 100%; /* 부모 요소 너비 초과 방지 */
 	overflow: hidden; /* 넘치는 부분 감춤 */
 }
 
 .image-container img {
-	width: 100%; /* 기본적으로 부모 요소의 너비를 따라감 */
-	max-width: 200px; /* 최대 너비 200px로 제한 */
-	height: auto; /* 가로세로 비율 유지 */
+	width: 100%; /* 부모 요소에 맞게 자동 크기 조정 */
+	max-width: 200px; /* 최대 너비 200px */
+	min-width: 100px; /* 최소 너비 100px (너무 작아지는 것 방지) */
+	height: auto; /* 비율 유지 */
 	border-radius: 5px; /* 둥근 모서리 */
-	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 */
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 	cursor: pointer;
 	transition: transform 0.3s ease;
 }
 
 .image-container img:hover {
-	transform: scale(0.8); /* 마우스 오버 시 확대 */
+	transform: scale(1.1); /* 마우스 오버 시 확대 */
 }
 
 /* 테이블 기본 스타일 */
