@@ -69,7 +69,7 @@ p {
 
 .image-container {
 	display: flex;
-	justify-content: center; /* 가운데 정렬 */
+	justify-content: left; /* 가운데 정렬 */
 	flex-wrap: wrap; /* 줄바꿈 자동 */
 	gap: 10px; /* 이미지 간격 */
 	max-width: 100%; /* 부모 요소보다 커지지 않도록 제한 */
@@ -89,7 +89,7 @@ p {
 }
 
 .image-container img:hover {
-	transform: scale(1.1); /* ✅ 마우스 오버 시 확대 */
+	transform: scale(1.03); /* ✅ 마우스 오버 시 확대 */
 }
 
 /* 테이블 기본 스타일 */
