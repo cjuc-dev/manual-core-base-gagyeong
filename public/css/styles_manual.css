@@ -70,17 +70,17 @@ p {
 .image-container {
 	display: flex;
 	justify-content: center; /* 가운데 정렬 */
-	flex-wrap: wrap; /* 자동 줄바꿈 */
+	flex-wrap: wrap; /* 줄바꿈 자동 */
 	gap: 10px; /* 이미지 간격 */
-	max-width: 100%; /* 부모 요소 너비 초과 방지 */
+	max-width: 100%; /* 부모 요소보다 커지지 않도록 제한 */
 	overflow: hidden; /* 넘치는 부분 감춤 */
 }
 
 .image-container img {
-	width: 100%; /* 부모 요소에 맞게 자동 크기 조정 */
-	max-width: 200px; /* 최대 너비 200px */
-	min-width: 100px; /* 최소 너비 100px (너무 작아지는 것 방지) */
-	height: auto; /* 비율 유지 */
+	height: 200px; /* ✅ 세로 200px로 고정 */
+	width: auto; /* ✅ 가로 자동 조정(비율 유지) */
+	max-width: 100%; /* 부모 요소보다 커지지 않도록 제한 */
+	object-fit: cover; /* 이미지가 찌그러지지 않도록 처리 */
 	border-radius: 5px; /* 둥근 모서리 */
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 	cursor: pointer;
