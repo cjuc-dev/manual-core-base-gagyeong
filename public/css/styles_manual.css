@@ -74,7 +74,7 @@ p {
 }
 
 .image-container img {
-	width: 100px; /* 각 이미지 너비 */
+	width: 200px; /* 각 이미지 너비 */
 	height: auto;
 	border-radius: 5px; /* 둥근 모서리 */
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 */
