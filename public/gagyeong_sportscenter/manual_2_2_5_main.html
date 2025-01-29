@@ -208,6 +208,14 @@
 				// 팝업을 숨김
 				popup.style.display = 'none'; // 팝업을 닫을 때 'none'으로 설정하여 숨김
 			}
+			function toggleDiv(id) {
+				var div = document.getElementById(id);
+				if (div.style.display === 'none' || div.style.display === '') {
+					div.style.display = 'block'; // ✅ 펼치기
+				} else {
+					div.style.display = 'none'; // ✅ 닫기
+				}
+			}
 		</script>
 		<style>
 			/* 기본적으로 숨겨져 있는 클래스 */
