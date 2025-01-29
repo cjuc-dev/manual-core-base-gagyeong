@@ -37,13 +37,14 @@ table {
     overflow: hidden; /* ✅ 넘치는 부분 감춤 */
 }
 
-/* 🛠 테이블 헤더 스타일 수정 */
+/* ✅ 테이블 헤더 스타일 (배경색 & 글씨색 수정) */
 th {
-    background-color: #34495e; /* ✅ 연한 배경 */
+    background-color: #34495e !important; /* ✅ 배경색 강제 적용 */
+    color: white !important; /* ✅ 글씨색 흰색으로 변경 */
     font-weight: bold;
     text-align: center;
     padding: 10px;
-    white-space: normal; /* ✅ 텍스트가 길 경우 자동 줄바꿈 */
+    white-space: normal; /* ✅ 텍스트 자동 줄바꿈 */
     min-width: 80px; /* ✅ 최소 크기 설정 */
 }
 
