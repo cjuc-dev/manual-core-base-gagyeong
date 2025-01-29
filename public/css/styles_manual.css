@@ -39,7 +39,7 @@ table {
 
 /* 🛠 테이블 헤더 스타일 수정 */
 th {
-    background-color: #f8f8f8; /* ✅ 연한 배경 */
+    background-color: #34495e; /* ✅ 연한 배경 */
     font-weight: bold;
     text-align: center;
     padding: 10px;
