@@ -11,13 +11,23 @@ table {
 	overflow: hidden; /* ✅ 넘치는 부분 감춤 */
 }
 
-/* ✅ 테이블이 불필요하게 확장되지 않도록 설정 */
+/* ✅ 세부사항 컨테이너 크기 자동 조정 */
 .details {
-	width: 100%; /* ✅ 부모 요소에 맞게 자동 조정 */
+	width: 100%; /* ✅ 부모 요소 크기에 맞게 자동 조정 */
 	max-width: 100%; /* ✅ 부모 요소보다 커지지 않도록 제한 */
 	min-width: 0; /* ✅ 크기가 작아질 때 최소 너비 제한 해제 */
 	flex-grow: 0; /* ✅ 불필요한 크기 확장 방지 */
 	overflow-x: auto; /* ✅ 가로 스크롤 허용 (너무 작아지면) */
+}
+
+/* ✅ 테이블 크기 자동 조정 */
+.details table {
+	width: 100%; /* ✅ 테이블이 부모 컨테이너의 크기에 맞도록 조정 */
+	max-width: 100%; /* ✅ 화면을 넘지 않도록 제한 */
+	table-layout: auto; /* ✅ 열 너비 자동 조정 */
+	border-collapse: collapse;
+	text-align: center;
+	font-size: clamp(12px, 1vw, 16px); /* ✅ 글씨 크기 자동 조정 */
 }
 
 /* ✅ 테이블 헤더 스타일 */
@@ -41,39 +51,24 @@ td {
 	word-break: break-word; /* ✅ 단어가 너무 길면 자동 줄바꿈 */
 }
 
-/* ✅ 반응형 테이블 스타일 */
+/* ✅ 테이블이 좁아질 때 자동으로 너비를 줄임 */
 @media (max-width: 1024px) {
-	table {
-		font-size: 16px; /* ✅ 글씨 크기를 16px로 줄임 */
-	}
-
-	th,
-	td {
-		padding: 8px; /* ✅ 셀 여백 줄이기 */
-		max-width: 150px; /* ✅ 더 작은 화면에서는 셀 크기 줄이기 */
+	.details table {
+		font-size: 14px; /* ✅ 작은 화면에서 글씨 크기 줄이기 */
 	}
 }
 
 @media (max-width: 768px) {
-	table {
-		font-size: 12px; /* 📌 더 작은 화면에서는 글씨 크기 축소 */
-	}
-
-	th,
-	td {
-		padding: 6px; /* 📌 셀 여백 줄이기 */
-		min-width: 50px; /* 📌 최소 너비 조정 */
+	.details table {
+		font-size: 12px; /* ✅ 더 작은 화면에서 글씨 크기 축소 */
 	}
 }
 
 @media (max-width: 480px) {
-	table {
-		font-size: 10px; /* 📌 모바일 화면에서 글씨 크기 최소화 */
+	.details {
+		max-width: 80%; /* ✅ 작은 화면에서는 더 좁아지도록 조정 */
 	}
-
-	th,
-	td {
-		padding: 4px; /* 📌 최소 여백 */
-		min-width: 40px; /* 📌 최소 크기 조정 */
+	.details table {
+		font-size: 10px; /* ✅ 글씨 크기 최소화 */
 	}
 }
