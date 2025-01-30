@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #2c3e50;
+    color: white;
+    position: fixed;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul ul {
+    padding-left: 15px;
+}
+
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid #34495e;
+}
+
+.sidebar ul li a:hover {
+    background-color: #1abc9c;
+}
+
+.sidebar ul ul li {
+    border-bottom: none;
+}
+
+.main-content {
+    margin-left: 270px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    min-height: 100vh;
+}
+
+
+h1 {
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.filter-section input {
+    padding: 10px;
+    margin-right: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #34495e;
+    color: white;
+}
+
+.status {
+    background-color: #3498db;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.status.green {
+    background-color: #2ecc71;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination button {
+    padding: 5px 15px;
+    margin: 5px;
+}
+
+/* 아이콘 관련 */
+.info-icon {
+    display: inline-block;
+    width: 25px !important; /* 아이콘 너비 */
+    height: 25px !important; /* 아이콘 높이 */
+    margin-right: 10px;
+    vertical-align: middle;
+    background-color: #34495e;
+    }
+    .hidden {
+    display: none;
+
+    }
+

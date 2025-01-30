@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>체육시설 통합 매뉴얼</title>
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/styles_main.css" />
+	</head>
+	<body>
+		<div class="sidebar">
+			<h2>체육시설 통합 매뉴얼</h2>
+			<ul>
+				<li><a href="#" onclick="loadContent('update')">업데이트 현황</a></li>
+				<li><a href="#" onclick="loadContent('facility')">시설현황</a></li>
+				<li>
+					<a href="#" onclick="toggleMenu('guide')">시설안내</a>
+					<ul id="guide" class="hidden">
+						<li>
+							<a href="#" onclick="loadContent('cheongjuSwimming_guide')">청주수영장</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('purmi_guide')">푸르미스포츠센터</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('youngun_sportscenter_guide')">영운국민체육센터</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('bokdae_sportscenter_guide')">복대국민체육센터</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('gagyeong_sportscenter_guide')">가경국민체육센터</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#" onclick="toggleMenu('manual')">매뉴얼</a>
+					<ul id="manual" class="hidden">
+						<li><a href="#" onclick="loadContent('admin')">행정</a></li>
+						<li><a href="#" onclick="loadContent('tech')">기술</a></li>
+						<li><a href="#" onclick="loadContent('phy')">체육</a></li>
+					</ul>
+				</li>
+				<li><a href="#" onclick="loadContent('voc')">VOC</a></li>
+			</ul>
+			<div class="sidebar-footer">
+				<p>v1.09</p>
+				<p>creator: 박영규, 박현수</p>
+			</div>
+		</div>
+
+		<div id="main-content" class="main-content">
+			<div id="content-area">
+				<h3>여기에 클릭된 메뉴의 내용이 표시됩니다.</h3>
+			</div>
+		</div>
+
+		<script>
+			function loadContent(section) {
+				var contentArea = document.getElementById('content-area');
+
+				const contentPaths = {
+					update: 'updatecontainer/updatecontainer_main.html',
+					facility: 'facility_status/facility_status.html',
+					cheongjuSwimming_guide: 'guide/cheongju_swimming_pool_guide.html',
+					purmi_guide: 'guide/purmi_guide.html',
+					youngun_sportscenter_guide: 'guide/youngun_sportscenter_guide.html',
+					bokdae_sportscenter_guide: 'guide/bokdae_sportscenter_guide.html',
+					gagyeong_sportscenter_guide: 'guide/gagyeong_sportscenter_guide.html',
+					gagyeong_sportscenter_manual_2_2_5: 'gagyeong_sportscenter/manual_2_2_5_main.html',
+				};
+
+				if (contentPaths[section]) {
+					// URL 확인을 위한 로그 출력
+					console.log(`Fetching URL: https://manual-5d03dc.gitlab.io/${contentPaths[section]}`);
+
+					fetch(`https://manual-5d03dc.gitlab.io/${contentPaths[section]}`)
+						.then((response) => {
+							if (!response.ok) throw new Error('Network response was not ok');
+							return response.text();
+						})
+						.then((data) => (contentArea.innerHTML = data))
+						.catch((error) => {
+							contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
+							console.error('Error loading the content:', error);
+						});
+				} else {
+					contentArea.innerHTML = generateContent(section);
+				}
+			}
+
+			function generateContent(section) {
+				const contentTemplates = {
+					admin: `
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.1.1.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">청주수영장 행정분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.1.2.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">푸르미스포츠센터 행정분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.1.3.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">영운국민체육센터 행정분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.1.4.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">복대국민체육센터 행정분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.1.5.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">가경국민체육센터 행정분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.1.6.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">공통 행정분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+					`,
+					tech: `
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.2.1.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">청주수영장 기술분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.2.2.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">푸르미스포츠센터 기술분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.2.3.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">영운국민체육센터 기술분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.2.4.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">복대국민체육센터 기술분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon" style="margin-right: 10px;">
+							<span class="hidden-text">2.2.5.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" class="menu-link" onclick="location.href='gagyeong_sportscenter/manual_2_2_5_main.html';">
+							<span class="highlight">가경국민체육센터 기술분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. </a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+					`,
+					phy: `
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.3.1.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">체육분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+					`,
+					voc: `
+						<p style="display: flex; align-items: center;">
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
+							<span class="hidden-text">2.4.1.</span>
+							<!-- 시설 연결 링크 -->
+							<a href="#" 
+							class="menu-link" onclick="location.href='tech2.html';">
+							<span class="highlight">VOC</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. 고객의 소리를 확인하세요. <미구현></a>
+							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
+						</p>
+					`,
+				};
+				return contentTemplates[section] || '<p>올바른 섹션이 아닙니다.</p>';
+			}
+
+			function toggleMenu(menuId) {
+				var menus = document.querySelectorAll('.sidebar ul ul');
+				menus.forEach((menu) => {
+					if (menu.id !== menuId) {
+						menu.classList.add('hidden');
+					}
+				});
+				var menu = document.getElementById(menuId);
+				menu.classList.toggle('hidden');
+			}
+		</script>
+
+		<style>
+			/* 기본적으로 숨겨져 있는 클래스 */
+			.hidden {
+				display: none; /* 요소를 화면에서 숨김 */
+			}
+
+			/* 방문한 링크 및 일반 링크 모두 동일한 스타일 적용 */
+			a.menu-link,
+			a.menu-link:visited,
+			a.menu-link:hover {
+				color: #070707 !important; /* 기본 검정색 유지 */
+				text-decoration: none !important; /* 밑줄 제거 */
+				font-weight: bold; /* 글자 두껍게 */
+			}
+
+			//* 모든 링크의 스타일을 동일하게 유지 */
+			.menu-link,
+			.menu-link:visited {
+				color: #070707 !important; /* 동일한 검정색 유지 */
+				text-decoration: none !important; /* 밑줄 제거 */
+				font-weight: bold;
+			}
+
+			/* 방문한 링크 스타일 */
+			.menu-link:visited {
+				color: #070707 !important; /* 방문 후에도 색상 유지 */
+				text-decoration: none !important;
+			}
+
+			/* 링크 마우스 오버 시 스타일 */
+			.menu-link:hover {
+				color: #0056b3; /* 마우스 오버 시 어두운 파란색으로 변경 */
+			}
+
+			/* 특정 강조 텍스트 스타일 */
+			.highlight {
+				color: #007bff !important; /* 특정 단어 강조 (파란색) */
+				font-weight: bold;
+			}
+
+			/* 항상 보이는 아이콘 스타일 */
+			.info-icon {
+				width: 20px; /* 아이콘 너비 설정 */
+				height: 20px; /* 아이콘 높이 설정 */
+				margin-left: 10px; /* 왼쪽 여백 추가 */
+				margin-right: 5px; /* 오른쪽 여백 추가 */
+				background-color: transparent; /* 배경색을 투명으로 설정 */
+			}
+
+			/* 마우스를 올리면 나타나는 아이콘 스타일 */
+			.hover-icon {
+				width: 20px; /* 아이콘 너비 설정 */
+				height: 20px; /* 아이콘 높이 설정 */
+				margin-left: 10px; /* 링크와의 간격 조정 */
+				display: none; /* 기본적으로 숨김 */
+				background-color: transparent; /* 배경색을 투명으로 설정 */
+			}
+
+			/* 링크에 마우스를 올리면 hover-icon이 나타남 */
+			.menu-link:hover + .hover-icon {
+				display: inline; /* 마우스 오버 시 아이콘 표시 */
+			}
+
+			/* 링크의 부모 요소 조정 (flex 컨테이너 설정) */
+			.link-container {
+				display: flex;
+				align-items: center; /* 수직 중앙 정렬 */
+			}
+
+			/* 전체 페이지 글꼴 및 기본 스타일 */
+			body {
+				font-family: Arial, sans-serif; /* 기본 글꼴 설정 */
+				line-height: 1.6; /* 가독성을 위한 줄 간격 조정 */
+				color: #333; /* 본문 기본 색상 */
+				background-color: #f9f9f9; /* 배경 색상 */
+				margin: 20px; /* 페이지 여백 */
+			}
+		</style>
+	</body>
+</html>
