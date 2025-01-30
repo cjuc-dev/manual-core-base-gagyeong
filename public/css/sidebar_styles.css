@@ -1,0 +1,51 @@
+/* ✅ 사이드바 스타일 */
+.sidebar {
+	width: 250px;
+	height: 100vh; /* ✅ 화면 높이만큼 적용 */
+	background-color: #2c3e50;
+	color: white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 20px;
+	box-sizing: border-box; /* ✅ 패딩 포함하여 크기 조정 */
+	overflow-y: auto; /* ✅ 세로 스크롤 허용 */
+}
+
+/* ✅ 사이드바 내 메뉴 스타일 */
+.sidebar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.sidebar ul li {
+	margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+	color: white;
+	text-decoration: none;
+	padding: 10px;
+	display: block;
+	border-radius: 5px;
+	transition: background 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+	background-color: #1a252f;
+}
+
+/* ✅ 사이드바 반응형 스타일 */
+@media (max-width: 768px) {
+	.sidebar {
+		width: 200px;
+	}
+}
+
+@media (max-width: 480px) {
+	.sidebar {
+		width: 180px;
+		padding: 15px;
+	}
+}

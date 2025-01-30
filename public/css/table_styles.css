@@ -1,0 +1,70 @@
+/* ✅ 테이블 기본 스타일 */
+table {
+	width: 100%; /* ✅ 부모 요소 크기에 맞게 조정 */
+	max-width: 100%; /* ✅ 화면을 넘지 않도록 제한 */
+	table-layout: auto; /* ✅ 열 너비 자동 조정 */
+	border-collapse: collapse;
+	text-align: center;
+	font-size: clamp(12px, 1vw, 16px); /* ✅ 글씨 크기 자동 조정 */
+	white-space: normal; /* ✅ 긴 텍스트 자동 줄바꿈 */
+	word-wrap: break-word; /* ✅ 긴 단어 줄바꿈 */
+	overflow: hidden; /* ✅ 넘치는 부분 감춤 */
+}
+
+/* ✅ 테이블 헤더 스타일 */
+th {
+	background-color: #34495e !important; /* ✅ 배경색 강제 적용 */
+	color: white !important; /* ✅ 글씨색 흰색으로 변경 */
+	font-weight: bold;
+	text-align: center;
+	padding: 10px;
+	white-space: normal; /* ✅ 텍스트 자동 줄바꿈 */
+	min-width: 80px; /* ✅ 최소 크기 설정 */
+}
+
+/* ✅ 테이블 셀 스타일 */
+th,
+td {
+	padding: 10px;
+	border: 1px solid #ccc;
+	font-size: clamp(10px, 0.8vw, 14px); /* ✅ 글자 크기 자동 조정 */
+	word-wrap: break-word; /* ✅ 긴 단어 줄바꿈 */
+	word-break: break-word; /* ✅ 단어가 너무 길면 자동 줄바꿈 */
+}
+
+/* ✅ 반응형 테이블 스타일 */
+@media (max-width: 1024px) {
+	table {
+		font-size: 16px; /* ✅ 글씨 크기를 16px로 줄임 */
+	}
+
+	th,
+	td {
+		padding: 8px; /* ✅ 셀 여백 줄이기 */
+		max-width: 150px; /* ✅ 더 작은 화면에서는 셀 크기 줄이기 */
+	}
+}
+
+@media (max-width: 768px) {
+	table {
+		font-size: 12px; /* 📌 더 작은 화면에서는 글씨 크기 축소 */
+	}
+
+	th,
+	td {
+		padding: 6px; /* 📌 셀 여백 줄이기 */
+		min-width: 50px; /* 📌 최소 너비 조정 */
+	}
+}
+
+@media (max-width: 480px) {
+	table {
+		font-size: 10px; /* 📌 모바일 화면에서 글씨 크기 최소화 */
+	}
+
+	th,
+	td {
+		padding: 4px; /* 📌 최소 여백 */
+		min-width: 40px; /* 📌 최소 크기 조정 */
+	}
+}
