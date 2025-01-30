@@ -11,6 +11,15 @@ table {
 	overflow: hidden; /* ✅ 넘치는 부분 감춤 */
 }
 
+/* ✅ 테이블이 불필요하게 확장되지 않도록 설정 */
+.details {
+	width: 100%; /* ✅ 부모 요소에 맞게 자동 조정 */
+	max-width: 100%; /* ✅ 부모 요소보다 커지지 않도록 제한 */
+	min-width: 0; /* ✅ 크기가 작아질 때 최소 너비 제한 해제 */
+	flex-grow: 0; /* ✅ 불필요한 크기 확장 방지 */
+	overflow-x: auto; /* ✅ 가로 스크롤 허용 (너무 작아지면) */
+}
+
 /* ✅ 테이블 헤더 스타일 */
 th {
 	background-color: #34495e !important; /* ✅ 배경색 강제 적용 */
