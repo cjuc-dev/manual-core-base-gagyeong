@@ -15,6 +15,8 @@ html {
 	max-width: 100%;
 	box-sizing: border-box; /* ✅ 패딩, 보더 크기 포함하여 너비 계산 */
 	overflow-x: hidden; /* ✅ 좌우 스크롤 방지 */
+	padding-bottom: 0 !important;
+	margin-bottom: 0 !important;
 }
 
 /* ✅ 이미지가 부모 요소보다 커지지 않도록 설정 */
@@ -220,51 +222,66 @@ ul li {
 
 /* ✅ 툴팁 텍스트 스타일 */
 .tooltip-text {
-	visibility: hidden; /* ✅ 기본적으로 툴팁 숨김 */
+	visibility: hidden; /* ✅ 기본적으로 툴팁을 숨김 */
 	background-color: #333; /* ✅ 툴팁 배경색 */
 	color: #fff; /* ✅ 텍스트 색상 */
 	text-align: left; /* ✅ 텍스트 왼쪽 정렬 */
 	border-radius: 5px;
 	padding: 10px;
 	position: absolute; /* ✅ 부모 요소 기준으로 배치 */
-	z-index: 10000;
-	left: 0;
-	top: 100%;
+	z-index: 10000; /* ✅ 툴팁이 다른 요소들 위에 표시되도록 설정 */
+	left: 0; /* ✅ 툴팁이 부모 요소의 왼쪽에 맞게 표시 */
+	top: 100%; /* ✅ 툴팁이 부모 요소 아래쪽에 표시 */
 	margin-top: 5px; /* ✅ 툴팁과 연결된 텍스트 사이 간격 추가 */
-	opacity: 0;
+	opacity: 0; /* ✅ 툴팁 기본 상태에서 투명 */
 	transition: opacity 0.3s ease, transform 0.3s ease; /* ✅ 부드러운 전환 효과 */
 	font-size: 12px;
 	line-height: 1.4;
 	word-break: normal; /* ✅ 단어가 길어도 줄바꿈 방지 */
 	overflow-wrap: normal; /* ✅ 텍스트가 자동으로 한 줄 유지 */
-	width: auto;
-	min-width: 200px;
-	max-width: 400px; /* ✅ 최대 너비 제한 */
-	white-space: normal; /* ✅ 자동 줄바꿈 허용 */
+	width: auto; /* ✅ 자동 크기 조정 */
+	min-width: 200px; /* ✅ 최소 너비 설정 */
+	max-width: none; /* ✅ 기본적으로 최대 크기 제한 해제 */
+	white-space: nowrap; /* ✅ 넓은 화면에서는 줄바꿈 방지 → 한 줄 유지 */
 	box-sizing: border-box; /* ✅ 패딩과 경계 포함하여 크기 계산 */
 }
 
-/* ✅ 작은 화면에서 툴팁 크기 조정 */
+/* ✅ 작은 화면에서는 반응형으로 툴팁 크기 조정 */
 @media screen and (max-width: 768px) {
 	.tooltip-text {
 		font-size: 10px; /* ✅ 작은 화면에서 글씨 크기 줄이기 */
 		padding: 8px; /* ✅ 여백 줄이기 */
 		max-width: 90vw; /* ✅ 작은 화면에서는 최대 너비를 화면 크기의 90%로 제한 */
-		white-space: normal; /* ✅ 자동 줄바꿈 허용 */
-		word-break: break-word; /* ✅ 긴 단어 자동 줄바꿈 */
+		white-space: normal; /* ✅ 작은 화면에서는 자동 줄바꿈 */
+		word-break: break-word; /* ✅ 긴 단어가 있을 경우 자동 줄바꿈 */
 	}
 }
 
 /* ✅ 마우스를 올릴 경우 툴팁 보이기 */
-.tooltip:hover .tooltip-text {    
-	visibility: visible    
-	opacity: 1    
+.tooltip:hover .tooltip-text {
+	visibility: visible;
+	opacity: 1;
 	transform: translateY(0); /* ✅ 부드러운 이동 효과 */
 }
 
 /* ✅ 툴팁 화살표 제거 */
 .tooltip-text::after {
 	content: none;
+}
+
+/* ✅ 기본 이미지 크기 및 스타일 적용 (팝업 제외) */
+img:not(.popup-image) {
+	width: 200px; /* ✅ 가로 200px 고정 */
+	height: 200px; /* ✅ 세로 200px 고정 */
+	object-fit: cover; /* ✅ 비율 유지하면서 컨테이너를 꽉 채움 */
+	border-radius: 8px; /* ✅ 모서리를 8px 둥글게 */
+}
+
+.image-wrapper img:not(.popup-image) {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 8px;
 }
 
 .image-container {
@@ -290,9 +307,8 @@ ul li {
 /* ✅ 이미지 스타일 */
 .image-wrapper img {
 	width: 100%;
-	height: auto;
-	max-height: 200px;
-	object-fit: cover;
+	height: 100%;
+	object-fit: contain; /* ✅ 이미지 비율 유지하며 축소 */
 	border-radius: 5px;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
@@ -376,10 +392,11 @@ ul li {
 	cursor: pointer;
 }
 
-/* ✅ 팝업 이미지 스타일 */
+/* ✅ 팝업 이미지 스타일 - 항상 90% 크기로 유지 */
 #popup-img {
-	max-width: 90%; /* ✅ 이미지의 가로 크기를 화면의 90%로 제한 */
-	max-height: 90%; /* ✅ 이미지의 세로 크기를 화면의 90%로 제한 */
+	width: 70% !important; /* ✅ 이미지 가로 크기를 화면의 90%로 설정 */
+	height: 70% !important; /* ✅ 이미지 세로 크기를 화면의 90%로 설정 */
+	object-fit: contain; /* ✅ 원본 비율을 유지하면서 조정 */
 	margin: auto;
 }
 
