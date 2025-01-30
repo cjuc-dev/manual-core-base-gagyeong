@@ -28,7 +28,7 @@ th {
 	text-align: center;
 	padding: 10px;
 	white-space: normal; /* ✅ 텍스트 자동 줄바꿈 */
-	min-width: 80px; /* ✅ 최소 크기 설정 */
+	min-width: 5px; /* ✅ 최소 크기 설정 */
 }
 
 /* ✅ 테이블 셀 스타일 */
