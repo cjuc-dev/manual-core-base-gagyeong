@@ -256,9 +256,9 @@ ul li {
 }
 
 /* ✅ 마우스를 올릴 경우 툴팁 보이기 */
-.tooltip:hover .tooltip-text {
-	visibility: visible;
-	opacity: 1;
+.tooltip:hover .tooltip-text {    
+	visibility: visible    
+	opacity: 1    
 	transform: translateY(0); /* ✅ 부드러운 이동 효과 */
 }
 
