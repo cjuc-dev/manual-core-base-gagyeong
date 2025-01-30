@@ -66,12 +66,19 @@ img:not(.popup-image) {
 	cursor: pointer;
 }
 
-/* ✅ 팝업 내부 이미지 크기 조정 */
+/* ✅ 기본 이미지 크기 - 리스트에서 보일 때 */
+.popup-image {
+	width: 200px; /* ✅ 작은 크기로 표시 */
+	height: 200px;
+	object-fit: cover; /* ✅ 비율 유지하며 컨테이너 채움 */
+	cursor: pointer; /* ✅ 클릭 가능하도록 설정 */
+}
+
+/* ✅ 팝업에서 표시되는 이미지 */
 #popup-img {
-	width: 70% !important; /* ✅ 이미지 가로 크기를 화면의 70%로 설정 */
-	height: 70% !important; /* ✅ 이미지 세로 크기를 화면의 70%로 설정 */
-	object-fit: contain; /* ✅ 원본 비율을 유지하면서 조정 */
-	margin: auto;
+	width: auto; /* ✅ 원본 크기 유지 */
+	max-width: 80%; /* ✅ 화면 크기의 80%까지 확대 가능 */
+	height: auto;
 }
 
 /* ✅ 팝업 닫기 버튼 스타일 */
