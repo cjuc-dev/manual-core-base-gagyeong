@@ -58,8 +58,7 @@ img:not(.popup-image) {
 .overlay-text {
 	position: absolute;
 	top: 8px; /* ✅ 사진 상단에서 8px 떨어진 위치 */
-	left: 25px; /* ✅ 왼쪽에서 8px 떨어진 위치 */
-	transform: translateX(-50%); /* ✅ 중앙 정렬 */
+	left: 8px; /* ✅ 왼쪽에서 8px 떨어진 위치 */
 	background: rgba(0, 0, 0, 0.7); /* ✅ 배경색 변경 (더 선명하게) */
 	color: white; /* ✅ 글자 색상 */
 	padding: 5px 10px; /* ✅ 내부 여백 */
