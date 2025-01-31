@@ -27,11 +27,13 @@ img:not(.popup-image) {
 
 /* ✅ 개별 이미지 컨테이너 */
 .image-wrapper {
-	position: relative; /* ✅ 오버레이 텍스트가 이미지 위에 정확하게 배치됨 */
+	position: relative; /* ✅ 자식 요소(.overlay-text)가 이미지 위에 배치됨 */
 	display: inline-block; /* ✅ 한 줄에 나란히 배치 */
 	width: 200px; /* ✅ 가로 200px 고정 */
 	height: 200px; /* ✅ 세로 200px 고정 */
 	text-align: center; /* ✅ 텍스트 중앙 정렬 */
+	overflow: hidden; /* ✅ 넘치는 내용 감춤 */
+	border-radius: 5px; /* ✅ 모서리를 둥글게 */
 }
 
 /* ✅ 이미지 스타일 (200x200 고정) */
@@ -50,6 +52,22 @@ img:not(.popup-image) {
 .image-wrapper img:hover {
 	transform: scale(1.03); /* ✅ 마우스 오버 시 살짝 확대 */
 	transition: transform 0.3s ease;
+}
+
+/* ✅ 오버레이 텍스트 스타일 (이미지 상단 정렬) */
+.overlay-text {
+	position: absolute;
+	top: 5px; /* ✅ 이미지 상단에 배치 */
+	left: 50%; /* ✅ 가로 정중앙 */
+	transform: translateX(-50%); /* ✅ 중앙 정렬 */
+	background: rgba(0, 0, 0, 0.8); /* ✅ 배경색 변경 (더 선명하게) */
+	color: white; /* ✅ 글자 색상 */
+	padding: 5px 10px; /* ✅ 내부 여백 */
+	border-radius: 5px; /* ✅ 모서리 둥글게 */
+	font-size: 14px; /* ✅ 글자 크기 */
+	font-weight: bold; /* ✅ 글자 강조 */
+	text-align: center;
+	white-space: nowrap; /* ✅ 줄바꿈 방지 */
 }
 
 /* ✅ 팝업 배경 스타일 */
