@@ -15,8 +15,9 @@
 	padding: 10px;
 	position: absolute; /* ✅ 부모 요소 기준으로 배치 */
 	z-index: 10000; /* ✅ 툴팁이 다른 요소들 위에 표시되도록 설정 */
-	left: 0; /* ✅ 툴팁이 부모 요소의 왼쪽에 맞게 표시 */
+	left: 50%; /* ✅ 기본적으로 부모 요소 중앙에 위치 */
 	top: 100%; /* ✅ 툴팁이 부모 요소 아래쪽에 표시 */
+	transform: translateX(-50%) translateY(5px); /* ✅ 기본 상태에서 중앙 정렬 */
 	margin-top: 5px; /* ✅ 툴팁과 연결된 텍스트 사이 간격 추가 */
 	opacity: 0; /* ✅ 툴팁 기본 상태에서 투명 */
 	transition: opacity 0.3s ease, transform 0.3s ease; /* ✅ 부드러운 전환 효과 */
@@ -26,9 +27,22 @@
 	overflow-wrap: normal; /* ✅ 텍스트가 자동으로 한 줄 유지 */
 	width: auto; /* ✅ 자동 크기 조정 */
 	min-width: 200px; /* ✅ 최소 너비 설정 */
-	max-width: none; /* ✅ 기본적으로 최대 크기 제한 해제 */
-	white-space: nowrap; /* ✅ 넓은 화면에서는 줄바꿈 방지 → 한 줄 유지 */
+	white-space: normal; /* ✅ 넓은 화면에서도 줄바꿈 허용 */
 	box-sizing: border-box; /* ✅ 패딩과 경계 포함하여 크기 계산 */
+}
+
+/* ✅ 화면 아래쪽에서 짤릴 경우 자동으로 위쪽으로 표시 */
+.tooltip-text.bottom-check {
+	top: auto;
+	bottom: 100%;
+	transform: translateX(-50%) translateY(-5px);
+}
+
+/* ✅ 화면 오른쪽에서 넘칠 경우 자동으로 왼쪽으로 정렬 */
+.tooltip-text.right-check {
+	left: auto;
+	right: 0;
+	transform: translateY(5px);
 }
 
 /* ✅ 작은 화면에서는 반응형으로 툴팁 크기 조정 */
@@ -46,7 +60,7 @@
 .tooltip:hover .tooltip-text {
 	visibility: visible;
 	opacity: 1;
-	transform: translateY(0); /* ✅ 부드러운 이동 효과 */
+	transform: translateX(-50%) translateY(0);
 }
 
 /* ✅ 툴팁 화살표 제거 */
