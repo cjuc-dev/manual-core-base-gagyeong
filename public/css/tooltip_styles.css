@@ -27,6 +27,7 @@
 	overflow-wrap: normal; /* ✅ 텍스트가 자동으로 한 줄 유지 */
 	width: auto; /* ✅ 자동 크기 조정 */
 	min-width: 200px; /* ✅ 최소 너비 설정 */
+	max-width: none; /* ✅ 기본적으로 최대 크기 제한 해제 */
 	white-space: normal; /* ✅ 넓은 화면에서도 줄바꿈 허용 */
 	box-sizing: border-box; /* ✅ 패딩과 경계 포함하여 크기 계산 */
 }
