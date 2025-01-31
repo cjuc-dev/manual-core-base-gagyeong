@@ -57,8 +57,8 @@ img:not(.popup-image) {
 /* ✅ 오버레이 텍스트 스타일 (이미지 상단 정렬) */
 .overlay-text {
 	position: absolute;
-	top: 5px; /* ✅ 이미지 상단에 배치 */
-	left: 50%; /* ✅ 가로 정중앙 */
+	top: 8px; /* ✅ 사진 상단에서 8px 떨어진 위치 */
+	left: 8px; /* ✅ 왼쪽에서 8px 떨어진 위치 */
 	transform: translateX(-50%); /* ✅ 중앙 정렬 */
 	background: rgba(0, 0, 0, 0.8); /* ✅ 배경색 변경 (더 선명하게) */
 	color: white; /* ✅ 글자 색상 */
