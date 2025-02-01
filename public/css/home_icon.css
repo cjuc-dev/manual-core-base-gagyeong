@@ -14,10 +14,6 @@
 	transition: transform 0.3s ease-in-out; /* ✅ 부드러운 효과 */
 }
 
-.home-icon img:hover {
-	transform: scale(1.1);
-}
-
 /* ✅ 클릭 후 확대 효과 방지 */
 .home-icon img:active {
 	transform: none !important;
