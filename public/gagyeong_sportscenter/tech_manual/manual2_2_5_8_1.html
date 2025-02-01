@@ -1,0 +1,652 @@
+<!-- 상위 테이블 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수영장 수온 매뉴얼</title>
+    <style>
+        /* 페이지 너비를 100%로 설정하여 iframe에 맞게 조정 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* 좌우 스크롤 방지 */
+            overflow-y: auto; /* 세로 스크롤은 허용 */
+            }
+    
+            /* 콘텐츠가 iframe 너비를 벗어나지 않도록 설정 */
+        .content-wrapper {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box; /* 패딩, 보더 크기 포함하여 너비 계산 */
+            overflow-x: hidden; /* 좌우 스크롤 방지 */
+            }
+    
+        /* 이미지나 다른 콘텐츠가 화면을 넘지 않도록 */
+        img {
+            max-width: 100%; /* 이미지를 부모 요소에 맞게 축소 */
+            height: auto; /* 비율 유지 */
+            display: block; /* 이미지가 블록 요소처럼 흐르게 설정 */
+            }
+    
+        /* 기타 필요한 스타일을 추가 */
+        p {
+            word-wrap: break-word; /* 긴 단어가 있을 경우 자동 줄바꿈 */
+            }
+        
+        /* 툴팁 텍스트 숨기기 기본값 */
+        .tooltip {
+            position: relative; /* 부모 요소가 위치 기준을 제공할 수 있도록 설정 */
+            display: inline-block;
+            cursor: pointer;
+            }
+    
+        .tooltip-text {
+            visibility: hidden; /* 기본적으로 툴팁을 숨김 */
+            background-color: #333; /* 툴팁 배경색 */
+            color: #fff; /* 텍스트 색상 */
+            text-align: left; /* 텍스트 왼쪽 정렬 */
+            border-radius: 5px;
+            padding: 10px;
+            position: absolute; /* 부모 요소 기준으로 배치 */
+            z-index: 10000; /* 툴팁이 다른 요소들 위에 표시되도록 설정 */
+            left: 100%; /* 툴팁이 연결된 텍스트 바로 옆에 표시되도록 설정 */
+            top: 0; /* 연결된 텍스트의 높이와 맞추기 */
+            margin-left: 5px; /* 툴팁과 연결된 텍스트 사이에 간격 추가 */
+            opacity: 0; /* 툴팁 기본 상태에서 투명 */
+            transition: opacity 0.3s; /* 툴팁이 보일 때 부드럽게 전환 */
+            font-size: 12px;
+            line-height: 1.4;
+            word-wrap: break-word;
+            word-break: break-word;
+            }
+    
+        /* 툴팁 화살표 제거 */
+        .tooltip-text::after {
+            content: none; /* 화살표를 제거 */
+            }
+    
+        /* 마우스를 올렸을 때 툴팁 보이기 */
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    
+        /* 이미지 컨테이너를 flexbox로 설정하여 이미지들이 한 줄로 배치되도록 */
+    .image-container {
+        display: flex; /* 플렉스박스를 사용해 이미지들을 한 줄로 배치 */
+        justify-content: space-between; /* 이미지들이 한 줄에 고르게 배치되도록 설정 */
+        gap: 10px; /* 이미지들 사이에 간격 설정 */
+    }
+    
+    /* 각 이미지에 대한 스타일 */
+    .image-container img {
+        width: 20%; /* 이미지들의 너비를 16%로 설정 (한 줄에 6개가 배치될 수 있도록) */
+        height: auto; /* 높이는 자동으로 비율에 맞게 조정 */
+    }
+        
+        /* 테이블 기본 스타일 */
+    table {
+        width: 100%;
+        margin: 0;
+        border-collapse: collapse;
+        text-align: center;
+        font-size: 18px;
+        white-space: nowrap;
+    }
+    
+    th, td {
+        padding-top: 10px; /* 셀의 상단 여백 */
+        padding-bottom: 10px; /* 셀의 하단 여백 */
+        padding-left: 10px; /* 왼쪽 여백 */
+        padding-right: 10px; /* 오른쪽 여백 */
+    }
+    
+    li {
+        line-height: 1.8; /* 줄 간격을 설정 (1.8배 간격) */
+    }
+    
+    /* 세부사항 테이블과 사진 */
+    .details table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    
+    .details th, .details td {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+    
+    .details img {
+        max-width: 100%; /* 이미지를 자동으로 화면 크기에 맞추어 줄입니다. */
+        height: auto;
+        margin: 5px;
+    }
+    
+    .details td {
+        vertical-align: top;
+    }
+    
+    .details .image-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap; /* 이미지를 가로로 배치하고 자동으로 줄 바꿈 */
+    }
+    
+    /* 세부사항 텍스트와 이미지 사이의 여백을 줄이기 위한 스타일 */
+    .details td, .details th {
+        padding: 5px;
+    }
+    
+    /* 테이블 크기 조정 */
+    .details table th, .details table td {
+        font-size: 14px; /* 텍스트 크기를 작게 */
+    }
+    
+    /* 이미지 크기 설정 */
+    .details .image-container img {
+        max-width: 45%; /* 이미지 크기를 줄여서 여러 개의 이미지가 한 줄에 배치될 수 있도록 설정 */
+        margin: 5px;
+    }
+    
+    /* 테이블 셀의 가로 크기 조정 */
+    .details td, .details th {
+        min-width: 100px; /* 최소 크기를 설정하여 레이아웃이 일정하게 유지되도록 */
+    }
+    
+    /* 팝업 스타일 */
+    #popup {
+        display: none; /* 기본적으로 팝업을 숨김 */
+        position: fixed; /* 고정 위치 */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7); /* 배경 반투명 (검정색 배경에 투명도 추가) */
+        justify-content: center; /* 팝업 내부의 콘텐츠를 세로, 가로 가운데 정렬 */
+        align-items: center; /* 팝업 내부의 콘텐츠를 세로, 가로 가운데 정렬 */
+        cursor: pointer; /* 팝업 전체를 클릭할 수 있게 설정 */
+    }
+    
+    #popup-img {
+        max-width: 90%; /* 이미지의 가로 크기를 화면의 90%로 제한 */
+        max-height: 90%; /* 이미지의 세로 크기를 화면의 90%로 제한 */
+        margin: auto; /* 팝업 내부에서 이미지 위치를 가운데로 설정 */
+    }
+    
+    #popup span {
+        position: absolute; /* 팝업의 오른쪽 위에 배치 */
+        top: 10px; /* 팝업 상단에서 10px 떨어진 위치 */
+        right: 10px; /* 팝업 우측에서 10px 떨어진 위치 */
+        font-size: 30px; /* × 버튼의 글씨 크기 */
+        color: white; /* × 버튼의 글씨 색을 하얀색으로 설정 */
+        cursor: pointer; /* 마우스 커서를 클릭 가능하게 설정 */
+    }
+    </style>
+
+</head>
+<body>
+
+    <table style="width: 100%; margin: 0; border-collapse: collapse; text-align: center; font-size: 18px; white-space: nowrap;">
+        <tr>
+            <td>
+                <div id="skill 8.1." class="content hidden" style="margin-left: 20px;">
+                    <table style="width: 80%; margin: 0; border-collapse: collapse; text-align: center; font-size: 18px; white-space: nowrap;">
+                        <tr>
+                            <td>
+                                <div id="detailTable0" class="details">
+                                    <table style="width: 100%; border-collapse: collapse; text-align: center;">
+                                        <tr>
+                                            <th style="width: 30%; border: 1px solid #ccc; padding: 10px; white-space: nowrap;">보일러</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                        010-3438-9524 이기쁨 기사(보일러 서비스)<br>
+                                                        010-3232-6954 박홍주 이사(보일러 시운전)
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">건축 시공사</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                        010-5504-6647 서원택 차장
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">기계설비</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                        010-4067-8270 한상용 소장
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">전기시공사</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-7488-5822 이병철 부장
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">에어컨 신규 설치 관련 전기공사 견적</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-4602-1839 맹주성 부장
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">수질현황 전관판</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-4578-4638 유익현 사장
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">에어컨 이전설치</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-8005-0844 이성진 과장
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">카드단말기</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-8327-2805 금융결제원
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">주차관제</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            043-233-1583 현정보
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">소방시공사</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-5462-3220 지은성 소장
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">외벽패널</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-8705-5837 김인선 대표
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">에어커튼</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-4025-3718 김순화 대표
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">통신 선로 공사</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-9229-1181 정주훈 이사
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">로지 시스템</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-8983-8504 서용주 주임
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">차염발생기</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-9412-2091 정찬호 과장(퇴수구 막힘)<br>
+                                                            010-3208-9695 남진수 팀장(설치/관리)
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">역세 수처리설비 및 측정장비</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-7642-1018 이두성 차장
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">배구지주</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-6422-7367 안광욱대표
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">온수가열기</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-8981-0322 박진수 팀장(영업)<br>
+                                                            010-3411-6615 황춘기 차장(납품 시공)
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">보일러 설치검사</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-6894-6031 송진석 대리
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">방충망</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-5615-2199 김현호 대리<br>
+                                                            010-5618-1341 이재빈 대리(A/S)
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">가스시공사</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-5218-0659 박정복 전무 <br>
+                                                            010-4592-3621 필터청소
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">수위조절판</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-8075-1945
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">배구지주</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-6422-7367 안광욱대표
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">sk통신망 설치</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-8567-0852
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">전화설치</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-5466-8039 김천웅 이사
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">방송장비 납품 및 서비스</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-2661-3683 이도희 대표
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">공조기</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-8901-8078 백종호 이사
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">Kt 통신사</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-9331-4563 
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">외부간판전기업체</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-5461-2364 광운전력
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">외부간판업체</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-5483-9499 비즈디자인
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">수영장 청소기</th>
+                                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse;">
+                                                        <tr>
+                                                            010-9231-4076 수영장 나라
+                                                        </tr>
+                                                    </table>
+                                                </ul>
+                                            </td>
+                                            
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+    <!-- PDF.js PDF 컨테이너 -->
+    <div id="pdf-container">
+        <div id="pdf-viewer"></div>
+    </div>
+
+    <!-- 팝업 이미지 -->
+    <div id="popup" onclick="closePopup()">
+        <span>&times;</span>
+        <img id="popup-img" src="" alt="보일러 사진">
+    </div>
+
+   <script>
+    // 팝업 열기 함수
+    function openPopup(src) {
+        var popup = document.getElementById("popup"); 
+        var popupImg = document.getElementById("popup-img");
+        popup.style.display = "flex";
+        popupImg.src = src;
+    }
+
+    // 팝업 닫기 함수
+    function closePopup() {
+        var popup = document.getElementById("popup");
+        popup.style.display = "none";
+    }
+</script>
+</body>
+
+
+
+
+
+

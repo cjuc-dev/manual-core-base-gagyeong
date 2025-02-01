@@ -1,0 +1,884 @@
+<!-- 상위 테이블 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공조기 매뉴얼</title>
+    <style>
+        /* 페이지 너비를 100%로 설정하여 iframe에 맞게 조정 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* 좌우 스크롤 방지 */
+            overflow-y: auto; /* 세로 스크롤은 허용 */
+            }
+    
+            /* 콘텐츠가 iframe 너비를 벗어나지 않도록 설정 */
+        .content-wrapper {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box; /* 패딩, 보더 크기 포함하여 너비 계산 */
+            overflow-x: hidden; /* 좌우 스크롤 방지 */
+            }
+    
+        /* 이미지나 다른 콘텐츠가 화면을 넘지 않도록 */
+        img {
+            max-width: 100%; /* 이미지를 부모 요소에 맞게 축소 */
+            height: auto; /* 비율 유지 */
+            display: block; /* 이미지가 블록 요소처럼 흐르게 설정 */
+            }
+    
+        /* 기타 필요한 스타일을 추가 */
+        p {
+            word-wrap: break-word; /* 긴 단어가 있을 경우 자동 줄바꿈 */
+            }
+        
+        /* 툴팁 텍스트 숨기기 기본값 */
+        .tooltip {
+            position: relative; /* 부모 요소가 위치 기준을 제공할 수 있도록 설정 */
+            display: inline-block;
+            cursor: pointer;
+            }
+    
+        .tooltip-text {
+            visibility: hidden; /* 기본적으로 툴팁을 숨김 */
+            background-color: #333; /* 툴팁 배경색 */
+            color: #fff; /* 텍스트 색상 */
+            text-align: left; /* 텍스트 왼쪽 정렬 */
+            border-radius: 5px;
+            padding: 10px;
+            position: absolute; /* 부모 요소 기준으로 배치 */
+            z-index: 10000; /* 툴팁이 다른 요소들 위에 표시되도록 설정 */
+            left: 100%; /* 툴팁이 연결된 텍스트 바로 옆에 표시되도록 설정 */
+            top: 0; /* 연결된 텍스트의 높이와 맞추기 */
+            margin-left: 5px; /* 툴팁과 연결된 텍스트 사이에 간격 추가 */
+            opacity: 0; /* 툴팁 기본 상태에서 투명 */
+            transition: opacity 0.3s; /* 툴팁이 보일 때 부드럽게 전환 */
+            font-size: 12px;
+            line-height: 1.4;
+            word-wrap: break-word;
+            word-break: break-word;
+            }
+    
+        /* 툴팁 화살표 제거 */
+        .tooltip-text::after {
+            content: none; /* 화살표를 제거 */
+            }
+    
+        /* 마우스를 올렸을 때 툴팁 보이기 */
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    
+        /* 이미지 컨테이너를 flexbox로 설정하여 이미지들이 한 줄로 배치되도록 */
+    .image-container {
+        display: flex; /* 플렉스박스를 사용해 이미지들을 한 줄로 배치 */
+        justify-content: space-between; /* 이미지들이 한 줄에 고르게 배치되도록 설정 */
+        gap: 10px; /* 이미지들 사이에 간격 설정 */
+    }
+    
+    /* 각 이미지에 대한 스타일 */
+    .image-container img {
+        width: 20%; /* 이미지들의 너비를 16%로 설정 (한 줄에 6개가 배치될 수 있도록) */
+        height: auto; /* 높이는 자동으로 비율에 맞게 조정 */
+    }
+        
+        /* 테이블 기본 스타일 */
+    table {
+        width: 100%;
+        margin: 0;
+        border-collapse: collapse;
+        text-align: center;
+        font-size: 18px;
+        white-space: nowrap;
+    }
+    
+    th, td {
+        padding-top: 10px; /* 셀의 상단 여백 */
+        padding-bottom: 10px; /* 셀의 하단 여백 */
+        padding-left: 10px; /* 왼쪽 여백 */
+        padding-right: 10px; /* 오른쪽 여백 */
+    }
+    
+    li {
+        line-height: 1.8; /* 줄 간격을 설정 (1.8배 간격) */
+    }
+    
+    /* 세부사항 테이블과 사진 */
+    .details table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    
+    .details th, .details td {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+    
+    .details img {
+        max-width: 100%; /* 이미지를 자동으로 화면 크기에 맞추어 줄입니다. */
+        height: auto;
+        margin: 5px;
+    }
+    
+    .details td {
+        vertical-align: top;
+    }
+    
+    .details .image-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap; /* 이미지를 가로로 배치하고 자동으로 줄 바꿈 */
+    }
+    
+    /* 세부사항 텍스트와 이미지 사이의 여백을 줄이기 위한 스타일 */
+    .details td, .details th {
+        padding: 5px;
+    }
+    
+    /* 테이블 크기 조정 */
+    .details table th, .details table td {
+        font-size: 14px; /* 텍스트 크기를 작게 */
+    }
+    
+    /* 이미지 크기 설정 */
+    .details .image-container img {
+        max-width: 45%; /* 이미지 크기를 줄여서 여러 개의 이미지가 한 줄에 배치될 수 있도록 설정 */
+        margin: 5px;
+    }
+    
+    /* 테이블 셀의 가로 크기 조정 */
+    .details td, .details th {
+        min-width: 100px; /* 최소 크기를 설정하여 레이아웃이 일정하게 유지되도록 */
+    }
+    
+    /* 팝업 스타일 */
+    #popup {
+        display: none; /* 기본적으로 팝업을 숨김 */
+        position: fixed; /* 고정 위치 */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7); /* 배경 반투명 (검정색 배경에 투명도 추가) */
+        justify-content: center; /* 팝업 내부의 콘텐츠를 세로, 가로 가운데 정렬 */
+        align-items: center; /* 팝업 내부의 콘텐츠를 세로, 가로 가운데 정렬 */
+        cursor: pointer; /* 팝업 전체를 클릭할 수 있게 설정 */
+    }
+    
+    #popup-img {
+        max-width: 90%; /* 이미지의 가로 크기를 화면의 90%로 제한 */
+        max-height: 90%; /* 이미지의 세로 크기를 화면의 90%로 제한 */
+        margin: auto; /* 팝업 내부에서 이미지 위치를 가운데로 설정 */
+    }
+    
+    #popup span {
+        position: absolute; /* 팝업의 오른쪽 위에 배치 */
+        top: 10px; /* 팝업 상단에서 10px 떨어진 위치 */
+        right: 10px; /* 팝업 우측에서 10px 떨어진 위치 */
+        font-size: 30px; /* × 버튼의 글씨 크기 */
+        color: white; /* × 버튼의 글씨 색을 하얀색으로 설정 */
+        cursor: pointer; /* 마우스 커서를 클릭 가능하게 설정 */
+    }
+    </style>
+
+</head>
+<body>
+
+    <table style="width: 100%; margin: 0; border-collapse: collapse; text-align: center; font-size: 18px; white-space: nowrap;">
+        <tr>
+            <td>
+                <div id="detailTable0" class="details">
+                    <table style="width: 100%; border-collapse: collapse; text-align: center;">
+                        <tr>
+                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">세부사항</th>
+                            <td style="border: 1px solid #ccc; padding: 10px;">
+                                <table style="width: 100%; border-collapse: collapse; text-align: center;">
+                                    <tr>
+                                        <tr>
+                                            <th style="border: 1px solid #ccc; text-align: center; width: 10%;">사진</th>
+                                            <td style="border: 1px solid #ccc;"> <!-- 사진이 들어가는 공간 -->
+                                            <div class="image-container">
+                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_1.jpg" alt="공조기1">
+                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_2.jpg" alt="공조기2">
+                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_3.jpg" alt="공조기3">
+                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_4.jpg" alt="공조기4">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+    
+                                <table style="width: 100%; border-collapse: collapse; margin: 0; text-align: center;">
+                                    <tr>
+                                        <th style="border: 1px solid #ccc; padding: 10px; text-align: center; white-space: nowrap;">기기명세</th>
+                                    </tr>
+                                </table>
+    
+                                <table style="width: 100%; border-collapse: collapse; margin: 0; text-align: center;">
+                                    <tr>
+                                        <th style="border: 1px solid #ccc; padding: 10px; text-align: center; white-space: nowrap; width: 10%;">명칭</th>
+                                        <th style="border: 1px solid #ccc; padding: 10px; text-align: center; white-space: nowrap;">형식</th>
+                                        <th style="border: 1px solid #ccc; padding: 10px; text-align: center; white-space: nowrap;">용량</th>
+                                        <th style="border: 1px solid #ccc; padding: 10px; text-align: center; white-space: nowrap;">대수</th>
+                                        <th style="border: 1px solid #ccc; padding: 10px; text-align: center; white-space: nowrap;">제조사</th>
+                                        <th style="border: 1px solid #ccc; padding: 10px; text-align: center; white-space: nowrap;">규격</th>
+                                        <th style="border: 1px solid #ccc; padding: 10px; text-align: center; white-space: nowrap;">A/S 연락처</th>
+                                        <th style="border: 1px solid #ccc; padding: 10px; text-align: center; white-space: nowrap;">비고</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">공조기</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">수평형 환기조화기</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">급기 환기 27,000CMH</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">1</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">(주)한국공조엔지니어링</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">HVU-1</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">010-8901-8078<br>백종호 이사사</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">PRE FILTER</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">6EA</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">594×594×20T</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">PRE FILTER</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">5EA</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">594×287×20T</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">MEDIUM FILTER</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">6EA</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">594×594×75T</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">MEDIUM FILTER</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">5EA</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">594×287×75T</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">SA V밸트</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">4EA 1SET</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">4EA</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">3V670-SPZ1700</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">RA V밸트</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">3EA 1SET</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">3EA</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;">3V610</td>
+                                        <td style="border: 1px solid #ccc; padding: 10px; font-weight: normal;"></td>
+                                        <td style="border: 1px solid #ccc; padding: 10px;"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">주요구성</th>
+                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                    
+                                    <li><span style="color: blue; font-weight: bold;">공조기</span>
+                                        <sup>
+                                        <span class="tooltip" style="color: blue;">[1]
+                                        <span class="tooltip-text">수영장 공조기의 주요 역할<br>
+                                            <br>
+                                            &nbsp;1. 습도 조절<br>
+                                            &nbsp;&nbsp;수영장에서는 증발로 인해 실내 습도가 매우 높아질 수 있습니다.<br>
+                                            &nbsp;&nbsp;공조기는 공기 중 과도한 수분을 제거하여 쾌적한 환경을 유지하고, 곰팡이나 부식을 방지합니다.<br>
+                                            <br>
+                                            &nbsp;2. 온도 조절
+                                            &nbsp;&nbsp;수영장 내부의 공기 온도와 물의 온도를 균형 있게 유지합니다.<br>
+                                            &nbsp;&nbsp;특히, 물 온도와 공기 온도의 적절한 조화는 이용자의 체감 온도를 최적화하는 데 중요합니다.<br>
+                                            <br>
+                                            &nbsp;3. 공기 정화<br>
+                                            &nbsp;&nbsp;공기 중의 먼지, 미세 입자, 화학물질(예: 염소 증기)을 제거하여 실내 공기를 깨끗하게 유지합니다.<br>
+                                            &nbsp;&nbsp;이는 수영장 이용자의 호흡기 건강을 보호하는 데 중요한 역할을 합니다.<br>
+                                            <br>
+                                            &nbsp;4. 에너지 회수<br>
+                                            &nbsp;&nbsp;수영장 공조기는 열 회수 장치를 통해 배출되는 공기의 열을 다시 회수하여 새로운 공기를 가열하는 데 사용합니다.<br>
+                                            &nbsp;&nbsp;이를 통해 에너지 소비를 줄이고 난방비를 절감합니다.<br>
+                                            <br>
+                                            &nbsp;5. 환기 및 공기 순환<br>
+                                            &nbsp;&nbsp;신선한 외부 공기를 공급하고 내부 공기를 순환시켜, 수영장 공기의 질을 유지합니다.<br>
+                                            &nbsp;&nbsp;환기를 통해 냄새와 유해 가스를 배출합니다.<br>
+                                            <br>
+                                            &nbsp;6. 응축수 관리<br>
+                                            &nbsp;&nbsp;수영장 내부의 습기 응축으로 인해 생기는 물을 효과적으로 배출하거나 재활용하여, 장비와 실내 환경을 보호합니다.<br>
+                                        </span>
+                                        </sup></li>
+                                    <li><span style="color: blue; font-weight: bold;">RA CHAMBER(Return Air Chamber)</span>
+                                        <sup>
+                                        <span class="tooltip" style="color: blue;">[1]
+                                        <span class="tooltip-text">
+                                            &nbsp;실내 공기 회수: 실내에서 사용된 공기를 회수하여 공조기로 보내기 전 안정화합니다.<br>
+                                            &nbsp;공기 흐름 조절: 흡입한 공기의 압력을 안정화하고, 공조기로 균일하게 공급합니다.<br>
+                                            &nbsp;오염 물질 제거: 먼지, 입자 등 이물질을 제거하기 위해 필터가 설치될 수 있습니다.<br>
+                                            &nbsp;혼합 공기 처리: 필요에 따라 외부 공기(Outdoor Air)와 회수 공기를 혼합하여 재처리합니다.<br>
+                                            &nbsp;소음 감소: 공기 흡입 시 발생하는 소음을 감소시켜 쾌적한 환경을 유지합니다.<br>
+                                            </span>
+                                        </sup></li>
+                                    <li><span style="color: blue; font-weight: bold;">SA CHAMBER(Supply Air Chamber)</span>
+                                        <sup>
+                                        <span class="tooltip" style="color: blue;">[1]
+                                        <span class="tooltip-text">
+                                            &nbsp;처리된 공기의 분배: 공조기에서 냉각, 가열, 여과된 공기를 실내로 공급하기 전에 분배합니다.<br>
+                                            &nbsp;공기 흐름 안정화: 공조기에서 나온 공기의 속도와 압력을 조정하여 실내 덕트로 균일하게 공급합니다.<br>
+                                            &nbsp;공기 품질 유지: 공기 공급 전에 추가 여과 장치나 흡음재를 통해 품질과 소음을 관리합니다.<br>
+                                            </span>
+                                        </sup></li>     
+                                    <li><span style="color: blue; font-weight: bold;">CHAMBER 모터</span>
+                                        <sup>
+                                        <span class="tooltip" style="color: blue;">[1]
+                                        <span class="tooltip-text">
+                                            &nbsp;팬(Blower)을 구동하여 공기를 이동시키는 회전 동력을 제공합니다.<br>
+                                            &nbsp;RA(리턴 에어) 또는 SA(서플라이 에어) 챔버 내에서 공기 순환 및 환기를 위한 동력원으로 작동합니다<br>
+                                        </span>
+                                        </sup></li>             
+                                    <li><span style="color: blue; font-weight: bold;">V 밸트</span>
+                                        <sup>
+                                        <span class="tooltip" style="color: blue;">[1]
+                                        <span class="tooltip-text">
+                                            &nbsp;모터의 회전 동력을 팬으로 전달하여 공조기 내 공기 흐름을 생성.<br>
+                                            <br>
+                                            &nbsp;유지보수:<br>
+                                            &nbsp;&nbsp;장력 조정: 장력이 너무 느슨하거나 과도하지 않도록 주기적으로 조정.<br>
+                                            &nbsp;&nbsp;마모 상태 확인: 균열, 늘어짐, 마모를 점검하고 필요 시 교체.<br>
+                                            &nbsp;&nbsp;풀리 정렬: 모터와 팬 풀리가 정확히 정렬되었는지 확인하여 벨트 수명을 연장.<br>
+                                        </span>
+                                        </sup></li>                
+                                    <li><span style="color: blue; font-weight: bold;">Electric Non-Freezing Heater Controller</span>
+                                        <sup>
+                                        <span class="tooltip" style="color: blue;">[1]
+                                        <span class="tooltip-text">
+                                            &nbsp;공조기 내부의 전기 히터를 제어하여 동결 방지 및 공기 온도 조절을 담당하는 장치입니다.<br>
+                                            이 컨트롤러는 주로 추운 환경에서 공조기의 효율적인 작동과 내부 구성 요소의 보호를 보장하는 데 사용됩니다.<br>
+                                        </span>
+                                        </sup></li>                                         
+                                    <li><span style="color: blue; font-weight: bold;">그리스 주입기기</span>
+                                        <sup>
+                                        <span class="tooltip" style="color: blue;">[1]
+                                        <span class="tooltip-text">
+                                            &nbsp;팬과 모터 베어링에 자동으로 적정량의 윤활유(그리스)를 공급하여 마찰을 줄이고 베어링의 수명을 연장.<br>
+                                            <br>
+                                            &nbsp;유지보수:<br>
+                                            &nbsp;&nbsp;윤활유가 과도하거나 부족하지 않도록 적정량을 유지.<br>
+                                            &nbsp;&nbsp;주입기 상태 점검: 막힘이나 누유가 없는지 확인.<br>
+                                            &nbsp;&nbsp;윤활유 교체: 권장 주기에 따라 윤활유를 교체하여 베어링 성능을 유지.<br>
+                                        </span>
+                                        </sup></li>                                                                                            
+                                    <li>스팀컨트롤 전동밸브</span></li>
+                                    <li><span style="color: blue; font-weight: bold;">PRE FILTER</span>
+                                        <sup>
+                                        <span class="tooltip" style="color: blue;">[1]
+                                        <span class="tooltip-text">프리필터의 주요 역할<br>
+                                            <br>
+                                            &nbsp;1. 큰 입자 제거<br>
+                                            &nbsp;&nbsp;공기 중의 먼지, 벌레, 꽃가루 등 큰 입자를 제거하여 공조기의 내부로 유입되지 않도록 합니다.<br>
+                                            &nbsp;&nbsp;이는 공조기의 주요 부품(팬, 열교환기 등)을 오염과 손상으로부터 보호합니다.<br>
+                                            <br>
+                                            &nbsp;2. 주요 필터 보호<br>
+                                            &nbsp;&nbsp;HEPA 필터나 활성탄 필터 등 고성능 필터가 과도한 먼지로 막히지 않도록 초기 단계에서 오염원을 걸러냅니다.<br>
+                                            &nbsp;&nbsp;주요 필터의 수명을 연장하고 교체 비용을 절감합니다.<br>
+                                            <br>
+                                            &nbsp;3. 공조기 성능 향상<br>
+                                            &nbsp;&nbsp;초기 오염을 줄여 시스템의 전체적인 효율성을 유지합니다.<br>
+                                            &nbsp;&nbsp;덕분에 에너지 소비를 낮추고 유지보수 비용을 줄일 수 있습니다.<br>
+                                            <br>
+                                            &nbsp;4. 공기 순환 개선<br>
+                                            &nbsp;&nbsp;깨끗한 공기가 효율적으로 순환되도록 돕습니다.<br>
+                                            &nbsp;&nbsp;특히, 수영장과 같이 고습 환경에서는 습기와 큰 오염 입자를 관리하는 데 필수적입니다.<br>
+                                        </span>
+                                        </sup></li>   
+                                    <li><span style="color: blue; font-weight: bold;">MIDIUM FILTER</span>
+                                        <sup>
+                                        <span class="tooltip" style="color: blue;">[1]
+                                        <span class="tooltip-text">미디움 필터의 주요 역할<br>
+                                            <br>
+                                            &nbsp;1. 중간 크기 입자의 제거<br>
+                                            &nbsp;&nbsp;공기 중의 미세 먼지, 꽃가루, 섬유질, 곰팡이 포자 등 비교적 작은 입자를 걸러냅니다.<br>
+                                            &nbsp;&nbsp;PM10(지름 10μm 이하의 입자) 수준의 먼지 제거에 효과적입니다.<br>
+                                            <br>
+                                            &nbsp;2. 공기 품질 개선<br>
+                                            &nbsp;&nbsp;초기 단계(프리필터)에서 걸러지지 않은 미세 입자를 제거하여 실내 공기의 질을 높입니다.<br>
+                                            &nbsp;&nbsp;쾌적한 환경을 조성하고 건강 위험을 줄입니다.<br>
+                                            <br>
+                                            &nbsp;3. 고성능 필터 보호<br>
+                                            &nbsp;&nbsp;HEPA, ULPA 등 고효율 필터의 과부하를 줄이고 수명을 연장합니다.<br>
+                                            &nbsp;&nbsp;필터 교체 주기를 늘려 유지보수 비용을 절감합니다.<br>
+                                            <br>
+                                            &nbsp;4. 시스템 성능 유지<br>
+                                            &nbsp;&nbsp;공기 흐름에 적절한 저항을 제공하여 공조기 시스템의 효율성을 유지합니다.<br>
+                                        </span>
+                                        </sup></li>  
+                                        
+                                    
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap;">운전절차</th>
+                            <td colspan="8" style="border: 1px solid #ccc; text-align: left;">
+                                <div style="flex: 1; padding-right: 20px;">
+                                    <ul style="list-style-type: none; padding-left: 20px; margin: 0;">
+                                        <li><strong>공조기 운전 절차</strong></li>
+                                    </ul>
+                                        <ul style="list-style-type: disc; padding-left: 20px; margin-top: 10px;">
+                                            <li>자동제어 시스템의 HVU(공조기) 운전 화면으로 전환한다.<br> 
+                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
+                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_5.jpg"
+                                                    alt="공조기5" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                    onclick="openPopup(this.src)">
+                                            </div>
+                                            <li>스케줄러 제어 설정이 가능하여 원하는 요일 및 시간 제어가 가능하다.</li>
+                                            &nbsp;&nbsp;&nbsp;※ 사용 체크 여부에 따라 스케줄 제어 작동여부를 결정한다.</div>
+                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_6.jpg"
+                                                    alt="공조기6" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                    onclick="openPopup(this.src)">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_7.jpg"
+                                                    alt="공조기7" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                    onclick="openPopup(this.src)">    
+                                                </div>     
+                                            <li>계절에 따라 동절기, 하절기로 전환 설정한다.</span>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_8.jpg"
+                                                        alt="공조기8" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">
+                                                        <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_9.jpg"
+                                                        alt="공조기9" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">    
+                                                    </div>     
+                                            <li>급기 및 환기팬 개별 기동이 가능하며 동시제어도 가능하다.</li>    
+                                            &nbsp;&nbsp;&nbsp;※ 기동 및 정지 신호 입력 후 자동제어의 동작 및 정지 표출까지에는 약간의 딜레이가 발생한다.</div>
+                                                <div style="margin-top: 10px;">
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_10.jpg"
+                                                        alt="공조기10" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">
+                                                </div>
+                                            <ul style="padding-left: 20px; margin-top: 10px;">
+                                            <li>동절기 시 지하1층 기계실의 스팀헤더의 공조기 공급 메인 밸브를 열어 스팀을 공급한다.(보일러 운전 중 공조기 최초 스팀 서비스 시)</li> 
+                                            &nbsp;※ 급격한 밸브 OPEN을 금지하고 스팀 서비스 시작 전 소량의 스팀 공급을 통해 충분한 배관 예열 실시 후 FULL OPEN 한다.<br>
+                                            &nbsp;※ 스팀헤더의 메인 밸브(게이트 밸브)의 첫 개방 및 완전 잠금은 꼭 파이프 렌치를 이용한다.<br>
+                                            &nbsp;※ 하절기 시 스팀헤더의 공조기 공급 밸브를 완전히 닫아 스팀 서비스를 차단한다.
+                                            </ul>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_11.jpg"
+                                                    alt="공조기11" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                    onclick="openPopup(this.src)">
+                                                </div>        
+                                            <li>난방 밸브의 설정 온도 및 스팀 컨트롤 밸브의 상한값 설정을 변경하여 운전한다.</li> 
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_12.jpg"
+                                                    alt="공조기12" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                    onclick="openPopup(this.src)">
+                                                </div>    
+                                            &nbsp;&nbsp;&nbsp;※ 밸브의 상한값 설정을 20%이하 적용시 컨트롤 밸브 하단부에 위치한 응축수 트랩의 원할한 응측수 배출이 안되는 상황 발생 빈번<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;- 응축수 트랩을 손으로 만져보고 차가운경우 응축수 배출이 안되는 상황이다.<br>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_13.jpg"
+                                                    alt="공조기13" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                    onclick="openPopup(this.src)">
+                                                </div>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;- 이때 트랩 
+                                            <span style="color: blue; font-weight: bold;">바이패스</span>
+                                                <sup>
+                                                <span class="tooltip" style="color: blue;">[1]
+                                                <span class="tooltip-text"> 바이패스 밸브의 일반적인 설치 및 운용 방식<br>
+                                                    <br>
+                                                    &nbsp;1. 설치 위치<br>
+                                                    &nbsp;&nbsp;스팀 트랩: 스팀 트랩 앞뒤에 설치된 바이패스 라인을 통해 응축수 또는 증기를 우회.<br>
+                                                    &nbsp;&nbsp;컨트롤 밸브: 컨트롤 밸브와 병렬로 설치하여 우회로 역할.<br>
+                                                    <br>
+                                                    &nbsp;2.운용 방식<br>
+                                                    &nbsp;&nbsp;가. 평상시:<br>
+                                                    &nbsp;&nbsp;&nbsp;바이패스 밸브는 닫혀 있고, 스팀 트랩이나 컨트롤 밸브가 정상적으로 작동.<br>
+                                                    <br>
+                                                    &nbsp;&nbsp;나. 유지보수 시:<br>
+                                                    &nbsp;&nbsp;&nbsp;바이패스 밸브를 열어 흐름을 우회시키고, 메인 밸브(스팀 트랩 또는 컨트롤 밸브)를 점검 또는 교체.<br>
+                                                    <br>
+                                                    &nbsp;&nbsp;다. 비상 상황:<br>
+                                                    &nbsp;&nbsp;&nbsp;바이패스 밸브를 열어 시스템 손상이나 흐름 중단을 방지.<br>
+                                                </span></span></sup>를 열어 응축수 배출작업과 에어 밴트 작업업도 같이 실시해준다.<br>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_14.jpg"
+                                                    alt="공조기14" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                    onclick="openPopup(this.src)">
+                                                </div>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;- 트랩이 충분히 뜨거워지면 원할한 응축수 배출이 이루어지며 바이패스는 잠그되 완전히 닫지는 않는다.   <br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;- 트랩의 정상 작동이 이루어지면 수영장 실내 온도변화를 확인한다.</div>   
+                                            </ul>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                        <ul style="list-style-type: none; padding-left: 20px; margin: 0;">
+                                            <li><strong>공조기의 유지관리</strong></li>
+                                        </ul>
+                                            <li style="list-style-type: none; padding-left: 20px; margin: 0; font-weight: bold; color: blue;">RA, SA 챔버 내부 구동 모터 V밸트 점검</li>
+                                                <li>V밸트 및 공조기 점검 전 2인 1조 점검 실시하며, 점검창을 통한 육안 확인 외 점검구 개방이 필요한 경우 필히 공조기 운전을 정지 한다.</li>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_15.jpg"
+                                                        alt="공조기15" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_16.jpg"
+                                                        alt="공조기16" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">
+                                                </div>        
+                                                
+                                                <li>구동 모터가 완전히 정지되면 V밸트의 마모, 이탈, 손상 여부를 육안 확인하고 장력은 손으로 눌러 1세트 밸트의 장력을 비교한다.</li>
+                                                
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                    <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                        <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_17.png"
+                                                            alt="공조기17" style="max-width: 500px; height: 200px; cursor: pointer;" onclick="openPopup(this.src)">
+                                                        <!-- 텍스트 오버레이 -->
+                                                        <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                    padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                            밸트 손상
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <!-- 두 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                    <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                        <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_18.jpg"
+                                                            alt="공조기18" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                        <!-- 텍스트 오버레이 -->
+                                                        <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                    padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                            V밸트 이탈
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <!-- 세 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                    <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                        <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_19.jpg"
+                                                            alt="공조기19" style="max-width: 200px; height: 200px; cursor: pointer;" onclick="openPopup(this.src)">
+                                                        <!-- 텍스트 오버레이 -->
+                                                        <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                    padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                            장력 확인
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                <li>V밸트의 교체 필요시 새로운 밸트로 교체 하되 반드시 3개 1세트 혹은 4개 1세트의 전체의 밸트를 교체토록 한다.</li>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">※ 밸트의 모델번호 및 세트 확인은 상단 기기명세 참고<br></span>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_20.jpg"
+                                                        alt="공조기20" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_21.jpg"
+                                                        alt="공조기21" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">
+                                                </div>    
+                                                <li>밸트 교체시 손끼임 안전사고 발생 확률이 높다. 각별히 유의하여 작업을 진행한다.</li>
+                                                <li>교체 완료 후 특이사항은 없는지 작업완료 상태 및 주변 확인을 실시한다.</li>
+                                                <li>점검구를 닫고 공조기를 기동하여 작동상태를 확인한다.</li>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_22.jpg"
+                                                        alt="공조기22" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">
+                                                </div>    
+                                                <br>
+
+                                                
+                                                <li style="list-style-type: none; padding-left: 20px; margin: 0; font-weight: bold; color: blue;">RA, SA 챔버 구동 팬 베어링 및 그리스 주입</li>
+                                                <li>공조기 점검 전 2인 1조 점검 실시하며, 점검창을 통한 육안 확인 외 점검구 개방이 필요한 경우 필히 공조기 운전을 정지 한다.</li>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_23.jpg"
+                                                        alt="공조기23" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">
+                                                </div>    
+                                                <li>공조기 기동 상태 중 진동 및 소음은 없는지 점검하며 점검창을 통해 팬의 구동상태를 확인한다.</li>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_24.jpg"
+                                                        alt="공조기24" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">
+                                                </div>   
+                                                <li>베어링 손상 시 소음 및 진동으로 팬의 큰 손상을 초래하여 많은 유지보수 비용이 발생 할 수 있으며 주기적인 점검이 필요하다.</li>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                    <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                        <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_25.png"
+                                                            alt="공조기25" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                        <!-- 텍스트 오버레이 -->
+                                                        <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                    padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                            베어링 파손
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <li>그리스 주입은 자동그리스 주입기의 남은 양을 확인하여 그리스 보충이 필요한경우 주입기 상단의 니플에 그리건을 연결하여 보충한다.</li>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_26.jpg"
+                                                        alt="공조기26" style="max-width: 200px; height: auto; cursor: pointer;"
+                                                        onclick="openPopup(this.src)">
+                                                </div>
+                                                <li>그리스 주입은 막힘이 없는지 과주입이 이루어 지진 않는지 확인도 필요하다.</li>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                    <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                        <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_27.jpg"
+                                                            alt="공조기27" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                        <!-- 텍스트 오버레이 -->
+                                                        <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                    padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                            정상주입
+                                                        </div>
+                                                    </div>
+                                                    <!-- 두 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                    <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                        <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_28.jpg"
+                                                            alt="공조기28" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                        <!-- 텍스트 오버레이 -->
+                                                        <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                    padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                            정상주입
+                                                        </div>
+                                                    </div></div>
+                                                
+                                                <li>그리스 주입이 막힘이 의심되는경우 자동그리스 주입기를 제거하고 그리스 니쁠을 연결하여 수동주입시 상단으로 나오지 않도록 막는다.</li>
+                                                <li>그리스 건을 연결하여 수동주입을 실시하며 배어링측의 그리스가 나오는지 확인토록하며 자동그리스 주입기의 이상유무도 확인한다.</li>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                    <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                        <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_29.jpg"
+                                                            alt="공조기29" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                        <!-- 텍스트 오버레이 -->
+                                                        <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                    padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                            
+                                                        </div>
+                                                    </div></div>
+                                                <li>점검구를 닫고 공조기를 기동하여 작동상태를 확인한다.</li>
+                                                <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                    <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                    <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                        <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_30.jpg"
+                                                            alt="공조기30" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                        <!-- 텍스트 오버레이 -->
+                                                        <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                    padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <!-- 두 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                    <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                        <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_31.jpg"
+                                                            alt="공조기31" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                        <!-- 텍스트 오버레이 -->
+                                                        <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                    padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                            
+                                                        </div>
+                                                    </div></div>
+                                                    <br>
+                                                    <br>
+                                                    
+                                                    <li style="list-style-type: none; padding-left: 20px; margin: 0; font-weight: bold; color: blue;">공조기의 외기 전단 프리필터 청소</li>                                                    
+                                                        <li>프리필터 4개 1SET으로 구성 및 연결되어 있으며 반영구적 사용이 가능하다.</li>
+                                                        <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                            <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                            <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_32.jpg"
+                                                                    alt="공조기32" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                                <!-- 텍스트 오버레이 -->
+                                                                <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                            padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        <!-- 두 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                        <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                            <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_33.jpg"
+                                                                alt="공조기33" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                            <!-- 텍스트 오버레이 -->
+                                                            <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                        padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                                필터구성
+                                                            </div>
+                                                        </div></div>
+                                                        
+                                                        
+                                                        <li>전동컨트롤러 하단 좌우측의 나비너트를 풀러 덮개를 제거하여 필터를 빼낸다.</li>
+                                                        <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                            <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                            <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_34.jpg"
+                                                                    alt="공조기34" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                                <!-- 텍스트 오버레이 -->
+                                                                <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                            padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        
+                                                            <!-- 두 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                            <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_35.jpg"
+                                                                    alt="공조기35" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                                <!-- 텍스트 오버레이 -->
+                                                                <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                            padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                                    필터상태 확인
+                                                                </div>
+                                                            </div>
+                                                        
+                                                            <!-- 세 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                            <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_36.jpg"
+                                                                    alt="공조기36" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                                <!-- 텍스트 오버레이 -->
+                                                                <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                            padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                                    필터청소 후 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <li>여름철은 벌래의 유입이 많아 점검 관리주기가 짧다.</li>
+                                                        <li>점검 및 청소완료 후 역순으로 조립한다.</li>
+                                                        </div>
+                                                        <br>
+                                                        <br>
+                                                        <li style="list-style-type: none; padding-left: 20px; margin: 0; font-weight: bold; color: blue;">공조기 RA CHAMBER 필터 교체</li>                                                               
+                                                        <li>챔버 내의 필터 구성은 PRE FILTER와 MEDIUM FILTER로 구성되어 있으며 구성 및 규격은 세부사항을 참고한다.</li>
+                                                        <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                            <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                            <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_37.jpg"
+                                                                    alt="공조기37" style="max-width: 500px; height: 200px; cursor: pointer;" onclick="openPopup(this.src)">
+                                                                <!-- 텍스트 오버레이 -->
+                                                                <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                            padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                                    프리필터
+                                                                </div>
+                                                            </div>
+                                                            <!-- 두 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                            <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                            <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_38.jpg"
+                                                                alt="공조기38" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                            <!-- 텍스트 오버레이 -->
+                                                            <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                        padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                                미디움필터터
+                                                            </div>
+                                                        </div></div>
+                                                        
+                                                        
+                                                        <li>공조기의 운전을 정지하고 점검구를 개방하여 필터의 상태를 확인한다.</li>
+                                                        
+                                                        <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
+                                                            <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                            <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_39.jpg"
+                                                                    alt="공조기39" style="max-width: 500px; height: 200px; cursor: pointer;" onclick="openPopup(this.src)">
+                                                                <!-- 텍스트 오버레이 -->
+                                                                <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                            padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        
+                                                            <!-- 두 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                            <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_40.jpg"
+                                                                    alt="공조기40" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
+                                                                <!-- 텍스트 오버레이 -->
+                                                                <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                            padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                                    필터상태 확인
+                                                                </div>
+                                                            </div>
+                                                        
+                                                            <!-- 세 번째 이미지와 텍스트를 겹치는 컨테이너 -->
+                                                            <div style="position: relative; display: inline-block; max-width: 200px;">
+                                                                <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_1_4_36.jpg"
+                                                                    alt="공조기36" style="max-width: 200px; height: 200px; cursor: pointer;" onclick="openPopup(this.src)">
+                                                                <!-- 텍스트 오버레이 -->
+                                                                <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
+                                                                            padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
+                                                                    필터청소 후 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <li>필터으 교체 주기는 PRE FILTER는 3개월 MEDIUM FILTER는 6개월의 주기로 교체하며 필터상태에 따라 교체주기는 다를수 있다.
+                                                        <li>필터 교체시 고정핀을 돌려 필터를 빼내고 새로운 필터로 교체한다.</li>
+                                                        </div>
+                                            
+
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+
+    
+
+    <!-- PDF.js PDF 컨테이너 -->
+    <div id="pdf-container">
+        <div id="pdf-viewer"></div>
+    </div>
+
+    <!-- 팝업 이미지 -->
+    <div id="popup" onclick="closePopup()">
+        <span>&times;</span>
+        <img id="popup-img" src="" alt="보일러 사진">
+    </div>
+
+   <script>
+    // 팝업 열기 함수
+    function openPopup(src) {
+        var popup = document.getElementById("popup"); 
+        var popupImg = document.getElementById("popup-img");
+        popup.style.display = "flex";
+        popupImg.src = src;
+    }
+
+    // 팝업 닫기 함수
+    function closePopup() {
+        var popup = document.getElementById("popup");
+        popup.style.display = "none";
+    }
+</script>
+</body>
+
+
+
+
+
+
