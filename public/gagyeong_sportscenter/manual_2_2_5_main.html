@@ -1,346 +1,222 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>가경국민체육센터 기술 매뉴얼</title>
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/styles_main.css"
-      href="https://manual-5d03dc.gitlab.io/css/home_icon.css"
-      href="https://manual-5d03dc.gitlab.io/css/popup.css"
-      href="https://manual-5d03dc.gitlab.io/css/styles_manual.css"
-    />
-  </head>
-  <body>
-    <div class="sidebar">
-      <a href="https://manual-5d03dc.gitlab.io/index.html" class="home-icon">
-        <img
-          src="https://manual-5d03dc.gitlab.io/icon/icon_home_24.png"
-          alt="홈"
-        />
-      </a>
-      <h2>
-        가경국민체육센터
-        <br />
-        기술 매뉴얼
-      </h2>
-      <ul>
-        <li><a href="#" onclick="loadContent('update')">업데이트 현황</a></li>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>가경국민체육센터 기술 매뉴얼</title>
+		<link
+			rel="stylesheet"
+			href="https://manual-5d03dc.gitlab.io/css/styles_main.css"
+			href="https://manual-5d03dc.gitlab.io/css/home_icon.css"
+			href="https://manual-5d03dc.gitlab.io/css/popup.css"
+			href="https://manual-5d03dc.gitlab.io/css/styles_manual.css"
+			href="https://manual-5d03dc.gitlab.io/css/main_link_styles.css" />
+	</head>
+	<body>
+		<div class="sidebar">
+			<a href="https://manual-5d03dc.gitlab.io/index.html" class="home-icon">
+				<img src="https://manual-5d03dc.gitlab.io/icon/icon_home_24.png" alt="홈" />
+			</a>
+			<h2>
+				가경국민체육센터
+				<br />
+				기술 매뉴얼
+			</h2>
+			<ul>
+				<li><a href="#" onclick="loadContent('update')">업데이트 현황</a></li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_1')">기계</a>
-          <ul id="tech_manual_2_2_5_1" class="hidden">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_1_1')"
-                >보일러</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_1_2')"
-                >수영장 제어설비</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_1_3')"
-                >온수가열기</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_1_4')"
-                >공조기</a
-              >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_1')">기계</a>
+					<ul id="tech_manual_2_2_5_1" class="hidden">
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_1_1')">보일러</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_1_2')">수영장 제어설비</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_1_3')">온수가열기</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_1_4')">공조기</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_2')">전기</a>
-          <ul id="tech_manual_2_2_5_2" class="hidden">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_2_1')"
-                >정전</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_2_2')"
-                >복전</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_2_3')"
-                >기타</a
-              >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_2')">전기</a>
+					<ul id="tech_manual_2_2_5_2" class="hidden">
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_2_1')">정전</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_2_2')">복전</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_2_3')">기타</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_3')">소방</a>
-          <ul id="tech_manual_2_2_5_3" class="hidden">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_3_1')">
-                화재감지기 작동 및 화재발생 대응
-              </a>
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_3')">소방</a>
+					<ul id="tech_manual_2_2_5_3" class="hidden">
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_3_1')">
+								화재감지기 작동 및 화재발생 대응
+							</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_4')">수질</a>
-          <ul id="tech_manual_2_2_5_4" class="hidden">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_1')"
-                >수영장 수질 자동측정 장치</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_2')"
-                >수영장 염소 측정</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_3')"
-                >수영장 약품관리</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_4')"
-                >수영장 배수 및 담수</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_5')"
-                >저수조 청소</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_6')"
-                >수영장 수온 관리</a
-              >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_4')">수질</a>
+					<ul id="tech_manual_2_2_5_4" class="hidden">
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_4_1')">수영장 수질 자동측정 장치</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_4_2')">수영장 염소 측정</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_4_3')">수영장 약품관리</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_4_4')">수영장 배수 및 담수</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_4_5')">저수조 청소</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_4_6')">수영장 수온 관리</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_5')">가스</a>
-          <ul id="tech_manual_2_2_5_5" class="hidden">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_5_1')"
-                >정압기실 기록지 교체</a
-              >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_5')">가스</a>
+					<ul id="tech_manual_2_2_5_5" class="hidden">
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_5_1')">정압기실 기록지 교체</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_6')">건축</a>
-          <ul id="tech_manual_2_2_5_6" class="hidden">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_6_1')"
-                >건축</a
-              >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_6')">건축</a>
+					<ul id="tech_manual_2_2_5_6" class="hidden">
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_6_1')">건축</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_7')"
-            >기타 주요업무</a
-          >
-          <ul id="tech_manual_2_2_5_7" class="hidden">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_7_1')"
-                >기타</a
-              >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_7')">기타 주요업무</a>
+					<ul id="tech_manual_2_2_5_7" class="hidden">
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_7_1')">기타</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_8')"
-            >업체 연락처</a
-          >
-          <ul id="tech_manual_2_2_5_8" class="hidden">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_8_1')"
-                >업체 연락처</a
-              >
-            </li>
-          </ul>
-        </li>
-      </ul>
+				<li>
+					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_8')">업체 연락처</a>
+					<ul id="tech_manual_2_2_5_8" class="hidden">
+						<li>
+							<a href="#" onclick="loadContent('tech_manual_2_2_5_8_1')">업체 연락처</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
 
-      <div class="sidebar-footer">
-        <p>v1.08</p>
-        <p>creator: 박영규, 박현수</p>
-      </div>
-    </div>
+			<div class="sidebar-footer">
+				<p>v1.08</p>
+				<p>creator: 박영규, 박현수</p>
+			</div>
+		</div>
 
-    <div id="main-content" class="main-content">
-      <div id="content-area">
-        <h3>여기에 클릭된 메뉴의 내용이 표시됩니다.</h3>
-      </div>
-    </div>
+		<div id="main-content" class="main-content">
+			<div id="content-area">
+				<h3>여기에 클릭된 메뉴의 내용이 표시됩니다.</h3>
+			</div>
+		</div>
 
-    <script>
-      function loadContent(section) {
-        var contentArea = document.getElementById("content-area");
+		<script>
+			function loadContent(section) {
+				var contentArea = document.getElementById('content-area');
 
-        const contentPaths = {
-          update:
-            "updatecontainer/updatecontainer_gagyeong_sportscenter_tech.html",
-          tech_manual_2_2_5_1_1:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_1_1.html",
-          facility: "facility.html",
-          cheongjuSwimming_guide: "guide/cheongju_swimming_pool_guide.html",
-          purmi_guide: "guide/purmi_guide.html",
-          youngun_sportscenter_guide: "guide/youngun_sportscenter_guide.html",
-          bokdae_sportscenter_guide: "guide/bokdae_sportscenter_guide.html",
-          gagyeong_sportscenter_guide: "guide/gagyeong_sportscenter_guide.html",
-          gagyeong_sportscenter_manual_tech_manual_2_2_5:
-            "gagyeong_sportscenter/manual_tech_manual_2_2_5_main.html",
-        };
+				const contentPaths = {
+					update: 'updatecontainer/updatecontainer_gagyeong_sportscenter_tech.html',
+					tech_manual_2_2_5_1_1: 'gagyeong_sportscenter/tech_manual/manual_2_2_5_1_1.html',
+					facility: 'facility.html',
+					cheongjuSwimming_guide: 'guide/cheongju_swimming_pool_guide.html',
+					purmi_guide: 'guide/purmi_guide.html',
+					youngun_sportscenter_guide: 'guide/youngun_sportscenter_guide.html',
+					bokdae_sportscenter_guide: 'guide/bokdae_sportscenter_guide.html',
+					gagyeong_sportscenter_guide: 'guide/gagyeong_sportscenter_guide.html',
+					gagyeong_sportscenter_manual_tech_manual_2_2_5:
+						'gagyeong_sportscenter/manual_tech_manual_2_2_5_main.html',
+				};
 
-        if (contentPaths[section]) {
-          // URL 확인을 위한 로그 출력
-          console.log(
-            `Fetching URL: https://manual-5d03dc.gitlab.io/${contentPaths[section]}`,
-          );
+				if (contentPaths[section]) {
+					// URL 확인을 위한 로그 출력
+					console.log(`Fetching URL: https://manual-5d03dc.gitlab.io/${contentPaths[section]}`);
 
-          fetch(`https://manual-5d03dc.gitlab.io/${contentPaths[section]}`)
-            .then((response) => {
-              if (!response.ok) throw new Error("Network response was not ok");
-              return response.text();
-            })
-            .then((data) => (contentArea.innerHTML = data))
-            .catch((error) => {
-              contentArea.innerHTML =
-                "<p>콘텐츠를 불러오는 데 실패했습니다.</p>";
-              console.error("Error loading the content:", error);
-            });
-        } else {
-          contentArea.innerHTML = generateContent(section);
-        }
-      }
+					fetch(`https://manual-5d03dc.gitlab.io/${contentPaths[section]}`)
+						.then((response) => {
+							if (!response.ok) throw new Error('Network response was not ok');
+							return response.text();
+						})
+						.then((data) => (contentArea.innerHTML = data))
+						.catch((error) => {
+							contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
+							console.error('Error loading the content:', error);
+						});
+				} else {
+					contentArea.innerHTML = generateContent(section);
+				}
+			}
 
-      function toggleMenu(menuId) {
-        var menus = document.querySelectorAll(".sidebar ul ul");
-        menus.forEach((menu) => {
-          if (menu.id !== menuId) {
-            menu.classList.add("hidden");
-          }
-        });
-        var menu = document.getElementById(menuId);
-        menu.classList.toggle("hidden");
-      }
-    </script>
+			function toggleMenu(menuId) {
+				var menus = document.querySelectorAll('.sidebar ul ul');
+				menus.forEach((menu) => {
+					if (menu.id !== menuId) {
+						menu.classList.add('hidden');
+					}
+				});
+				var menu = document.getElementById(menuId);
+				menu.classList.toggle('hidden');
+			}
+		</script>
 
-    <script>
-      // 팝업 열기 함수
-      function openPopup(src) {
-        var popup = document.getElementById("popup"); // 팝업 요소를 가져옴
-        var popupImg = document.getElementById("popup-img"); // 팝업 안의 이미지 요소를 가져옴
+		<script>
+			// 팝업 열기 함수
+			function openPopup(src) {
+				var popup = document.getElementById('popup'); // 팝업 요소를 가져옴
+				var popupImg = document.getElementById('popup-img'); // 팝업 안의 이미지 요소를 가져옴
 
-        // 팝업을 화면에 표시
-        popup.style.display = "flex"; // 팝업을 'flex'로 설정하여 화면 중앙에 표시되도록 함
+				// 팝업을 화면에 표시
+				popup.style.display = 'flex'; // 팝업을 'flex'로 설정하여 화면 중앙에 표시되도록 함
 
-        // 클릭한 이미지의 src를 팝업 이미지의 src로 설정
-        popupImg.src = src; // 팝업에 클릭한 이미지 주소를 삽입
-      }
+				// 클릭한 이미지의 src를 팝업 이미지의 src로 설정
+				popupImg.src = src; // 팝업에 클릭한 이미지 주소를 삽입
+			}
 
-      // 팝업 닫기 함수
-      function closePopup() {
-        var popup = document.getElementById("popup"); // 팝업 요소를 가져옴
-        // 팝업을 숨김
-        popup.style.display = "none"; // 팝업을 닫을 때 'none'으로 설정하여 숨김
-      }
-      function toggleDiv(id) {
-        var div = document.getElementById(id);
-        if (div.style.display === "none" || div.style.display === "") {
-          div.style.display = "block"; // ✅ 펼치기
-        } else {
-          div.style.display = "none"; // ✅ 닫기
-        }
-      }
-    </script>
-    <style>
-      /* 기본적으로 숨겨져 있는 클래스 */
-      .hidden {
-        display: none; /* 요소를 화면에서 숨김 */
-      }
-
-      /* 방문한 링크 및 일반 링크 모두 동일한 스타일 적용 */
-      a.menu-link,
-      a.menu-link:visited,
-      a.menu-link:hover {
-        color: #070707 !important; /* 기본 검정색 유지 */
-        text-decoration: none !important; /* 밑줄 제거 */
-        font-weight: bold; /* 글자 두껍게 */
-      }
-
-      /* 모든 링크의 스타일을 동일하게 유지 */
-      .menu-link,
-      .menu-link:visited {
-        color: #070707 !important; /* 동일한 검정색 유지 */
-        text-decoration: none !important; /* 밑줄 제거 */
-        font-weight: bold;
-      }
-
-      /* 방문한 링크 스타일 */
-      .menu-link:visited {
-        color: #070707 !important; /* 방문 후에도 색상 유지 */
-        text-decoration: none !important;
-      }
-
-      /* 링크 마우스 오버 시 스타일 */
-      .menu-link:hover {
-        color: #0056b3; /* 마우스 오버 시 어두운 파란색으로 변경 */
-      }
-
-      /* 특정 강조 텍스트 스타일 */
-      .highlight {
-        color: #007bff !important; /* 특정 단어 강조 (파란색) */
-        font-weight: bold;
-      }
-
-      /* 항상 보이는 아이콘 스타일 */
-      .info-icon {
-        width: 20px; /* 아이콘 너비 설정 */
-        height: 20px; /* 아이콘 높이 설정 */
-        margin-left: 10px; /* 왼쪽 여백 추가 */
-        margin-right: 5px; /* 오른쪽 여백 추가 */
-        background-color: transparent; /* 배경색을 투명으로 설정 */
-      }
-
-      /* 마우스를 올리면 나타나는 아이콘 스타일 */
-      .hover-icon {
-        width: 20px; /* 아이콘 너비 설정 */
-        height: 20px; /* 아이콘 높이 설정 */
-        margin-left: 10px; /* 링크와의 간격 조정 */
-        display: none; /* 기본적으로 숨김 */
-        background-color: transparent; /* 배경색을 투명으로 설정 */
-      }
-
-      /* 링크에 마우스를 올리면 hover-icon이 나타남 */
-      .menu-link:hover + .hover-icon {
-        display: inline; /* 마우스 오버 시 아이콘 표시 */
-      }
-
-      /* 링크의 부모 요소 조정 (flex 컨테이너 설정) */
-      .link-container {
-        display: flex;
-        align-items: center; /* 수직 중앙 정렬 */
-      }
-
-      /* 전체 페이지 글꼴 및 기본 스타일 */
-      body {
-        font-family: Arial, sans-serif; /* 기본 글꼴 설정 */
-        line-height: 1.6; /* 가독성을 위한 줄 간격 조정 */
-        color: #333; /* 본문 기본 색상 */
-        background-color: #f9f9f9; /* 배경 색상 */
-        margin: 20px; /* 페이지 여백 */
-      }
-    </style>
-  </body>
+			// 팝업 닫기 함수
+			function closePopup() {
+				var popup = document.getElementById('popup'); // 팝업 요소를 가져옴
+				// 팝업을 숨김
+				popup.style.display = 'none'; // 팝업을 닫을 때 'none'으로 설정하여 숨김
+			}
+			function toggleDiv(id) {
+				var div = document.getElementById(id);
+				if (div.style.display === 'none' || div.style.display === '') {
+					div.style.display = 'block'; // ✅ 펼치기
+				} else {
+					div.style.display = 'none'; // ✅ 닫기
+				}
+			}
+		</script>
+	</body>
 </html>
