@@ -31,6 +31,20 @@
 	box-sizing: border-box; /* ✅ 패딩과 경계 포함하여 크기 계산 */
 }
 
+/* ✅ 화면 아래쪽에서 짤릴 경우 자동으로 위쪽으로 표시 */
+.tooltip-text.bottom-check {
+	top: auto;
+	bottom: 100%;
+	transform: translateX(-50%) translateY(-5px);
+}
+
+/* ✅ 화면 오른쪽에서 넘칠 경우 자동으로 왼쪽으로 정렬 */
+.tooltip-text.right-check {
+	left: auto;
+	right: 0;
+	transform: translateY(5px);
+}
+
 /* ✅ 작은 화면에서는 반응형으로 툴팁 크기 조정 */
 @media screen and (max-width: 768px) {
 	.tooltip-text {
