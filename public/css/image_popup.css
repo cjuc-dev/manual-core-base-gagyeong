@@ -1,0 +1,20 @@
+#image-popup {
+	display: none !important; /* 기본적으로 숨김 */
+	flex-direction: column !important;
+	align-items: flex-start !important; /* 왼쪽 정렬 */
+	gap: 10px !important;
+	background-color: rgba(0, 0, 0, 0.8) !important;
+	padding: 20px !important;
+	width: 100% !important; /* 전체 너비 적용 */
+	max-height: 100vh !important;
+	overflow-y: auto !important;
+	position: relative !important; /* 페이지의 흐름을 유지하며 바로 아래 표시 */
+}
+
+#image-popup img {
+	height: auto !important;
+	width: auto !important;
+	max-width: 100% !important;
+	max-height: 100vh !important;
+	margin: 10px !important;
+}
