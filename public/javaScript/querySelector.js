@@ -1,22 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-	// ✅ 모든 메뉴의 클릭 이벤트 추가
-	const menuItems = document.querySelectorAll('.sidebar ul > li > a');
+	var menuItems = document.querySelectorAll('.sidebar ul li > a');
 
-	menuItems.forEach((menu) => {
+	menuItems.forEach(function (menu) {
 		menu.addEventListener('click', function (event) {
-			event.preventDefault();
-
-			const submenu = this.nextElementSibling;
-
-			// ✅ 다른 펼쳐진 메뉴는 자동으로 접기
-			document.querySelectorAll('.submenu').forEach((item) => {
-				if (item !== submenu) {
-					item.classList.remove('show');
-				}
-			});
-
-			// ✅ 클릭한 메뉴의 하위 항목만 토글
-			if (submenu) {
+			var submenu = this.nextElementSibling;
+			if (submenu && submenu.classList.contains('submenu')) {
+				event.preventDefault(); // ✅ 기본 링크 이동 방지
 				submenu.classList.toggle('show');
 			}
 		});
