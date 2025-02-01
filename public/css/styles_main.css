@@ -194,10 +194,16 @@ p:hover .hover-icon {
 	height: 100%;
 	border-radius: 50%;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-	transition: transform 0.3s ease-in-out; /* ✅ 부드러운 효과 */
+	transition: none !important; /* ✅ 애니메이션 효과 제거 */
+	user-select: none; /* ✅ 클릭 시 선택 방지 */
 }
 
-/* ✅ 클릭 후 확대 효과 방지 */
+/* ✅ 마우스 오버 시 크기 변경 방지 */
+.home-icon img:hover {
+	transform: none !important;
+}
+
+/* ✅ 클릭 시 크기 변경 방지 */
 .home-icon img:active {
 	transform: none !important;
 }
