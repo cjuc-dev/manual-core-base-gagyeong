@@ -13,42 +13,7 @@
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
-		<style>
-			/* ✅ 홈 아이콘 기본 스타일 */
-			.home-icon {
-				position: absolute;
-				top: 20px;
-				right: 20px;
-				width: 40px;
-				height: 40px;
-			}
-
-			/* ✅ 홈 아이콘 이미지 스타일 */
-			.home-icon img {
-				width: 100%;
-				height: 100%;
-				border-radius: 50%;
-				box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-				transition: none !important; /* ✅ 애니메이션 효과 제거 */
-				user-select: none; /* ✅ 클릭 시 선택 방지 */
-				pointer-events: auto; /* ✅ 터치 디바이스에서도 정상 작동 */
-				touch-action: manipulation; /* ✅ 터치 기기에서 확대 방지 */
-				-webkit-user-drag: none; /* ✅ 드래그 방지 (크롬, 사파리) */
-				-moz-user-drag: none; /* ✅ 드래그 방지 (파이어폭스) */
-				-ms-user-drag: none; /* ✅ 드래그 방지 (엣지) */
-				user-drag: none; /* ✅ 기본 드래그 방지 */
-			}
-
-			/* ✅ 마우스 오버 시 크기 변경 방지 */
-			.home-icon img:hover {
-				transform: none !important;
-			}
-
-			/* ✅ 클릭 시 크기 변경 방지 */
-			.home-icon img:active {
-				transform: none !important;
-			}
-		</style>
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/home_icon.css" />
 	</head>
 	<body>
 		<div class="sidebar">
@@ -231,5 +196,6 @@
 		<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
 		<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
 		<script src="https://manual-5d03dc.gitlab.io/javaScript/homeIcon.js"></script>
+		<script src="https://manual-5d03dc.gitlab.io/javaScript/submenu.js"></script>
 	</body>
 </html>

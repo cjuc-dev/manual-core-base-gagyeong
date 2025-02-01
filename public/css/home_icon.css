@@ -1,26 +1,29 @@
+/* ✅ 홈 아이콘 기본 스타일 */
 .home-icon {
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	width: 40px;
-	height: 40px;
+	position: relative; /* ✅ 절대 위치 대신 상대 위치로 변경 */
+	width: 30px;
+	height: 30px;
+	margin-bottom: 10px; /* ✅ 이제 제대로 적용됨 */
 }
 
 .home-icon img {
-	width: 100%;
-	height: 100%;
-	border-radius: 50%;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-	transition: none !important; /* ✅ 애니메이션 효과 제거 */
-	user-select: none; /* ✅ 클릭 시 선택 방지 */
+	width: 30px !important;
+	height: 30px !important;
+
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;
+	transition: none !important; /* ✅ 애니메이션 효과 강제 제거 */
+	user-select: none !important;
+	pointer-events: auto !important;
+	touch-action: manipulation !important;
+	-webkit-user-drag: none !important;
+	-moz-user-drag: none !important;
+	-ms-user-drag: none !important;
+	user-drag: none !important;
 }
 
-/* ✅ 마우스 오버 시 크기 변경 방지 */
-.home-icon img:hover {
-	transform: none !important;
-}
-
-/* ✅ 클릭 시 크기 변경 방지 */
-.home-icon img:active {
+/* ✅ 클릭 후 아이콘 변경 방지 */
+.home-icon img:active,
+.home-icon img:focus,
+.home-icon img:visited {
 	transform: none !important;
 }

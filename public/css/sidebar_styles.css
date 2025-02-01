@@ -21,8 +21,11 @@
 
 .sidebar ul li {
 	margin-bottom: 10px;
+	position: relative;
+	cursor: pointer;
 }
 
+/* ✅ 메인 메뉴 스타일 */
 .sidebar ul li a {
 	color: white;
 	text-decoration: none;
@@ -32,11 +35,46 @@
 	transition: background 0.3s ease;
 }
 
+/* ✅ 마우스 오버 시 배경색 변경 */
 .sidebar ul li a:hover {
 	background-color: #1a252f;
 }
 
-/* ✅ 사이드바 반응형 스타일 */
+/* ✅ 하위 메뉴 스타일 */
+.submenu {
+	list-style: none;
+	padding-left: 20px; /* ✅ 들여쓰기 적용 */
+	display: none; /* ✅ 기본적으로 숨김 */
+}
+
+/* ✅ 하위 메뉴 항목 스타일 */
+.submenu li {
+	margin-top: 5px;
+	font-size: 14px;
+	background-color: #3b4f65; /* ✅ 하위 메뉴 색상 */
+	border-radius: 3px;
+}
+
+/* ✅ 하위 메뉴 링크 스타일 */
+.submenu li a {
+	padding: 8px;
+	display: block;
+	border-radius: 3px;
+	background-color: #3b4f65; /* ✅ 하위 메뉴 색상 유지 */
+	transition: background 0.3s ease;
+}
+
+/* ✅ 하위 메뉴 마우스 오버 시 배경색 변경 */
+.submenu li a:hover {
+	background-color: #4a6582;
+}
+
+/* ✅ 하위 메뉴가 펼쳐질 때 표시 */
+.submenu.show {
+	display: block;
+}
+
+/* ✅ 반응형 스타일 */
 @media (max-width: 768px) {
 	.sidebar {
 		width: 200px;
