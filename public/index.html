@@ -5,6 +5,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>체육시설 통합 매뉴얼</title>
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/styles_main.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/icon.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/main_link_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/table_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/home_icon.css" />
 	</head>
 	<body>
 		<div class="sidebar">
@@ -14,7 +23,7 @@
 				<li><a href="#" onclick="loadContent('facility')">시설현황</a></li>
 				<li>
 					<a href="#" onclick="toggleMenu('guide')">시설안내</a>
-					<ul id="guide" class="hidden">
+					<ul id="guide" class="submenu">
 						<li>
 							<a href="#" onclick="loadContent('cheongjuSwimming_guide')">청주수영장</a>
 						</li>
@@ -34,7 +43,7 @@
 				</li>
 				<li>
 					<a href="#" onclick="toggleMenu('manual')">매뉴얼</a>
-					<ul id="manual" class="hidden">
+					<ul id="manual" class="submenu">
 						<li><a href="#" onclick="loadContent('admin')">행정</a></li>
 						<li><a href="#" onclick="loadContent('tech')">기술</a></li>
 						<li><a href="#" onclick="loadContent('phy')">체육</a></li>
@@ -309,4 +318,9 @@
 			}
 		</style>
 	</body>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/tooltip.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/homeIcon.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/submenu.js"></script>
 </html>
