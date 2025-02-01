@@ -43,16 +43,17 @@
 /* ✅ 하위 메뉴 스타일 */
 .submenu {
 	list-style: none;
-	padding-left: 20px; /* ✅ 들여쓰기 적용 */
+	padding-left: 15px; /* ✅ 들여쓰기 적용 */
 	display: none; /* ✅ 기본적으로 숨김 */
+	border-left: 3px solid rgba(255, 255, 255, 0.3); /* ✅ 시각적 구분 추가 */
+	margin-left: 10px;
 }
 
 /* ✅ 하위 메뉴 항목 스타일 */
 .submenu li {
 	margin-top: 5px;
 	font-size: 14px;
-	background-color: #3b4f65; /* ✅ 하위 메뉴 색상 */
-	border-radius: 3px;
+	background-color: transparent; /* ✅ 배경 투명 */
 }
 
 /* ✅ 하위 메뉴 링크 스타일 */
