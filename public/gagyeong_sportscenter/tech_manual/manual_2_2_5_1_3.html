@@ -6,7 +6,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>온수가열기 매뉴얼</title>
-		<title>보일러 매뉴얼</title>
+
 		<!-- ✅ 기본 글로벌 스타일 -->
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
 		<!-- 🛠 전체적인 페이지 기본 스타일 (폰트, 여백, 색상 등) -->
@@ -307,37 +307,29 @@
 
 					<ul style="list-style-type: none; padding-left: 0px; margin: 0">
 						<li>
-							<strong
-								onclick="toggleDiv('hotWaterHeaterControlPanelInstructions')"
-								style="cursor: pointer; color: rgb(0, 0, 0)">
+							<strong onclick="toggleImagePopup()" style="cursor: pointer; color: rgb(0, 0, 0)">
 								온수가열기 컨트롤 판넬 조작 매뉴얼
 							</strong>
 						</li>
 					</ul>
-					<!-- 이미지 팝업 -->
-					<div id="hotWaterHeaterControlPanelInstructions" style="display: none; margin-top: 10px">
-						<div
-							id="image-popup"
-							style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px">
-							<img
-								src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_1_3_15.jpg"
-								class="popup-image"
-								alt="이미지1"
-								onclick="openPopup(this.src)"
-								style="height: auto; width: auto; max-width: 100%; max-height: 100vh; margin: 10px" />
-							<img
-								src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_1_3_16.jpg"
-								class="popup-image"
-								alt="이미지2"
-								onclick="openPopup(this.src)"
-								style="height: auto; width: auto; max-width: 100%; max-height: 100vh; margin: 10px" />
-							<img
-								src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_1_3_17.jpg"
-								class="popup-image"
-								alt="이미지3"
-								onclick="openPopup(this.src)"
-								style="height: auto; width: auto; max-width: 100%; max-height: 100vh; margin: 10px" />
-						</div>
+
+					<!-- ✅ 이미지 팝업 -->
+					<div id="image-popup" style="display: none; margin-top: 10px">
+						<img
+							src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_1_3_15.jpg"
+							class="popup-image"
+							alt="이미지1"
+							style="height: auto; width: auto; max-width: 100%; max-height: 100vh; margin: 10px" />
+						<img
+							src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_1_3_16.jpg"
+							class="popup-image"
+							alt="이미지2"
+							style="height: auto; width: auto; max-width: 100%; max-height: 100vh; margin: 10px" />
+						<img
+							src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_1_3_17.jpg"
+							class="popup-image"
+							alt="이미지3"
+							style="height: auto; width: auto; max-width: 100%; max-height: 100vh; margin: 10px" />
 					</div>
 				</td>
 			</tr>
@@ -352,5 +344,5 @@
 	<script src="https://manual-5d03dc.gitlab.io/javaScript/tooltip.js"></script>
 	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
 	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
-	<script src="https://manual-5d03dc.gitlab.io/javaScript/ImagePopup.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggleImagePopup.js"></script>
 </html>
