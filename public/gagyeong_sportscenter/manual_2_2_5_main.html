@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/home_icon.css" />
-		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/submenu.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
 	</head>
 	<body>
 		<div class="sidebar">
@@ -31,7 +31,7 @@
 
 				<li>
 					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_1')">기계</a>
-					<ul id="tech_manual_2_2_5_1" class="submenu hidden">
+					<ul id="tech_manual_2_2_5_1" class="submenu">
 						<li>
 							<a href="#" onclick="loadContent('tech_manual_2_2_5_1_1')">보일러</a>
 						</li>
@@ -49,7 +49,7 @@
 
 				<li>
 					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_2')">전기</a>
-					<ul id="tech_manual_2_2_5_2" class="submenu hidden">
+					<ul id="tech_manual_2_2_5_2" class="submenu">
 						<li>
 							<a href="#" onclick="loadContent('tech_manual_2_2_5_2_1')">정전</a>
 						</li>
@@ -64,7 +64,7 @@
 
 				<li>
 					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_3')">소방</a>
-					<ul id="tech_manual_2_2_5_3" class="submenu hidden">
+					<ul id="tech_manual_2_2_5_3" class="submenu">
 						<li>
 							<a href="#" onclick="loadContent('tech_manual_2_2_5_3_1')">
 								화재감지기 작동 및 화재발생 대응
@@ -75,7 +75,7 @@
 
 				<li>
 					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_4')">수질</a>
-					<ul id="tech_manual_2_2_5_4" class="submenu hidden">
+					<ul id="tech_manual_2_2_5_4" class="submenu">
 						<li>
 							<a href="#" onclick="loadContent('tech_manual_2_2_5_4_1')">수영장 수질 자동측정 장치</a>
 						</li>
@@ -99,7 +99,7 @@
 
 				<li>
 					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_5')">가스</a>
-					<ul id="tech_manual_2_2_5_5" class="submenu hidden">
+					<ul id="tech_manual_2_2_5_5" class="submenu">
 						<li>
 							<a href="#" onclick="loadContent('tech_manual_2_2_5_5_1')">정압기실 기록지 교체</a>
 						</li>
@@ -108,7 +108,7 @@
 
 				<li>
 					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_6')">건축</a>
-					<ul id="tech_manual_2_2_5_6" class="submenu hidden">
+					<ul id="tech_manual_2_2_5_6" class="submenu">
 						<li>
 							<a href="#" onclick="loadContent('tech_manual_2_2_5_6_1')">건축</a>
 						</li>
@@ -117,7 +117,7 @@
 
 				<li>
 					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_7')">기타 주요업무</a>
-					<ul id="tech_manual_2_2_5_7" class="submenu hidden">
+					<ul id="tech_manual_2_2_5_7" class="submenu">
 						<li>
 							<a href="#" onclick="loadContent('tech_manual_2_2_5_7_1')">기타</a>
 						</li>
@@ -126,7 +126,7 @@
 
 				<li>
 					<a href="#" onclick="toggleMenu('tech_manual_2_2_5_8')">업체 연락처</a>
-					<ul id="tech_manual_2_2_5_8" class="submenu hidden">
+					<ul id="tech_manual_2_2_5_8" class="submenu">
 						<li>
 							<a href="#" onclick="loadContent('tech_manual_2_2_5_8_1')">업체 연락처</a>
 						</li>
@@ -153,6 +153,7 @@
 				const contentPaths = {
 					update: 'updatecontainer/updatecontainer_gagyeong_sportscenter_tech.html',
 					tech_manual_2_2_5_1_1: 'gagyeong_sportscenter/tech_manual/manual_2_2_5_1_1.html',
+					tech_manual_2_2_5_1_2: 'gagyeong_sportscenter/tech_manual/manual_2_2_5_1_2.html',
 					facility: 'facility.html',
 					cheongjuSwimming_guide: 'guide/cheongju_swimming_pool_guide.html',
 					purmi_guide: 'guide/purmi_guide.html',
