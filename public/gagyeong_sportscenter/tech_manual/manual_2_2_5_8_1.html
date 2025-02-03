@@ -436,32 +436,7 @@
             </td>
         </tr>
 
-    <!-- PDF.js PDF 컨테이너 -->
-    <div id="pdf-container">
-        <div id="pdf-viewer"></div>
-    </div>
-
-    <!-- 팝업 이미지 -->
-    <div id="popup" onclick="closePopup()">
-        <span>&times;</span>
-        <img id="popup-img" src="" alt="보일러 사진">
-    </div>
-
-   <script>
-    // 팝업 열기 함수
-    function openPopup(src) {
-        var popup = document.getElementById("popup"); 
-        var popupImg = document.getElementById("popup-img");
-        popup.style.display = "flex";
-        popupImg.src = src;
-    }
-
-    // 팝업 닫기 함수
-    function closePopup() {
-        var popup = document.getElementById("popup");
-        popup.style.display = "none";
-    }
-</script>
+    
 </body>
 
 
