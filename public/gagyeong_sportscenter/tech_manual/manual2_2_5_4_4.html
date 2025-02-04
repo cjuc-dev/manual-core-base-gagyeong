@@ -2,11 +2,11 @@
 
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>수영장 배수 및 담수 매뉴얼</title>
-    <!-- ✅ 기본 글로벌 스타일 -->
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>수영장 배수 및 담수 매뉴얼</title>
+		<!-- ✅ 기본 글로벌 스타일 -->
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
 		<!-- 🛠 전체적인 페이지 기본 스타일 (폰트, 여백, 색상 등) -->
 
@@ -37,294 +37,380 @@
 		<!-- ✅ 이미지 팝업 스타일 -->
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_popup.css" />
 		<!-- 🛠 이미지 팝업 효과 적용 (클릭 시 확대 표시, 팝업 UI) -->
-</head>
-<body>
-    <td style="border: 1px solid #ccc; padding: 10px">
-					<table style="width: 100%; border-collapse: collapse; text-align: center">
-						<tr>
-                            <th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap">매뉴얼</th>
-						<td colspan="8" style="border: 1px solid #ccc; text-align: left">
-							<ul style="list-style-type: none; padding-left: 0px; margin: 0">
+	</head>
+	<body>
+		<td style="border: 1px solid #ccc; padding: 10px">
+			<table style="width: 100%; border-collapse: collapse; text-align: center">
+				<tr>
+				<th
+					style="
+						border: 1px solid #ccc;
+						padding: 10px;
+						min-width: 80px;
+						max-width: 150px;
+						text-align: center;
+					">
+					매뉴얼
+				</th>
+				<td colspan="8" style="border: 1px solid #ccc; text-align: left">
+					<ul style="list-style-type: none; padding-left: 0px; margin: 0">
+						<li>
+							<strong
+								onclick="toggleDiv('pooldrain')"
+								style="cursor: pointer; color: rgb(0, 0, 0)">
+									수영장 순환펌프 기동 배수방법
+								</strong>
+							</li>
+						</ul>
+
+						<div id="pooldrain" style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+						<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+							
+								
+									<li>
+										수영장수 배수전 역세작업을 실시할지 판단한다. 역세 운전시 역세 운전 매뉴얼을
+										참고한다.
+									</li>
+									<p>
+										💡 수영장수 배수 작업 전 버려질 물을 이용해 여과기 역세 작업을 실시하면 상수도
+										사용량을 절감할 수 있다.
+									</p>
+								
+								<li>수영장 밸런스 탱크 보충을 차단한다.</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_1.jpg"
+											class="popup-image"
+											alt="밸런스 탱크"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">솔밸브 차단</div>
+									</div>
+								</div>
+								
+									<li>
+										⚙️밸런스 탱크 상수도 공급 솔레노이드 밸브 전단 밸브를 잠금다.(밸런스
+										탱크 상부에 위치해 있다)
+									</li>
+									<div class="image-container">
+										<div class="image-wrapper">
+											<img
+												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_2.jpg"
+												class="popup-image"
+												alt="솔벨브 차단"
+												onclick="openPopup(this.src)" />
+											<div class="overlay-text">솔밸브 차단</div>
+										</div>
+                                         <div class="image-wrapper">
+											<img
+												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_3.jpg"
+												class="popup-image"
+												alt="솔밸브 위치"
+												onclick="openPopup(this.src)" />
+											<div class="overlay-text">솔밸브 위치</div>
+										</div>
+                                    </div>
+										<p>
+										💡밸브는 40%~50% 개방되어 있다. 잠근 후 개방 시 40~50% 개방한다.
+									</p>
+                                    <p>
+										🚨50% 이상 개방시 상수도가 밸런스탱크 공급으로 쏠려 샤워장의 물이 나오지 않는다.
+									</p>
+                                    <p>
+										❗부스터 펌프 설정 압력 : 3bar 설정
+									</p>
+                                    <p>
+										❗밸런스 탱크 솔밸브 전단 밸브 50%이상 개방 시 부스터 펌프 압력 1.9bar 이하로 떨어져 샤워장 물 안나온다는 민원 발생❗)
+									</p>
+                                    <p>
+										💡혹은 수영장 제어설비 컨트롤 화면의 설비 운전을 <b>자동</b>에서<b> 수동</b>으로
+										전환한다.
+									</p>
+									<div class="image-container">
+										<div class="image-wrapper">
+											<img
+												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_4.jpg"
+												class="popup-image"
+												alt="수영장 설비 컨트롤화면 운전화면"
+												onclick="openPopup(this.src)" />
+											<div class="overlay-text">운전화면</div>
+										</div>
+                                        <div class="image-wrapper">
+											<img
+												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_5.jpg"
+												class="popup-image"
+												alt="수영장 설비 컨트롤화면 수동전환"
+												onclick="openPopup(this.src)" />
+											<div class="overlay-text">수동 전환</div>
+										</div>
+									</div>
+									<p>❕수동전환시 수위변화에 따른 솔레노이드 밸브는 작동이 하지 않는다.</p>
+									<p>
+										❗장시간 탱크를 비우는 경우 자동운전모드 상태에서는 솔밸브 작동 신호가 계속 들어가는
+										상태로 유지되기 때문에 가급적 작동하지 않도록 수동으로 전환하는걸 추천한다.
+									</p>
+								
+
 								<li>
-									<strong
-										onclick="toggleDiv('pooldrain')"
-										style="cursor: pointer; color: rgb(0, 0, 0)">
-										수영장 순환펌프 기동 배수방법
-									</strong>
+									⚙️수영장수 배수 작업전 수영장 제어 컨트롤 화면에서 운전모드를 자동에서
+									<b>자동운전</b>에서<b> 수동운전</b>으로 전환한다.
 								</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_6.jpg"
+											class="popup-image"
+											alt="수영장 설비 컨트롤화면"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">수동 전환</div>
+									</div>
+								</div>
+								<li>⚙️수영장 수질 자동측정 장치의 밸브를 닫는다.(불필요한 측정 방지❕)</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_7.jpg"
+											class="popup-image"
+											alt="수질측정장치"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">수질측정 유입수 차단</div>
+									</div>
+								</div>
+								<li>수동전환 설정되면 자동운전 중인 수영장 설비가 작동을 멈춘다.</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_8.jpg"
+											class="popup-image"
+											alt="수영장 설비 컨트롤화면"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">전체 설비 정지</div>
+									</div>
+								</div>
+								<li>
+									배수 방법에 따라 밸브 라인업 상태가 달라진다.(수영장수(수영조) 배수, 밸런스탱크
+									배수)
+								</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_9.jpg"
+											class="popup-image"
+											alt="밸브 조작 환경"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">수영장 조작 밸브</div>
+									</div>
+								</div>
+								<li>⚙️밸런스탱크 토출 측 밸브를 차단한다.</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_10.jpg"
+											class="popup-image"
+											alt="밸런스탱크 토출 측 밸브"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">토출 밸브 차단</div>
+									</div>
+								</div>
+								<li>⚙️수영장 순환펌프 측과 연결 된 수영장수 배수 토출 밸브를 개방한다.</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_11.jpg"
+											class="popup-image"
+											alt="수영장수 배수 토출 밸브"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">수영장 배수 토출 밸브 개방</div>
+									</div>
+								</div>
+								<li>⚙️여과기 전단 밸브, 후단 밸브, 드레인 밸브(여과기 드레인 밸브)를 차단한다.</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_12.jpg"
+											class="popup-image"
+											alt="여과기 전단 밸브"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">여과기 전단 밸브 차단</div>
+									</div>
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_13.jpg"
+											class="popup-image"
+											alt="여과기 후단 밸브"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">여과기 후단 밸브 차단</div>
+									</div>
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_14.jpg"
+											class="popup-image"
+											alt="여과기 드레인 밸브 차단"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">여과기 드레인 밸브 차단</div>
+									</div>
+								</div>
+								<li>
+									⚙️순환펌프 토출밸브와 여과기 전단 밸브 사이에 위치한 수영장 배수 토출 밸브를 개방한다.
+								</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_15.jpg"
+											class="popup-image"
+											alt="수영장 배수 토출 밸브"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">수영장 배수 토출 밸브 개방</div>
+									</div>
+								</div>
+								
+									<li>
+										❗밸브 라인업 상태를 마쳤으며 순환펌프 기동시 순환펌프가 배수펌프 역활을
+										수행한다.
+									</li>
+                                
+									<p>🚨 수영장수 배수작업은 반드시 2인 1조로 작업 진행 한다.</p>
+									<p>🚨 수영장의 상황을 지켜보는 인원과 기계실의 설비 작동 인원이 필요하다.</p>
+									<p>⚠️ 순환펌프 가동시 수영조 수위가 급격히 줄어든다.</p>
+								
+								<li>⚙️기동하고자 하는 수영장 순환펌프를 조작화면에서 터치하여 🟢기동시켜 배수작업을 시작한다.</li>
+								<li>
+									2층 수영조의 일정수위 도달시(수영조 바닥 배수구 확인) 배수와류 현상이 발생하며
+									소용돌이와 함께 공기도 함께 빨려 들어간다.
+								</li>
+								<li>순환펌프의 손상을 방지하기 위해 펌프의 작동을 🛑정지시킨다.</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_16.jpg"
+											class="popup-image"
+											alt="펌프 정지"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">펌프 정지</div>
+									</div>
+								</div>
+
+								<li>수영조의 남은 물은 자연배수로 배수한다.</li>
+								<li>⚙️수영장 순환펌프 측과 연결 된 수영장수 배수 토출 밸브를 차단한다.</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_17.jpg"
+											class="popup-image"
+											alt="수영장 배수 토출 밸브 차단"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">수영장 배수 토출 밸브 차단</div>
+									</div>
+								</div>
+								
+								<li>⚙️수영장 배수 토출 밸브 바로 위에 위치한 드레인 밸브를 개방한다.</li>
+									<div class="image-container">
+										<div class="image-wrapper">
+											<img
+												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_18.jpg"
+												class="popup-image"
+												alt="수영장 드레인 밸브"
+												onclick="openPopup(this.src)" />
+											<div class="overlay-text">수영장 드레인 밸브</div>
+										</div>
+                                        <div class="image-wrapper">
+											<img
+												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_19.jpg"
+												class="popup-image"
+												alt="배수펌프 상태 확인"
+												onclick="openPopup(this.src)" />
+											<div class="overlay-text">배수펌프 상태 확인</div>
+										</div>
+									</div>
+									<p>🚨 수영조 배수 및 물탱크 드레인 밸브 개방시 과도하게 열지 않는다.</p>
+									<p>
+										⚠️ 기계실의 배수 펌프는 1개소만 있으며 과도한 밸브 개방으로 배수시 배수펌프
+										배수용량 초과로 인해 침수사고가 발생할 수 있다.
+									</p>
+									<p>⚠️ 배수작업시 필히 배수피트의 상태를 확인하며 드레인 배출량을 조절한다.</p>
+								
+								<li>수영장수 배수 작업 후 밸런스 탱크 배수 작업을 실시한다.</li>
+								<li>⚙️밸런스탱크의 차단해 놓았던 토출 측 밸브를 개방한다.</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_20.jpg"
+											class="popup-image"
+											alt="밸런스탱크 토출 밸브 개방"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">밸런스탱크 토출 밸브 개방</div>
+									</div>
+								</div>
+								<li>수영장 순환펌프를 🟢기동하여 배수작업을 시작한다.</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_21.jpg"
+											class="popup-image"
+											alt="순환펌프 기동"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">순환펌프 기동</div>
+									</div>
+								</div>
+								<li>
+									밸런스탱크의 일정 수위 도달시(수위계 확인) 배수와류 현상이 발생하며 소용돌이와 함께
+									공기도 함께 빨려 들어간다.
+								</li>
+								<div class="image-container">
+									<div class="image-wrapper">
+										<img
+											src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_22.jpg"
+											class="popup-image"
+											alt="밸런스 탱크 수위계"
+											onclick="openPopup(this.src)" />
+										<div class="overlay-text">밸런스 탱크 수위계</div>
+									</div>
+								</div>
+								<li>순환펌프의 손상을 방지하기 위해 펌프의 작동을 🛑정지시킨다.</li>
+								<li>밸런스탱크의 남은 물은 자연배수로 배수한다.</li>
+								<li>
+										⚙️밸런스탱크 뒤쪽 하부에 위치한 드레인 밸브를 개방한다.(배수피트 상태 확인하며
+										배출량 조절)
+								</li>
+									<div class="image-container">
+                                        <div class="image-wrapper">
+											<img
+												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_23.jpg"
+												class="popup-image"
+												alt="밸런스 탱크 드레인밸브 위치"
+												onclick="openPopup(this.src)" />
+											<div class="overlay-text">밸런스 탱크 드레인밸브 위치</div>
+										</div>
+										<div class="image-wrapper">
+											<img
+												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_24.jpg"
+												class="popup-image"
+												alt="밸런스 탱크 드레인밸브"
+												onclick="openPopup(this.src)" />
+											<div class="overlay-text">밸런스 탱크 드레인밸브 개방</div>
+										</div>
+                                        <div class="image-wrapper">
+											<img
+												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_25.jpg"
+												class="popup-image"
+												alt="배수피트"
+												onclick="openPopup(this.src)" />
+											<div class="overlay-text">배수펌프 상태 확인</div>
+										</div>
+									</div>
+								
+                                    <p>🚨 수영조 배수 및 물탱크 드레인 밸브 개방시 과도하게 열지 않는다.</p>
+									<p>
+										⚠️ 기계실의 배수 펌프는 1개소만 있으며 과도한 밸브 개방으로 배수시 배수펌프
+										배수용량 초과로 인해 침수사고가 발생할 수 있다.
+									</p>
+									<p>⚠️ 배수작업시 필히 배수피트의 상태를 확인하며 드레인 배출량을 조절한다.</p>
+								
+								<li>배수작업 종료하며 밸브의 조작상태는 인수인계를 위해 반드시 기록해 놓는다.</li>
+								<li>⚠️ 급수 혹은 설비 가동전 밸브의 개폐 조작상태를 필히 ✅확인토록 한다.</li>
 							</ul>
-
-							<div
-								id="pooldrain"
-								style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
-								<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
-									<ul><li>수영장수 배수전 역세작업을 실시할지 판단한다. 역세 운전시 역세 운전 매뉴얼을 참고한다.</li>
-                                    <p>💡 수영장수 배수 작업 전 버려질 물을 이용해 여과기 역세 작업을 실시하면 상수도 사용량을 절감할 수 있다. </p>    
-                                    </ul>
-									<li>수영장 밸런스 탱크 보충을 차단한다.</li>
-									<ul><li>밸런스 탱크 상수도 공급 솔레노이드 밸브 전단 혹은 후단 밸브를 잠금다.(밸런스 탱크 상부에 위치해 있다)</li>
-                                    <p>혹은 수영장 제어설비 컨트롤 화면의 설비 운전을 <b>자동</b>에서<b> 수동</b>으로 전환한다</p>
-                                    <p>수동전환시 수위변화에 따른 솔레노이드 작동이 하지 않는다.</p>
-                                    <p>장시간 탱크를 비우는 경우 자동인 상태에서는 솔밸브 작동 신호가 계속 들어가는 상태로 유지되기 때문에 가급적 작동하지 않도록 수동으로 전환하는걸 추천한다.</p>
-                                    </ul>
-                                    <div class="image-container">
-										<div class="image-wrapper">
-											<img
-												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_1.jpg"
-												class="popup-image"
-												alt="솔벨브 차단"
-												onclick="openPopup(this.src)" />
-											<div class="overlay-text">솔밸브 차단</div>
-										</div>
-										<div class="image-wrapper">
-											<img
-												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_1.jpg"
-												class="popup-image"
-												alt="솔밸브 위치"
-												onclick="openPopup(this.src)" />
-											<div class="overlay-text">솔밸브 위치</div>
-										</div>
-                                        <div class="image-wrapper">
-											<img
-												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_1.jpg"
-												class="popup-image"
-												alt="수영장 설비 컨트롤화면"
-												onclick="openPopup(this.src)" />
-											<div class="overlay-text">제어 운전 전환</div>
-										</div>
-									</div>
-
-									<li>수영장수 배수 작업전 수영장 제어 컨트롤 화면에서 운전모드를 자동에서 <b>자동</b>에서<b> 수동</b>으로 전환한다.</li>
-                                    <li>수동전환 설정되면 자동운전 중인 수영장 설비가 작동을 멈춘다.</li>
-                                    <li>배수 방법에 따라 밸브 라인업 상태가 달라진다.(수영장수(수영조) 배수, 밸런스탱크 배수)</li>
-                                    <li>밸런스탱크 토출 측 밸브를 차단한다.</li>
-                                    <li>수영장 순환펌프 측과 연결 된 수영장수 배수 토출 밸브를 개방한다.</li>
-                                    <li>여과기 전단 밸브, 후단 밸브, 드레인 밸브(여과기 드레인 밸브)를 차단한다.</li>
-                                    <li>순환펌프 토출밸브와 여과기 전단 밸브 사이에 위치한 드레인 밸브를 개방한다.</li>
-                                    <li>밸브 라인업 상태를 마쳤으며 순환펌프 기동시 순환펌프가 배수펌프 역활을 수행한다.</li>
-                                    <ul>
-                                    <li>⚠️ 수영장수 배수시 2인 1조로 작업 진행해야 한다.</li>
-                                    <li>⚠️ 수영장의 상황을 지켜보는 인원과 기계실의 설비 작동 인원이 필요하다.</li>
-                                        <p>⚠️ 순환펌프 가동시 수영조 수위가 급격히 줄어든다.</p>
-                                    </ul>
-                                    <li>수영장 순환펌프를 기동하여 배수작업을 시작한다.</li>
-                                    <li>2층 수영조의 일정수위 도달시(수영조 바닥 배수구 확인) 배수와류 현상이 발생하며 소용돌이와 함께 공기도 함께 빨려 들어간다.</li>
-                                    <li>순환펌프의 손상을 방지하기 위해 펌프의 작동을 정지시킨다.</li>
-                                    <li>수영조의 남은 물은 자연배수로 배수한다.</li>
-                                    <li>수영장 순환펌프 측과 연결 된 수영장수 배수 토출 밸브를 차단한다.</li>
-                                    <ul>
-                                    <li>수영장 배수 토출 밸브 바로 위에 위치한 드레인 밸브를 개방한다.</li>
-                                        <p>⚠️ 수영조 배수 및 물탱크 드레인 밸브 개방시 과도하게 열지 않는다.</p>
-                                        <p>⚠️ 기계실의 배수 펌프는 1개소만 있으며 과도한 배출시 배수펌프 배수용량 초과로 침수발생한다.</p>
-                                        <p>⚠️ 배수작업시 필히 배수피트의 상태를 확인하며 드레인 배출량을 조절한다.</p>
-                                    </ul>
-                                    <li>수영장수 배수 작업 후 밸런스 탱크 배수 작업을 실시한다.</li>
-                                    <li>밸런스탱크의 차단해 놓았던 토출 측 밸브를 개방한다.</li>
-                                    <li>수영장 순환펌프를 기동하여 배수작업을 시작한다.</li>
-                                    <li>밸런스탱크의 일정 수위 도달시(수위계 확인) 배수와류 현상이 발생하며 소용돌이와 함께 공기도 함께 빨려 들어간다.</li>
-                                    <li>순환펌프의 손상을 방지하기 위해 펌프의 작동을 정지시킨다.</li>
-                                    <li>밸런스탱크의 남은 물은 자연배수로 배수한다.</li>
-                                    <li>밸런스탱크 뒤쪽 하부에 위치한 드레인 밸브를 개방한다.(배수피트 상태 확인하며 배출량 조절)</li>
-                                    <li>배수작업 종료하며 밸브의 조작상태는 인수인계를 위해 반드시 기록해 놓는다.</li>
-                                    <li>⚠️ 급수 혹은 설비 가동전 밸브의 개폐 조작상태를 필히 확인토록 한다.</li>
-                                    <li></li>
-
-									<ul><li>밸런스 탱크 상수도 공급 솔레노이드 밸브 전단 혹은 후단 밸브를 잠금다.(밸런스 탱크 상부에 위치해 있다)</li>
-                                    <p>혹은 수영장 제어설비 컨트롤 화면의 설비 운전을 <b>자동</b>에서<b> 수동</b>으로 전환한다</p>
-                                    <p>수동전환시 수위변화에 따른 솔레노이드 작동이 하지 않는다.</p>
-                                    <p>장시간 탱크를 비우는 경우 자동인 상태에서는 솔밸브 작동 신호가 계속 들어가는 상태로 유지되기 때문에 가급적 작동하지 않도록 수동으로 전환하는걸 추천한다.</p>
-                                    </ul>
-                                    <div class="image-container">
-										<div class="image-wrapper">
-											<img
-												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_1.jpg"
-												class="popup-image"
-												alt="솔벨브 차단"
-												onclick="openPopup(this.src)" />
-											<div class="overlay-text">솔밸브 차단</div>
-										</div>
-										<div class="image-wrapper">
-											<img
-												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_1.jpg"
-												class="popup-image"
-												alt="솔밸브 위치"
-												onclick="openPopup(this.src)" />
-											<div class="overlay-text">솔밸브 위치</div>
-										</div>
-                                        <div class="image-wrapper">
-											<img
-												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_1.jpg"
-												class="popup-image"
-												alt="수영장 설비 컨트롤화면"
-												onclick="openPopup(this.src)" />
-											<div class="overlay-text">제어 운전 전환</div>
-										</div>
-									</div>
-                                        
-                                        <ul style="list-style-type: disc; padding-left: 20px; margin-top: 10px;">
-                                            <li>생활용수에서 수영장 밸런스 탱크로 가는 밸브를 잠근다.</li>
-                                                <div style="margin-top: 5px;">- 수영장 자동제어판 manu 선택 후 시수 밸브를 정지한다.</div>
-                                                <div style="margin-top: 5px;">- 밸런스 탱크 위 공급 밸브를 잠근다.</div>
-                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
-                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
-                                                <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
-                                                <div style="position: relative; display: inline-block; max-width: 200px;">
-                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
-                                                        alt="수질 자동측정 장치1" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
-                                                    <!-- 텍스트 오버레이 -->
-                                                    <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
-                                                                padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <li>생활용수에서 수영장 밸런스 탱크로 가는 밸브를 잠근다.</li>
-                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
-                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
-                                                <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
-                                                <div style="position: relative; display: inline-block; max-width: 200px;">
-                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
-                                                        alt="수질 자동측정 장치1" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
-                                                    <!-- 텍스트 오버레이 -->
-                                                    <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
-                                                                padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <li>수영장 도출 밸브 서서히 연다.</li>
-                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
-                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
-                                                <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
-                                                <div style="position: relative; display: inline-block; max-width: 200px;">
-                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
-                                                        alt="수질 자동측정 장치1" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
-                                                    <!-- 텍스트 오버레이 -->
-                                                    <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
-                                                                padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <li>수영장 및 여과기 밸브를 잠그고 드래인 밸브를 연다.</li>
-                                                <div style="margin-top: 5px;">- 여과기 출입밸브를 잠근다.</div>
-                                                <div style="margin-top: 5px;">- 수영장 출입밸브를 잠근다.</div>
-                                                <div style="margin-top: 5px;">- 수영장수 드래인 밸브를 연다.</div>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">※ 순환펌프 공기가 들어가지 않도록 수영장 물이 조금 남았을 때 멈춰야 함<br></span>
-                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
-                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
-                                                <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
-                                                <div style="position: relative; display: inline-block; max-width: 200px;">
-                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
-                                                        alt="수질 자동측정 장치1" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
-                                                    <!-- 텍스트 오버레이 -->
-                                                    <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
-                                                                padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <li>수영장 자동제어판을 통해 순환 펌프를 작동해 수영장 물을 버린다.</li>
-                                                <div style="margin-top: 5px;">- 수영장 물이 조금 남아있을떼 순환펌프를 정지한다.</div>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">※ 순환펌프 공기가 들어가지 않도록 하기 위함<br></span>
-                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
-                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
-                                                <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
-                                                <div style="position: relative; display: inline-block; max-width: 200px;">
-                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
-                                                        alt="수질 자동측정 장치1" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
-                                                    <!-- 텍스트 오버레이 -->
-                                                    <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
-                                                                padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <li>수영장 토출 밸브 잠근다.</li>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">※ 수영장의 남은 물은 드래인 밸브를 통해 버린다.<br></span>
-                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
-                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
-                                                <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
-                                                <div style="position: relative; display: inline-block; max-width: 200px;">
-                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
-                                                        alt="수질 자동측정 장치1" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
-                                                    <!-- 텍스트 오버레이 -->
-                                                    <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
-                                                                padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <li>밸런스 탱크 토출 밸브를 연다.</li>
-                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
-                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
-                                                <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
-                                                <div style="position: relative; display: inline-block; max-width: 200px;">
-                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
-                                                        alt="수질 자동측정 장치1" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
-                                                    <!-- 텍스트 오버레이 -->
-                                                    <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
-                                                                padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <li>수영장 자동제어판을 통해 순환 펌프를 작동해 밸런스 탱크 물을 버린다.</li>
-                                                <div style="margin-top: 5px;">- 수영장 물이 조금 남아있을떼 순환펌프를 정지한다.</div>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">※ 순환펌프 공기가 들어가지 않도록 하기 위함<br></span>
-                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
-                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
-                                                <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
-                                                <div style="position: relative; display: inline-block; max-width: 200px;">
-                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
-                                                        alt="수질 자동측정 장치1" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
-                                                    <!-- 텍스트 오버레이 -->
-                                                    <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
-                                                                padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <li>순환펌프 공급 밸브를 잠근다.</li>
-                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
-                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
-                                                <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
-                                                <div style="position: relative; display: inline-block; max-width: 200px;">
-                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
-                                                        alt="수질 자동측정 장치1" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
-                                                    <!-- 텍스트 오버레이 -->
-                                                    <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
-                                                                padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <li>밸런스 탱크 드래인 밸브를 열어 밸런스 탱크를 비운다.</li>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: rgb(255, 0, 0);">※ 기계실 배수펌프 수위를 보면서 드래인 배브를 열을 것것<br></span>
-                                            <!-- 사진을 왼쪽에 정렬하여 아래로 배치 -->
-                                            <div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 10px; margin-top: 10px;">
-                                                <!-- 첫 번째 이미지와 텍스트를 겹치는 컨테이너 -->
-                                                <div style="position: relative; display: inline-block; max-width: 200px;">
-                                                    <img src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
-                                                        alt="수질 자동측정 장치1" style="max-width: 200px; height: auto; cursor: pointer;" onclick="openPopup(this.src)">
-                                                    <!-- 텍스트 오버레이 -->
-                                                    <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; 
-                                                                padding: 5px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ul>
-                                    </ul>
+						</div>
+                        
 
                                     <ul style="list-style-type: none; padding-left: 20px; margin: 0;">
                                         <li><strong>수영장 담수</strong></li>
@@ -404,37 +490,16 @@
             </td>
         </tr>
         
-
-    <!-- PDF.js PDF 컨테이너 -->
-    <div id="pdf-container">
-        <div id="pdf-viewer"></div>
-    </div>
-
-    <!-- 팝업 이미지 -->
-    <div id="popup" onclick="closePopup()">
-        <span>&times;</span>
-        <img id="popup-img" src="" alt="보일러 사진">
-    </div>
-
-   <script>
-    // 팝업 열기 함수
-    function openPopup(src) {
-        var popup = document.getElementById("popup"); 
-        var popupImg = document.getElementById("popup-img");
-        popup.style.display = "flex";
-        popupImg.src = src;
-    }
-
-    // 팝업 닫기 함수
-    function closePopup() {
-        var popup = document.getElementById("popup");
-        popup.style.display = "none";
-    }
-</script>
-</body>
-
-
-
-
-
-
+			</tr>
+		</table>
+		<!-- 팝업 이미지 -->
+		<!-- ✅ 기본적으로 팝업을 숨김 -->
+		<div id="popup" onclick="closePopup()" style="display: none; z-index: 9999">
+			<span>&times;</span>
+			<img id="popup-img" src="" alt="보일러 사진" />
+		</div>
+	</body>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/tooltip.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
+</html>
