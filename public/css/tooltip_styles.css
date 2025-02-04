@@ -15,7 +15,7 @@
 	padding: 10px !important;
 	position: absolute !important;
 	z-index: 10000 !important;
-	left: 50% !important;
+	right: 80% !important;
 	top: 100% !important;
 	transform: translateX(-50%) !important;
 	opacity: 0 !important;
