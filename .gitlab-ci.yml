@@ -1,4 +1,4 @@
-image: ruby:3.1  # 사용할 Docker 이미지 (필요에 따라 변경 가능)
+image: ruby:3.1  # 사용할 Docker 이미지
 
 stages:
   - deploy
@@ -7,9 +7,11 @@ pages:
   stage: deploy
   script:
     - mkdir -p public  # public 폴더 생성 (없을 경우 대비)
-    - find . -mindepth 1 -not -path "./public/*" -exec cp -r {} public/ \;
+    - rsync -av --exclude='public' ./ public/  # ✅ 자기 자신 복사 방지
+    - tar -czf public.tar.gz public  # ✅ public 폴더 압축 (파일 개수 줄이기)
+    - tar -xzf public.tar.gz -C public  # ✅ GitLab Pages에서 사용할 수 있도록 압축 해제
   artifacts:
     paths:
-      - public
+      - public  # ✅ GitLab Pages가 배포할 폴더
   only:
     - main  # main 브랜치에서만 실행
