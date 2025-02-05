@@ -5,17 +5,22 @@ document.addEventListener('DOMContentLoaded', function () {
 		const tooltipText = tooltip.querySelector('.tooltip-text');
 
 		tooltip.addEventListener('mouseenter', function () {
+			// ✅ 툴팁을 먼저 표시해야 위치를 정확히 계산 가능
+			tooltipText.style.visibility = 'visible';
+			tooltipText.style.opacity = '1';
+
+			// ✅ 툴팁 위치 계산
 			const rect = tooltipText.getBoundingClientRect();
 			const windowHeight = window.innerHeight;
 			const windowWidth = window.innerWidth;
 
 			// 🛠 툴팁이 화면 위로 가려질 경우 아래로 배치
 			if (rect.top < 0) {
-				tooltipText.classList.remove('bottom');
 				tooltipText.style.top = '100%';
 				tooltipText.style.bottom = 'auto';
 			} else {
-				tooltipText.classList.add('bottom');
+				tooltipText.style.top = 'auto';
+				tooltipText.style.bottom = '100%';
 			}
 
 			// 🛠 툴팁이 오른쪽을 넘어가면 왼쪽 정렬
@@ -32,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			// ✅ **툴팁이 왼쪽을 넘어가면 오른쪽으로 이동**
 			if (rect.left < 0) {
 				tooltipText.style.left = '10px';
+				tooltipText.style.right = 'auto';
 				tooltipText.style.transform = 'none';
 			}
 
@@ -42,6 +48,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			} else {
 				tooltipText.style.maxWidth = '90vw';
 			}
+		});
+
+		// ✅ `mouseleave` 시 툴팁 숨기기
+		tooltip.addEventListener('mouseleave', function () {
+			tooltipText.style.visibility = 'hidden';
+			tooltipText.style.opacity = '0';
 		});
 	});
 });

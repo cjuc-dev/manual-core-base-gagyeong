@@ -1,32 +1,44 @@
 /* ✅ 툴팁 기본 스타일 (덮어쓰기 방지 적용) */
+/* ✅ 툴팁 기본 스타일 */
 .tooltip {
-	position: relative !important; /* ✅ 덮어쓰기 방지 */
-	display: inline-block !important;
-	cursor: pointer !important;
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
 }
 
-/* ✅ 툴팁 텍스트 스타일 (덮어쓰기 방지 적용) */
+/* ✅ 툴팁 텍스트 스타일 */
 .tooltip-text {
-	visibility: hidden !important;
-	background-color: #333 !important;
-	color: #fff !important;
-	text-align: left !important;
-	border-radius: 5px !important;
-	padding: 10px !important;
-	position: absolute !important;
-	z-index: 10000 !important;
-	right: 80% !important;
-	top: 100% !important;
-	transform: translateX(-50%) !important;
-	opacity: 0 !important;
-	transition: opacity 0.3s ease, transform 0.3s ease !important;
-	font-size: 12px !important;
-	line-height: 1.4 !important;
-	word-break: break-word !important;
-	min-width: max-content !important;
-	max-width: 400px !important;
-	white-space: normal !important;
-	box-sizing: border-box !important;
+	visibility: hidden;
+	background-color: #333;
+	color: #fff;
+	text-align: left;
+	border-radius: 5px;
+	padding: 10px;
+	position: absolute;
+	z-index: 10000;
+	left: 100%; /* 🛠 부모 요소의 오른쪽에 위치 */
+	top: 50%; /* 🛠 부모 요소의 중앙 */
+	transform: translateY(-50%); /* 🛠 수직 가운데 정렬 */
+	margin-left: 5px; /* 🛠 툴팁과 텍스트 간격 */
+	opacity: 0;
+	transition: opacity 0.3s ease, transform 0.3s ease;
+	font-size: 12px;
+	line-height: 1.4;
+	white-space: nowrap; /* 🛠 줄바꿈 방지 */
+}
+
+/* ✅ 화면 오른쪽을 넘어가면 자동으로 왼쪽 정렬 */
+.tooltip-text.right-overflow {
+	left: auto !important;
+	right: 100% !important;
+	transform: translateY(-50%) translateX(-5px) !important;
+}
+
+/* ✅ 마우스를 올릴 때 툴팁 표시 */
+.tooltip:hover .tooltip-text {
+	visibility: visible !important;
+	opacity: 1 !important;
+	transform: translateY(-50%) !important;
 }
 
 /* ✅ 툴팁이 화면을 벗어나면 자동으로 위쪽에 표시 */
@@ -34,6 +46,11 @@
 	top: auto !important;
 	bottom: 100% !important;
 	transform: translateX(-50%) translateY(-5px) !important;
+}
+
+/* ✅ 툴팁 화살표 제거 */
+.tooltip-text::after {
+	content: none !important;
 }
 
 /* ✅ 화면 크기에 따라 툴팁 크기 자동 조정 */
@@ -44,16 +61,4 @@
 		max-width: 90vw !important;
 		white-space: normal !important;
 	}
-}
-
-/* ✅ 마우스를 올릴 때 툴팁 표시 */
-.tooltip:hover .tooltip-text {
-	visibility: visible !important;
-	opacity: 1 !important;
-	transform: translateX(-50%) translateY(0) !important;
-}
-
-/* ✅ 툴팁 화살표 제거 */
-.tooltip-text::after {
-	content: none !important;
 }
