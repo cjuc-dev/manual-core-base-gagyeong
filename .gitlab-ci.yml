@@ -6,10 +6,11 @@ stages:
 pages:
   stage: deploy
   script:
+    - apt-get update -y && apt-get install -y rsync  # ✅ rsync 설치 추가
     - mkdir -p public  # public 폴더 생성 (없을 경우 대비)
     - rsync -av --exclude='public' ./ public/  # ✅ 자기 자신 복사 방지
   artifacts:
     paths:
-      - public  # ✅ GitLab Pages가 public 폴더를 배포
+      - public  # ✅ GitLab Pages가 배포할 폴더
   only:
     - main  # main 브랜치에서만 실행
