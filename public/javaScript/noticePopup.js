@@ -10,7 +10,7 @@ function openNoticePopup() {
 	let top = (screen.height - popupHeight) / 2;
 
 	// 📌 공지사항 URL (필요에 따라 변경)
-	let noticeUrl = 'https://crs.cjsisul.or.kr/pCenter/pd/boa01002_select.do?board_no=1760&winID=alert1760&popup_yn=Y';
+	let noticeUrl = 'https://manual-5d03dc.gitlab.io/noticePopup.html';
 
 	let popupWindow = window.open(
 		noticeUrl,
