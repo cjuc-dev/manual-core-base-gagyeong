@@ -5,7 +5,7 @@ window.onload = function () {
 
 function openNoticePopup() {
 	let popupWidth = 500; // 팝업 창 너비
-	let popupHeight = 400; // 팝업 창 높이
+	let popupHeight = 550; // 팝업 창 높이
 	let left = (screen.width - popupWidth) / 2;
 	let top = (screen.height - popupHeight) / 2;
 
