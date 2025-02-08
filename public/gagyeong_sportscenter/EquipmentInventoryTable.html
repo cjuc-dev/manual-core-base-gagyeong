@@ -4,951 +4,1042 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>장비일람표</title>
+		<style>
+			.container {
+				overflow: auto !important; /* 강제적으로 스크롤 가능하도록 설정 */
+			}
+		</style>
 	</head>
 	<body>
-		<p style="font-size: 16px; font-weight: bold">▨ 증기 보일러</p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="2">수량</th>
-				<th rowspan="2">용도</th>
-				<th rowspan="2">형식</th>
-				<th>최고사용압력</th>
-				<th>용량</th>
-				<th rowspan="2">형식</th>
-				<th rowspan="2">사용연료</th>
-				<th colspan="3">버너</th>
-				<th rowspan="2">전원</th>
-				<th rowspan="2">송풍기</th>
-				<th rowspan="2">급수펌프</th>
-				<th rowspan="2">오일펌프</th>
-				<th rowspan="2">충전기용량</th>
-				<th colspan="4">접속배관구경(A)</th>
-				<th rowspan="2">연도</th>
-				<th rowspan="2">설치 위치</th>
-				<th rowspan="2">비고</th>
-			</tr>
-			<tr>
-				<th>kg/㎠</th>
-				<th>TON/h</th>
-				<th>압력</th>
-				<th>발열량</th>
-				<th>연료소비량</th>
-				<th>연료</th>
-				<th>증기</th>
-				<th>보수</th>
-				<th>합계</th>
-			</tr>
-			<tr>
-				<td rowspan="2">2</td>
-				<td rowspan="2">난방 및 급탕용</td>
-				<td rowspan="2">관류형(콘덴싱)</td>
-				<td rowspan="2">10</td>
-				<td rowspan="2">1.5</td>
-				<td rowspan="2">강압흡수기</td>
-				<td rowspan="2">LNG</td>
-				<td>mm Aq</td>
-				<td>Kcal/N㎥</td>
-				<td>N㎥/h</td>
-				<td rowspan="2">3 / 380 / 60</td>
-				<td rowspan="2">7.5</td>
-				<td rowspan="2">3.7</td>
-				<td rowspan="2">-</td>
-				<td rowspan="2">11.2</td>
-				<td rowspan="2">40</td>
-				<td rowspan="2">80</td>
-				<td rowspan="2">32 / 32</td>
-				<td rowspan="2">32</td>
-				<td rowspan="2">350</td>
-				<td rowspan="2">기계실</td>
-				<td rowspan="2" style="text-align: left; padding: 5px">
-					표준부속 및 밸브류, 연수장치, 연수 Check 포함<br />
-					자동제어용 접점(ON/OFF, 상태전송 등)은 장비 외 제공분
-				</td>
-			</tr>
-			<tr>
-				<td>2000 ~ 4000</td>
-				<td>10,500</td>
-				<td>130.0</td>
-			</tr>
-		</table>
+		<table style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed">
+			<p style="font-size: 16px; font-weight: bold">▨ 증기 보일러</p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="2">수량</th>
+					<th rowspan="2">용도</th>
+					<th rowspan="2">형식</th>
+					<th>최고사용압력</th>
+					<th>용량</th>
+					<th rowspan="2">형식</th>
+					<th rowspan="2">사용연료</th>
+					<th colspan="3">버너</th>
+					<th rowspan="2">전원</th>
+					<th rowspan="2">송풍기</th>
+					<th rowspan="2">급수펌프</th>
+					<th rowspan="2">오일펌프</th>
+					<th rowspan="2">충전기용량</th>
+					<th colspan="4">접속배관구경(A)</th>
+					<th rowspan="2">연도</th>
+					<th rowspan="2">설치 위치</th>
+					<th rowspan="2">비고</th>
+				</tr>
+				<tr>
+					<th>kg/㎠</th>
+					<th>TON/h</th>
+					<th>압력</th>
+					<th>발열량</th>
+					<th>연료소비량</th>
+					<th>연료</th>
+					<th>증기</th>
+					<th>보수</th>
+					<th>합계</th>
+				</tr>
+				<tr>
+					<td rowspan="2">2</td>
+					<td rowspan="2">난방 및 급탕용</td>
+					<td rowspan="2">관류형(콘덴싱)</td>
+					<td rowspan="2">10</td>
+					<td rowspan="2">1.5</td>
+					<td rowspan="2">강압흡수기</td>
+					<td rowspan="2">LNG</td>
+					<td>mm Aq</td>
+					<td>Kcal/N㎥</td>
+					<td>N㎥/h</td>
+					<td rowspan="2">3 / 380 / 60</td>
+					<td rowspan="2">7.5</td>
+					<td rowspan="2">3.7</td>
+					<td rowspan="2">-</td>
+					<td rowspan="2">11.2</td>
+					<td rowspan="2">40</td>
+					<td rowspan="2">80</td>
+					<td rowspan="2">32 / 32</td>
+					<td rowspan="2">32</td>
+					<td rowspan="2">350</td>
+					<td rowspan="2">기계실</td>
+					<td rowspan="2" style="text-align: left; padding: 5px">
+						표준부속 및 밸브류, 연수장치, 연수 Check 포함<br />
+						자동제어용 접점(ON/OFF, 상태전송 등)은 장비 외 제공분
+					</td>
+				</tr>
+				<tr>
+					<td>2000 ~ 4000</td>
+					<td>10,500</td>
+					<td>130.0</td>
+				</tr>
+			</table>
 
-		<p>
-			◉ CONTROL PANEL 포함<br />◉ 정수 연화장치, 약주입장치 포함<br />◉ 보일러 보급수펌프 포함<br />◉ 고효율에너지
-			기자재 인증제품, 저녹스 인증
-		</p>
-		<p style="font-size: 16px; font-weight: bold">▨ 환기 조화기 (Heating Ventilation Unit) &lt;관급자재&gt;</p>
+			<p>
+				◉ CONTROL PANEL 포함<br />◉ 정수 연화장치, 약주입장치 포함<br />◉ 보일러 보급수펌프 포함<br />◉
+				고효율에너지 기자재 인증제품, 저녹스 인증
+			</p>
+			<p style="font-size: 16px; font-weight: bold">▨ 환기 조화기 (Heating Ventilation Unit) &lt;관급자재&gt;</p>
 
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="2">수량</th>
-				<th rowspan="2">형식</th>
-				<th rowspan="2">설치 위치</th>
-				<th colspan="5">급기 송풍기</th>
-				<th colspan="5">환기 송풍기</th>
-				<th colspan="5">가열 코일</th>
-				<th colspan="3">필터</th>
-				<th>전원</th>
-				<th>판형열교환기</th>
-				<th rowspan="2">비고</th>
-			</tr>
-			<tr>
-				<th>형식</th>
-				<th>풍량</th>
-				<th>정압</th>
-				<th>FAN NO</th>
-				<th>모터</th>
-				<th>형식</th>
-				<th>풍량</th>
-				<th>정압</th>
-				<th>FAN NO</th>
-				<th>모터</th>
-				<th>열량</th>
-				<th>입출구온도</th>
-				<th>증기압력</th>
-				<th>증기량</th>
-				<th>코일접면면적</th>
-				<th>미세먼지 제거 필터</th>
-				<th>PRE</th>
-				<th>MEDIUM</th>
-				<th>Φ / V / Hz</th>
-				<th>효율 (난방)</th>
-			</tr>
-			<tr>
-				<td rowspan="2">1</td>
-				<td rowspan="2">수평형</td>
-				<td rowspan="2">공조실</td>
-				<td rowspan="2">Air Foil</td>
-				<td>(CMH)</td>
-				<td>(mmAq)</td>
-				<td rowspan="2">#4.5DS</td>
-				<td>(kW)</td>
-				<td rowspan="2">Air Foil</td>
-				<td>(CMH)</td>
-				<td>(mmAq)</td>
-				<td rowspan="2">#4.5DS</td>
-				<td>(kW)</td>
-				<td>(kcal/h)</td>
-				<td>(EAT) DB(℃)</td>
-				<td>(kg/㎠)</td>
-				<td>(kg/h)</td>
-				<td>(㎡)</td>
-				<td>하천식</td>
-				<td>MERV 5</td>
-				<td>MERV 13</td>
-				<td>3 / 380 / 60</td>
-				<td rowspan="2">50%</td>
-				<td rowspan="2">프리미엄모터 적용. 송풍기는 AMCA 인증 및 고효율 인증 제품 적용</td>
-			</tr>
-			<tr>
-				<td>27,000</td>
-				<td>120</td>
-				<td>15</td>
-				<td>27,000</td>
-				<td>65</td>
-				<td>11</td>
-				<td>226,180</td>
-				<td>12.1 / 37.5</td>
-				<td>2</td>
-				<td>438</td>
-				<td>2.90</td>
-				<td>하천식</td>
-				<td>MERV 5</td>
-				<td>MERV 13</td>
-				<td>3 / 380 / 60</td>
-			</tr>
-		</table>
-		<p>
-			◉ 미세먼지 저감설비는 설정값(미세먼지 및 PM 2.5)에 따라 0~24V 전압을 조정하여 미세먼지를 포집하는 제품
-			적용.<br />
-			◉ 컨트롤 패널 표준: (온도, 습도, 미세먼지, CO₂ 제어)<br />
-			◉ 환기팬 장치는 급기 환풍기 100% 적용.
-		</p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="2">수량</th>
+					<th rowspan="2">형식</th>
+					<th rowspan="2">설치 위치</th>
+					<th colspan="5">급기 송풍기</th>
+					<th colspan="5">환기 송풍기</th>
+					<th colspan="5">가열 코일</th>
+					<th colspan="3">필터</th>
+					<th>전원</th>
+					<th>판형열교환기</th>
+					<th rowspan="2">비고</th>
+				</tr>
+				<tr>
+					<th>형식</th>
+					<th>풍량</th>
+					<th>정압</th>
+					<th>FAN NO</th>
+					<th>모터</th>
+					<th>형식</th>
+					<th>풍량</th>
+					<th>정압</th>
+					<th>FAN NO</th>
+					<th>모터</th>
+					<th>열량</th>
+					<th>입출구온도</th>
+					<th>증기압력</th>
+					<th>증기량</th>
+					<th>코일접면면적</th>
+					<th>미세먼지 제거 필터</th>
+					<th>PRE</th>
+					<th>MEDIUM</th>
+					<th>Φ / V / Hz</th>
+					<th>효율 (난방)</th>
+				</tr>
+				<tr>
+					<td rowspan="2">1</td>
+					<td rowspan="2">수평형</td>
+					<td rowspan="2">공조실</td>
+					<td rowspan="2">Air Foil</td>
+					<td>(CMH)</td>
+					<td>(mmAq)</td>
+					<td rowspan="2">#4.5DS</td>
+					<td>(kW)</td>
+					<td rowspan="2">Air Foil</td>
+					<td>(CMH)</td>
+					<td>(mmAq)</td>
+					<td rowspan="2">#4.5DS</td>
+					<td>(kW)</td>
+					<td>(kcal/h)</td>
+					<td>(EAT) DB(℃)</td>
+					<td>(kg/㎠)</td>
+					<td>(kg/h)</td>
+					<td>(㎡)</td>
+					<td>하천식</td>
+					<td>MERV 5</td>
+					<td>MERV 13</td>
+					<td>3 / 380 / 60</td>
+					<td rowspan="2">50%</td>
+					<td rowspan="2">프리미엄모터 적용. 송풍기는 AMCA 인증 및 고효율 인증 제품 적용</td>
+				</tr>
+				<tr>
+					<td>27,000</td>
+					<td>120</td>
+					<td>15</td>
+					<td>27,000</td>
+					<td>65</td>
+					<td>11</td>
+					<td>226,180</td>
+					<td>12.1 / 37.5</td>
+					<td>2</td>
+					<td>438</td>
+					<td>2.90</td>
+					<td>하천식</td>
+					<td>MERV 5</td>
+					<td>MERV 13</td>
+					<td>3 / 380 / 60</td>
+				</tr>
+			</table>
+			<p>
+				◉ 미세먼지 저감설비는 설정값(미세먼지 및 PM 2.5)에 따라 0~24V 전압을 조정하여 미세먼지를 포집하는 제품
+				적용.<br />
+				◉ 컨트롤 패널 표준: (온도, 습도, 미세먼지, CO₂ 제어)<br />
+				◉ 환기팬 장치는 급기 환풍기 100% 적용.
+			</p>
 
-		<p style="font-size: 16px; font-weight: bold">▨ 탱크<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2; border: 1px solid #000">
-				<th rowspan="2">수량</th>
-				<th rowspan="2">형식</th>
-				<th rowspan="2">설치장소</th>
-				<th rowspan="2">용도</th>
-				<th>용량</th>
-				<th colspan="4">크기</th>
-				<th rowspan="2">재질</th>
-				<th rowspan="2">보온</th>
-				<th colspan="2">두께</th>
-				<th rowspan="2">비고</th>
-			</tr>
-			<tr>
-				<th>ℓ</th>
-				<th>ø</th>
-				<th>L</th>
-				<th>W</th>
-				<th>H</th>
-				<th>강판</th>
-				<th>동판</th>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>각형</td>
-				<td>지하층 기계실</td>
-				<td>시수용</td>
-				<td>52,500</td>
-				<td>ㅡ</td>
-				<td>7,000</td>
-				<td>2,500</td>
-				<td>3,000</td>
-				<td>S.M.C</td>
-				<td>비보온 (표준사양 흡조)</td>
-				<td>-</td>
-				<td>-</td>
-				<td>내부관라이, 기타표준부속품 일체구비</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>각형</td>
-				<td>지하층 기계실</td>
-				<td>소화용수</td>
-				<td>52,500</td>
-				<td>ㅡ</td>
-				<td>7,000</td>
-				<td>2,500</td>
-				<td>3,000</td>
-				<td>S.M.C</td>
-				<td>비보온 (표준사양 흡조)</td>
-				<td>-</td>
-				<td>-</td>
-				<td>기타표준부속품 일체구비 (소방내진설계에 따른 구조조인 및 방파판 적용)</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>각형</td>
-				<td>지하층 기계실</td>
-				<td>수전간 비상급용</td>
-				<td>36,000</td>
-				<td>ㅡ</td>
-				<td>4,000</td>
-				<td>3,000</td>
-				<td>3,000</td>
-				<td>S.M.C</td>
-				<td>보온 (표준사양 흡조)</td>
-				<td>-</td>
-				<td>-</td>
-				<td>기타표준부속품 일체구비</td>
-			</tr>
-		</table>
+			<p style="font-size: 16px; font-weight: bold">▨ 탱크<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2; border: 1px solid #000">
+					<th rowspan="2">수량</th>
+					<th rowspan="2">형식</th>
+					<th rowspan="2">설치장소</th>
+					<th rowspan="2">용도</th>
+					<th>용량</th>
+					<th colspan="4">크기</th>
+					<th rowspan="2">재질</th>
+					<th rowspan="2">보온</th>
+					<th colspan="2">두께</th>
+					<th rowspan="2">비고</th>
+				</tr>
+				<tr>
+					<th>ℓ</th>
+					<th>ø</th>
+					<th>L</th>
+					<th>W</th>
+					<th>H</th>
+					<th>강판</th>
+					<th>동판</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>각형</td>
+					<td>지하층 기계실</td>
+					<td>시수용</td>
+					<td>52,500</td>
+					<td>ㅡ</td>
+					<td>7,000</td>
+					<td>2,500</td>
+					<td>3,000</td>
+					<td>S.M.C</td>
+					<td>비보온 (표준사양 흡조)</td>
+					<td>-</td>
+					<td>-</td>
+					<td>내부관라이, 기타표준부속품 일체구비</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>각형</td>
+					<td>지하층 기계실</td>
+					<td>소화용수</td>
+					<td>52,500</td>
+					<td>ㅡ</td>
+					<td>7,000</td>
+					<td>2,500</td>
+					<td>3,000</td>
+					<td>S.M.C</td>
+					<td>비보온 (표준사양 흡조)</td>
+					<td>-</td>
+					<td>-</td>
+					<td>기타표준부속품 일체구비 (소방내진설계에 따른 구조조인 및 방파판 적용)</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>각형</td>
+					<td>지하층 기계실</td>
+					<td>수전간 비상급용</td>
+					<td>36,000</td>
+					<td>ㅡ</td>
+					<td>4,000</td>
+					<td>3,000</td>
+					<td>3,000</td>
+					<td>S.M.C</td>
+					<td>보온 (표준사양 흡조)</td>
+					<td>-</td>
+					<td>-</td>
+					<td>기타표준부속품 일체구비</td>
+				</tr>
+			</table>
 
-		<p style="font-size: 16px; font-weight: bold">▨ 펌 프<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="2">형식</th>
-				<th rowspan="2">설치장소</th>
-				<th rowspan="2">수량</th>
-				<th rowspan="2">용도</th>
-				<th rowspan="2">유량</th>
-				<th rowspan="2">양정</th>
-				<th rowspan="2">동력</th>
-				<th rowspan="2">전원</th>
-				<th rowspan="2">최고사용압력</th>
-				<th colspan="2">효율</th>
-				<th rowspan="2">고효율기자재 인증제품</th>
-				<th rowspan="2">비고</th>
-			</tr>
-			<tr>
-				<th>A</th>
-				<th>B</th>
-			</tr>
-			<tr>
-				<td rowspan="2">부스터</td>
-				<td rowspan="2">지하층 기계실</td>
-				<td>대</td>
-				<td rowspan="2">시수용</td>
-				<td>l/min</td>
-				<td>m</td>
-				<td>kW</td>
-				<td>Ph×V×Hz</td>
-				<td>kg/㎠</td>
-				<td>%</td>
-				<td>%</td>
-				<td>○</td>
-				<td rowspan="2">개별인버터 제어, Mechanical Seal, KS인증제품 또는 KS에서 정한 효율 이상</td>
-			</tr>
-			<tr>
-				<td>1 Set</td>
-				<td>200 × 3</td>
-				<td>65</td>
-				<td>1.5 × 3</td>
-				<td>3×380×60</td>
-				<td>-</td>
-				<td>63.7</td>
-				<td>62.4</td>
-				<td>○</td>
-			</tr>
-		</table>
+			<p style="font-size: 16px; font-weight: bold">▨ 펌 프<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="2">형식</th>
+					<th rowspan="2">설치장소</th>
+					<th rowspan="2">수량</th>
+					<th rowspan="2">용도</th>
+					<th rowspan="2">유량</th>
+					<th rowspan="2">양정</th>
+					<th rowspan="2">동력</th>
+					<th rowspan="2">전원</th>
+					<th rowspan="2">최고사용압력</th>
+					<th colspan="2">효율</th>
+					<th rowspan="2">고효율기자재 인증제품</th>
+					<th rowspan="2">비고</th>
+				</tr>
+				<tr>
+					<th>A</th>
+					<th>B</th>
+				</tr>
+				<tr>
+					<td rowspan="2">부스터</td>
+					<td rowspan="2">지하층 기계실</td>
+					<td>대</td>
+					<td rowspan="2">시수용</td>
+					<td>l/min</td>
+					<td>m</td>
+					<td>kW</td>
+					<td>Ph×V×Hz</td>
+					<td>kg/㎠</td>
+					<td>%</td>
+					<td>%</td>
+					<td>○</td>
+					<td rowspan="2">개별인버터 제어, Mechanical Seal, KS인증제품 또는 KS에서 정한 효율 이상</td>
+				</tr>
+				<tr>
+					<td>1 Set</td>
+					<td>200 × 3</td>
+					<td>65</td>
+					<td>1.5 × 3</td>
+					<td>3×380×60</td>
+					<td>-</td>
+					<td>63.7</td>
+					<td>62.4</td>
+					<td>○</td>
+				</tr>
+			</table>
 
-		<p style="font-size: 16px; font-weight: bold">▨ 천장형 온풍기<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="3">기호</th>
-				<th colspan="3">수량</th>
-				<th rowspan="3">명칭</th>
-				<th rowspan="3">형식</th>
-				<th rowspan="2">열량</th>
-				<th rowspan="2">소비 전력</th>
-				<th rowspan="2">전원</th>
-				<th rowspan="2">제품사양</th>
-				<th rowspan="2">천정타공크기</th>
-				<th rowspan="3">설치 위치</th>
-				<th rowspan="3">비고</th>
-			</tr>
-			<tr>
-				<th rowspan="2">1층</th>
-				<th rowspan="2">2층</th>
-				<th rowspan="2">4층</th>
-			</tr>
-			<tr>
-				<th>kcal/hr</th>
-				<th>W</th>
-				<th>PH / V / Hz</th>
-				<th>Wmm x Dmm x Hmm</th>
-				<th>Wmm x Dmm x Hmm</th>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>4</td>
-				<td>4</td>
-				<td>4</td>
-				<td>천정형 온풍기</td>
-				<td>천정형</td>
-				<td>1,290</td>
-				<td>1,500</td>
-				<td>1 / 220 / 60</td>
-				<td>460 x 252 x 220</td>
-				<td>550 x 280 x 220</td>
-				<td>화장실/탈의실</td>
-				<td>기타 표준 부속품 일체구비, 유선리모콘 포함</td>
-			</tr>
-		</table>
+			<p style="font-size: 16px; font-weight: bold">▨ 천장형 온풍기<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="3">기호</th>
+					<th colspan="3">수량</th>
+					<th rowspan="3">명칭</th>
+					<th rowspan="3">형식</th>
+					<th rowspan="2">열량</th>
+					<th rowspan="2">소비 전력</th>
+					<th rowspan="2">전원</th>
+					<th rowspan="2">제품사양</th>
+					<th rowspan="2">천정타공크기</th>
+					<th rowspan="3">설치 위치</th>
+					<th rowspan="3">비고</th>
+				</tr>
+				<tr>
+					<th rowspan="2">1층</th>
+					<th rowspan="2">2층</th>
+					<th rowspan="2">4층</th>
+				</tr>
+				<tr>
+					<th>kcal/hr</th>
+					<th>W</th>
+					<th>PH / V / Hz</th>
+					<th>Wmm x Dmm x Hmm</th>
+					<th>Wmm x Dmm x Hmm</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>4</td>
+					<td>4</td>
+					<td>4</td>
+					<td>천정형 온풍기</td>
+					<td>천정형</td>
+					<td>1,290</td>
+					<td>1,500</td>
+					<td>1 / 220 / 60</td>
+					<td>460 x 252 x 220</td>
+					<td>550 x 280 x 220</td>
+					<td>화장실/탈의실</td>
+					<td>기타 표준 부속품 일체구비, 유선리모콘 포함</td>
+				</tr>
+			</table>
 
-		<p style="font-size: 16px; font-weight: bold">▨ 전기온수기<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="2">기호</th>
-				<th rowspan="2">수량</th>
-				<th rowspan="2">명칭</th>
-				<th rowspan="2">형식</th>
-				<th>용량</th>
-				<th>소비 전력</th>
-				<th>전원</th>
-				<th>제품사양</th>
-				<th>사용압력</th>
-				<th rowspan="2">비고</th>
-			</tr>
-			<tr>
-				<th>LIT</th>
-				<th>W</th>
-				<th>PH / V / Hz</th>
-				<th>Wmm x Dmm x Hmm</th>
-				<th>Mpa</th>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>1</td>
-				<td>전기온수기</td>
-				<td>저장식</td>
-				<td>30</td>
-				<td>2,500</td>
-				<td>1 / 220 / 60</td>
-				<td>445 x 445 x 360</td>
-				<td>0.02~0.6</td>
-				<td>기타 표준 부속품 일체구비</td>
-			</tr>
-		</table>
+			<p style="font-size: 16px; font-weight: bold">▨ 전기온수기<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="2">기호</th>
+					<th rowspan="2">수량</th>
+					<th rowspan="2">명칭</th>
+					<th rowspan="2">형식</th>
+					<th>용량</th>
+					<th>소비 전력</th>
+					<th>전원</th>
+					<th>제품사양</th>
+					<th>사용압력</th>
+					<th rowspan="2">비고</th>
+				</tr>
+				<tr>
+					<th>LIT</th>
+					<th>W</th>
+					<th>PH / V / Hz</th>
+					<th>Wmm x Dmm x Hmm</th>
+					<th>Mpa</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>1</td>
+					<td>전기온수기</td>
+					<td>저장식</td>
+					<td>30</td>
+					<td>2,500</td>
+					<td>1 / 220 / 60</td>
+					<td>445 x 445 x 360</td>
+					<td>0.02~0.6</td>
+					<td>기타 표준 부속품 일체구비</td>
+				</tr>
+			</table>
 
-		<p style="font-size: 16px; font-weight: bold">▨ 열교환기<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="3">수량</th>
-				<th rowspan="3">형식</th>
-				<th rowspan="3">용도</th>
-				<th rowspan="3">설치위치</th>
-				<th rowspan="2">가열능력</th>
-				<th rowspan="2">증기압력</th>
-				<th rowspan="2">증기량</th>
-				<th colspan="3">온수 온도</th>
-				<th colspan="4">가열 코일</th>
-				<th rowspan="2">손실수두</th>
-				<th colspan="2" rowspan="2">도장</th>
-				<th rowspan="3">단열 및 마감</th>
-				<th rowspan="3">비고</th>
-			</tr>
-			<tr>
-				<th>입구</th>
-				<th>출구</th>
-				<th>사용압</th>
-				<th>전열면적</th>
-				<th rowspan="2">재질</th>
-				<th colspan="2">온수 온도</th>
-			</tr>
+			<p style="font-size: 16px; font-weight: bold">▨ 열교환기<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="3">수량</th>
+					<th rowspan="3">형식</th>
+					<th rowspan="3">용도</th>
+					<th rowspan="3">설치위치</th>
+					<th rowspan="2">가열능력</th>
+					<th rowspan="2">증기압력</th>
+					<th rowspan="2">증기량</th>
+					<th colspan="3">온수 온도</th>
+					<th colspan="4">가열 코일</th>
+					<th rowspan="2">손실수두</th>
+					<th colspan="2" rowspan="2">도장</th>
+					<th rowspan="3">단열 및 마감</th>
+					<th rowspan="3">비고</th>
+				</tr>
+				<tr>
+					<th>입구</th>
+					<th>출구</th>
+					<th>사용압</th>
+					<th>전열면적</th>
+					<th rowspan="2">재질</th>
+					<th colspan="2">온수 온도</th>
+				</tr>
 
-			<tr>
-				<th>kcal/h</th>
-				<th>kg/㎠</th>
-				<th>kg/hr</th>
-				<td>°C</td>
-				<td>°C</td>
-				<td>kg/㎠</td>
-				<td>㎡</td>
-				<td>입구</td>
-				<td>출구</td>
-				<td>mAq</td>
-				<td>내부</td>
-				<td>외부</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>판형 열교환기</td>
-				<td>수영장 바닥난방용</td>
-				<td>지하층 기계실</td>
-				<td>100,000</td>
-				<td>2</td>
-				<td>194</td>
-				<td>50</td>
-				<td>60</td>
-				<td>5</td>
-				<td>-</td>
-				<td rowspan="2">STS-316</td>
-				<td rowspan="2">입구</td>
-				<td>50</td>
-				<td>60</td>
-				<td>-</td>
-				<td>-</td>
-				<td>유리솜 THK50 + 0.45T 칼라함석</td>
-				<td>표준부속품 일체구비</td>
-			</tr>
-		</table>
+				<tr>
+					<th>kcal/h</th>
+					<th>kg/㎠</th>
+					<th>kg/hr</th>
+					<td>°C</td>
+					<td>°C</td>
+					<td>kg/㎠</td>
+					<td>㎡</td>
+					<td>입구</td>
+					<td>출구</td>
+					<td>mAq</td>
+					<td>내부</td>
+					<td>외부</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>판형 열교환기</td>
+					<td>수영장 바닥난방용</td>
+					<td>지하층 기계실</td>
+					<td>100,000</td>
+					<td>2</td>
+					<td>194</td>
+					<td>50</td>
+					<td>60</td>
+					<td>5</td>
+					<td>-</td>
+					<td rowspan="2">STS-316</td>
+					<td rowspan="2">입구</td>
+					<td>50</td>
+					<td>60</td>
+					<td>-</td>
+					<td>-</td>
+					<td>유리솜 THK50 + 0.45T 칼라함석</td>
+					<td>표준부속품 일체구비</td>
+				</tr>
+			</table>
 
-		<p style="font-size: 16px; font-weight: bold">▨ 온수가열기<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="3">수량</th>
-				<th rowspan="3">형식</th>
-				<th rowspan="3">용도</th>
-				<th rowspan="2">탱크용량</th>
-				<th rowspan="2">가열량</th>
-				<th colspan="2">열 원</th>
-				<th rowspan="2">온수압력</th>
-				<th rowspan="2">규격</th>
-				<th rowspan="3">재질</th>
-				<th rowspan="2" colspan="2">2차입출구온도</th>
-				<th rowspan="3">보온</th>
-				<th rowspan="2">전열면적</th>
-				<th colspan="5">관 경</th>
-				<th rowspan="3">비고</th>
-			</tr>
-			<tr>
-				<th>증기량</th>
-				<th>사용압력</th>
-				<th>증기</th>
-				<th>응축수</th>
-				<th>급수</th>
+			<p style="font-size: 16px; font-weight: bold">▨ 온수가열기<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="3">수량</th>
+					<th rowspan="3">형식</th>
+					<th rowspan="3">용도</th>
+					<th rowspan="2">탱크용량</th>
+					<th rowspan="2">가열량</th>
+					<th colspan="2">열 원</th>
+					<th rowspan="2">온수압력</th>
+					<th rowspan="2">규격</th>
+					<th rowspan="3">재질</th>
+					<th rowspan="2" colspan="2">2차입출구온도</th>
+					<th rowspan="3">보온</th>
+					<th rowspan="2">전열면적</th>
+					<th colspan="5">관 경</th>
+					<th rowspan="3">비고</th>
+				</tr>
+				<tr>
+					<th>증기량</th>
+					<th>사용압력</th>
+					<th>증기</th>
+					<th>응축수</th>
+					<th>급수</th>
 
-				<th>급탕</th>
-				<th>자동밸브</th>
-			</tr>
-			<tr>
-				<th>lit</th>
-				<th>kcal/h</th>
-				<th>kcal/h</th>
-				<th>kg/h</th>
-				<th>kg/cm²</th>
+					<th>급탕</th>
+					<th>자동밸브</th>
+				</tr>
+				<tr>
+					<th>lit</th>
+					<th>kcal/h</th>
+					<th>kcal/h</th>
+					<th>kg/h</th>
+					<th>kg/cm²</th>
 
-				<th>L × W × H</th>
-				<th colspan="2">°C</th>
+					<th>L × W × H</th>
+					<th colspan="2">°C</th>
 
-				<th>㎡</th>
-				<th>A</th>
-				<th>A</th>
-				<th>A</th>
-				<th>A</th>
-				<th>A</th>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>순간식</td>
-				<td>급탕용</td>
-				<td>10,000</td>
-				<td>640,000</td>
-				<td>1058</td>
-				<td>2</td>
-				<td>10</td>
+					<th>㎡</th>
+					<th>A</th>
+					<th>A</th>
+					<th>A</th>
+					<th>A</th>
+					<th>A</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>순간식</td>
+					<td>급탕용</td>
+					<td>10,000</td>
+					<td>640,000</td>
+					<td>1058</td>
+					<td>2</td>
+					<td>10</td>
 
-				<td>1,220×900×1,870</td>
-				<td>STS 316</td>
-				<td>5</td>
-				<td>60</td>
-				<td>50mm 그라스울 + 0.45 mm 칼라강판</td>
-				<td>-</td>
-				<td>50</td>
-				<td>50</td>
-				<td>50</td>
-				<td>50</td>
-				<td>50</td>
-				<td>전자동시스템(자동콘트롤, 자동밸브, 온도센서 등 포함), 기타 표준부속품 일체구비</td>
-			</tr>
-		</table>
-		<p>◉ 콘트롤 판넬 포함(상태감시및 기동정지 자동제어 접점 인출)</p>
+					<td>1,220×900×1,870</td>
+					<td>STS 316</td>
+					<td>5</td>
+					<td>60</td>
+					<td>50mm 그라스울 + 0.45 mm 칼라강판</td>
+					<td>-</td>
+					<td>50</td>
+					<td>50</td>
+					<td>50</td>
+					<td>50</td>
+					<td>50</td>
+					<td>전자동시스템(자동콘트롤, 자동밸브, 온도센서 등 포함), 기타 표준부속품 일체구비</td>
+				</tr>
+			</table>
+			<p>◉ 콘트롤 판넬 포함(상태감시및 기동정지 자동제어 접점 인출)</p>
 
-		<p style="font-size: 16px; font-weight: bold">▨ 응축수 탱크<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="3">수량</th>
-				<th rowspan="3">형식</th>
-				<th rowspan="3">설치장소</th>
-				<th rowspan="2">용량</th>
-				<th colspan="4">크기</th>
-				<th rowspan="3">재질</th>
-				<th colspan="2">보온</th>
-				<th rowspan="3">비고</th>
-			</tr>
-			<tr>
-				<th>Ø</th>
-				<th>L</th>
-				<th>W</th>
-				<th>H</th>
-				<th rowspan="2">재질</th>
-				<th>두께</th>
-			</tr>
-			<tr>
-				<th>ℓ</th>
-				<th>mm</th>
-				<th>mm</th>
-				<th>mm</th>
-				<th>mm</th>
-				<th>mm</th>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>각형</td>
-				<td>지하 기계실</td>
-				<td>6,000</td>
-				<td>-</td>
-				<td>2,000</td>
-				<td>2,000</td>
-				<td>1,500</td>
-				<td>S.T.S</td>
-				<td>그라스울 + <br />칼라강선마감(0.5t)</td>
-				<td>50</td>
-				<td>기타표준부속품 일체구비</td>
-			</tr>
-		</table>
-		<p style="font-size: 16px; font-weight: bold">▨ 밀폐형 팽창 탱크<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="3">수량</th>
-				<th rowspan="3">형식</th>
-				<th rowspan="3">설치장소</th>
-				<th rowspan="3">용도</th>
-				<th rowspan="2">용량</th>
-				<th colspan="4">크기</th>
-				<th rowspan="3">재질</th>
-				<th colspan="2">보온</th>
-				<th rowspan="3">최고사용압력</th>
-				<th rowspan="3">비고</th>
-			</tr>
-			<tr>
-				<th>Ø</th>
-				<th>L</th>
-				<th>W</th>
-				<th>H</th>
-				<th rowspan="2">재질</th>
-				<th>두께</th>
-			</tr>
-			<tr>
-				<th>ℓ</th>
-				<th>mm</th>
-				<th>mm</th>
-				<th>mm</th>
-				<th>mm</th>
-				<th>mm</th>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>BLADDER</td>
-				<td>지하층 기계실</td>
-				<td>HEX-1 일폐식 팽창탱크</td>
-				<td>600</td>
-				<td>775</td>
-				<td>-</td>
-				<td>-</td>
-				<td>1,700</td>
-				<td>SS400</td>
-				<td>-</td>
-				<td>-</td>
-				<td>10</td>
-				<td>기타표준부속품 일체구비, 한국산업안전공단 검사품</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>BLADDER</td>
-				<td>지하층 기계실</td>
-				<td>EX-1 일폐식 팽창탱크</td>
-				<td>300</td>
-				<td>610</td>
-				<td>-</td>
-				<td>-</td>
-				<td>1,410</td>
-				<td>SS400</td>
-				<td>-</td>
-				<td>-</td>
-				<td>10</td>
-				<td>기타표준부속품 일체구비, 한국산업안전공단 검사품</td>
-			</tr>
-		</table>
-		<p style="font-size: 16px; font-weight: bold">▨ 증기해더<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="3">수량</th>
-				<th rowspan="3">형식</th>
-				<th rowspan="3">설치장소</th>
-				<th rowspan="3">용도</th>
-				<th rowspan="2">용량</th>
-				<th colspan="4">크기</th>
-				<th rowspan="3">재질</th>
-				<th colspan="2">보온</th>
-				<th rowspan="3">최고사용압력</th>
-				<th rowspan="3">비고</th>
-			</tr>
-			<tr>
-				<th>Ø</th>
-				<th>L</th>
-				<th>W</th>
-				<th>H</th>
-				<th rowspan="2">재질</th>
-				<th>두께</th>
-			</tr>
-			<tr>
-				<th>ℓ</th>
-				<th>mm</th>
-				<th>mm</th>
-				<th>mm</th>
-				<th>mm</th>
-				<th>mm</th>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>원통형</td>
-				<td>지하층 기계실</td>
-				<td>스팀 공급 헤더(2kg/㎠)</td>
-				<td>-</td>
-				<td>250</td>
-				<td>2,800</td>
-				<td>-</td>
-				<td>1,400</td>
-				<td>특관강 SCH 40</td>
-				<td>그라스울 + <br />칼라강선마감(0.5t)</td>
-				<td>50</td>
-				<td>-</td>
-				<td>기타표준부속품 일체구비</td>
-			</tr>
-		</table>
+			<p style="font-size: 16px; font-weight: bold">▨ 응축수 탱크<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="3">수량</th>
+					<th rowspan="3">형식</th>
+					<th rowspan="3">설치장소</th>
+					<th rowspan="2">용량</th>
+					<th colspan="4">크기</th>
+					<th rowspan="3">재질</th>
+					<th colspan="2">보온</th>
+					<th rowspan="3">비고</th>
+				</tr>
+				<tr>
+					<th>Ø</th>
+					<th>L</th>
+					<th>W</th>
+					<th>H</th>
+					<th rowspan="2">재질</th>
+					<th>두께</th>
+				</tr>
+				<tr>
+					<th>ℓ</th>
+					<th>mm</th>
+					<th>mm</th>
+					<th>mm</th>
+					<th>mm</th>
+					<th>mm</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>각형</td>
+					<td>지하 기계실</td>
+					<td>6,000</td>
+					<td>-</td>
+					<td>2,000</td>
+					<td>2,000</td>
+					<td>1,500</td>
+					<td>S.T.S</td>
+					<td>그라스울 + <br />칼라강선마감(0.5t)</td>
+					<td>50</td>
+					<td>기타표준부속품 일체구비</td>
+				</tr>
+			</table>
+			<p style="font-size: 16px; font-weight: bold">▨ 밀폐형 팽창 탱크<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="3">수량</th>
+					<th rowspan="3">형식</th>
+					<th rowspan="3">설치장소</th>
+					<th rowspan="3">용도</th>
+					<th rowspan="2">용량</th>
+					<th colspan="4">크기</th>
+					<th rowspan="3">재질</th>
+					<th colspan="2">보온</th>
+					<th rowspan="3">최고사용압력</th>
+					<th rowspan="3">비고</th>
+				</tr>
+				<tr>
+					<th>Ø</th>
+					<th>L</th>
+					<th>W</th>
+					<th>H</th>
+					<th rowspan="2">재질</th>
+					<th>두께</th>
+				</tr>
+				<tr>
+					<th>ℓ</th>
+					<th>mm</th>
+					<th>mm</th>
+					<th>mm</th>
+					<th>mm</th>
+					<th>mm</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>BLADDER</td>
+					<td>지하층 기계실</td>
+					<td>HEX-1 일폐식 팽창탱크</td>
+					<td>600</td>
+					<td>775</td>
+					<td>-</td>
+					<td>-</td>
+					<td>1,700</td>
+					<td>SS400</td>
+					<td>-</td>
+					<td>-</td>
+					<td>10</td>
+					<td>기타표준부속품 일체구비, 한국산업안전공단 검사품</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>BLADDER</td>
+					<td>지하층 기계실</td>
+					<td>EX-1 일폐식 팽창탱크</td>
+					<td>300</td>
+					<td>610</td>
+					<td>-</td>
+					<td>-</td>
+					<td>1,410</td>
+					<td>SS400</td>
+					<td>-</td>
+					<td>-</td>
+					<td>10</td>
+					<td>기타표준부속품 일체구비, 한국산업안전공단 검사품</td>
+				</tr>
+			</table>
+			<p style="font-size: 16px; font-weight: bold">▨ 증기해더<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="3">수량</th>
+					<th rowspan="3">형식</th>
+					<th rowspan="3">설치장소</th>
+					<th rowspan="3">용도</th>
+					<th rowspan="2">용량</th>
+					<th colspan="4">크기</th>
+					<th rowspan="3">재질</th>
+					<th colspan="2">보온</th>
+					<th rowspan="3">최고사용압력</th>
+					<th rowspan="3">비고</th>
+				</tr>
+				<tr>
+					<th>Ø</th>
+					<th>L</th>
+					<th>W</th>
+					<th>H</th>
+					<th rowspan="2">재질</th>
+					<th>두께</th>
+				</tr>
+				<tr>
+					<th>ℓ</th>
+					<th>mm</th>
+					<th>mm</th>
+					<th>mm</th>
+					<th>mm</th>
+					<th>mm</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>원통형</td>
+					<td>지하층 기계실</td>
+					<td>스팀 공급 헤더(2kg/㎠)</td>
+					<td>-</td>
+					<td>250</td>
+					<td>2,800</td>
+					<td>-</td>
+					<td>1,400</td>
+					<td>특관강 SCH 40</td>
+					<td>그라스울 + <br />칼라강선마감(0.5t)</td>
+					<td>50</td>
+					<td>-</td>
+					<td>기타표준부속품 일체구비</td>
+				</tr>
+			</table>
 
-		<p style="font-size: 16px; font-weight: bold">▨ 펌프<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="3">형식</th>
-				<th rowspan="3">명칭</th>
-				<th rowspan="3">설치장소</th>
-				<th rowspan="2">수량</th>
-				<th rowspan="3">용도</th>
-				<th rowspan="2">유량</th>
-				<th rowspan="2">양정</th>
-				<th rowspan="2">동력</th>
-				<th rowspan="2">전원</th>
-				<th colspan="2">효율</th>
-				<th rowspan="3">고효율기자재 인증제품</th>
-				<th rowspan="3">비고</th>
-			</tr>
-			<tr>
-				<th>A</th>
-				<th>B</th>
-			</tr>
-			<tr>
-				<th>대</th>
-				<th>ℓ/min</th>
-				<th>m</th>
-				<th>kW</th>
-				<th>Ph×V×Hz</th>
-				<th>%</th>
-				<th>%</th>
-			</tr>
-			<tr>
-				<td>인라인</td>
-				<td>온수 순환펌프</td>
-				<td>지하층 기계실</td>
-				<td>2</td>
-				<td>EX-1(난방열교환기용)</td>
-				<td>150</td>
-				<td>15</td>
-				<td>1.5</td>
-				<td>3×380×60</td>
-				<td>56.7</td>
-				<td>56.1</td>
-				<td>인버터제어</td>
-				<td>1대 예비, Mechanical Seal, KS인증제품 또는 KS에서 정한 효율 이상</td>
-			</tr>
-			<tr>
-				<td>인라인</td>
-				<td>급탕 순환펌프</td>
-				<td>지하층 기계실</td>
-				<td>2</td>
-				<td>HEX-1(온수가열기)</td>
-				<td>100</td>
-				<td>10</td>
-				<td>0.75</td>
-				<td>3×380×60</td>
-				<td>70.0</td>
-				<td>69.5</td>
-				<td>-</td>
-				<td>1대 예비, 기타 표준 부속품 일체구비, 메카니컬씰, 고효율 모터 사용</td>
-			</tr>
-			<tr>
-				<td>웨스코</td>
-				<td>보일러 급수펌프</td>
-				<td>지하층 기계실</td>
-				<td>4</td>
-				<td>보일러 급수용</td>
-				<td>60</td>
-				<td>10</td>
-				<td>3.7</td>
-				<td>3×380×60</td>
-				<td>-</td>
-				<td>-</td>
-				<td>-</td>
-				<td>2대 예비, 기타 표준 부속품 일체구비, 메카니컬씰, 고효율 모터 사용</td>
-			</tr>
-			<tr>
-				<td>수중형</td>
-				<td>배수펌프</td>
-				<td>지하층 기계실</td>
-				<td>2</td>
-				<td>기계실 배수용</td>
-				<td>300</td>
-				<td>12</td>
-				<td>2.2</td>
-				<td>3×380×60</td>
-				<td>-</td>
-				<td>-</td>
-				<td>-</td>
-				<td>
-					순차기동, 비상시 동시 운전, Mechanical Seal, 자동탈착장치 적용, KS인증제품 또는 KS에서 정한 효율
-					이상
-				</td>
-			</tr>
-		</table>
+			<p style="font-size: 16px; font-weight: bold">▨ 펌프<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="3">형식</th>
+					<th rowspan="3">명칭</th>
+					<th rowspan="3">설치장소</th>
+					<th rowspan="2">수량</th>
+					<th rowspan="3">용도</th>
+					<th rowspan="2">유량</th>
+					<th rowspan="2">양정</th>
+					<th rowspan="2">동력</th>
+					<th rowspan="2">전원</th>
+					<th colspan="2">효율</th>
+					<th rowspan="3">고효율기자재 인증제품</th>
+					<th rowspan="3">비고</th>
+				</tr>
+				<tr>
+					<th>A</th>
+					<th>B</th>
+				</tr>
+				<tr>
+					<th>대</th>
+					<th>ℓ/min</th>
+					<th>m</th>
+					<th>kW</th>
+					<th>Ph×V×Hz</th>
+					<th>%</th>
+					<th>%</th>
+				</tr>
+				<tr>
+					<td>인라인</td>
+					<td>온수 순환펌프</td>
+					<td>지하층 기계실</td>
+					<td>2</td>
+					<td>EX-1(난방열교환기용)</td>
+					<td>150</td>
+					<td>15</td>
+					<td>1.5</td>
+					<td>3×380×60</td>
+					<td>56.7</td>
+					<td>56.1</td>
+					<td>인버터제어</td>
+					<td>1대 예비, Mechanical Seal, KS인증제품 또는 KS에서 정한 효율 이상</td>
+				</tr>
+				<tr>
+					<td>인라인</td>
+					<td>급탕 순환펌프</td>
+					<td>지하층 기계실</td>
+					<td>2</td>
+					<td>HEX-1(온수가열기)</td>
+					<td>100</td>
+					<td>10</td>
+					<td>0.75</td>
+					<td>3×380×60</td>
+					<td>70.0</td>
+					<td>69.5</td>
+					<td>-</td>
+					<td>1대 예비, 기타 표준 부속품 일체구비, 메카니컬씰, 고효율 모터 사용</td>
+				</tr>
+				<tr>
+					<td>웨스코</td>
+					<td>보일러 급수펌프</td>
+					<td>지하층 기계실</td>
+					<td>4</td>
+					<td>보일러 급수용</td>
+					<td>60</td>
+					<td>10</td>
+					<td>3.7</td>
+					<td>3×380×60</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>2대 예비, 기타 표준 부속품 일체구비, 메카니컬씰, 고효율 모터 사용</td>
+				</tr>
+				<tr>
+					<td>수중형</td>
+					<td>배수펌프</td>
+					<td>지하층 기계실</td>
+					<td>2</td>
+					<td>기계실 배수용</td>
+					<td>300</td>
+					<td>12</td>
+					<td>2.2</td>
+					<td>3×380×60</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>
+						순차기동, 비상시 동시 운전, Mechanical Seal, 자동탈착장치 적용, KS인증제품 또는 KS에서 정한 효율
+						이상
+					</td>
+				</tr>
+			</table>
 
-		<p style="font-size: 16px; font-weight: bold">▨ 송풍기<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th colspan="6">수량 상세</th>
-				<th rowspan="2">명칭</th>
-				<th rowspan="2">형식</th>
-				<th rowspan="2">용도</th>
-				<th>규격</th>
-				<th>풍량</th>
-				<th>정압</th>
-				<th>모터</th>
-				<th>전원</th>
-				<th rowspan="2">설치 규격</th>
-				<th rowspan="2">방진 장치</th>
-				<th rowspan="2">설치 위치</th>
-				<th rowspan="2">비고</th>
-			</tr>
-			<tr>
-				<th>합계</th>
-				<th>지하층</th>
-				<th>1층</th>
-				<th>2층</th>
-				<th>3층</th>
-				<th>4층</th>
-				<th>A</th>
-				<th>CMH</th>
-				<th>mmAq</th>
-				<th>kW</th>
-				<th>ø/V/Hz</th>
-			</tr>
-			<tr>
-				<td>14</td>
-				<td>-</td>
-				<td>4</td>
-				<td>-</td>
-				<td>-</td>
-				<td>10</td>
-				<td>천장형</td>
-				<td>배기 FAN</td>
-				<td>화장실</td>
-				<td>Ø 150</td>
-				<td>210</td>
-				<td>-</td>
-				<td>30(W)</td>
-				<td>1 / 220 / 60</td>
-				<td>-</td>
-				<td>-</td>
-				<td>화장실, 샤워실</td>
-				<td>기타 필요부속품 일체포함</td>
-			</tr>
-			<tr>
-				<td>5</td>
-				<td>1</td>
-				<td>-</td>
-				<td>-</td>
-				<td>4</td>
-				<td>-</td>
-				<td>WALL</td>
-				<td>급.배기 FAN</td>
-				<td>공조실 급.배기용</td>
-				<td>500 X 500</td>
-				<td>3,000</td>
-				<td>-</td>
-				<td>85(W)</td>
-				<td>1 / 220 / 60</td>
-				<td>550 X 550</td>
-				<td>-</td>
-				<td>공조실, 지하용역실</td>
-				<td>가타 필요부속품 일체포함</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>-</td>
-				<td>-</td>
-				<td>-</td>
-				<td>2</td>
-				<td>-</td>
-				<td>DUCT IN LINE</td>
-				<td>급.배기 FAN</td>
-				<td>전기실</td>
-				<td>400 X 400</td>
-				<td>6,000</td>
-				<td>40</td>
-				<td>3.7KW</td>
-				<td>3 / 380 / 60</td>
-				<td>-</td>
-				<td>방진행거</td>
-				<td>전기실</td>
-				<td>밀폐형 스프링방진구비, 고효율 유도전동기 적용, 기타 필요부속</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>-</td>
-				<td>-</td>
-				<td>1</td>
-				<td>-</td>
-				<td>-</td>
-				<td>DUCT IN LINE</td>
-				<td>급.배기 FAN</td>
-				<td>화장실, 샤워실</td>
-				<td>700 X 700</td>
-				<td>8,000</td>
-				<td>40</td>
-				<td>5.5KW</td>
-				<td>3 / 380 / 60</td>
-				<td>-</td>
-				<td>방진행거</td>
-				<td>PIT</td>
-				<td>밀폐형 스프링방진구비, 고효율 유도전동기 적용, 기타 필요부속</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>2</td>
-				<td>-</td>
-				<td>-</td>
-				<td>-</td>
-				<td>-</td>
-				<td>DUCT IN LINE</td>
-				<td>급.배기 FAN</td>
-				<td>기계실 급.배기용</td>
-				<td>700 X 700</td>
-				<td>10,000</td>
-				<td>40</td>
-				<td>5.5KW</td>
-				<td>3 / 380 / 60</td>
-				<td>-</td>
-				<td>방진 스프링</td>
-				<td>기계실</td>
-				<td>밀폐형 스프링방진구비, 고효율 유도전동기 적용, 기타 필요부속</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>-</td>
-				<td>-</td>
-				<td>-</td>
-				<td>-</td>
-				<td>2</td>
-				<td>WALL</td>
-				<td>배기 FAN</td>
-				<td>다목적체육관 배기용</td>
-				<td>500 X 500</td>
-				<td>4,320</td>
-				<td>-</td>
-				<td>175(W)</td>
-				<td>1 / 220 / 60</td>
-				<td>410 X 410</td>
-				<td>-</td>
-				<td>공조실</td>
-				<td>고정압, 셔터, 기타 필요부속품 일체포함</td>
-			</tr>
-		</table>
+			<p style="font-size: 16px; font-weight: bold">▨ 송풍기<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th colspan="6">수량 상세</th>
+					<th rowspan="2">명칭</th>
+					<th rowspan="2">형식</th>
+					<th rowspan="2">용도</th>
+					<th>규격</th>
+					<th>풍량</th>
+					<th>정압</th>
+					<th>모터</th>
+					<th>전원</th>
+					<th rowspan="2">설치 규격</th>
+					<th rowspan="2">방진 장치</th>
+					<th rowspan="2">설치 위치</th>
+					<th rowspan="2">비고</th>
+				</tr>
+				<tr>
+					<th>합계</th>
+					<th>지하층</th>
+					<th>1층</th>
+					<th>2층</th>
+					<th>3층</th>
+					<th>4층</th>
+					<th>A</th>
+					<th>CMH</th>
+					<th>mmAq</th>
+					<th>kW</th>
+					<th>ø/V/Hz</th>
+				</tr>
+				<tr>
+					<td>14</td>
+					<td>-</td>
+					<td>4</td>
+					<td>-</td>
+					<td>-</td>
+					<td>10</td>
+					<td>천장형</td>
+					<td>배기 FAN</td>
+					<td>화장실</td>
+					<td>Ø 150</td>
+					<td>210</td>
+					<td>-</td>
+					<td>30(W)</td>
+					<td>1 / 220 / 60</td>
+					<td>-</td>
+					<td>-</td>
+					<td>화장실, 샤워실</td>
+					<td>기타 필요부속품 일체포함</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td>1</td>
+					<td>-</td>
+					<td>-</td>
+					<td>4</td>
+					<td>-</td>
+					<td>WALL</td>
+					<td>급.배기 FAN</td>
+					<td>공조실 급.배기용</td>
+					<td>500 X 500</td>
+					<td>3,000</td>
+					<td>-</td>
+					<td>85(W)</td>
+					<td>1 / 220 / 60</td>
+					<td>550 X 550</td>
+					<td>-</td>
+					<td>공조실, 지하용역실</td>
+					<td>가타 필요부속품 일체포함</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>2</td>
+					<td>-</td>
+					<td>DUCT IN LINE</td>
+					<td>급.배기 FAN</td>
+					<td>전기실</td>
+					<td>400 X 400</td>
+					<td>6,000</td>
+					<td>40</td>
+					<td>3.7KW</td>
+					<td>3 / 380 / 60</td>
+					<td>-</td>
+					<td>방진행거</td>
+					<td>전기실</td>
+					<td>밀폐형 스프링방진구비, 고효율 유도전동기 적용, 기타 필요부속</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>-</td>
+					<td>-</td>
+					<td>1</td>
+					<td>-</td>
+					<td>-</td>
+					<td>DUCT IN LINE</td>
+					<td>급.배기 FAN</td>
+					<td>화장실, 샤워실</td>
+					<td>700 X 700</td>
+					<td>8,000</td>
+					<td>40</td>
+					<td>5.5KW</td>
+					<td>3 / 380 / 60</td>
+					<td>-</td>
+					<td>방진행거</td>
+					<td>PIT</td>
+					<td>밀폐형 스프링방진구비, 고효율 유도전동기 적용, 기타 필요부속</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>2</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>DUCT IN LINE</td>
+					<td>급.배기 FAN</td>
+					<td>기계실 급.배기용</td>
+					<td>700 X 700</td>
+					<td>10,000</td>
+					<td>40</td>
+					<td>5.5KW</td>
+					<td>3 / 380 / 60</td>
+					<td>-</td>
+					<td>방진 스프링</td>
+					<td>기계실</td>
+					<td>밀폐형 스프링방진구비, 고효율 유도전동기 적용, 기타 필요부속</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>2</td>
+					<td>WALL</td>
+					<td>배기 FAN</td>
+					<td>다목적체육관 배기용</td>
+					<td>500 X 500</td>
+					<td>4,320</td>
+					<td>-</td>
+					<td>175(W)</td>
+					<td>1 / 220 / 60</td>
+					<td>410 X 410</td>
+					<td>-</td>
+					<td>공조실</td>
+					<td>고정압, 셔터, 기타 필요부속품 일체포함</td>
+				</tr>
+			</table>
 
-		<p style="font-size: 16px; font-weight: bold">▨ 필란드 전기 스토브<관급자재></p>
-		<table
-			border="1"
-			style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; border: 2px solid #000">
-			<tr style="background-color: #f2f2f2">
-				<th rowspan="2">명칭</th>
-				<th rowspan="2">설치장소</th>
-				<th>수량</th>
-				<th>동력</th>
-				<th>전원</th>
-				<th rowspan="2">비고</th>
-			</tr>
-			<tr>
-				<th>대</th>
-				<th>kW</th>
-				<th>Ph×V×Hz</th>
-			</tr>
-			<tr>
-				<td>필란드 전기 스토브</td>
-				<td>사우나</td>
-				<td>2</td>
-				<td>15.0</td>
-				<td>3×380×60</td>
-				<td>기타 필요부속품 일체포함</td>
-			</tr>
+			<p style="font-size: 16px; font-weight: bold">▨ 필란드 전기 스토브<관급자재></p>
+			<table
+				border="1"
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					text-align: center;
+					font-size: 14px;
+					border: 2px solid #000;
+				">
+				<tr style="background-color: #f2f2f2">
+					<th rowspan="2">명칭</th>
+					<th rowspan="2">설치장소</th>
+					<th>수량</th>
+					<th>동력</th>
+					<th>전원</th>
+					<th rowspan="2">비고</th>
+				</tr>
+				<tr>
+					<th>대</th>
+					<th>kW</th>
+					<th>Ph×V×Hz</th>
+				</tr>
+				<tr>
+					<td>필란드 전기 스토브</td>
+					<td>사우나</td>
+					<td>2</td>
+					<td>15.0</td>
+					<td>3×380×60</td>
+					<td>기타 필요부속품 일체포함</td>
+				</tr>
+			</table>
 		</table>
 	</body>
 </html>
