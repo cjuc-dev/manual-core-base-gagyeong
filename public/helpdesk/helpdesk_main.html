@@ -1,0 +1,341 @@
+<!-- helpdesk_main.html -->
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>자주 묻는 질문</title>
+		<link rel="stylesheet" href="styles.css" />
+		<style>
+			.helpdesk-table {
+				width: 100%;
+				border-collapse: collapse;
+				text-align: center;
+			}
+			.helpdesk-table thead {
+				background-color: #f5f5f5;
+			}
+			.helpdesk-table th,
+			.helpdesk-table td {
+				border-bottom: 1px solid #ddd;
+				padding: 10px;
+				text-align: center;
+			}
+			.helpdesk-table tr:hover {
+				background-color: #f9f9f9;
+			}
+			.helpdesk-table td:nth-child(3) {
+				text-align: left;
+				cursor: pointer;
+			}
+			.confirm-checkbox,
+			.complete-checkbox {
+				display: block;
+				margin: 0 auto;
+			}
+			.button-style {
+				display: inline-block;
+				padding: 8px 12px;
+				background-color: #f0f0f0;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				text-decoration: none;
+				color: black;
+				font-size: 14px;
+				cursor: pointer;
+				margin-bottom: 10px;
+			}
+			.button-style:hover {
+				background-color: #e0e0e0;
+			}
+			.popup {
+				display: none;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				width: 400px;
+				background: #fff;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+				padding: 20px;
+				border-radius: 8px;
+				z-index: 1000;
+				text-align: center;
+			}
+			.popup-buttons {
+				margin-top: 10px;
+			}
+			.answer-container {
+				display: none; /* 기본적으로 숨김 */
+				margin-top: 10px;
+				padding: 10px;
+				border: 2px solid #ddd;
+				border-radius: 8px;
+				background-color: #f9f9f9;
+			}
+
+			.answer-textarea {
+				width: 100%;
+				height: 80px;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				padding: 5px;
+				font-size: 14px;
+			}
+
+			.answer-buttons {
+				display: flex;
+				justify-content: flex-end;
+				margin-top: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>
+				자주 묻는 질문
+				<span class="subtitle">문의가 많은 질문에 대해 답변드려요.</span>
+			</h1>
+			<a href="helpdesk_write.html" id="openInquiryPage" class="button-style">문의하기</a>
+			<table class="helpdesk-table">
+				<thead>
+					<tr>
+						<th>순번</th>
+						<th>카테고리</th>
+						<th>제목</th>
+						<th>작성일</th>
+						<th>조회</th>
+						<th>확인</th>
+						<th>완료</th>
+					</tr>
+				</thead>
+				<tbody id="helpdesk-list"></tbody>
+			</table>
+		</div>
+
+		<div class="popup" id="viewPopup">
+			<h3>문의 내용</h3>
+			<p>
+				<strong>카테고리:</strong>
+				<span id="popupCategory"></span>
+			</p>
+			<p>
+				<strong>제목:</strong>
+				<span id="popupTitle"></span>
+			</p>
+			<p>
+				<strong>내용:</strong>
+				<span id="popupContent"></span>
+			</p>
+			<!-- ✅ 팝업 창 버튼 정렬 개선 -->
+			<div class="popup-buttons" style="display: flex; flex-direction: column; width: 100%; margin-top: 10px">
+				<!-- ✅ 수정 및 닫기 버튼을 가운데 정렬 -->
+				<div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px">
+					<button onclick="openPasswordPrompt()">수정</button>
+					<button onclick="closePopup()">닫기</button>
+				</div>
+				<!-- ✅ 답변 달기 버튼은 오른쪽 끝 정렬 -->
+				<button style="align-self: flex-end" onclick="openAnswerPrompt()">답변 달기</button>
+			</div>
+
+			<!-- ✅ 답변 입력 폼 (초기 상태 숨김) -->
+			<div
+				id="answerSection"
+				style="
+					display: none;
+					margin-top: 10px;
+					padding: 10px;
+					border: 2px solid #ccc;
+					border-radius: 5px;
+					background: #f9f9f9;
+				">
+				<textarea
+					id="answerContent"
+					placeholder="답변 내용을 입력하세요."
+					style="
+						width: 100%;
+						height: 100px;
+						padding: 5px;
+						border: none;
+						border-radius: 4px;
+						font-size: 14px;
+						background: transparent;
+						outline: none;
+					"></textarea>
+				<button
+					onclick="saveAnswer()"
+					style="
+						float: right;
+						margin-top: 5px;
+						background: #4caf50;
+						color: white;
+						padding: 5px 10px;
+						border: none;
+						border-radius: 4px;
+						cursor: pointer;
+					">
+					답변 저장
+				</button>
+			</div>
+		</div>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+				const list = document.getElementById('helpdesk-list');
+
+				inquiries.forEach((inquiry, index) => {
+					const row = document.createElement('tr');
+					row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${inquiry.type}</td>
+            <td class="clickable">
+                <div style="display: flex; align-items: center;">
+                    <span onclick="viewInquiry(${index})">${inquiry.title}</span>
+                    ${
+						inquiry.answer
+							? `<span onclick="toggleAnswer(event, ${index})" class="answer-indicator" 
+                                style="cursor: pointer; color: #1abc9c; margin-left: 10px;">
+                                📌 답변 있음
+                            </span>`
+							: ''
+					}
+                </div>
+                ${
+					inquiry.answer
+						? `<div id="answer-${index}" class="answer-content" style="display: none; padding-left: 10px; padding-top: 5px; color: #444;">
+                            <span style="color: #1abc9c; font-size: 16px; margin-right: 5px;">↳</span> ${inquiry.answer}
+                        </div>`
+						: ''
+				}
+            </td>
+            <td>${inquiry.date}</td>
+            <td>${inquiry.views}</td>
+            <td><input type="checkbox" class="confirm-checkbox" data-index="${index}" onclick="checkAdminPassword(event, this)"></td>
+            <td><input type="checkbox" class="complete-checkbox" data-index="${index}" onclick="checkAdminPassword(event, this)"></td>
+        `;
+					list.appendChild(row);
+				});
+
+				loadCheckboxState();
+			});
+
+			// ✅ "📌 답변 있음" 클릭 시, 제목 아래 답변 표시/숨김
+			function toggleAnswer(event, index) {
+				event.stopPropagation();
+				const answerContent = document.getElementById(`answer-${index}`);
+				if (answerContent) {
+					answerContent.style.display = answerContent.style.display === 'none' ? 'block' : 'none';
+				}
+			}
+
+			function checkAdminPassword(event, checkbox) {
+				event.preventDefault(); // 기본 체크 방지
+				const password = prompt('관리자 비밀번호를 입력하세요:');
+				if (password === '8512') {
+					checkbox.checked = !checkbox.checked; // 체크 상태 토글
+					saveCheckboxState(checkbox);
+				} else {
+					alert('비밀번호가 틀렸습니다.');
+				}
+			}
+
+			function saveCheckboxState(checkbox) {
+				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+				const index = checkbox.getAttribute('data-index');
+
+				if (index !== null && inquiries[index]) {
+					if (checkbox.classList.contains('confirm-checkbox')) {
+						inquiries[index].confirmed = checkbox.checked;
+					} else if (checkbox.classList.contains('complete-checkbox')) {
+						inquiries[index].completed = checkbox.checked;
+					}
+				}
+
+				localStorage.setItem('inquiries', JSON.stringify(inquiries));
+			}
+
+			function loadCheckboxState() {
+				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+				document.querySelectorAll('.confirm-checkbox, .complete-checkbox').forEach((checkbox) => {
+					const index = checkbox.getAttribute('data-index');
+					if (index !== null && inquiries[index]) {
+						if (checkbox.classList.contains('confirm-checkbox')) {
+							checkbox.checked = inquiries[index].confirmed || false;
+						} else if (checkbox.classList.contains('complete-checkbox')) {
+							checkbox.checked = inquiries[index].completed || false;
+						}
+					}
+				});
+			}
+
+			function viewInquiry(index) {
+				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+				const inquiry = inquiries[index];
+
+				// 조회수 증가 및 저장
+				inquiry.views += 1;
+				localStorage.setItem('inquiries', JSON.stringify(inquiries));
+
+				document.getElementById('popupCategory').innerText = inquiry.type;
+				document.getElementById('popupTitle').innerText = inquiry.title;
+				document.getElementById('popupContent').innerText = inquiry.content;
+
+				document.getElementById('viewPopup').style.display = 'block';
+				document.getElementById('viewPopup').setAttribute('data-index', index);
+
+				// 답변 입력란 숨김 (초기화)
+				document.getElementById('answerSection').style.display = 'none';
+				document.getElementById('answerContent').value = inquiry.answer || ''; // 기존 답변 불러오기
+			}
+
+			function openPasswordPrompt() {
+				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+				const index = document.getElementById('viewPopup').getAttribute('data-index');
+				if (index !== null) {
+					const password = prompt('비밀번호를 입력하세요:');
+					if (password === inquiries[index].password) {
+						window.location.href = `helpdesk_write.html?edit=${index}&title=${encodeURIComponent(
+							inquiries[index].title
+						)}&content=${encodeURIComponent(inquiries[index].content)}&type=${encodeURIComponent(
+							inquiries[index].type
+						)}&password=${encodeURIComponent(inquiries[index].password)}`;
+					} else {
+						alert('비밀번호가 틀렸습니다.');
+					}
+				}
+			}
+
+			function openAnswerPrompt() {
+				const password = prompt('관리자 비밀번호를 입력하세요:');
+				if (password === '8512') {
+					document.getElementById('answerSection').style.display = 'block'; // 답변 입력 창 표시
+				} else {
+					alert('비밀번호가 틀렸습니다.');
+				}
+			}
+
+			function saveAnswer() {
+				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
+				const index = document.getElementById('viewPopup').getAttribute('data-index');
+
+				if (index !== null && inquiries[index]) {
+					inquiries[index].answer = document.getElementById('answerContent').value; // ✅ 답변 저장
+					localStorage.setItem('inquiries', JSON.stringify(inquiries));
+					alert('답변이 저장되었습니다.');
+					window.location.reload(); // 새로고침하여 답변 반영
+				}
+			}
+
+			function closePopup() {
+				document.getElementById('viewPopup').style.display = 'none';
+				document.getElementById('viewPopup').removeAttribute('data-index');
+
+				// 팝업 내 기존 데이터 초기화
+				document.getElementById('popupCategory').innerText = '';
+				document.getElementById('popupTitle').innerText = '';
+				document.getElementById('popupContent').innerText = '';
+			}
+		</script>
+	</body>
+</html>
