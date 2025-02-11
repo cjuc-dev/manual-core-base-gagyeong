@@ -1,341 +1,526 @@
-<!-- helpdesk_main.html -->
-<!DOCTYPE html>
-<html lang="ko">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>자주 묻는 질문</title>
-		<link rel="stylesheet" href="styles.css" />
-		<style>
-			.helpdesk-table {
-				width: 100%;
-				border-collapse: collapse;
-				text-align: center;
-			}
-			.helpdesk-table thead {
-				background-color: #f5f5f5;
-			}
-			.helpdesk-table th,
-			.helpdesk-table td {
-				border-bottom: 1px solid #ddd;
-				padding: 10px;
-				text-align: center;
-			}
-			.helpdesk-table tr:hover {
-				background-color: #f9f9f9;
-			}
-			.helpdesk-table td:nth-child(3) {
-				text-align: left;
-				cursor: pointer;
-			}
-			.confirm-checkbox,
-			.complete-checkbox {
-				display: block;
-				margin: 0 auto;
-			}
-			.button-style {
-				display: inline-block;
-				padding: 8px 12px;
-				background-color: #f0f0f0;
-				border: 1px solid #ccc;
-				border-radius: 4px;
-				text-decoration: none;
-				color: black;
-				font-size: 14px;
-				cursor: pointer;
-				margin-bottom: 10px;
-			}
-			.button-style:hover {
-				background-color: #e0e0e0;
-			}
-			.popup {
-				display: none;
-				position: fixed;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				width: 400px;
-				background: #fff;
-				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-				padding: 20px;
-				border-radius: 8px;
-				z-index: 1000;
-				text-align: center;
-			}
-			.popup-buttons {
-				margin-top: 10px;
-			}
-			.answer-container {
-				display: none; /* 기본적으로 숨김 */
-				margin-top: 10px;
-				padding: 10px;
-				border: 2px solid #ddd;
-				border-radius: 8px;
-				background-color: #f9f9f9;
-			}
-
-			.answer-textarea {
-				width: 100%;
-				height: 80px;
-				border: 1px solid #ccc;
-				border-radius: 5px;
-				padding: 5px;
-				font-size: 14px;
-			}
-
-			.answer-buttons {
-				display: flex;
-				justify-content: flex-end;
-				margin-top: 5px;
-			}
-		</style>
+		<title>문의게시판 - 빵장수단팥빵 율하점</title>
 	</head>
-	<body>
-		<div class="container">
-			<h1>
-				자주 묻는 질문
-				<span class="subtitle">문의가 많은 질문에 대해 답변드려요.</span>
-			</h1>
-			<a href="helpdesk_write.html" id="openInquiryPage" class="button-style">문의하기</a>
-			<table class="helpdesk-table">
-				<thead>
-					<tr>
-						<th>순번</th>
-						<th>카테고리</th>
-						<th>제목</th>
-						<th>작성일</th>
-						<th>조회</th>
-						<th>확인</th>
-						<th>완료</th>
-					</tr>
-				</thead>
-				<tbody id="helpdesk-list"></tbody>
-			</table>
+	<body id="main">
+		<div id="skipNavigation">
+			<p><a href="#category">전체상품목록 바로가기</a></p>
+			<p><a href="#contents">본문 바로가기</a></p>
 		</div>
 
-		<div class="popup" id="viewPopup">
-			<h3>문의 내용</h3>
-			<p>
-				<strong>카테고리:</strong>
-				<span id="popupCategory"></span>
-			</p>
-			<p>
-				<strong>제목:</strong>
-				<span id="popupTitle"></span>
-			</p>
-			<p>
-				<strong>내용:</strong>
-				<span id="popupContent"></span>
-			</p>
-			<!-- ✅ 팝업 창 버튼 정렬 개선 -->
-			<div class="popup-buttons" style="display: flex; flex-direction: column; width: 100%; margin-top: 10px">
-				<!-- ✅ 수정 및 닫기 버튼을 가운데 정렬 -->
-				<div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px">
-					<button onclick="openPasswordPrompt()">수정</button>
-					<button onclick="closePopup()">닫기</button>
+		<hr class="layout" />
+		<div id="container">
+			<div id="content">
+				<div class="sub_board">
+					<div class="xans-element- xans-board xans-board-listpackage-4 xans-board-listpackage xans-board-4">
+						<div class="xans-element- xans-board xans-board-title-4 xans-board-title xans-board-4">
+							<div class="title">
+								<h2>
+									<img src="/web/upload/9e8101041299e816913a64e2200aa974.png" alt="문의게시판" />
+								</h2>
+								<!-- <p>문의게시판입니다.</p>-->
+							</div>
+						</div>
+						<div class="boardList">
+							<table border="1" summary="">
+								<caption>
+									상품 게시판 목록
+								</caption>
+								<colgroup
+									class="xans-element- xans-board xans-board-listheader-4 xans-board-listheader xans-board-4">
+									<col style="width: 70px" />
+									<!--<col style="width:230px;" />-->
+									<col style="width: 135px" class="displaynone" />
+									<col style="width: auto" />
+									<col style="width: 84px" />
+									<col style="width: 80px" class="" />
+									<col style="width: 55px" class="" />
+									<col style="width: 55px" class="displaynone" />
+									<col style="width: 80px" class="displaynone" />
+								</colgroup>
+								<thead
+									class="xans-element- xans-board xans-board-listheader-4 xans-board-listheader xans-board-4">
+									<tr style="">
+										<th scope="col">번호</th>
+										<!--<th scope="col" class="thumb">상품정보</th>-->
+										<th scope="col" class="displaynone">카테고리</th>
+										<th scope="col">제목</th>
+										<th scope="col">작성자</th>
+										<th scope="col" class="">작성일</th>
+										<th scope="col" class="">조회</th>
+										<th scope="col" class="displaynone">추천</th>
+										<th scope="col" class="displaynone">평점</th>
+									</tr>
+								</thead>
+								<tbody
+									class="xans-element- xans-board xans-board-notice-4 xans-board-notice xans-board-4 notice">
+									<!--
+                $count = 20
+                $product_name_cut = 30
+                $login_page_url = /member/login.html
+                $deny_access_url = /index.html
+            -->
+									<tr style="background-color: ; color: #fff" class="xans-record-">
+										<td>공지</td>
+										<!--<td class="thumb"><a href="/product/detail.html"><span></span></a></td>-->
+										<td class="displaynone"></td>
+										<td class="subject">
+											<span class="displaynone">
+												<a href="#none" onclick="BOARD.viewTarget('44545','6',this);"
+													><img
+														src="http://img.echosting.cafe24.com/skin/base_ko_KR/board/btn_unfold.gif"
+														alt="내용 보기"
+												/></a>
+											</span>
+											<a href="/board/product/read.html?no=44545&board_no=6" style="color: #fff"
+												>주문 또는 글 쓰시기 전 한 번씩 읽어주시면 감사하겠습니다.</a
+											>
+											<img
+												src="http://img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_hit.gif"
+												alt="HIT"
+												class="ec-common-rwd-image" /><span class="comment"></span>
+										</td>
+										<td>대표 관리자</td>
+										<td class="txtLess">2023-07-18</td>
+										<td class="txtLess">714</td>
+										<td class="txtLess displaynone">0</td>
+										<td class="displaynone">
+											<img
+												src="http://img.echosting.cafe24.com/skin/base_ko_KR/board/ico_point0.gif"
+												alt="0점" />
+										</td>
+									</tr>
+									<tr style="background-color: ; color: #fff" class="xans-record-">
+										<td>공지</td>
+										<!--<td class="thumb"><a href="/product/detail.html"><span></span></a></td>-->
+										<td class="displaynone"></td>
+										<td class="subject">
+											<span class="displaynone">
+												<a href="#none" onclick="BOARD.viewTarget('1849','6',this);"
+													><img
+														src="http://img.echosting.cafe24.com/skin/base_ko_KR/board/btn_unfold.gif"
+														alt="내용 보기"
+												/></a>
+											</span>
+											<a href="/board/product/read.html?no=1849&board_no=6" style="color: #fff"
+												>빵장수 단팥빵 온라인 쇼핑 택배사 변경 안내</a
+											>
+											<img
+												src="http://img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_hit.gif"
+												alt="HIT"
+												class="ec-common-rwd-image" /><span class="comment"></span>
+										</td>
+										<td>대표 관리자</td>
+										<td class="txtLess">2019-02-27</td>
+										<td class="txtLess">2001</td>
+										<td class="txtLess displaynone">0</td>
+										<td class="displaynone">
+											<img
+												src="http://img.echosting.cafe24.com/skin/base_ko_KR/board/ico_point0.gif"
+												alt="0점" />
+										</td>
+									</tr>
+
+									<tr style="background-color: ; color: #fff" class="xans-record-">
+										<td>1</td>
+										<!--<td class="thumb"><a href="/product/detail.html"><span></span></a></td>-->
+										<td class="displaynone"></td>
+										<td class="subject">
+											<span class="displaynone">
+												<a href="#none" onclick="BOARD.viewTarget('44553','6',this);"
+													><img
+														src="http://img.echosting.cafe24.com/skin/base_ko_KR/board/btn_unfold.gif"
+														alt="내용 보기"
+												/></a>
+											</span>
+											&nbsp;&nbsp;&nbsp;<img
+												src="http://img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_re.gif"
+												alt="답변"
+												class="ec-common-rwd-image" />
+											<a href="/board/product/read.html?no=44553&board_no=6" style="color: #fff"
+												>[쇼핑몰 구매필독] 빵장수 단팥빵 구매안내!</a
+											>
+											<img
+												src="http://img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_hit.gif"
+												alt="HIT"
+												class="ec-common-rwd-image" /><span class="comment"></span>
+										</td>
+										<td>박****</td>
+										<td class="txtLess">2024-07-06</td>
+										<td class="txtLess">218</td>
+										<td class="txtLess displaynone">0</td>
+										<td class="displaynone">
+											<img
+												src="http://img.echosting.cafe24.com/skin/base_ko_KR/board/ico_point0.gif"
+												alt="0점" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div
+							class="xans-element- xans-board xans-board-empty-4 xans-board-empty xans-board-4 boardListEmpty displaynone">
+							<p></p>
+						</div>
+						<div
+							class="xans-element- xans-board xans-board-buttonlist-4 xans-board-buttonlist xans-board-4">
+							<a href="/board/product/write.html?board_no=6" class=""
+								><img src="/web/upload/sub_img/btn_write.png" alt="글쓰기"
+							/></a>
+						</div>
+					</div>
+
+					<div class="xans-element- xans-board xans-board-paging-4 xans-board-paging xans-board-4">
+						<p>
+							<a href="?board_no=6&page=1"
+								><img src="/web/upload/sub_img/btn_page_prev.png" alt="이전 페이지"
+							/></a>
+						</p>
+						<ol>
+							<li class="xans-record-"><a href="?board_no=6&page=1" class="this">1</a></li>
+						</ol>
+						<p>
+							<a href="?board_no=6&page=1"
+								><img src="/web/upload/sub_img/btn_page_next.png" alt="다음 페이지"
+							/></a>
+						</p>
+					</div>
+
+					<form
+						id="boardSearchForm"
+						name=""
+						action="/board/product/list.html"
+						method="get"
+						target="_top"
+						enctype="multipart/form-data">
+						<input id="board_no" name="board_no" value="6" type="hidden" />
+						<input id="page" name="page" value="1" type="hidden" />
+						<input id="board_sort" name="board_sort" value="" type="hidden" />
+						<div class="xans-element- xans-board xans-board-search-4 xans-board-search xans-board-4">
+							<fieldset class="boardSearch">
+								<legend>게시물 검색</legend>
+								<p>
+									<select id="search_date" name="search_date" fw-filter="" fw-label="" fw-msg="">
+										<option value="week">일주일</option>
+										<option value="month">한달</option>
+										<option value="month3">세달</option>
+										<option value="all">전체</option>
+									</select>
+									<select id="search_key" name="search_key" fw-filter="" fw-label="" fw-msg="">
+										<option value="subject">제목</option>
+										<option value="content">내용</option>
+										<option value="writer_name">글쓴이</option>
+										<option value="member_id">아이디</option>
+										<option value="nick_name">별명</option>
+										<option value="product">상품정보</option>
+									</select>
+									<input
+										id="search"
+										name="search"
+										fw-filter=""
+										fw-label=""
+										fw-msg=""
+										class="inputTypeText"
+										placeholder=""
+										value=""
+										type="text" />
+									<a href="#none" onclick="BOARD.form_submit('boardSearchForm');"
+										><img
+											src="http://img.echosting.cafe24.com/skin/base_ko_KR/board/btn_find.gif"
+											alt="찾기"
+									/></a>
+								</p>
+							</fieldset>
+						</div>
+					</form>
+					<!-- 관리자 전용 메뉴 -->
+
+					<!-- //관리자 전용 메뉴 -->
 				</div>
-				<!-- ✅ 답변 달기 버튼은 오른쪽 끝 정렬 -->
-				<button style="align-self: flex-end" onclick="openAnswerPrompt()">답변 달기</button>
-			</div>
-
-			<!-- ✅ 답변 입력 폼 (초기 상태 숨김) -->
-			<div
-				id="answerSection"
-				style="
-					display: none;
-					margin-top: 10px;
-					padding: 10px;
-					border: 2px solid #ccc;
-					border-radius: 5px;
-					background: #f9f9f9;
-				">
-				<textarea
-					id="answerContent"
-					placeholder="답변 내용을 입력하세요."
-					style="
-						width: 100%;
-						height: 100px;
-						padding: 5px;
-						border: none;
-						border-radius: 4px;
-						font-size: 14px;
-						background: transparent;
-						outline: none;
-					"></textarea>
-				<button
-					onclick="saveAnswer()"
-					style="
-						float: right;
-						margin-top: 5px;
-						background: #4caf50;
-						color: white;
-						padding: 5px 10px;
-						border: none;
-						border-radius: 4px;
-						cursor: pointer;
-					">
-					답변 저장
-				</button>
+				<br /><br /><br /><br /><br /><br />
 			</div>
 		</div>
+
+		<!-- //참고 -->
+
+		<span itemscope="" itemtype="https://schema.org/Organization">
+			<link itemprop="url" href="https://빵장수단팥빵.kr" />
+		</span>
+		<script
+			type="text/javascript"
+			src="/app/Eclog/js/cid.generate.js?vs=2f11c73833aa32e7a1901e93c892fbad&u=jangok0802.1"></script>
 
 		<script>
-			document.addEventListener('DOMContentLoaded', function () {
-				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
-				const list = document.getElementById('helpdesk-list');
+			try {
+				// Account ID 적용
+				if (!wcs_add) var wcs_add = {};
+				wcs_add['wa'] = 's_1080cd4fe9cd';
 
-				inquiries.forEach((inquiry, index) => {
-					const row = document.createElement('tr');
-					row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${inquiry.type}</td>
-            <td class="clickable">
-                <div style="display: flex; align-items: center;">
-                    <span onclick="viewInquiry(${index})">${inquiry.title}</span>
-                    ${
-						inquiry.answer
-							? `<span onclick="toggleAnswer(event, ${index})" class="answer-indicator" 
-                                style="cursor: pointer; color: #1abc9c; margin-left: 10px;">
-                                📌 답변 있음
-                            </span>`
-							: ''
-					}
-                </div>
-                ${
-					inquiry.answer
-						? `<div id="answer-${index}" class="answer-content" style="display: none; padding-left: 10px; padding-top: 5px; color: #444;">
-                            <span style="color: #1abc9c; font-size: 16px; margin-right: 5px;">↳</span> ${inquiry.answer}
-                        </div>`
-						: ''
-				}
-            </td>
-            <td>${inquiry.date}</td>
-            <td>${inquiry.views}</td>
-            <td><input type="checkbox" class="confirm-checkbox" data-index="${index}" onclick="checkAdminPassword(event, this)"></td>
-            <td><input type="checkbox" class="complete-checkbox" data-index="${index}" onclick="checkAdminPassword(event, this)"></td>
-        `;
-					list.appendChild(row);
-				});
+				// 네이버 페이 White list가 있을 경우
+				wcs.checkoutWhitelist = [
+					'jangok0802.cafe24.com',
+					'www.jangok0802.cafe24.com',
+					'm.jangok0802.cafe24.com',
+					'빵장수단팥빵.kr',
+					'www.빵장수단팥빵.kr',
+					'm.빵장수단팥빵.kr',
+					'xn--6j1b12tba638a80i0ss.kr',
+					'www.xn--6j1b12tba638a80i0ss.kr',
+					'm.xn--6j1b12tba638a80i0ss.kr',
+				];
 
-				loadCheckboxState();
-			});
+				// 레퍼러
+				wcs.setReferer('');
 
-			// ✅ "📌 답변 있음" 클릭 시, 제목 아래 답변 표시/숨김
-			function toggleAnswer(event, index) {
-				event.stopPropagation();
-				const answerContent = document.getElementById(`answer-${index}`);
-				if (answerContent) {
-					answerContent.style.display = answerContent.style.display === 'none' ? 'block' : 'none';
-				}
+				// 유입 추적 함수 호출
+				wcs.inflow('xn--6j1b12tba638a80i0ss.kr');
+
+				// 로그수집
+				wcs_do();
+			} catch (e) {}
+		</script>
+
+		<script
+			type="text/javascript"
+			src="/ind-script/i18n.php?lang=ko_KR&domain=front&v=2502051370"
+			charset="utf-8"></script>
+
+		<script src="/ind-script/optimizer.php?filename=zVjbbtw2EH239drvUJwURV7jNXJBbcRIXOR5RI1W4yU5LC9eK1-f0e62tdvIK5E2UBhYa7lzDodzp-qeDdZnr33deTC4Zb-pPQZOXmF9G2o6e2ur2_BL_ZRcIgdqU9_-mdAPh39vqt-qVwuReB_RW9DhsFAp5g1hKUvyOusIFaqqs9lQy4ptp0nFLIqz6lf5y9pcfo3s_2U353kt-EfebSFiJBEwImVjjepq9_CNYn_z_QIiVIbsAh5NjaDwRp6Po4LzZGM3g55VGtV6z96s2EbPWqM_jrvWKbxz7txTu56hT4qkj0t1nneWOgmsBcH2JLI70WTxpAFr5-i1p1BsDNu50vdgJRuthLbzGOfvssNFNE6LX34OAufqK25IY_3lAX6v3xNWmcAZbpMshS25ZRt2yarRoKNcmyRtzGQQz2V4QgkJ1fqPffY8pNDwfdAM7SKQSRHGfT83Af3dlHMmwI710JGeHXotdpB0HE0QDPh4_pOoW14kmzXtQP-Pkt1KAbFBLBpKmRAC2XUpi8EI7VgOJ6PxnMG3j_wqq1UzruaBBk4xNZgHTkrlARvNapMH9ejYxzyspjCm-5jQC13ldFqTlLg70CQeYv-Xy_5eqOQBQjHtGBO2Df-lFwYngYovt0OP2uGLn6MH2-rFhWTBBlIYqRtejl-KaHw2M0kegHSXDR8vy_9oMN2rwML6ca_aouTaelGnWCXv0aqhDj27U5meFBbg1eHbaSdjFcRSTZ6LZt4U1kejZSKkSBiOS6_84CL_jsMiD0EYrNp_ZuMMmgZ9Nvyzb9ErG7MJziFsMJYzPBFsszmuD0NZLsuKkxTakrNcSX-Bdf45LqTFBcrf_xuF_nJsdSUEilOBCTwqLIB_2cE3OEg1bQtZbjiCXhWdZpcf-WGJFjsqTY1LGAp0-OChzQ_IdymyFF1SO5qvPW_zc0PuFHTNLrn8BE1B1EEviX5HJY65Gi5pg4d6URYhj6iKcm8Xax9pfLUyPEPUHphuoHkWnk9yxy8_3oXcc0h_sh3nB4EGMtBoLNDIQew9azzNG60eqnM5eZefALuMLrXv8qcyz029LZsAhm0lY-asl1le7oP4nu5F8gc&type=js&k=de0e9a29e622b6ef9ea2dc85f15cc6fb94f7ed21&t=1735171292"></script>
+		<script src="/ind-script/optimizer_user.php?filename=pc7BDcIwDEbhAcKVOf7CiXVSx2qdxDHgGsT2VEIsALd3-vSwmjKYUjjfHTWPxdp0mc64xtyF0rpphxdOhV2WAW8yTuj5ZbFhzi6E6p84VD_iN28nyFRt_Geolej8vbuFUEsP4eeuvgE&type=js&k=b339d287e0aea2996dc617b5cfb6a9b260efe392&t=1452673614&user=T"></script>
+		<script type="text/javascript">
+			var sIsChannelUi = 'F';
+			var sChRef = '';
+			var sUseShoppingpayPg = 'F';
+			var sOwnMallLanding = 'F';
+			var sShoppingPayCookie = '';
+			var sYtshopping = 'F';
+			if (sIsChannelUi === 'T') {
+				sessionStorage.setItem('ch_ref', sChRef);
 			}
-
-			function checkAdminPassword(event, checkbox) {
-				event.preventDefault(); // 기본 체크 방지
-				const password = prompt('관리자 비밀번호를 입력하세요:');
-				if (password === '8512') {
-					checkbox.checked = !checkbox.checked; // 체크 상태 토글
-					saveCheckboxState(checkbox);
+			CAFE24.getChRefData = function () {
+				if (sIsChannelUi === 'T') {
+					return sessionStorage.getItem('ch_ref');
+				}
+			};
+			// 자사몰랜딩/유튜브랜딩 공용
+			CAFE24.checkChannelUI = function () {
+				if (
+					(sIsChannelUi === 'T' && sessionStorage.getItem('ch_ref')) ||
+					(sUseShoppingpayPg === 'T' && sOwnMallLanding === 'T') ||
+					sYtshopping === 'T'
+				) {
+					return true;
 				} else {
-					alert('비밀번호가 틀렸습니다.');
+					return false;
 				}
-			}
-
-			function saveCheckboxState(checkbox) {
-				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
-				const index = checkbox.getAttribute('data-index');
-
-				if (index !== null && inquiries[index]) {
-					if (checkbox.classList.contains('confirm-checkbox')) {
-						inquiries[index].confirmed = checkbox.checked;
-					} else if (checkbox.classList.contains('complete-checkbox')) {
-						inquiries[index].completed = checkbox.checked;
+			};
+			// 자사몰랜딩 UI확인
+			CAFE24.isOwnMallLandingUI = function () {
+				return sUseShoppingpayPg === 'T' && sOwnMallLanding === 'T';
+			};
+			CAFE24.attachShoppingpayParam = function (sUrl) {
+				if (sUrl) {
+					var sChRef = CAFE24.getChRefData();
+					if (sChRef) {
+						var sSeparator = sUrl.includes('?') ? '&' : '?';
+						sUrl += sSeparator + 'ch_ref=' + sChRef;
+					} else if (sUseShoppingpayPg === 'T' && sOwnMallLanding === 'T') {
+						var sSeparator = sUrl.includes('?') ? '&' : '?';
+						sUrl += sSeparator + 'co_servicetype=shoppingpay';
 					}
 				}
-
-				localStorage.setItem('inquiries', JSON.stringify(inquiries));
+				return sUrl;
+			};
+			CAFE24.attachChRef = function (sUrl) {
+				if (sUrl) {
+					var sChRef = CAFE24.getChRefData();
+					if (sChRef) {
+						var sSeparator = sUrl.includes('?') ? '&' : '?';
+						sUrl += sSeparator + 'ch_ref=' + sChRef;
+					}
+				}
+				return sUrl;
+			};
+			var sIsCheckout = 'F';
+			var sCheckoutToken = '';
+			if (sIsCheckout === 'T') {
+				sessionStorage.setItem('checkoutToken', sCheckoutToken);
+			} else {
+				sessionStorage.removeItem('checkoutToken');
 			}
-
-			function loadCheckboxState() {
-				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
-				document.querySelectorAll('.confirm-checkbox, .complete-checkbox').forEach((checkbox) => {
-					const index = checkbox.getAttribute('data-index');
-					if (index !== null && inquiries[index]) {
-						if (checkbox.classList.contains('confirm-checkbox')) {
-							checkbox.checked = inquiries[index].confirmed || false;
-						} else if (checkbox.classList.contains('complete-checkbox')) {
-							checkbox.checked = inquiries[index].completed || false;
+			CAFE24.getCheckoutToken = function () {
+				if (sIsCheckout === 'T') {
+					return sessionStorage.getItem('checkoutToken');
+				}
+			};
+			CAFE24.attachCheckoutParam = function (sUrl) {
+				if (sUrl) {
+					var sCheckoutToken = CAFE24.getCheckoutToken();
+					if (sCheckoutToken) {
+						var sSeparator = sUrl.includes('?') ? '&' : '?';
+						sUrl += sSeparator + 'checkoutToken=' + sCheckoutToken;
+					}
+				}
+				return sUrl;
+			};
+			CAFE24.MOBILE_WEB = false;
+			var mobileWeb = CAFE24.MOBILE_WEB;
+			try {
+				var isUseLoginKeepingSubmit = false;
+				// isSeqNoKeyExpiretime
+				function isSeqNoKeyExpiretime(iExpiretime) {
+					var sDate = new Date();
+					var iNow = Math.floor(sDate.getTime() / 1000);
+					// 유효시간 확인
+					if (iExpiretime > iNow) {
+						return false;
+					}
+					return true;
+				}
+				function isUseLoginKeeping() {
+					// 디바이스 확인
+					if (EC_MOBILE_DEVICE === false) {
+						return;
+					}
+					// 로그인 여부
+					var isLogin = document.cookie.match(/(?:^| |;)iscache=F/) ? true : false;
+					if (isLogin) {
+						return;
+					}
+					var sLoginKeepingInfo = localStorage.getItem('use_login_keeping_info');
+					var iSeqnoExpiretime;
+					var iSeqNoKey;
+					if (sLoginKeepingInfo == null) {
+						iSeqnoExpiretime = localStorage.getItem('seq_no_key_expiretime');
+						iSeqNoKey = localStorage.getItem('seq_no_key');
+						// 유효시간, key 값 확인
+						if (iSeqnoExpiretime === null || iSeqNoKey === null) {
+							return;
+						}
+					} else {
+						var oLoginKeepingInfo = JSON.parse(sLoginKeepingInfo);
+						iSeqNoKey = oLoginKeepingInfo.seq_no_key;
+						iSeqnoExpiretime = oLoginKeepingInfo.seq_no_key_expiretime;
+						if (isNaN(iSeqNoKey) === true || isNaN(iSeqnoExpiretime) === true) {
+							return;
 						}
 					}
-				});
-			}
-
-			function viewInquiry(index) {
-				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
-				const inquiry = inquiries[index];
-
-				// 조회수 증가 및 저장
-				inquiry.views += 1;
-				localStorage.setItem('inquiries', JSON.stringify(inquiries));
-
-				document.getElementById('popupCategory').innerText = inquiry.type;
-				document.getElementById('popupTitle').innerText = inquiry.title;
-				document.getElementById('popupContent').innerText = inquiry.content;
-
-				document.getElementById('viewPopup').style.display = 'block';
-				document.getElementById('viewPopup').setAttribute('data-index', index);
-
-				// 답변 입력란 숨김 (초기화)
-				document.getElementById('answerSection').style.display = 'none';
-				document.getElementById('answerContent').value = inquiry.answer || ''; // 기존 답변 불러오기
-			}
-
-			function openPasswordPrompt() {
-				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
-				const index = document.getElementById('viewPopup').getAttribute('data-index');
-				if (index !== null) {
-					const password = prompt('비밀번호를 입력하세요:');
-					if (password === inquiries[index].password) {
-						window.location.href = `helpdesk_write.html?edit=${index}&title=${encodeURIComponent(
-							inquiries[index].title
-						)}&content=${encodeURIComponent(inquiries[index].content)}&type=${encodeURIComponent(
-							inquiries[index].type
-						)}&password=${encodeURIComponent(inquiries[index].password)}`;
-					} else {
-						alert('비밀번호가 틀렸습니다.');
+					if (isSeqNoKeyExpiretime(iSeqnoExpiretime) === false) {
+						return;
 					}
+					useLoginKeepingSubmit();
 				}
-			}
-
-			function openAnswerPrompt() {
-				const password = prompt('관리자 비밀번호를 입력하세요:');
-				if (password === '8512') {
-					document.getElementById('answerSection').style.display = 'block'; // 답변 입력 창 표시
-				} else {
-					alert('비밀번호가 틀렸습니다.');
+				function findGetParamValue(paramKey) {
+					var result = null,
+						tmp = [];
+					location.search
+						.substr(1)
+						.split('&')
+						.forEach(function (item) {
+							tmp = item.split('=');
+							if (tmp[0] === paramKey) result = decodeURIComponent(tmp[1]);
+						});
+					return result;
 				}
-			}
-
-			function saveAnswer() {
-				let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [];
-				const index = document.getElementById('viewPopup').getAttribute('data-index');
-
-				if (index !== null && inquiries[index]) {
-					inquiries[index].answer = document.getElementById('answerContent').value; // ✅ 답변 저장
-					localStorage.setItem('inquiries', JSON.stringify(inquiries));
-					alert('답변이 저장되었습니다.');
-					window.location.reload(); // 새로고침하여 답변 반영
+				function useLoginKeepingSubmit() {
+					var iSeqnoExpiretime;
+					var iSeqNoKey;
+					var sUseLoginKeepingIp;
+					var sLoginKeepingInfo = localStorage.getItem('use_login_keeping_info');
+					if (sLoginKeepingInfo == null) {
+						iSeqnoExpiretime = localStorage.getItem('seq_no_key_expiretime');
+						iSeqNoKey = localStorage.getItem('seq_no_key');
+					} else {
+						var oLoginKeepingInfo = JSON.parse(sLoginKeepingInfo);
+						iSeqNoKey = oLoginKeepingInfo.seq_no_key;
+						iSeqnoExpiretime = oLoginKeepingInfo.seq_no_key_expiretime;
+						sUseLoginKeepingIp = oLoginKeepingInfo.use_login_keeping_ip;
+					}
+					var oForm = document.createElement('form');
+					oForm.method = 'post';
+					oForm.action = '/exec/front/member/LoginKeeping';
+					document.body.appendChild(oForm);
+					var oSeqNoObj = document.createElement('input');
+					oSeqNoObj.name = 'seq_no_key';
+					oSeqNoObj.type = 'hidden';
+					oSeqNoObj.value = iSeqNoKey;
+					oForm.appendChild(oSeqNoObj);
+					oSeqNoObj = document.createElement('input');
+					oSeqNoObj.name = 'seq_no_key_expiretime';
+					oSeqNoObj.type = 'hidden';
+					oSeqNoObj.value = iSeqnoExpiretime;
+					oForm.appendChild(oSeqNoObj);
+					var returnUrl = findGetParamValue('returnUrl');
+					if (returnUrl == '' || returnUrl == null) {
+						returnUrl = location.pathname + location.search;
+					}
+					oSeqNoObj = document.createElement('input');
+					oSeqNoObj.name = 'returnUrl';
+					oSeqNoObj.type = 'hidden';
+					oSeqNoObj.value = returnUrl;
+					oForm.appendChild(oSeqNoObj);
+					if (sUseLoginKeepingIp != undefined) {
+						oSeqNoObj = document.createElement('input');
+						oSeqNoObj.name = 'use_login_keeping_ip';
+						oSeqNoObj.type = 'hidden';
+						oSeqNoObj.value = sUseLoginKeepingIp;
+						oForm.appendChild(oSeqNoObj);
+					}
+					oForm.submit();
+					isUseLoginKeepingSubmit = true;
 				}
-			}
-
-			function closePopup() {
-				document.getElementById('viewPopup').style.display = 'none';
-				document.getElementById('viewPopup').removeAttribute('data-index');
-
-				// 팝업 내 기존 데이터 초기화
-				document.getElementById('popupCategory').innerText = '';
-				document.getElementById('popupTitle').innerText = '';
-				document.getElementById('popupContent').innerText = '';
-			}
+				isUseLoginKeeping();
+			} catch (e) {}
+			var bIsUseSpread = false;
+			var sIsSecret = false;
+			var iBoardNo = '6';
+			var aLogData = {
+				log_server1: 'eclog2-259.cafe24.com',
+				log_server2: 'elg-db-svcm-011.cafe24.com',
+				mid: 'jangok0802',
+				stype: 'e',
+				domain: '',
+				shop_no: 1,
+				lang: 'ko_KR',
+				ver: 2,
+				hash: 'add77e2295c29e46c924711d28fc4b09',
+				ca: 'cfa-js.cafe24.com\/cfa.js',
+				etc: '',
+				mobile_flag: 'F',
+			};
+			var sMileageName = '적립금';
+			var sMileageUnit = '[:PRICE:]원';
+			var sDepositName = '예치금';
+			var sDepositUnit = '원';
+			CAFE24.SHOP_CURRENCY_INFO = {
+				1: {
+					aShopCurrencyInfo: {
+						currency_code: 'KRW',
+						currency_no: '410',
+						currency_symbol: '\uffe6',
+						currency_name: 'South Korean won',
+						currency_desc: '\uffe6 \uc6d0 (\ud55c\uad6d)',
+						decimal_place: 0,
+						round_method_type: 'F',
+					},
+					aShopSubCurrencyInfo: null,
+					aBaseCurrencyInfo: {
+						currency_code: 'KRW',
+						currency_no: '410',
+						currency_symbol: '\uffe6',
+						currency_name: 'South Korean won',
+						currency_desc: '\uffe6 \uc6d0 (\ud55c\uad6d)',
+						decimal_place: 0,
+						round_method_type: 'F',
+					},
+					fExchangeRate: 1,
+					fExchangeSubRate: null,
+					aFrontCurrencyFormat: { head: '', tail: '\uc6d0' },
+					aFrontSubCurrencyFormat: { head: '', tail: '' },
+				},
+			};
+			var SHOP_CURRENCY_INFO = CAFE24.SHOP_CURRENCY_INFO;
 		</script>
 	</body>
 </html>
