@@ -49,19 +49,14 @@
 			<p style="text-align: left; margin-left: 30px">4️⃣ 매뉴얼</p>
 
 			<div style="text-align: left; margin-left: 40px">
-				<span>🔹 행정분야 ❌ 미구현</span>
-				<br />
-				<span>🔹 기술분야 ✅ 가경국민체육센터 일부 구현</span>
-				<br />
+				<span>🔹 행정분야 ❌ 미구현</span><br />
+				<span>🔹 기술분야 ✅ 가경국민체육센터 일부 구현</span><br />
 				<span>🔹 체육분야 ❌</span>
 			</div>
 			<p style="text-align: left; margin-left: 30px">5️⃣ ❌ 미구현</p>
 
 			<p style="margin-top: 10px; text-align: center">감사합니다.</p>
-			<p class="contact">
-				📞
-				<strong>문의 | 043-820-7242&nbsp;&nbsp;&nbsp;&nbsp;체육사업부 박영규</strong>
-			</p>
+			<p class="contact">📞 <strong>문의 | 043-820-7242&nbsp;&nbsp;&nbsp;&nbsp;체육사업부 박영규</strong></p>
 
 			<div class="hide-today">
 				<input type="checkbox" id="hideNotice" onclick="hideForToday()" />
@@ -76,6 +71,11 @@
 					let expireTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
 					document.cookie = 'hideNotice=true; expires=' + expireTime.toUTCString() + '; path=/';
 					document.getElementById('notice').style.display = 'none';
+
+					// 창을 닫을 수 있는 환경인지 확인 후 닫기
+					if (window.opener || window.top !== window.self) {
+						window.close(); // 팝업 창이면 닫기
+					}
 				}
 			}
 

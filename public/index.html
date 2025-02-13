@@ -352,6 +352,29 @@
 			}
 		}
 	</script>
+	<script>
+		function hideForToday() {
+			if (document.getElementById('hideNotice').checked) {
+				let now = new Date();
+				let expireTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+				document.cookie = 'hideNotice=true; expires=' + expireTime.toUTCString() + '; path=/';
+				document.getElementById('notice').style.display = 'none';
+
+				// 창을 닫을 수 있는 환경인지 확인 후 닫기
+				if (window.opener || window.top !== window.self) {
+					window.close(); // 팝업 창이면 닫기
+				}
+			}
+		}
+
+		function checkNotice() {
+			if (document.cookie.indexOf('hideNotice=true') !== -1) {
+				document.getElementById('notice').style.display = 'none';
+			}
+		}
+
+		window.onload = checkNotice;
+	</script>
 	<script src="https://manual-5d03dc.gitlab.io/javaScript/tooltip.js"></script>
 	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
 	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
