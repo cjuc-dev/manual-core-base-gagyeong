@@ -342,6 +342,16 @@
 			}
 		</style>
 	</body>
+	<script>
+		function toggleVisibility(id) {
+			var section = document.getElementById(id);
+			if (section.style.display === 'none') {
+				section.style.display = 'block';
+			} else {
+				section.style.display = 'none';
+			}
+		}
+	</script>
 	<script src="https://manual-5d03dc.gitlab.io/javaScript/tooltip.js"></script>
 	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
 	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
