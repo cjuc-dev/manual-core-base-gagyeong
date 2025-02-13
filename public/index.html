@@ -49,7 +49,15 @@
 						<li><a href="#" onclick="loadContent('phy')">체육</a></li>
 					</ul>
 				</li>
-				<li><a href="#" onclick="loadContent('voc')">VOC</a></li>
+				<li>
+					<a href="#" onclick="toggleMenu('voc')">VOC</a>
+					<ul id="voc" class="submenu">
+						<li><a href="#" onclick="loadContent('voc_swimming_pool')">수영장</a></li>
+						<li><a href="#" onclick="loadContent('voc_multipurpose_sports_hall')">다목적체육관</a></li>
+						<li><a href="#" onclick="loadContent('voc_program_room')">프로그램실</a></li>
+						<li><a href="#" onclick="loadContent('voc_other_information')">기타</a></li>
+					</ul>
+				</li>
 				<li><a href="#" onclick="loadContent('helpdesk')">Help</a></li>
 			</ul>
 			<div class="sidebar-footer">
@@ -77,6 +85,10 @@
 					bokdae_sportscenter_guide: 'guide/bokdae_sportscenter_guide.html',
 					gagyeong_sportscenter_guide: 'guide/gagyeong_sportscenter_guide.html',
 					gagyeong_sportscenter_manual_2_2_5: 'gagyeong_sportscenter/manual_2_2_5_main.html',
+					voc_swimming_pool: 'voc/voc_swimming_pool.html',
+					voc_multipurpose_sports_hall: 'voc/voc_multipurpose_sports_hall.html',
+					voc_program_room: 'voc/voc_program_room.html',
+					voc_other_information: 'voc/voc_other_information.html',
 				};
 
 				if (contentPaths[section]) {
@@ -231,7 +243,7 @@
 							<!-- 시설 연결 링크 -->
 							<a href="#" 
 							class="menu-link" onclick="location.href='https://docs.google.com/spreadsheets/d/1gkFP9ARlFcD6uUwKhKYZTIWMENFj7Hs1k6FgW8fN1uA/edit?usp=sharing';">
-							<span class="highlight">Help</span>를 클릭하면 해당 페이지로 이동합니다.</a>
+							<span class="highlight">Help</span>를 클릭하면 해당 페이지로 이동합니다. 수정 및 개선 요청 사항을 작성할 수 있습니다.</a>
 							<img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
 						</p>
 					`,

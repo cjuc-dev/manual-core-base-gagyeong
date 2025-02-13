@@ -1,0 +1,181 @@
+<!-- 상위 테이블 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>수영장 약품 관리 매뉴얼</title>
+		<!-- ✅ 기본 글로벌 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
+		<!-- 🛠 전체적인 페이지 기본 스타일 (폰트, 여백, 색상 등) -->
+
+		<!-- ✅ 사이드바 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
+		<!-- 🛠 사이드바 UI 스타일 (메뉴, 토글 기능, 레이아웃 관련 스타일) -->
+
+		<!-- ✅ 테이블 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/table_styles.css" />
+		<!-- 🛠 테이블 디자인 및 정렬 스타일 (테두리, 배경색, 크기 조정 등) -->
+
+		<!-- ✅ 이미지 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_styles.css" />
+		<!-- 🛠 페이지 내 이미지 관련 스타일 (크기, 정렬, 여백 등) -->
+
+		<!-- ✅ 툴팁 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
+		<!-- 🛠 툴팁 UI 스타일 (호버 시 설명 표시, 애니메이션 효과 등) -->
+
+		<!-- ✅ 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
+		<!-- 🛠 팝업창 및 이미지 확대 표시 관련 스타일 -->
+
+		<!-- ✅ 기타 UI 스타일 (추가 필요 시) -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
+		<!-- 🛠 UI 구성 요소 스타일 (버튼, 레이아웃, 폰트 스타일 등) -->
+
+		<!-- ✅ 이미지 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_popup.css" />
+		<!-- 🛠 이미지 팝업 효과 적용 (클릭 시 확대 표시, 팝업 UI) -->
+		<style>
+			.button-container {
+				display: flex;
+				flex-direction: column;
+				gap: 10px; /* 버튼 간격 */
+				align-items: center; /* 가운데 정렬 */
+			}
+
+			.button {
+				padding: 5px 5px;
+				border-radius: 20px; /* 둥근 버튼 */
+				font-size: 10px;
+				font-weight: bold;
+				color: white;
+				border: none;
+				cursor: pointer;
+				width: 50px;
+				text-align: center;
+			}
+
+			.list-button {
+				background-color: #007bff; /* 파란색 */
+			}
+
+			.table-button {
+				background-color: #28a745; /* 초록색 */
+			}
+		</style>
+	</head>
+
+	<body>
+		<table style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed">
+			<tr>
+				<td style="width: 90%; border: 1px solid #ccc; text-align: left; padding: 10px">
+					<ul style="list-style-type: none; padding-left: 20px; margin: 0">
+						<li>
+							<h3 style="cursor: pointer" onclick="toggleVisibility('contentSection')">
+								<span style="font-weight: bold">Q. 저출산 시대에 다자녀 가정의 혜택은 없나요?</span>
+								<span
+									style="cursor: pointer; font-weight: bold; color: blue"
+									onclick="toggleVisibility('내용')">
+									<button class="button list-button">내용</button>
+								</span>
+								<span
+									style="cursor: pointer; font-weight: bold; color: blue"
+									onclick="toggleVisibility('답변')">
+									<button class="button table-button">답변</button>
+								</span>
+							</h3>
+						</li>
+					</ul>
+
+					<!-- 내용 섹션 -->
+					<div
+						id="내용"
+						style="
+							display: none;
+							clear: both;
+							margin-top: 20px;
+							padding: 15px;
+							border: 1px solid #ccc;
+							border-radius: 8px;
+							background-color: #f9f9f9;
+						">
+						<p style="margin-top: 10px; font-weight: bold; line-height: 2">
+							<button class="button list-button">내용</button><br />
+							추운 겨울 근무하시느라 고생하십니다.
+							<br />
+							청주시설관리공단의 체육시설 등 여러시설을 이용하는데 다자녀가정의 혜택은 없는것으로
+							알고있습니다.
+							<br />
+							현재 여러 지자체에서 강습료 할인 등 여러정책으로 혜택을 주고 있는것을 확인하고 이에 시청
+							담당자와 통화해봤으나 오히려 시설관리공단에서 안한다는 뉘앙스로 답변받았습니다.
+							<br />
+							청주시시설관리공단의 다자녀가정 할인혜택 관련하여 계획이 있는지 궁금하여 글 올립니다.
+							<br />
+						</p>
+					</div>
+
+					<!-- 답변 섹션 -->
+					<div
+						id="답변"
+						style="
+							display: none;
+							clear: both;
+							margin-top: 20px;
+							padding: 15px;
+							border: 1px solid #ccc;
+							border-radius: 8px;
+							background-color: #f9f9f9;
+						">
+						<p style="margin-top: 10px; font-weight: bold; line-height: 2">
+							<button class="button table-button">답변</button><br />
+							- 고객님께서 홈페이지 시민의 소리를 통해 요청을 주신 사항은 ‘다자녀 혜택 문의’로 사료됩니다.
+							<br />
+							- 먼저, 가경국민체육센터의 다자녀 혜택이 없어 불편을 겪으신 점에 대해 진심으로 사과드립니다.
+							<br />
+							- 가경국민체육센터는 「청주시 체육시설의 설치 및 운영 조례」에 따라 운영되고 있으며, 현재
+							해당 조례에는 다자녀 가정을 위한 사용료 감면 혜택이 포함되어 있지 않습니다.
+							<br />
+							<span style="display: inline-block; padding-left: 10px"
+								>이로 인해 즉시 혜택을 제공해 드리기 어려운 점 양해 부탁드립니다.</span
+							>
+							<br />
+							- 조례 개정은 입법예고 및 의견 수렴 절차를 거쳐야 합니다.
+							<br />
+							- 청주시 유관부서 확인 결과, 상반기에 「청주시 체육시설의 설치 및 운영 조례」 일부개정 관련
+							의견수렴이 있을 예정이므로, 고객님의 의견을 반영하여 개정될 수 있도록 최선을 다하겠습니다.
+							<br />
+							- 고객님께서 주신 소중한 의견을 바탕으로 다자녀 가정 혜택이 적용될 수 있도록 적극적으로
+							노력하겠으며, 보다 나은 서비스 제공을 위해 힘쓰겠습니다.
+							<br />
+						</p>
+					</div>
+				</td>
+			</tr>
+
+			<tr>
+				<td style="width: 90%; border: 1px solid #ccc; text-align: left; padding: 10px"></td>
+			</tr>
+		</table>
+		<!-- 팝업 이미지 -->
+		<!-- ✅ 기본적으로 팝업을 숨김 -->
+		<div id="popup" onclick="closePopup()" style="display: none; z-index: 9999">
+			<span>&times;</span>
+			<img id="popup-img" src="" alt="보일러 사진" />
+		</div>
+	</body>
+	<script>
+		function toggleVisibility(id) {
+			var section = document.getElementById(id);
+			if (section.style.display === 'none') {
+				section.style.display = 'block';
+			} else {
+				section.style.display = 'none';
+			}
+		}
+	</script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggleImagePopup.js"></script>
+</html>

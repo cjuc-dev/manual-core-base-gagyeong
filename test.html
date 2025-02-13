@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>버튼 스타일</title>
+		<style>
+			.button-container {
+				display: flex;
+				flex-direction: column;
+				gap: 10px; /* 버튼 간격 */
+				align-items: center; /* 가운데 정렬 */
+			}
+
+			.button {
+				padding: 10px 20px;
+				border-radius: 20px; /* 둥근 버튼 */
+				font-size: 16px;
+				font-weight: bold;
+				color: white;
+				border: none;
+				cursor: pointer;
+				width: 100px;
+				text-align: center;
+			}
+
+			.list-button {
+				background-color: #007bff; /* 파란색 */
+			}
+
+			.table-button {
+				background-color: #28a745; /* 초록색 */
+			}
+		</style>
+	</head>
+	<body>
+		<div class="button-container">
+			<button class="button list-button">내용</button>
+			<button class="button table-button">답변</button>
+			<button class="button list-button">목록형</button>
+			<button class="button list-button">목록형</button>
+			<button class="button list-button">목록형</button>
+			<button class="button list-button">목록형</button>
+		</div>
+	</body>
+</html>

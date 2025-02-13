@@ -1,0 +1,205 @@
+<!-- 상위 테이블 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>VOC 다목적체육관</title>
+		<!-- ✅ 기본 글로벌 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
+		<!-- 🛠 전체적인 페이지 기본 스타일 (폰트, 여백, 색상 등) -->
+
+		<!-- ✅ 사이드바 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
+		<!-- 🛠 사이드바 UI 스타일 (메뉴, 토글 기능, 레이아웃 관련 스타일) -->
+
+		<!-- ✅ 테이블 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/table_styles.css" />
+		<!-- 🛠 테이블 디자인 및 정렬 스타일 (테두리, 배경색, 크기 조정 등) -->
+
+		<!-- ✅ 이미지 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_styles.css" />
+		<!-- 🛠 페이지 내 이미지 관련 스타일 (크기, 정렬, 여백 등) -->
+
+		<!-- ✅ 툴팁 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
+		<!-- 🛠 툴팁 UI 스타일 (호버 시 설명 표시, 애니메이션 효과 등) -->
+
+		<!-- ✅ 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
+		<!-- 🛠 팝업창 및 이미지 확대 표시 관련 스타일 -->
+
+		<!-- ✅ 기타 UI 스타일 (추가 필요 시) -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
+		<!-- 🛠 UI 구성 요소 스타일 (버튼, 레이아웃, 폰트 스타일 등) -->
+
+		<!-- ✅ 이미지 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_popup.css" />
+		<!-- 🛠 이미지 팝업 효과 적용 (클릭 시 확대 표시, 팝업 UI) -->
+		<style>
+			.button-container {
+				display: flex;
+				flex-direction: column;
+				gap: 10px; /* 버튼 간격 */
+				align-items: center; /* 가운데 정렬 */
+			}
+
+			.button {
+				padding: 5px 5px;
+				border-radius: 20px; /* 둥근 버튼 */
+				font-size: 10px;
+				font-weight: bold;
+				color: white;
+				border: none;
+				cursor: pointer;
+				width: 50px;
+				text-align: center;
+			}
+
+			.list-button {
+				background-color: #007bff; /* 파란색 */
+			}
+
+			.table-button {
+				background-color: #28a745; /* 초록색 */
+			}
+		</style>
+	</head>
+
+	<body>
+		<table style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed">
+			<tr>
+				<td style="width: 90%; border: 1px solid #ccc; text-align: left; padding: 10px">
+					<ul style="list-style-type: none; padding-left: 20px; margin: 0">
+						<li>
+							<h3 style="cursor: pointer" onclick="toggleVisibility('contentSection')">
+								<span style="font-weight: bold"
+									>Q. 가경국민체육센터 다목적체육관 예약방법 개선 요청</span
+								>
+								<span
+									style="cursor: pointer; font-weight: bold; color: blue"
+									onclick="toggleVisibility('내용')">
+									<button class="button list-button">내용</button>
+								</span>
+								<span
+									style="cursor: pointer; font-weight: bold; color: blue"
+									onclick="toggleVisibility('답변')">
+									<button class="button table-button">답변</button>
+								</span>
+							</h3>
+						</li>
+					</ul>
+
+					<!-- 내용 섹션 -->
+					<div
+						id="내용"
+						style="
+							display: none;
+							clear: both;
+							margin-top: 20px;
+							padding: 15px;
+							border: 1px solid #ccc;
+							border-radius: 8px;
+							background-color: #f9f9f9;
+						">
+						<p style="margin-top: 10px; font-weight: bold; line-height: 2">
+							<button class="button list-button">내용</button><br />
+							올해 9월 가경국민체육센터 개관 이후 4개월째 거의 매일 다목적체육관에서 운동하고 있습니다.<br />
+							항상 친절하게 응대해주셔서 감사합니다.<br />
+							다목적체육관에서 탁구를 매일 치고 있는데 당일 직접 방문 예약해야해서<br />
+							오전에 직접 가서 예약하고 오후에 다시 가서 운동하는데 너무 비효율적이고시간이 많이
+							낭비됩니다.<br />
+							특히 요즘처럼 추운 날씨에는 더욱더 힘이 듭니다.<br />
+							오후에 탁구치고 가면서 다음날 예약을 미리하고 가면 2번 왔다갔다 하지 않아도 되어<br />
+							시간도 절약되고 효율적일것 같습니다.<br />
+							빠른 시일안에 모바일, 인터넷 예약이 될 수 있도록 부탁드리며 인터넷 예약이 되기전까지는<br />
+							다목적체육관 예약을 하루전(휴관일경우 휴관일전날)에도 예약할 수 있도록 개선해주시길 간곡히
+							요청드립니다.<br />
+							아울러 수영장처럼 다목적체육관도 월회원제로 운영하여 하루하루 예약해야하는 비효율적인
+							시간낭비가 없어졌으면 좋겠습니다.<br />
+						</p>
+					</div>
+
+					<!-- 답변 섹션 -->
+					<div
+						id="답변"
+						style="
+							display: none;
+							clear: both;
+							margin-top: 20px;
+							padding: 15px;
+							border: 1px solid #ccc;
+							border-radius: 8px;
+							background-color: #f9f9f9;
+						">
+						<p style="margin-top: 10px; font-weight: bold; line-height: 2">
+							<button class="button table-button">답변</button><br />
+							- 고객님께서 홈페이지 시민의 소리를 통해 요청을 주신 사항은 ‘가경국민체육센터 다목적체육관
+							운영방식 개선 제안’으로 사료됩니다.<br />
+							- 먼저 더 나은 가경국민체육센터 운영을 위해 다목적체육관 운영방식 개선 의견을 제시해주신
+							점에 진심으로 감사의 말씀 드립니다.<br />
+
+							- 1. 이용 전일 예약 요청<br />
+							<span style="display: inline-block; padding-left: 10px"
+								>현재 다목적체육관은 일일 예약 운영 방식을 통해 모든 이용객이 동일한 조건에서 공정하게
+								시설을 이용할 수 있도록 운영하고 있습니다.</span
+							><br />
+							<span style="display: inline-block; padding-left: 10px"
+								>하루 전 예약제를 도입할 경우, 특정 이용객에게 예약 기회가 편중될 가능성이 있어 공정성과
+								형평성 측면에서 부합하지 않다고 판단되며, 이에 따라 현행 예약 방식을 유지하고자 하오니
+								너른 양해 부탁드립니다.</span
+							><br />
+
+							- 2. 월회비 제도 도입 제안<br />
+							<span style="display: inline-block; padding-left: 10px"
+								>다목적체육관은 탁구, 배드민턴 경기 뿐만 아니라 친목행사, 체육행사, 선수 훈련, 예술 활동
+								등의 용도로 기업, 단체, 동호회, 개인 등에 대관되는 공간입니다.</span
+							><br />
+							<span style="display: inline-block; padding-left: 10px"
+								>대관사용 시 체육관 전체 공간을 사용하기에 해당일에 탁구와 배드민턴의 이용이
+								불가합니다.</span
+							><br />
+							<span style="display: inline-block; padding-left: 10px"
+								>비정기적인 대관 일정으로 인해 월회비를 산정할 수 없으므로 월회원제 도입이 어려운 점
+								양해 부탁드립니다.</span
+							><br />
+							- 3. 인터넷 및 모바일 예약 시스템 도입
+							<span style="display: inline-block; padding-left: 10px"
+								>이용객의 편의를 위해 인터넷 및 모바일 예약 시스템과 방문 시 키오스크를 활용한 예약
+								시스템 도입을 현재 검토 중입니다.</span
+							><br />
+							<span style="display: inline-block; padding-left: 10px"
+								>다만, 이러한 시스템 도입은 예산 반영이 필요한 사항으로, 즉시 시행이 어려운 점을 양해
+								부탁드립니다. </span
+							><br />
+						</p>
+					</div>
+				</td>
+			</tr>
+
+			<tr>
+				<td style="width: 90%; border: 1px solid #ccc; text-align: left; padding: 10px"></td>
+			</tr>
+		</table>
+		<!-- 팝업 이미지 -->
+		<!-- ✅ 기본적으로 팝업을 숨김 -->
+		<div id="popup" onclick="closePopup()" style="display: none; z-index: 9999">
+			<span>&times;</span>
+			<img id="popup-img" src="" alt="보일러 사진" />
+		</div>
+	</body>
+	<script>
+		function toggleVisibility(id) {
+			var section = document.getElementById(id);
+			if (section.style.display === 'none') {
+				section.style.display = 'block';
+			} else {
+				section.style.display = 'none';
+			}
+		}
+	</script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggleImagePopup.js"></script>
+</html>
