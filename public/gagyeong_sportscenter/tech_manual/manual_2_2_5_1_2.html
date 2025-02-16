@@ -373,9 +373,79 @@
 						<li>
 							<h3>
 								<strong
+									onclick="toggleDiv('filterOverview')"
+									style="cursor: pointer; color: rgb(0, 0, 0)">
+									1️⃣ 여과기 개요📋
+								</strong>
+							</h3>
+						</li>
+					</ul>
+					<div id="filterOverview" style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+						<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_1_2_2.jpg"
+										alt="여과기"
+										class="popup-image"
+										onclick="openPopup(this.src)" />
+									<div class="overlay-text">여과기</div>
+								</div>
+							</div>
+							<div>
+								<h2>1. 용도</h2>
+								<ol>
+									<li>
+										POOL 내의 물의 탁도(5도 이하)를 유지하기 위해 사용되며 TANK 내의 여과재를
+										충전하여 순환수가 여과재를 통과하는 과정에서 이물질과 부유물질을 걸러주는
+										장치이며 통상 1일 1회 이상 역세척을 실시하여 중모에서 여과 기능을 재생하여
+										오염된 이물질들을 효과적으로 제거하도록 한다.
+									</li>
+									<li>종류: 자동 EPD 여과장치 (CARBON STEEL TANK)</li>
+								</ol>
+								<h2>2. 기능 및 구성</h2>
+								<ol>
+									<li>상부하향식의 병렬형으로 처리 용량에 따라 확장이 가능하다. (1 TANK→ 8 TANKS)</li>
+									<li>
+										각 TANK 별로 역세 여과를 독립적으로 실시하여 순차역세, 임의역세 선택이 가능하다.
+									</li>
+									<li>1 TANK의 역세시 다른 TANK는 여과를 지속 수행한다. (2 Tank 이상 모델)</li>
+									<li>여과기 내부에는 분배기, 스트레이너, 여재(가네이트)로 이루어진다.</li>
+								</ol>
+								<ol>
+									<li>
+										역세시 배수 물량은 최대
+										<strong>1.02㎥/min</strong>
+										이며 각 TANK당 역세시간은 기본 2분에서 2분30초 정도 실시하며 투명맨홀을 통해
+										여과기 내부를 관찰하여 역세 시간을 조절하여도 된다. (역세 배수물량이 절감된다.)
+									</li>
+									<li>
+										여과장치에 충전되는 여과재는
+										<strong>GARNET</strong>
+										를 사용하며 여과재의 수명은 반영구적이다.
+									</li>
+									<li>
+										도장이 우수하고 내부식성이 탁월하다.
+										<ul>
+											<li>CARBON STEEL TANK : POLY URETHANE 도장</li>
+											<li>POLYETHYLENE TANK : 내부식성 재질 사용</li>
+										</ul>
+									</li>
+									<img src="" />
+								</ol>
+								<h2>3. 여과기 여과/역세 흐름</h2>
+							</div>
+							<li></li>
+						</ul>
+					</div>
+
+					<ul style="list-style-type: none; padding-left: 0px; margin: 0">
+						<li>
+							<h3>
+								<strong
 									onclick="toggleDiv('backwashInstructions')"
 									style="cursor: pointer; color: rgb(0, 0, 0)">
-									1️⃣ 역세 운전 절차(수동역세)📋
+									2️⃣ 역세 운전 절차(수동역세)📋
 								</strong>
 							</h3>
 						</li>
@@ -562,7 +632,7 @@
 								<strong
 									onclick="toggleDiv('backwashAutoInstructions')"
 									style="cursor: pointer; color: rgb(0, 0, 0)">
-									2️⃣ 역세예약 운전 절차(자동역세)📋
+									3️⃣ 역세예약 운전 절차(자동역세)📋
 								</strong>
 							</h3>
 						</li>
