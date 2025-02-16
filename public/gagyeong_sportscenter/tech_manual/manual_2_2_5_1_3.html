@@ -352,7 +352,6 @@
 							</h3>
 						</li>
 					</ul>
-
 					<!-- ✅ 이미지 팝업 -->
 					<div id="image-popup" style="display: none; margin-top: 10px">
 						<img
@@ -370,6 +369,179 @@
 							class="popup-image"
 							alt="이미지3"
 							style="height: auto; width: auto; max-width: 100%; max-height: 100vh; margin: 10px" />
+					</div>
+					<div>
+						<h3><strong>1. 개요</strong></h3>
+						<li>본 사양서는 순간온수 가열기와 콘트롤 판넬 조작방법에 대한 사항이다.</li>
+						<h3><strong>2. 적용대상</strong></h3>
+						<li>증기순간온수기</li>
+						<h3><strong>3. 증기순간온수기 운전 MANUAL</strong></h3>
+
+						<ol style="padding-left: 10px">
+							<h4 style="margin-left: 0"><strong>3.1 AUTONICS (TK4L)</strong></h4>
+							<ul style="padding-left: 10px">
+								<p>(1) 각부의 명칭</p>
+							</ul>
+						</ol>
+						<style>
+							.content-container {
+								display: flex;
+								align-items: flex-start;
+								margin-bottom: 20px;
+							}
+							.image-container {
+								flex: 0 0 auto;
+								margin-right: 20px;
+							}
+							.description-container {
+								flex: 1 1 auto;
+							}
+							.full-size-image {
+								max-width: 100%;
+								height: auto;
+							}
+							.number-in-box {
+								display: inline-block;
+								width: 11px;
+								height: 11px;
+								border: 1px solid black;
+								text-align: center;
+								line-height: 12px;
+								font-weight: bold;
+								margin-right: 8px;
+								font-size: 10px;
+							}
+							.indented {
+								margin-left: 109px;
+							}
+							br {
+								margin-bottom: 10px;
+								display: block;
+								content: '';
+							}
+							.key {
+								display: inline-block;
+								padding: 2px 5px;
+								background-color: #f0f0f0;
+								border: 1px solid #ccc;
+								border-radius: 3px;
+								font-family: monospace;
+							}
+						</style>
+
+						<div style="font-family: Arial, sans-serif; margin-top: 0px">
+							<ol>
+								<img
+									src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_1_3_18.png"
+									class="full-size-image" />
+								<p>
+									<span class="number-in-box">1</span>
+									측정값(PV)표시부: 운전모드 시, 현재측정 값이나 현재 측정값(Present Value)을
+									표시한다.
+									<br />
+									<span class="indented">설정모드 시, 내부 파라미터명을 표시한다.</span>
+								</p>
+								<p>
+									<span class="number-in-box">2</span>
+									편차(℃ / ℉ / %)표시램프: 표시되는 측정값(PV)의 단위를 표시한다.
+								</p>
+								<p>
+									<span class="number-in-box">3</span>
+									설정값(SV)표시부: 운전모드 시, 제어하고자 하는 설정값(Setting Value)을 표시한다.
+									<br />
+									<span class="indented">설정모드 시, 해당 파라미터의 모든 설정값을 표시한다.</span>
+								</p>
+								<p>
+									<span class="number-in-box">4</span>
+									경보출력(Alarm1, Alarm2) 표시램프: 해당 경보출력 ON시, 점등된다.
+									<br />
+									<span class="indented">제어출력 표시램프: 제어출력 ON시, 점등된다.</span>
+								</p>
+								<p>
+									<span class="number-in-box">5</span>
+									제어출력(기설정, 냉각출) 표시램프: 해당 제어출력 ON시, 점등된다.
+								</p>
+								<p>
+									&ensp;&ensp;&ensp;&ensp;※ SSRP 출력램프의 쌍이중차단 제어시, 조작량이 3.0% 이상일
+									경우, 점등된다.
+								</p>
+								<p>&ensp;&ensp;&ensp;&ensp;※ 전류 (4-20mA DC, 0-20mA DC) 출력으로 사용할 경우,</p>
+								<p>
+									&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;수동제어의 경우 조작량이 0.0%일 때에만 제어
+									출력램프가 소등되며, 그 이외는 항상 점등된다.
+								</p>
+								<p>
+									&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;자동제어의 경우 조작량이 3.0% 이상일 때
+									점등된다.
+								</p>
+								<p>
+									<span class="number-in-box">6</span>
+									수동(MANUAL)제어 표시램프: 수동제어 시, 점등된다.
+								</p>
+								<p>
+									<span class="number-in-box">7</span>
+									오토튜닝(Auto Tuning) 표시램프: 오토튜닝 실행 시, 1초 주기로 점멸된다.
+								</p>
+								<p>
+									<span class="number-in-box">8</span>
+									멀티 SV 표시부: 멀티 SV 기능을 사용할 경우, 해당 SV1~3 램프가 점등된다.
+								</p>
+								<p>
+									<span class="number-in-box">9</span>
+									<span class="key">A/M</span>
+									키: 자동제어 ↔ 수동제어 전환 시, 사용된다.
+								</p>
+								<div style="font-family: Arial, sans-serif; margin-top: 0px">
+									<div class="content-container">
+										<div class="image-container">
+											<img
+												src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_1_3_19.png"
+												alt="온도 컨트롤러"
+												class="full-size-image" />
+										</div>
+										<div class="description-container">
+											<p>
+												<span class="key">▼</span>
+												<span class="key">▲</span>
+												키를 지속적으로 누르면 연속적으로 숫자변경이 가능하며, 상하위 DIGIT과
+												상호연계되어 자동으로 변경된다.
+											</p>
+											<p>
+												<span class="key">◀</span>
+												키로 이동하여 원하는 DIGIT과 상호연계되어 자동으로 변경된다.
+											</p>
+											<p>
+												<span class="key">▼</span>
+												<span class="key">▲</span>
+												키를 이용하여 원하는 SV를 설정한다.
+											</p>
+										</div>
+									</div>
+								</div>
+							</ol>
+						</div>
+						<div style="font-family: Arial, sans-serif; margin-top: 20px">
+							<p style="font-weight: bold">※ TK4S/SP(W48×H48mm)의 경우,</p>
+							<div style="display: flex; align-items: center; margin-bottom: 10px">
+								<span class="key">A/M</span>
+								<span>키가 없으므로</span>
+								<span class="key">MODE</span>
+								<span>키 + ONE TOUCH로 자동/수동 제어 전환키의 기능을 동시에 수행한다.</span>
+							</div>
+							<div style="display: flex; align-items: center; margin-bottom: 5px">
+								<span class="key">MODE</span>
+								<span>키 : 설정모드 진입 및 파라미터 이동 시, 사용한다.</span>
+							</div>
+							<div style="display: flex; align-items: center; margin-bottom: 5px">
+								<span class="key">◀</span>
+								<span>키 : 설정값 변경모드 진입 및 Digit 위치 이동 시, 사용한다.</span>
+							</div>
+							<div style="display: flex; align-items: center">
+								<span class="key">▼</span>
+								<span class="key">▲</span>
+								<span>키 : 설정값 변경모드 진입 및 모든 설정값(Digit값)을 변경 시, 사용한다.</span>
+							</div>
+						</div>
 					</div>
 				</td>
 			</tr>
