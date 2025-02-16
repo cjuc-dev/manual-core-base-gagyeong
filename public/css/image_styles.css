@@ -23,7 +23,6 @@ img:not(.popup-image) {
 	max-width: 100%; /* ✅ 부모 요소를 초과하지 않도록 제한 */
 	overflow: hidden; /* ✅ 넘치는 부분 감춤 */
 	gap: 10px; /* ✅ 이미지 간격 추가 */
-	margin-top: 10px; /* 필요에 따라 값을 조정하세요 */
 }
 
 /* ✅ 개별 이미지 컨테이너 */
