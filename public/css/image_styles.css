@@ -128,3 +128,10 @@ img:not(.popup-image) {
 		max-height: 90vh;
 	}
 }
+/* New class to override image size constraints */
+.full-size-image {
+	width: auto !important;
+	height: auto !important;
+	max-width: none !important;
+	max-height: none !important;
+}
