@@ -1,306 +1,177 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>가경국민체육센터 행정 매뉴얼</title>
-    <style>
-      .container {
-        overflow: auto !important; /* 강제적으로 스크롤 가능하도록 설정 */
-      }
-    </style>
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/styles_main.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/icon.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/main_link_styles.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/table_styles.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/image_styles.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/popup_styles.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/ui_components.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/home_icon.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/image_popup.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css"
-    />
-  </head>
-  <body>
-    <div class="sidebar">
-      <a href="https://manual-5d03dc.gitlab.io/index.html" class="home-icon">
-        <img
-          src="https://manual-5d03dc.gitlab.io/icon/icon_home_24.png"
-          alt="홈"
-        />
-      </a>
-      <h2>
-        가경국민체육센터
-        <br />
-        행정정 매뉴얼
-      </h2>
-      <ul>
-        <li><a href="#" onclick="loadContent('update')">업데이트 현황</a></li>
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_1')">입장 및 회원 관리</a>
-          <ul id="tech_manual_2_2_5_1" class="submenu">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_1_1')"
-                >입장권 발매/취소</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_1_2')"
-                >회원 접수 등록</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_1_3')"
-                >화원 접수 변경 및 이월</a
-              >
-            </li>
-          </ul>
-        </li>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>가경국민체육센터 행정 매뉴얼</title>
+		<style>
+			.container {
+				overflow: auto !important; /* 강제적으로 스크롤 가능하도록 설정 */
+			}
+		</style>
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/styles_main.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/icon.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/main_link_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/table_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/home_icon.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_popup.css" />
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
+	</head>
+	<body>
+		<div class="sidebar">
+			<a href="https://manual-5d03dc.gitlab.io/index.html" class="home-icon">
+				<img src="https://manual-5d03dc.gitlab.io/icon/icon_home_24.png" alt="홈" />
+			</a>
+			<h2>
+				가경국민체육센터
+				<br />
+				행정정 매뉴얼
+			</h2>
+			<ul>
+				<li><a href="#" onclick="loadContent('update')">업데이트 현황</a></li>
+				<li>
+					<a href="#" onclick="toggleMenu('admin_manual_2_1_5_1')">입장 및 회원 관리</a>
+					<ul id="admin_manual_2_1_5_1" class="submenu">
+						<li>
+							<a href="#" onclick="loadContent('admin_manual_2_1_5_1_1')">입장권 발매/취소</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('admin_manual_2_1_5_1_2')">회원 접수 등록</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('admin_manual_2_1_5_1_3')">화원 접수 변경 및 이월</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_2')">강습관리</a>
-          <ul id="tech_manual_2_2_5_2" class="submenu">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_2_1')"
-                >이용료 관리 및 강습 등록</a
-                >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('admin_manual_2_1_5_2')">강습관리</a>
+					<ul id="admin_manual_2_1_5_2" class="submenu">
+						<li>
+							<a href="#" onclick="loadContent('admin_manual_2_1_5_2_1')">이용료 관리 및 강습 등록</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_3')">대관관리</a>
-          <ul id="tech_manual_2_2_5_3" class="submenu">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_3_1')"
-                >대관 예약</a
-                >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_3_2')"
-                >대관 부속사용료</a
-              >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('admin_manual_2_1_5_3')">대관관리</a>
+					<ul id="admin_manual_2_1_5_3" class="submenu">
+						<li>
+							<a href="#" onclick="loadContent('admin_manual_2_1_5_3_1')">대관 예약</a>
+						</li>
+						<li>
+							<a href="#" onclick="loadContent('admin_manual_2_1_5_3_2')">대관 부속사용료</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_4')">수입금관리</a>
-          <ul id="tech_manual_2_2_5_4" class="submenu">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_1')"
-                >수영장 수질 자동측정 장치</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_2')"
-                >수영장 염소 측정</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_3')"
-                >수영장 약품관리</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_4')"
-                >수영장 배수 및 담수</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_5')"
-                >저수조 청소</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_6')"
-                >수영장 수온 관리</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_4_6')"
-                >수질 오염 발생 대응</a
-              >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('admin_manual_2_1_5_4')">수입금관리</a>
+					<ul id="admin_manual_2_1_5_4" class="submenu">
+						<li>
+							<a href="#" onclick="loadContent('admin_manual_2_1_5_5_1')">수입금 관리</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_5')">가스</a>
-          <ul id="tech_manual_2_2_5_5" class="submenu">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_5_1')"
-                >정압기실 기록지 교체</a
-              >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="toggleMenu('admin_manual_2_1_5_7')">기타 주요업무</a>
+					<ul id="admin_manual_2_1_5_7" class="submenu">
+						<li>
+							<a href="#" onclick="loadContent('admin_manual_2_1_5_7_1')">기타</a>
+						</li>
+					</ul>
+				</li>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_6')">건축</a>
-          <ul id="tech_manual_2_2_5_6" class="submenu">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_6_1')"
-                >건축</a
-              >
-            </li>
-          </ul>
-        </li>
+				<li>
+					<a href="#" onclick="loadContent('admin_manual_2_1_5_8_1')">업체 연락처</a>
+				</li>
+			</ul>
 
-        <li>
-          <a href="#" onclick="toggleMenu('tech_manual_2_2_5_7')"
-            >기타 주요업무</a
-          >
-          <ul id="tech_manual_2_2_5_7" class="submenu">
-            <li>
-              <a href="#" onclick="loadContent('tech_manual_2_2_5_7_1')"
-                >기타</a
-              >
-            </li>
-          </ul>
-        </li>
+			<div class="sidebar-footer">
+				<p>v1.13</p>
+				<p>creator: 박영규, 박현수</p>
+			</div>
+		</div>
 
-        <li>
-          <a href="#" onclick="loadContent('tech_manual_2_2_5_8_1')"
-            >업체 연락처</a
-          >
-        </li>
-      </ul>
+		<div id="main-content" class="main-content">
+			<div id="content-area">
+				<h3>여기에 클릭된 메뉴의 내용이 표시됩니다.</h3>
+			</div>
+		</div>
 
-      <div class="sidebar-footer">
-        <p>v1.13</p>
-        <p>creator: 박영규, 박현수</p>
-      </div>
-    </div>
+		<script>
+			function loadContent(section) {
+				var contentArea = document.getElementById('content-area');
 
-    <div id="main-content" class="main-content">
-      <div id="content-area">
-        <h3>여기에 클릭된 메뉴의 내용이 표시됩니다.</h3>
-      </div>
-    </div>
+				const contentPaths = {
+					update: 'updatecontainer/updatecontainer_gagyeong_sportscenter_admin.html', // 업데이트 현황
+					EquipmentInventoryTable: 'gagyeong_sportscenter/EquipmentInventoryTable.html', // 기계장비일람표
+					admin_manual_2_1_5_1_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_1_1.html', // 1.1 보일러
+					admin_manual_2_1_5_1_2: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_1_2.html', // 1.2 수영장 제어설비
+					admin_manual_2_1_5_1_3: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_1_3.html', // 1.3 온수가열기
+					admin_manual_2_1_5_1_4: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_1_4.html', // 1.4 공조기
+					admin_manual_2_1_5_3_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_3_1.html', // 3.1 소방안전관리자
+					admin_manual_2_1_5_3_2: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_3_2.html', // 3.2 소방훈련
+					admin_manual_2_1_5_3_3: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_3_3.html', // 3.3 자체점검
+					admin_manual_2_1_5_3_4: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_3_4.html', // 3.4 스프링클러설비
+					admin_manual_2_1_5_3_5: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_3_5.html', // 3.5 옥내소화전설비
+					admin_manual_2_1_5_3_6: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_3_6.html', // 3.6 자동화재탐지설비
+					admin_manual_2_1_5_3_7: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_3_7.html', // 3.7 비보화재 및 화재 발생 대응
+					admin_manual_2_1_5_4_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_4_1.html', // 4.1 수영장 수질 자동측정 장치
+					admin_manual_2_1_5_4_2: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_4_2.html', // 4.2 수영장 염소 측정
+					admin_manual_2_1_5_4_3: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_4_3.html', // 4.3 수영장 약품관리
+					admin_manual_2_1_5_4_4: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_4_4.html', // 4.4 수영장 배수 및 담수
+					admin_manual_2_1_5_8_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_8_1.html', // 8. 업체 연락처
+					facility: 'facility.html',
+					cheongjuSwimming_guide: 'guide/cheongju_swimming_pool_guide.html',
+					purmi_guide: 'guide/purmi_guide.html',
+					youngun_sportscenter_guide: 'guide/youngun_sportscenter_guide.html',
+					bokdae_sportscenter_guide: 'guide/bokdae_sportscenter_guide.html',
+					gagyeong_sportscenter_guide: 'guide/gagyeong_sportscenter_guide.html',
+					gagyeong_sportscenter_manual_admin_manual_2_1_5:
+						'gagyeong_sportscenter/manual_admin_manual_2_1_5_main.html',
+				};
 
-    <script>
-      function loadContent(section) {
-        var contentArea = document.getElementById("content-area");
+				if (contentPaths[section]) {
+					// URL 확인을 위한 로그 출력
+					console.log(`Fetching URL: https://manual-5d03dc.gitlab.io/${contentPaths[section]}`);
 
-        const contentPaths = {
-          update:
-            "updatecontainer/updatecontainer_gagyeong_sportscenter_tech.html", // 업데이트 현황
-          EquipmentInventoryTable:
-            "gagyeong_sportscenter/EquipmentInventoryTable.html", // 기계장비일람표
-          tech_manual_2_2_5_1_1:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_1_1.html", // 1.1 보일러
-          tech_manual_2_2_5_1_2:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_1_2.html", // 1.2 수영장 제어설비
-          tech_manual_2_2_5_1_3:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_1_3.html", // 1.3 온수가열기
-          tech_manual_2_2_5_1_4:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_1_4.html", // 1.4 공조기
-          tech_manual_2_2_5_3_1:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_3_1.html", // 3.1 소방안전관리자
-          tech_manual_2_2_5_3_2:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_3_2.html", // 3.2 소방훈련
-          tech_manual_2_2_5_3_3:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_3_3.html", // 3.3 자체점검
-          tech_manual_2_2_5_3_4:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_3_4.html", // 3.4 스프링클러설비
-          tech_manual_2_2_5_3_5:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_3_5.html", // 3.5 옥내소화전설비
-          tech_manual_2_2_5_3_6:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_3_6.html", // 3.6 자동화재탐지설비
-          tech_manual_2_2_5_3_7:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_3_7.html", // 3.7 비보화재 및 화재 발생 대응
-          tech_manual_2_2_5_4_1:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_4_1.html", // 4.1 수영장 수질 자동측정 장치
-          tech_manual_2_2_5_4_2:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_4_2.html", // 4.2 수영장 염소 측정
-          tech_manual_2_2_5_4_3:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_4_3.html", // 4.3 수영장 약품관리
-          tech_manual_2_2_5_4_4:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_4_4.html", // 4.4 수영장 배수 및 담수
-          tech_manual_2_2_5_8_1:
-            "gagyeong_sportscenter/tech_manual/manual_2_2_5_8_1.html", // 8. 업체 연락처
-          facility: "facility.html",
-          cheongjuSwimming_guide: "guide/cheongju_swimming_pool_guide.html",
-          purmi_guide: "guide/purmi_guide.html",
-          youngun_sportscenter_guide: "guide/youngun_sportscenter_guide.html",
-          bokdae_sportscenter_guide: "guide/bokdae_sportscenter_guide.html",
-          gagyeong_sportscenter_guide: "guide/gagyeong_sportscenter_guide.html",
-          gagyeong_sportscenter_manual_tech_manual_2_2_5:
-            "gagyeong_sportscenter/manual_tech_manual_2_2_5_main.html",
-        };
+					fetch(`https://manual-5d03dc.gitlab.io/${contentPaths[section]}`)
+						.then((response) => {
+							if (!response.ok) throw new Error('Network response was not ok');
+							return response.text();
+						})
+						.then((data) => (contentArea.innerHTML = data))
+						.catch((error) => {
+							contentArea.innerHTML = '<p>콘텐츠를 불러오는 데 실패했습니다.</p>';
+							console.error('Error loading the content:', error);
+						});
+				} else {
+					contentArea.innerHTML = generateContent(section);
+				}
+			}
 
-        if (contentPaths[section]) {
-          // URL 확인을 위한 로그 출력
-          console.log(
-            `Fetching URL: https://manual-5d03dc.gitlab.io/${contentPaths[section]}`
-          );
-
-          fetch(`https://manual-5d03dc.gitlab.io/${contentPaths[section]}`)
-            .then((response) => {
-              if (!response.ok) throw new Error("Network response was not ok");
-              return response.text();
-            })
-            .then((data) => (contentArea.innerHTML = data))
-            .catch((error) => {
-              contentArea.innerHTML =
-                "<p>콘텐츠를 불러오는 데 실패했습니다.</p>";
-              console.error("Error loading the content:", error);
-            });
-        } else {
-          contentArea.innerHTML = generateContent(section);
-        }
-      }
-
-      function toggleMenu(menuId) {
-        var menus = document.querySelectorAll(".sidebar ul ul");
-        menus.forEach((menu) => {
-          if (menu.id !== menuId) {
-            menu.classList.add("hidden");
-          }
-        });
-        var menu = document.getElementById(menuId);
-        menu.classList.toggle("hidden");
-      }
-    </script>
-  </body>
-  <script src="https://manual-5d03dc.gitlab.io/javaScript/tooltip.js"></script>
-  <script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
-  <script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
-  <script src="https://manual-5d03dc.gitlab.io/javaScript/homeIcon.js"></script>
-  <script src="https://manual-5d03dc.gitlab.io/javaScript/submenu.js"></script>
-  <script src="https://manual-5d03dc.gitlab.io/javaScript/toggleImagePopup.js"></script>
+			function toggleMenu(menuId) {
+				var menus = document.querySelectorAll('.sidebar ul ul');
+				menus.forEach((menu) => {
+					if (menu.id !== menuId) {
+						menu.classList.add('hidden');
+					}
+				});
+				var menu = document.getElementById(menuId);
+				menu.classList.toggle('hidden');
+			}
+		</script>
+	</body>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/tooltip.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/homeIcon.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/submenu.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggleImagePopup.js"></script>
 </html>
