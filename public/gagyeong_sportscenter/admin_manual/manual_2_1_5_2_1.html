@@ -5,7 +5,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>회원권 접수 등록</title>
+		<title>이용료 관리 및 강습 관리</title>
 		<!-- ✅ 기본 글로벌 스타일 -->
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
 		<!-- 🛠 전체적인 페이지 기본 스타일 (폰트, 여백, 색상 등) -->
@@ -360,6 +360,349 @@
 											🚨 배수작업 종료하며 밸브의 조작상태는 인수인계를 위해 반드시 기록해 놓는다.
 										</li>
 										<li>⚠️ 급수 혹은 설비 가동전 밸브의 개폐 조작상태를 필히 ✅확인토록 한다.</li>
+									</ul>
+								</div>
+								<ul style="list-style-type: none; padding-left: 0px; margin: 0">
+									<li>
+										<h3>
+											<strong
+												onclick="toggleDiv('poolwaterservice')"
+												style="cursor: pointer; color: rgb(0, 0, 0)">
+												2️⃣ 수영장 담수📋
+											</strong>
+										</h3>
+									</li>
+								</ul>
+								<div
+									id="poolwaterservice"
+									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+										<li>🚨 모든 작업은 2인 1조 이상으로 작업을 실시한다.</li>
+										<li>⚠️✅ 수영장 담수 작업 전 설비의 모든 밸브 조작 상태를 확인한다.</li>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">작업 전 설비 밸브 확인</div>
+											</div>
+										</div>
+										<p>✅ 밸런스 탱크 보충을 위한 상수도 공급 솔레노이드 밸브 상태를 확인한다.</p>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">솔레노이드 밸브 위치</div>
+											</div>
+										</div>
+										<p>✨ 솔레노이드 밸브 전단 밸브, 후단 밸브의 개방 상태 확인 필요</p>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">솔레노이드 밸브 개방 확인</div>
+											</div>
+										</div>
+										<p>💡 솔레노이드 밸브 전단 밸브는 시설 운영 시 40~50% 개방 상태를 유지한다.</p>
+										<p>
+											❗ 단, 수영장수 초기 담수 작업 시에는 빠른 담수를 위해 전단 밸브는 ✅100%
+											개방한다.
+										</p>
+										<p>
+											❗ 담수 작업 완료 후 솔레노이드 밸브의 전단 밸브는 40~50%로 개방 상태를
+											전환한다.
+										</p>
+										<p>✅ 밸런스 탱크 토출 측 밸브의 개방 상태를 확인한다.</p>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">밸런트 탱크 토출 밸브 개방 확인</div>
+											</div>
+										</div>
+										<p>
+											✅ 수영장 배수 토출 밸브의 잠김 상태와 드레인 밸브의 잠김 상태를 확인한다.
+										</p>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">수영장 배수 토출 밸브 잠김 확인</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">수영장 드레인 밸브 잠김 확인</div>
+											</div>
+										</div>
+										<p>✅ 순환 펌프의 흡입 측 밸브, 토출 측 밸브의 개방 상태를 확인한다.</p>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">순환 펌프 흡입 밸브 확인</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">순환 펌프 토출 밸브 확인</div>
+											</div>
+										</div>
+										<p>
+											✅ 순환 펌프 후단과 여과기 흡입 측 사이에 위치한 드레인 밸브의 잠김 상태를
+											확인한다.
+										</p>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">드레인 밸브 잠김 확인</div>
+											</div>
+										</div>
+										<p>✅ 여과기 흡입 측 밸브, 토출 측 밸브의 개방 상태를 확인한다.</p>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">여과기 흡입 밸브 개방 확인</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">여과기 토출 밸브 개방 확인</div>
+											</div>
+										</div>
+										<p>✅ 여과기 드레인 밸브의 개방 상태를 확인한다.</p>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">여과기 드레인 밸브 개방 확인</div>
+											</div>
+										</div>
+
+										<li>
+											밸브의 조작 상태 확인을 마쳤다면 생활용수 저수조 탱크의 수위가 밸런스 탱크
+											보충에 적합한 수위인지를 확인한다.
+										</li>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">제어반 생활용수 저수조 탱크 수위 확인</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">수위계 생활용수 저수조 탱크 수위 확인</div>
+											</div>
+										</div>
+										<p>
+											생활용수 저수조 탱크의 수위가 중간 정도 수위에 미치지 못하거나 충분치 않다면
+											생활용수 저수조 탱크의 수위를 보충한다.
+										</p>
+										<p>📋 생활용수 저수조 탱크 수위 세팅방법은 추후에 구현 예정 🔗<링크 연결></p>
+										<p>📍 생활용수 저수조 탱크는 소방 저수조 탱크 뒤편에 위치해 있다.</p>
+										<p>
+											💡 수영장수 담수를 위해선 생활용수 저장조 ➡️ 밸런스 탱크 ➡️ 수영조 순으로
+											공급이 진행된다.
+										</p>
+										<p>
+											💡 상하수도 직수 ➡️ 수영장 담수 방법도 있으나 펌프를 이용한 담수 방법보다
+											상당한 시간이 소요된다.(비추천)
+										</p>
+										<li>
+											⚙️ 생활용수 저장조까지 준비를 마쳤다면 수영장 설비 제어반의 패널에서(수동
+											운전 모드) 밸런스 탱크 공급을 위한 솔레노이드 밸브를 클릭하여 작동 시키며
+											탱크 보충을 시작한다.
+										</li>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">밸런스 탱크 급수</div>
+											</div>
+										</div>
+										<li>
+											⚙️ 밸런스 탱크의 수위가 70~80% 이상 도달하였다면 수영장 순환 펌프를
+											🟢기동한다.
+										</li>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">순환펌프 정지</div>
+											</div>
+										</div>
+										<li>
+											⚙️ 초기 담수 시 배관 내의 이물질, 수영조 내의 이물질 등의 배출을 위해서
+											수영장 드레인 밸브(자연 배수)를 열어 수영조로 공급되는 물을 배출시킨다.
+										</li>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">수영장 드레인 밸브 개방</div>
+											</div>
+										</div>
+										<p>
+											💡 수영조 청소를 마쳤더라도 소화전을 사용해 수영조 바닥, 벽면의 잔여 이물질
+											등의 청소를 같이 해주면 더욱 효과적이다.
+										</p>
+										<li>
+											⚙️ 공급과 드레인 작업(수영조 린스)을 위해 펌프의 🟢기동 🛑정지를 상황에 맞게
+											실시한다.
+										</li>
+										<li>
+											⚙️ 충분한 드레인 작업(수영조 린스)이 이루어졌다면 수영장 드레인 밸브를
+											차단하고 공급만 실시한다.
+										</li>
+										<li>
+											⚠️ 밸런스 탱크의 수위와 생활용수 탱크의 수위 상태를 수시로 확인해가며 탱크의
+											보충을 위해 순환 펌프 🟢기동, 🛑정지 및 부스터 펌프의 🟢기동, 🛑정지도 같이
+											병행하도록 한다.
+										</li>
+										<p>
+											💡 생활용수 저수조 탱크의 보충이 필요한 경우 부스터 펌프의 🟢기동, 🛑정지
+											혹은 밸런스 탱크의 공급을 중단시킨다.
+										</p>
+										<p>
+											🚨 저수위 상태의 펌프 기동은 공기가 빨려 들어가 펌프의 고장을 초래할 수
+											있다.
+										</p>
+										<li>🔗 위 작업을 반복하여 담수를 진행한다.</li>
+										<p>
+											💡 수영조의 물이 가득 채워졌다면 오버플로우 트렌지로 넘어오는 물이 배관을
+											통해 밸런스 탱크로 회수된다. (밸런스 탱크 상부에 연결되어 있는 흰색
+											PVC배관이 오버플로우 배관이다.)
+										</p>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">오버플로우 배관</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">급수 배관</div>
+											</div>
+										</div>
+										<p>
+											💡👍 이때 오버플로우 되는 물이 밸런스 탱크 내로 유입되는 소리가 들린다.(📢콸
+											콸 콸)
+										</p>
+										<li>
+											💡 담수 작업 시 보일러를 가동하여 담수 온도를 올리는 것도 수영장 수온 상승
+											시간 단축에 영향을 미칠 듯하다.
+										</li>
+										<li>
+											❗ 담수 작업 완료 시 밸런스 탱크의 솔레노이드 밸브의 전단 밸브 개방 상태를
+											40~50%로 전환한다.
+										</li>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">솔레노이드 밸브 조작</div>
+											</div>
+										</div>
+										<p>
+											💡 앞서 설명하였듯이 정상 운영 중 솔밸브 전단 밸브를 100% 개방 상태로
+											운영하면 배관 관경이 더 큰 밸런스 탱크(탱크 보충 시)로 생활용수가 쏠려
+											샤워장의 물이 안 나오는 상황이 발생한다.
+										</p>
+										<li>
+											⚙️ 수영장 설비 제어반의 운전 모드를
+											<b>수동 운전</b>
+											에서
+											<b>자동 운전</b>
+											으로 전환한다.
+										</li>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">제어반 운전 모드 변경</div>
+											</div>
+										</div>
+										<li>⚙️ 수질 자동 측정 장비의 샘플수 유입 밸브를 열어 약품 설비를 가동한다.</li>
+										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_.jpg"
+													class="popup-image"
+													alt=""
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">자동 측정 장비 가동</div>
+											</div>
+										</div>
+										<li>
+											❗ 수영장 수온 및 염소 수치가 정적 수치에 도달할 때까지 지속적인 관찰을
+											한다.
+										</li>
 									</ul>
 								</div>
 							</tr>
