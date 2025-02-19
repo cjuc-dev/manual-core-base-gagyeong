@@ -38,7 +38,7 @@ p + .image-container {
 	text-align: center; /* ✅ 텍스트 중앙 정렬 */
 	overflow: hidden; /* ✅ 넘치는 내용 감춤 */
 	border-radius: 5px; /* ✅ 모서리를 둥글게 */
-	margin-top: 0px; /* 필요에 따라 값을 조정하세요 */
+	margin-top: 10px; /* 필요에 따라 값을 조정하세요 */
 }
 
 /* ✅ 이미지 스타일 (200x200 고정) */
