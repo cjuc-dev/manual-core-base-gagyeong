@@ -13,6 +13,10 @@ img:not(.popup-image) {
 	border-radius: 8px; /* ✅ 모서리를 8px 둥글게 */
 }
 
+p + .image-container {
+	margin-top: 10px; /* 이미지 컨테이너 간의 간격을 늘리기 */
+}
+
 /* ✅ 이미지 컨테이너 스타일 */
 .image-container {
 	display: flex;
