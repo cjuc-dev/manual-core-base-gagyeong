@@ -42,21 +42,21 @@
 		<table style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed">
 			<tr>
 				<style>
-					ul li p {
-						margin-bottom: 10px;
-						margin-top: 10px;
+					/* ✅ 개별 이미지 컨테이너 */
+					.image-wrapper {
+						position: relative; /* ✅ 자식 요소(.overlay-text)가 이미지 위에 배치됨 */
+						display: ; /* ✅ 한 줄에 나란히 배치 */
+						width: 800px; /* ✅ 가로 200px 고정 */
+						height: 500px; /* ✅ 세로 200px 고정 */
+						text-align: center; /* ✅ 텍스트 중앙 정렬 */
+						overflow: hidden; /* ✅ 넘치는 내용 감춤 */
+						border-radius: 5px; /* ✅ 모서리를 둥글게 */
+						margin-top: 10px; /* 필요에 따라 값을 조정하세요 */
 					}
-
-					ul li + .image-container,
 					p + .image-container {
-						margin-top: 10px; /* 이미지 컨테이너 간의 간격을 늘리기 */
-					}
-
-					.image-container {
-						margin-bottom: 10px;
+						margin-top: -15px; /* 이미지 컨테이너 간의 간격을 늘리기 */
 					}
 				</style>
-
 				<td style="width: 90%; border: 1px solid #ccc; text-align: left; padding: 10px">
 					<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
 						<table style="width: 100%; border-collapse: collapse">
@@ -119,7 +119,7 @@
 										</div>
 										<li>카드결제를 선택후 카드승인을 선택한다.</li>
 										<p>❗ 현금을 받지 않고 있기 때문에 카드결제를 선택한다.</p>
-										<div class="image-container" style="margin-top: 0px; margin-bottom: 0px">
+										<div class="image-container">
 											<div class="image-wrapper">
 												<img
 													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_12.jpg"
@@ -165,7 +165,7 @@
 									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
 									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
 										<li>통합회원정보시스템에서 통합회원을 선택한다.</li>
-										<div class="image-container" style="margin-top: 0px; margin-bottom: 10px">
+										<div class="image-container">
 											<div class="image-wrapper">
 												<img
 													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_15.jpg"
@@ -181,7 +181,7 @@
 											❗ 청주사랑카드, e그린카드, 장애인(활동보조인)이 가능한지 확인한다. 💡
 											장애인(활동보조인)은 장애인이 3급이상이여야 가능하다.
 										</p>
-										<div class="image-container" style="margin-top: 0px; margin-bottom: 10px">
+										<div class="image-container">
 											<div class="image-wrapper">
 												<img
 													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_15.jpg"
@@ -192,7 +192,7 @@
 											</div>
 										</div>
 										<li>발행입장권 선택에서 원하는 입장권을 선택한다.</li>
-										<div class="image-container" style="margin-top: 0px; margin-bottom: 10px">
+										<div class="image-container">
 											<div class="image-wrapper">
 												<img
 													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_15.jpg"
@@ -204,7 +204,7 @@
 										</div>
 										<li>카드결제를 선택후 카드승인을 선택한다.</li>
 										<p>❗ 현금을 받지 않고 있기 때문에 카드결제를 선택한다.</p>
-										<div class="image-container" style="margin-top: 0px; margin-bottom: 10px">
+										<div class="image-container">
 											<div class="image-wrapper">
 												<img
 													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_12.jpg"
