@@ -41,6 +41,22 @@
 	<body>
 		<table style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed">
 			<tr>
+				<style>
+					/* ✅ 개별 이미지 컨테이너 */
+					.image-wrapper {
+						position: relative; /* ✅ 자식 요소(.overlay-text)가 이미지 위에 배치됨 */
+						display: ; /* ✅ 한 줄에 나란히 배치 */
+						width: 800px; /* ✅ 가로 200px 고정 */
+						height: 500px; /* ✅ 세로 200px 고정 */
+						text-align: center; /* ✅ 텍스트 중앙 정렬 */
+						overflow: hidden; /* ✅ 넘치는 내용 감춤 */
+						border-radius: 5px; /* ✅ 모서리를 둥글게 */
+						margin-top: 10px; /* 필요에 따라 값을 조정하세요 */
+					}
+					p + .image-container {
+						margin-top: -15px; /* 이미지 컨테이너 간의 간격을 늘리기 */
+					}
+				</style>
 				<td style="width: 90%; border: 1px solid #ccc; text-align: left; padding: 10px">
 					<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
 						<table style="width: 100%; border-collapse: collapse">
@@ -64,15 +80,23 @@
 											❗청주사랑카드, e그린카드, 장애인(활동보조인)의 경우에만 이 방법으로
 											입장권을 발행한다.
 										</li>
-										<li>통합회원 홈페이지에서 입장관리를 선택한다.</li>
+										<li>통합회원정보시스템에서 통합회원을 선택한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_15.jpg"
+													class="popup-image"
+													alt="수영장 배수 토출 밸브"
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">수영장 배수 토출 밸브 개방</div>
+											</div>
+										</div>
+										<li>입장관리를 선택한다.</li>
 										<p>⚙️ 혹은 즐겨찾기의 일일입장권발매를 선택하여도 된다.</p>
 										<p>⚙️ 입장관리를 들어가면 처음화면에 일일입장권 발매가 화면에 나온다.</p>
-										<p>
-											❗ 청주사랑카드, e그린카드, 장애인(활동보조인)이 가능한지 확인한다.
-											<br />
-											💡 장애인(활동보조인)은 장애인이 3급이상이여야 가능하다.
-										</p>
-										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+										<p>❗ 청주사랑카드, e그린카드, 장애인(활동보조인)이 가능한지 확인한다.</p>
+										<p>💡 장애인(활동보조인)은 장애인이 3급이상이여야 가능하다.</p>
+										<div class="image-container">
 											<div class="image-wrapper">
 												<img
 													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_15.jpg"
@@ -83,7 +107,7 @@
 											</div>
 										</div>
 										<li>발행입장권 선택에서 원하는 입장권을 선택한다.</li>
-										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+										<div class="image-container">
 											<div class="image-wrapper">
 												<img
 													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_15.jpg"
@@ -95,7 +119,7 @@
 										</div>
 										<li>카드결제를 선택후 카드승인을 선택한다.</li>
 										<p>❗ 현금을 받지 않고 있기 때문에 카드결제를 선택한다.</p>
-										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+										<div class="image-container">
 											<div class="image-wrapper">
 												<img
 													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_12.jpg"
@@ -140,9 +164,25 @@
 									id="Cancel tickets"
 									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
 									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
-										<li>통합회원 홈페이지에서 즐겨찾기의 수입금 결제취소를 선택한다.</li>
+										<<<<<<< HEAD
+										<li>통합회원정보시스템에서 통합회원을 선택한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_15.jpg"
+													class="popup-image"
+													alt="수영장 배수 토출 밸브"
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">수영장 배수 토출 밸브 개방</div>
+											</div>
+										</div>
+										<li>즐겨찾기의 수입금 결제취소를 선택한다.</li>
 										<p>⚙️ 그럼 수입금 결제 현황 팝업창이 나온다.</p>
-										<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
+										<p>
+											❗ 청주사랑카드, e그린카드, 장애인(활동보조인)이 가능한지 확인한다. 💡
+											장애인(활동보조인)은 장애인이 3급이상이여야 가능하다.
+										</p>
+										<div class="image-container">
 											<div class="image-wrapper">
 												<img
 													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_4_15.jpg"
@@ -190,7 +230,7 @@
 												<div class="overlay-text">여과기 드레인 밸브 차단</div>
 											</div>
 										</div>
-										<li>카드결제 단말기에 카드를 투입하여 카드취소를를 진행한다.</li>
+										<li>카드결제 단말기에 카드를 투입하여 카드취소를 진행한다.</li>
 									</ul>
 								</div>
 								<ul style="list-style-type: none; padding-left: 0; margin: 0">
