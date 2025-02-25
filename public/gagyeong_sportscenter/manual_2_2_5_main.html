@@ -152,7 +152,7 @@
 			</ul>
 
 			<div class="sidebar-footer">
-				<p>v1.13</p>
+				<p>v1.14</p>
 				<p>creator: 박영규, 박현수</p>
 			</div>
 		</div>
@@ -197,7 +197,6 @@
 				};
 
 				if (contentPaths[section]) {
-					// URL 확인을 위한 로그 출력
 					console.log(`Fetching URL: https://manual-5d03dc.gitlab.io/${contentPaths[section]}`);
 
 					fetch(`https://manual-5d03dc.gitlab.io/${contentPaths[section]}`)
@@ -211,20 +210,42 @@
 							console.error('Error loading the content:', error);
 						});
 				} else {
-					contentArea.innerHTML = generateContent(section);
+					contentArea.innerHTML = '<p>해당 콘텐츠가 없습니다.</p>';
 				}
 			}
 
 			function toggleMenu(menuId) {
-				var menus = document.querySelectorAll('.sidebar ul ul');
+				const menus = document.querySelectorAll('.sidebar ul ul');
+				const contentArea = document.getElementById('content-area');
+
+				// 📌 모든 서브메뉴 숨기기 및 콘텐츠 영역 초기화
 				menus.forEach((menu) => {
 					if (menu.id !== menuId) {
 						menu.classList.add('hidden');
 					}
 				});
-				var menu = document.getElementById(menuId);
-				menu.classList.toggle('hidden');
+
+				// 📌 선택한 서브메뉴 열기 및 기본 메시지 출력
+				const menu = document.getElementById(menuId);
+				if (menu) {
+					const isHidden = menu.classList.contains('hidden');
+					menus.forEach((m) => m.classList.add('hidden')); // 모든 서브메뉴 숨김
+					if (isHidden) {
+						menu.classList.remove('hidden'); // 선택한 서브메뉴 열기
+					}
+
+					// 🚀 콘텐츠 영역 기본 메시지로 초기화
+					contentArea.innerHTML = '<h3>여기에 클릭된 메뉴의 내용이 표시됩니다.</h3>';
+				}
 			}
+
+			// 📌 상위 메뉴 클릭 시 콘텐츠 영역 초기화
+			document.querySelectorAll('.sidebar > ul > li > a').forEach((item) => {
+				item.addEventListener('click', () => {
+					document.getElementById('content-area').innerHTML =
+						'<h3>여기에 클릭된 메뉴의 내용이 표시됩니다.</h3>';
+				});
+			});
 		</script>
 	</body>
 	<script src="https://manual-5d03dc.gitlab.io/javaScript/tooltip.js"></script>
