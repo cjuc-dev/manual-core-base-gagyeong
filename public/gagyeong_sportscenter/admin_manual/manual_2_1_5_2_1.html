@@ -70,22 +70,20 @@
 									<li>
 										<h3>
 											<strong
-												onclick="toggleDiv('Register')"
+												onclick="toggleDiv('Fare')"
 												style="cursor: pointer; color: rgb(0, 0, 0)">
 												1️⃣ 이용료 관리📋
 											</strong>
 										</h3>
 									</li>
 								</ul>
-								<div
-									id="Register"
-									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+								<div id="Fare" style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
 									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
 										<li>통합회원정보시스템에서 통합회원을 선택한다.</li>
 										<div class="image-container">
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_1.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_1.png"
 													class="popup-image"
 													alt="통합회원 들어가기기" />
 												<div class="overlay-text">통합회원 들어가기기</div>
@@ -95,14 +93,14 @@
 										<div class="image-container">
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_2.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_2.png"
 													class="popup-image"
 													alt="회원관리" />
 												<div class="overlay-text">회원관리</div>
 											</div>
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_3.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_3.png"
 													class="popup-image"
 													alt="회원접수등록" />
 												<div class="overlay-text">회원접수등록</div>
@@ -112,201 +110,144 @@
 										<div class="image-container">
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_4.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_4.png"
 													class="popup-image"
 													alt="성명검색" />
 												<div class="overlay-text">성명검색</div>
 											</div>
 										</div>
-										<li>매표구분에서 해당하는 이용자 구분을 선택 후 확인을 선택한다.</li>
+										<li>이용구분, 매표구분, 이용자 구분을 입력을 해준다.</li>
 										<p>
-											⚠️ 이용자 구분이 같아도 매표구분에 따라 가격이 달라지므로 가격도 잘 확인해야
-											한다!
+											💡새로운 것을 작성을 하기 위해서는 맨 밑에 있는 직접 입력을 선택하여
+											작성한다.
 										</p>
 										<div class="image-container">
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_6.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_6.png"
 													class="popup-image"
 													alt="이용자구분 선택" />
 												<div class="overlay-text">이용자구분 선택</div>
 											</div>
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_7.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_7.png"
 													class="popup-image"
 													alt="확인 선택" />
 												<div class="overlay-text">확인 선택</div>
 											</div>
 										</div>
-										<li>카드결제를 진행한다.</li>
+										<li>이용료와 정상요금을 작성을 한다.</li>
+										<p>❗할인해택이 있는 경우만 정상 요금을 작성을 하면 된다.</p>
+										<p>
+											❗강습요금과 입장요금을 정확히 나누어서 작성을 해야한다.(환불이 진행이 될때
+											강습비와 입장요금에 따라 금액이 달라지기 때문)
+										</p>
 										<div class="image-container">
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_8.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_8.png"
 													class="popup-image"
 													alt="카드결제" />
 												<div class="overlay-text">카드결제</div>
 											</div>
 										</div>
+										<li>일일권일 경우 정렬순서를 작성을 한다.</li>
+										<p>💡일일입장권발매의 no.가 정해진다.</p>
 									</ul>
 								</div>
 								<ul style="list-style-type: none; padding-left: 0; margin: 0">
 									<li>
 										<h3>
 											<strong
-												onclick="toggleDiv('Register2')"
+												onclick="toggleDiv('lesson')"
 												style="cursor: pointer; color: rgb(0, 0, 0)">
-												2️⃣ 회원접수등록(강습)📋
+												2️⃣ 강습 관리📋
 											</strong>
 										</h3>
 									</li>
 								</ul>
-								<div
-									id="Register2"
-									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+								<div id="lesson" style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
 									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
-										<li>
-											❗청주사랑카드, E그린카드 등 온라인 접수로 하지 못하는 것을 이 방법을
-											사용한다.
-										</li>
 										<li>통합회원정보시스템에서 통합회원을 선택한다.</li>
 										<div class="image-container">
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_9.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_1.png"
 													class="popup-image"
 													alt="통합회원 들어가기기" />
 												<div class="overlay-text">통합회원 들어가기기</div>
 											</div>
 										</div>
 										<li>시설관리 선택 후 강습정보를 선택한다.</li>
-										<p>
-											⚙️ 강습은 그 다음달을 신청을 받기 때문에 기준연월을 다음달로 바꾸어야 한다.
-										</p>
 										<div class="image-container">
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_10.png"
-													class="popup-image"
-													alt="시설관리 선택" />
-												<div class="overlay-text">시설관리 선택</div>
-											</div>
-											<div class="image-wrapper">
-												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_11.png"
-													class="popup-image"
-													alt="강습정보 선택" />
-												<div class="overlay-text">강습정보 선택</div>
-											</div>
-											<div class="image-wrapper">
-												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_12.png"
-													class="popup-image"
-													alt="기준연월" />
-												<div class="overlay-text">기준연월</div>
-											</div>
-										</div>
-										<li>고객의 신청한 강습의 정원을 온라인 1명을 줄이고 오프라인 1명을 늘린다.</li>
-										<div class="image-container">
-											<div class="image-wrapper">
-												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_13.png"
-													class="popup-image"
-													alt="수정 버튼" />
-												<div class="overlay-text">수정 버튼</div>
-											</div>
-											<div class="image-wrapper">
-												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_14.png"
-													class="popup-image"
-													alt="강습정원 수정" />
-												<div class="overlay-text">강습정원 수정</div>
-											</div>
-										</div>
-										<li>고객이 결제한 강습을 취소를 진행한다.</li>
-										<p>⚙️ 취소 방법은 1-1에 있는 취소 방법을 참고</p>
-										<p>
-											ℹ️ 고객의 결제 취소보다 정원을 먼저 수정하는 이유는 정원을 수정하는 사이
-											온라인으로 신청을 할 수 있기 때문
-										</p>
-										<div class="image-container">
-											<div class="image-wrapper">
-												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_15.png"
-													class="popup-image"
-													alt="결제 취소" />
-												<div class="overlay-text">결제 취소</div>
-											</div>
-										</div>
-										<li>회원관리 선택 후 회원접수등록을 선택한다.</li>
-										<p>⚙️ 혹은 즐겨찾기의 회원접수등록을 선택하여도 된다.</p>
-										<div class="image-container">
-											<div class="image-wrapper">
-												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_16.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_2.png"
 													class="popup-image"
 													alt="회원관리" />
 												<div class="overlay-text">회원관리</div>
 											</div>
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_17.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_3.png"
 													class="popup-image"
 													alt="회원접수등록" />
 												<div class="overlay-text">회원접수등록</div>
 											</div>
-											<div class="image-wrapper">
-												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_18.png"
-													class="popup-image"
-													alt="즐겨찾기" />
-												<div class="overlay-text">즐겨찾기</div>
-											</div>
 										</div>
-										<li>회원성명을 검색 후 생년월일, 연락처를 확인한다.</li>
+										<li>강습을 만드려는 기준연월을 선택을 한다.</li>
 										<div class="image-container">
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_19.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_4.png"
 													class="popup-image"
 													alt="성명검색" />
 												<div class="overlay-text">성명검색</div>
 											</div>
-											<div class="image-wrapper">
-												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_20.png"
-													class="popup-image"
-													alt="생년월일, 연락처 확인" />
-												<div class="overlay-text">생년월일, 연락처 확인</div>
-											</div>
 										</div>
-										<li>매표구분에서 해당하는 이용자 구분을 선택 후 확인을 선택한다.</li>
+										<li>
+											전월 강습시간을 복사를 하기 위해서는 전월강습 복사해서 일괄 생성을 선택한다.
+										</li>
 										<p>
-											⚠️ 이용자 구분이 같아도 매표구분에 따라 가격이 달라지므로 가격도 잘 확인해야
-											한다!
+											💡전월 강습시간이 동일하게 복사가 되기 때문에 강습명과 접수기간을 수정을
+											해준다.
+											<br />
+											💡전월 강습이 있는 것은 우선접수가 있기 때문에 우선접수를 작성을 해야
+											한다.(아쿠아로빅 제외)
 										</p>
 										<div class="image-container">
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_21.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_6.png"
 													class="popup-image"
 													alt="이용자구분 선택" />
 												<div class="overlay-text">이용자구분 선택</div>
 											</div>
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_22.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_7.png"
 													class="popup-image"
 													alt="확인 선택" />
 												<div class="overlay-text">확인 선택</div>
 											</div>
 										</div>
-										<li>카드결제를 진행한다.</li>
+										<li>새로 만들어진 강습은 신규강습등록을 선택을 한다.</li>
 										<div class="image-container">
 											<div class="image-wrapper">
 												<img
-													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_2_23.png"
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_8.png"
+													class="popup-image"
+													alt="카드결제" />
+												<div class="overlay-text">카드결제</div>
+											</div>
+										</div>
+										<li>강습정보를 작성을 해준다.</li>
+										<p>💡신규강습은 우선접수를 하지 않기 때문에 우선접수를 작성하지 않는다.</p>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_2_1_8.png"
 													class="popup-image"
 													alt="카드결제" />
 												<div class="overlay-text">카드결제</div>
