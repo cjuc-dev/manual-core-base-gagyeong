@@ -5,7 +5,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>수입결의서 작성</title>
+		<title>정산관리</title>
 		<!-- ✅ 기본 글로벌 스타일 -->
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
 		<!-- 🛠 전체적인 페이지 기본 스타일 (폰트, 여백, 색상 등) -->
@@ -72,7 +72,7 @@
 											<strong
 												onclick="toggleDiv('Register')"
 												style="cursor: pointer; color: rgb(0, 0, 0)">
-												1️⃣ 대관 부속사용료📋
+												1️⃣ 사전정산하기(무인)📋
 											</strong>
 										</h3>
 									</li>
@@ -81,7 +81,30 @@
 									id="Register"
 									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
 									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
-										<li>발행입장권 선택에서 원하는 입장권을 선택한다.</li>
+										<li>화면을 한번 터치한다.</li>
+										<li>차량 뒤 4자리를 입력한다.</li>
+										<li>사전정산완료가 나오면 20분내에 출차해야 한다.</li>
+									</ul>
+								</div>
+								<ul style="list-style-type: none; padding-left: 0; margin: 0">
+									<li>
+										<h3>
+											<strong
+												onclick="toggleDiv('Register2')"
+												style="cursor: pointer; color: rgb(0, 0, 0)">
+												1️⃣ 정산하기(관리자)📋
+											</strong>
+										</h3>
+									</li>
+								</ul>
+								<div
+									id="Register2"
+									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+										<li>무인정산기 현황에 사전무인이 선택이 되어 있는지 확인한다.</li>
+										<p>💡 출구무인이로 되어 있을 경우 추차 차단기가 열리지 않는다!</p>
+										<li>사전무인에 차량 번호를 입력을 한다.</li>
+										<li>차량번호가 맞으면 P모양의 아이콘을 선택한다.</li>
 									</ul>
 								</div>
 							</tr>
