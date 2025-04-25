@@ -113,7 +113,7 @@
 					화재상황 발생과 동시에 4층 통신실의 자동화재탐지설비 수신기로 이동하여 화재발생 구역 위치를
 					확인한다. 수신기 화면에 화재 발생구역이 표시되어 있다.(예: 2F-2 화재발생)
 				</li>
-				<p>❗ 사진은 경보발생 사진이다. 예 와 다른 상황임</p>
+				<p>❗ 사진은 다른 경보발생 상황이다. 예 와 다른 상황임</p>
 				<div class="image-container" style="margin-top: 10px; margin-bottom: 10px">
 					<div class="image-wrapper">
 						<img
@@ -447,7 +447,7 @@
 						</div>
 					</div>
 				</div>
-				<p>리셋 시 수신기에서 알람은 사라진다.</p>
+				<p>❗ 리셋 시 수신기에서 알람은 사라진다.</p>
 				<p>
 					💡 옥상층 출입시 비밀번호를 입력하여 출입이 가능하다. 등록/개폐 버튼을 누른 후 비밀번호 입력 다시
 					등록/개폐를 누른다.
@@ -462,24 +462,37 @@
 						<div class="overlay-text">출입시 등록/개폐</div>
 					</div>
 				</div>
-				<p>옥상층 출입 guest password: 1234(비밀번호 입력 시 출입문 개방되며 몇 초 뒤 다시 잠긴다.)</p>
+				<p>💡옥상층 출입 guest password: 1234(비밀번호 입력 시 출입문 개방되며 몇 초 뒤 다시 잠긴다.)</p>
 				<p>
-					옥상층 출입 masta password: 8512(비밀번호 입력 시 출입문은 닫음 비밀번호 입력 전까지 항시 개방
+					💡 옥상층 출입 masta password: 8512(비밀번호 입력 시 출입문은 닫음 비밀번호 입력 전까지 항시 개방
 					상태가 된다.)
 				</p>
+			</ul>
+		</div>
+		<ul style="list-style-type: none; padding-left: 0; margin: 0">
+			<li>
+				<h3>
+					<strong onclick="toggleDiv('fireResponseManual')" style="cursor: pointer; color: rgb(0, 0, 0)">
+						2️⃣ 화재발생 대응 매뉴얼📋
+					</strong>
+				</h3>
+			</li>
+		</ul>
 
-				<h3>화재발생 대응 매뉴얼</h3>
-				<p>본 화재발생 대응 매뉴얼은 시설 특성을 고려하여 작성한 대응 매뉴얼이다.</p>
-				<ol>
+		<ul>
+			<div id="fireResponseManual" style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+				<b>본 화재발생 대응 매뉴얼은 시설 특성을 고려하여 작성한 대응 매뉴얼이다.</b>
+				<ol style="padding-right: 0px">
 					<li>
 						본 시설은 소수의 인원으로 운영하는 시설로서 상황 발생 시 상주하고 있는 인원 각자의 임무 수행이
 						중요하다.
 					</li>
 					<li>
-						화재 알림이 발생하여 시설 점검을 통해 화재를 발견한 경우 화재 상황을 시설 근무자에게 전파한다.
+						화재 알림이 발생하여 시설 점검을 통해 화재를 발견한 경우 소화전의 발신기 버튼을 눌러 화재 경보
+						작동과 함께 화재 상황을 시설 근무자에게 전파한다.
 					</li>
 
-					<li>근무자는 소방서에 즉시 신고한다. (누가 하든 상관없음)</li>
+					<li>근무자는 소방서에 즉시 신고한다. (누가 하든 상관없다.)</li>
 					<li>근무자는 신속하게 시설팀장에게 상황을 알린다.(상급자 보고 및 비상연락망 가동 목적)</li>
 					<p>소수 인원으로 일일이 보고 및 비상연락망 돌릴 시간이 없다. 각자 맏은 임무에 집중하여 수행한다.</p>
 					<li>
@@ -516,8 +529,9 @@
 						</li>
 					</ul>
 				</ol>
-			</ul>
-		</div>
+			</div>
+		</ul>
+
 		<!-- 팝업 이미지 -->
 		<!-- ✅ 기본적으로 팝업을 숨김 -->
 		<div id="popup" onclick="closePopup()" style="display: none; z-index: 9999">
