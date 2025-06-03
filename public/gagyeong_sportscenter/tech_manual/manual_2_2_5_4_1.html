@@ -239,6 +239,17 @@
 					</ul>
 				</td>
 			</tr>
+			<style>
+				#chlorineCalibrationInstructions .icon1,
+				#chemicalConcentrationSetting .icon1,
+				#chlorineSensorInstallation .icon1,
+				#chlorineMeasurementChange .icon1 {
+					display: inline-block;
+					width: 25px; /* 원하는 크기로 조정 */
+					height: 25px; /* 원하는 크기로 조정 */
+					vertical-align: middle; /* 텍스트와 수직 정렬 */
+				}
+			</style>
 			<tr>
 				<th style="border: 1px solid #ccc; padding: 10px; white-space: nowrap">매뉴얼</th>
 				<td colspan="8" style="border: 1px solid #ccc; text-align: left">
@@ -257,53 +268,97 @@
 					<div id="chlorineCalibrationInstructions" style="display: none; margin-top: 10px">
 						<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
 							<li>
-								<p>초기 화면에서 1번째 버튼을 3회 눌러 Calibration 화면을 띄운다.</p>
+								<p>
+									초기 화면에서
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_menu.png"
+										alt="아이콘"
+										class="icon1" />
+									를 3회 눌러 Calibration 으로 진입후
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_enter.png"
+										alt="아이콘"
+										class="icon1" />
+									를 2회 눌러 DPD-value 화면으로 진입한다.
+								</p>
 							</li>
 							<div class="image-container">
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_1.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_1.png"
 										class="popup-image"
-										alt="수질 자동측정 장치1"
-										onclick="openPopup(this.src)" />
+										alt="수질 자동측정 장치" />
 									<div class="overlay-text">Calibration 화면</div>
 								</div>
-							</div>
-							<li>
-								<p>Calibration 화면에서 3번째 버튼을 2회 눌러 DPD-value 값을 띄운다.</p>
-							</li>
-							<div class="image-container">
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_2.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_2.png"
 										class="popup-image"
-										alt="수질 자동측정 장치2"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">DPD-value 값 설정</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">DPD-value 화면</div>
 								</div>
 							</div>
 							<li>
 								<p>
-									숫자가 깜빡이면 아래 방향키를 누르고 1번째 버튼을 눌러 자릿수를 이동하며, 윗방향키나
-									아래방향키를 눌러 측정한 염소 값으로 숫자를 변경한다.
+									숫자가 깜빡이면
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_down.png"
+										alt="아이콘"
+										class="icon1" />
+									를 1회 누르고
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_menu.png"
+										alt="아이콘"
+										class="icon1" />
+									버튼을 눌러 자릿수를 이동한다.
+								</p>
+								<p>
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_up.png"
+										alt="아이콘"
+										class="icon1" />
+									와
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_down.png"
+										alt="아이콘"
+										class="icon1" />
+									를 눌러 측정한 염소 값으로 숫자를 변경한다.
+								</p>
+								<p>예) 현재 수질의 염소 농도가 0.8ppm이라면 0.8로 입력한다.</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_3.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">DPD-value 보정</div>
+								</div>
+							</div>
+							<li>
+								<p>
+									보정값 입력이 완료되었다면
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_enter.png"
+										alt="아이콘"
+										class="icon1" />
+									를 2회 누르고
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_back.png"
+										alt="아이콘"
+										class="icon1" />
+									를 3회 눌러 초기화면으로 나간다.
 								</p>
 							</li>
 							<div class="image-container">
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_3.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_3.png"
 										class="popup-image"
-										alt="수질 자동측정 장치3"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">염소 값 입력</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">Calibration 보정 종료</div>
 								</div>
 							</div>
-							<li>
-								<p>
-									3번째 버튼을 2회 누르고 5번째 버튼을 3회 눌러 초기화면으로 나간 후 변경이 되었는지
-									확인한다.
-								</p>
-							</li>
 						</ul>
 					</div>
 					<ul style="list-style-type: none; padding-left: 0px; margin: 0">
@@ -321,69 +376,106 @@
 					<div id="chemicalConcentrationSetting" style="display: none; margin-top: 10px">
 						<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
 							<li>
-								<p>초기 화면에서 1번째 버튼을 7회 눌러 Control 화면을 띄운다.</p>
-							</li>
-							<div class="image-container">
-								<div class="image-wrapper">
-									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_4.jpg"
-										class="popup-image"
-										alt="수질 자동측정 장치4"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">Control 화면</div>
-								</div>
-							</div>
-							<li>
-								<p>Control 화면에서 3번째 버튼을 3회 눌러 Set Point 값을 띄운다.</p>
-							</li>
-							<div class="image-container">
-								<div class="image-wrapper">
-									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_5.jpg"
-										class="popup-image"
-										alt="수질 자동측정 장치5"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">Set Point 설정</div>
-								</div>
-							</div>
-							<li>
 								<p>
-									숫자가 깜빡이면 아래 방향키를 누르고 1번째 버튼을 눌러 자릿수를 이동하며, 윗방향키나
-									아래방향키를 눌러 원하는 염소 농도 값으로 숫자를 변경한다.
+									초기 화면에서
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_menu.png"
+										alt="아이콘"
+										class="icon1" />
+									를 7회 눌러 Control setting로 진입 후
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_enter.png"
+										alt="아이콘"
+										class="icon1" />
+									를 3회 누른다.
 								</p>
 							</li>
 							<div class="image-container">
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_6.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_5.png"
 										class="popup-image"
-										alt="수질 자동측정 장치6"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">염소 농도 설정</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">Control setting 화면</div>
 								</div>
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_7.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_6.png"
 										class="popup-image"
-										alt="수질 자동측정 장치7"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">설정값 확인</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">set point 화면</div>
 								</div>
 							</div>
 							<li>
 								<p>
-									3번째 버튼을 3회 누르고 5번째 버튼을 2회 눌러 초기화면으로 나간 다음, 1번째 버튼을
-									1회 눌러 변경된 설정값을 확인한다.
+									숫자가 깜빡이면
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_down.png"
+										alt="아이콘"
+										class="icon1" />
+									를 1회 누르고
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_menu.png"
+										alt="아이콘"
+										class="icon1" />
+									를 눌러 자릿수를 이동하며,
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_up.png"
+										alt="아이콘"
+										class="icon1" />
+									와
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_down.png"
+										alt="아이콘"
+										class="icon1" />
+									를 눌러 원하는 염소 농도 값으로 숫자를 변경한다.
+								</p>
+								<p>예) 염소 투임 농도를 2.00ppm으로 원한다면 2.00으로 입력한다.</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_7.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">set point 변경 전</div>
+								</div>
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_8.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">set point 변경 후</div>
+								</div>
+							</div>
+							<li>
+								<p>
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_enter.png"
+										alt="아이콘"
+										class="icon1" />
+									를 3회 누르고
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_back.png"
+										alt="아이콘"
+										class="icon1" />
+									를 2회 누른다.
+								</p>
+								<p>
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/icon_menu.png"
+										alt="아이콘"
+										class="icon1" />
+									를 1회 눌러 변경된 설정값을 확인한다.
 								</p>
 							</li>
 							<div class="image-container">
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_8.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_9.png"
 										class="popup-image"
-										alt="수질 자동측정 장치8"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">변경된 설정값 확인</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">set point 변경 확인</div>
 								</div>
 							</div>
 						</ul>
@@ -394,7 +486,7 @@
 								<strong
 									onclick="toggleDiv('chlorineSensorInstallation')"
 									style="cursor: pointer; color: rgb(0, 0, 0)">
-									3️⃣ 유리잔류염소센서 설치 방법📋
+									3️⃣ 유리잔류염소 센서 설치 방법📋
 								</strong>
 							</h3>
 						</li>
@@ -407,24 +499,26 @@
 									유리잔류염소 센서와 멤브레인 캡을 분리하고 전해액 끝부분을 잘라낸 후 멤브레인 캡
 									안에 주입한다.
 								</p>
-								<p>⚠️ 공기방울이 생기지 않게 주입한다.</p>
+								<p>
+									⚠️
+									<span style="color: red; font-weight: bold">공기방울이 생기지 않게</span>
+									주입한다.
+								</p>
 							</li>
 							<div class="image-container">
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_9.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_10.png"
 										class="popup-image"
-										alt="수질 자동측정 장치9"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">멤브레인 캡 주입</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">유리잔류염소와 전해액</div>
 								</div>
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_10.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_11.png"
 										class="popup-image"
-										alt="수질 자동측정 장치10"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">공기방울 제거</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">맴브레인 캡 전해액 주입</div>
 								</div>
 							</div>
 							<li>
@@ -437,19 +531,17 @@
 							<div class="image-container">
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_11.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_12.png"
 										class="popup-image"
-										alt="수질 자동측정 장치11"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">고무패킹 결합</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">센서와 맴브레인 캡 체결</div>
 								</div>
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_12.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_13.png"
 										class="popup-image"
-										alt="수질 자동측정 장치12"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">플라스틱링 결합</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">센서 결합</div>
 								</div>
 							</div>
 							<li>
@@ -462,45 +554,303 @@
 							<div class="image-container">
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_13.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_14.png"
 										class="popup-image"
-										alt="수질 자동측정 장치13"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">센서 케이블 결선</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">센서 하우징 체결</div>
 								</div>
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_14.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_15.png"
 										class="popup-image"
-										alt="수질 자동측정 장치14"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">결선 완료</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">센서 케이블 결선</div>
 								</div>
 							</div>
 							<li>
 								<p>케이블 결선 후 윗 커버를 체결한다.</p>
 							</li>
-							<div class="image-container">
-								<div class="image-wrapper">
-									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_15.jpg"
-										class="popup-image"
-										alt="수질 자동측정 장치15"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">윗 커버 체결</div>
-								</div>
-							</div>
 							<li>
 								<p>하우징 밸브를 열어 물이 흐르는 것을 확인한다.</p>
 							</li>
 							<div class="image-container">
 								<div class="image-wrapper">
 									<img
-										src="https://raw.githubusercontent.com/cjsisul/manual/main/manual_image/image_2_2_5_4_1_16.jpg"
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_16.png"
 										class="popup-image"
-										alt="수질 자동측정 장치16"
-										onclick="openPopup(this.src)" />
-									<div class="overlay-text">하우징 밸브 개방</div>
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">커버 체결</div>
+								</div>
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_17.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">물의 이동 확인</div>
+								</div>
+							</div>
+						</ul>
+					</div>
+					<ul style="list-style-type: none; padding-left: 0px; margin: 0">
+						<li>
+							<h3>
+								<strong
+									onclick="toggleDiv('phCalibrationInstructions')"
+									style="cursor: pointer; color: rgb(0, 0, 0)">
+									4️⃣ Ph센서 보정법📋
+								</strong>
+							</h3>
+						</li>
+					</ul>
+					<!-- 매뉴얼 상세 내용 -->
+					<div id="phCalibrationInstructions" style="display: none; margin-top: 10px">
+						<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+							<li>
+								<p>ph센서와 퍼버용액을 준비한다.</p>
+								<p>
+									[
+									<span style="color: green; font-weight: bold">초록색: 퍼버7</span>
+									/
+									<span style="color: red; font-weight: bold">빨간색: 퍼버4</span>
+									]
+								</p>
+							</li>
+							<li>
+								<p>ph센서를 꺼내 케이블과 결선한다.</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_18.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">센서와 퍼버용액</div>
+								</div>
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_19.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">센서와 케이블 체결</div>
+								</div>
+							</div>
+							<li>
+								<p>휴지로 ph센서를 깨끗이 닦아준다.</p>
+								<p style="color: red; font-weight: bold">[너무 세게 문지르지 말고 물기만 없애 준다.]</p>
+							</li>
+							<li>
+								<p>ph센서를 퍼버7 용액에 넣고 약 30초 동안 기다린다.</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_20.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">센서 이물질 제거</div>
+								</div>
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_21.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">퍼버7용액 측정 준비</div>
+								</div>
+							</div>
+							<li>
+								<p>
+									<span style="color: blue; font-weight: bold">CAL</span>
+									을 2회 누룬후 화면 7.00 ph 수치가 표기됨을 확인한 후
+									<span style="color: blue; font-weight: bold">CAL</span>
+									을 1회 누른다.
+								</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_22.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">표기 상태 확인</div>
+								</div>
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_23.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">측정 시작</div>
+								</div>
+							</div>
+							<li>
+								<p>
+									측정이 끝날 때까지 기다리고 완료되면
+									<span style="color: blue; font-weight: bold">CAL</span>
+									을 1회 누른다.
+								</p>
+							</li>
+
+							<li>
+								<p>ph센서를 퍼버7 용액에서 빼낸 후 휴지로 부드럽게 닦아준다.</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_24.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">측정 후 확인</div>
+								</div>
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_25.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">센서 물기 제거</div>
+								</div>
+							</div>
+							<li>
+								<p>ph센서를 퍼버 4용액에 넣고 약 30초 동안 기다린다.</p>
+							</li>
+							<li>
+								<p>
+									화면에 4.00 ph 수치가 표기됨을 확인한 후
+									<span style="color: blue; font-weight: bold">CAL</span>
+									을 1회 누른다.
+								</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_26.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">퍼버4 측정 준비</div>
+								</div>
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_27.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">측정 시작</div>
+								</div>
+							</div>
+							<li>
+								<p>
+									측정이 끝날 때까지 기다리고 완료되면
+									<span style="color: blue; font-weight: bold">CAL</span>
+									을 1회 누른다.
+								</p>
+							</li>
+							<li>
+								<p>초기화면으로 돌아감을 확인 후 완료한다.</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_28.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">측정 후 확인</div>
+								</div>
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_29.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">ph 보정 완료</div>
+								</div>
+							</div>
+						</ul>
+					</div>
+					<ul style="list-style-type: none; padding-left: 0px; margin: 0">
+						<li>
+							<h3>
+								<strong
+									onclick="toggleDiv('phConcentrationSetting')"
+									style="cursor: pointer; color: rgb(0, 0, 0)">
+									5️⃣ ph 셋팅포인트 설정법📋
+								</strong>
+							</h3>
+						</li>
+					</ul>
+					<!-- 매뉴얼 상세 내용 -->
+					<div id="phConcentrationSetting" style="display: none; margin-top: 10px">
+						<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+							<li>
+								<p>
+									<span style="color: blue; font-weight: bold">MENU</span>
+									버튼을 1회 누른 후 아래 화살표 버튼을 이용해
+									<span style="font-weight: bold">CONTROL</span>
+									로 이동한 후
+									<span style="color: blue; font-weight: bold">OK</span>
+									버튼을 누른다.
+								</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_30.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">초기화면</div>
+								</div>
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_31.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">CONTROL 선택</div>
+								</div>
+							</div>
+							<li>
+								<p>
+									<span style="color: blue; font-weight: bold">아래 화살표</span>
+									버튼을 눌러
+									<span style="font-weight: bold">SET</span>
+									으로 이동한 뒤
+									<span style="color: blue; font-weight: bold">OK</span>
+									버튼을 누른다.
+								</p>
+							</li>
+							<li>
+								<p>
+									<span style="color: blue; font-weight: bold">오른쪽 화살표</span>
+									버튼으로 자리이동을 하고
+									<span style="color: blue; font-weight: bold">상하</span>
+									버튼을 눌러 원하는 셋팅 포인트로 설정한 뒤
+									<span style="color: blue; font-weight: bold">OK</span>
+									버튼을 누른다.
+								</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_32.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">SET 선택</div>
+								</div>
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_33.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">세팅값 설정</div>
+								</div>
+							</div>
+							<li>
+								<p>
+									<span style="color: blue; font-weight: bold">ESC</span>
+									버튼을 2회 눌러 초기화면으로 전환한 뒤 우측 상단에 세팅된 설정값을 확인한다.
+								</p>
+							</li>
+							<div class="image-container">
+								<div class="image-wrapper">
+									<img
+										src="https://manual-5d03dc.gitlab.io/manual_image/image_2_2_5_4_1_34.png"
+										class="popup-image"
+										alt="수질 자동측정 장치" />
+									<div class="overlay-text">초기화면 세팅 적용 확인</div>
 								</div>
 							</div>
 						</ul>
