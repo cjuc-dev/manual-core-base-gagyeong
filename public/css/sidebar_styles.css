@@ -95,6 +95,13 @@
 	background-color: transparent !important;
 }
 
+/* ✅ submenu1 내부 링크 스타일 */
+.sidebar ul .submenu1 li a {
+	overflow: visible !important; /* ✅ 잘림 제거 */
+	text-overflow: unset !important; /* ✅ 말줄임 제거 */
+	width: auto !important;
+}
+
 /* ✅ submenu2 내부 링크 스타일 */
 .sidebar ul .submenu2 li a {
 	padding: 8px !important;
@@ -102,9 +109,9 @@
 	border-radius: 3px !important;
 	background-color: #3b4f65 !important;
 	transition: background 0.3s ease !important;
-	white-space: normal !important; /* ✅ 줄바꿈 허용 */
 	overflow: visible !important; /* ✅ 잘림 제거 */
 	text-overflow: unset !important; /* ✅ 말줄임 제거 */
+	width: auto !important;
 }
 
 /* ✅ submenu2 호버 시 배경 변경 */
