@@ -80,6 +80,43 @@
 	display: block !important;
 }
 
+.sidebar ul .submenu2 {
+	list-style: none !important;
+	padding-left: 15px !important;
+	display: none !important;
+	border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
+	margin-left: 10px !important;
+}
+
+/* ✅ submenu2 내부 항목 스타일 */
+.sidebar ul .submenu2 li {
+	margin-top: 5px !important;
+	font-size: 14px !important;
+	background-color: transparent !important;
+}
+
+/* ✅ submenu2 내부 링크 스타일 */
+.sidebar ul .submenu2 li a {
+	padding: 8px !important;
+	display: block !important;
+	border-radius: 3px !important;
+	background-color: #3b4f65 !important;
+	transition: background 0.3s ease !important;
+	white-space: normal !important; /* ✅ 줄바꿈 허용 */
+	overflow: visible !important; /* ✅ 잘림 제거 */
+	text-overflow: unset !important; /* ✅ 말줄임 제거 */
+}
+
+/* ✅ submenu2 호버 시 배경 변경 */
+.sidebar ul .submenu2 li a:hover {
+	background-color: #1abc9c !important;
+}
+
+/* ✅ submenu2가 펼쳐질 때 표시 */
+.sidebar ul .submenu2.show {
+	display: block !important;
+}
+
 /* ✅ 반응형 스타일 */
 @media (max-width: 768px) {
 	.sidebar {
