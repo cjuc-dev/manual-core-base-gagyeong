@@ -1,0 +1,63 @@
+.sidebar {
+	width: 250px;
+	height: 100vh;
+	background-color: #2c3e50;
+	color: white;
+	padding: 20px;
+	box-sizing: border-box;
+	overflow-y: auto;
+}
+.sidebar .submenu2 li a {
+	white-space: nowrap !important;
+	width: fit-content !important;
+	overflow: visible !important;
+	text-overflow: unset !important;
+	padding: 8px 10px !important;
+	font-size: 13px !important; /* 기본 크기 */
+}
+
+/* ✅ 창 너비가 768px 이하일 때 */
+@media (max-width: 768px) {
+	.sidebar .submenu2 li a {
+		font-size: 13px !important;
+	}
+}
+
+/* ✅ 창 너비가 480px 이하일 때 */
+@media (max-width: 480px) {
+	.sidebar .submenu2 li a {
+		font-size: 12px !important;
+	}
+}
+
+.sidebar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.sidebar li {
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+.sidebar a {
+	color: white;
+	text-decoration: none;
+	padding: 10px;
+	display: block;
+	background: #3b4f65;
+	border-radius: 5px;
+}
+.sidebar a:hover {
+	background-color: #1abc9c;
+}
+.submenu,
+.submenu2 {
+	display: none;
+	padding-left: 15px;
+	border-left: 3px solid rgba(255, 255, 255, 0.3);
+	margin-left: 10px;
+}
+.submenu.show,
+.submenu2.show {
+	display: block;
+}

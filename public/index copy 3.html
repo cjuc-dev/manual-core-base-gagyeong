@@ -10,6 +10,71 @@
 
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/styles_main.css" />
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
+		<style>
+			.sidebar {
+				width: 250px;
+				height: 100vh;
+				background-color: #2c3e50;
+				color: white;
+				padding: 20px;
+				box-sizing: border-box;
+				overflow-y: auto;
+			}
+			.sidebar .submenu2 li a {
+				white-space: nowrap !important;
+				width: fit-content !important;
+				overflow: visible !important;
+				text-overflow: unset !important;
+				padding: 8px 10px !important;
+				font-size: 13px !important; /* 기본 크기 */
+			}
+
+			/* ✅ 창 너비가 768px 이하일 때 */
+			@media (max-width: 768px) {
+				.sidebar .submenu2 li a {
+					font-size: 13px !important;
+				}
+			}
+
+			/* ✅ 창 너비가 480px 이하일 때 */
+			@media (max-width: 480px) {
+				.sidebar .submenu2 li a {
+					font-size: 12px !important;
+				}
+			}
+
+			.sidebar ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.sidebar li {
+				margin-bottom: 10px;
+				cursor: pointer;
+			}
+			.sidebar a {
+				color: white;
+				text-decoration: none;
+				padding: 10px;
+				display: block;
+				background: #3b4f65;
+				border-radius: 5px;
+			}
+			.sidebar a:hover {
+				background-color: #1abc9c;
+			}
+			.submenu,
+			.submenu2 {
+				display: none;
+				padding-left: 15px;
+				border-left: 3px solid rgba(255, 255, 255, 0.3);
+				margin-left: 10px;
+			}
+			.submenu.show,
+			.submenu2.show {
+				display: block;
+			}
+		</style>
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_submenu2.css" />
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/main_link_styles.css" />
@@ -44,15 +109,15 @@
 				<li>
 					<a href="#" onclick="toggleMenu('manual')">매뉴얼</a>
 					<ul id="manual" class="submenu">
-						<li><a href="#" onclick="loadContent('admin')">행정</a></li>
-						<li><a href="#" onclick="loadContent('tech')">기술</a></li>
+						<li><a href="#">행정</a></li>
+						<li><a href="#">기술</a></li>
 						<li>
 							<a href="#" onclick="toggleMenu('phy'); event.stopPropagation();">체육</a>
 							<ul id="phy" class="submenu2">
-								<li><a href="#" onclick="loadContent('phy_manual_1')">체육시설 안전관리 매뉴얼</a></li>
-								<li><a href="#" onclick="loadContent('phy_manual_2')">심폐소생술</a></li>
-								<li><a href="#" onclick="loadContent('phy_manual_3')">자동심장충격기(AED)</a></li>
-								<li><a href="#" onclick="loadContent('phy_manual_4')">대상별 하임리히법</a></li>
+								<li><a href="#">체육시설 안전관리 매뉴얼</a></li>
+								<li><a href="#">심폐소생술</a></li>
+								<li><a href="#">자동심장충격기(AED)</a></li>
+								<li><a href="#">대상별 하임리히법</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -97,10 +162,6 @@
 					voc_multipurpose_sports_hall: 'voc/voc_multipurpose_sports_hall.html',
 					voc_program_room: 'voc/voc_program_room.html',
 					voc_other_information: 'voc/voc_other_information.html',
-					pyh_manual_1: 'phy_manual/phy_manual_1.html',
-					pyh_manual_2: 'phy_manual/phy_manual_2.html',
-					pyh_manual_3: 'phy_manual/phy_manual_3.html',
-					pyh_manual_4: 'phy_manual/phy_manual_4.html',
 				};
 
 				if (contentPaths[section]) {
