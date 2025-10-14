@@ -1,0 +1,40 @@
+﻿{
+  "name": "file-notes-ext",
+  "displayName": "File Notes (Side View)",
+  "version": "0.0.1",
+  "publisher": "local",
+  "engines": { "vscode": "^1.70.0" },
+  "main": "./extension.js",
+
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:fileNotesView",
+    "onView:fileNotesViewExplorer"
+  ],
+
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "fileNotesContainer",
+          "title": "File Notes",
+          "icon": "resources/file-notes.svg"
+        }
+      ]
+    },
+    "views": {
+      "fileNotesContainer": [
+        { "id": "fileNotesView", "name": "File Notes" }
+      ],
+      "explorer": [
+        { "id": "fileNotesViewExplorer", "name": "File Notes" }
+      ]
+    },
+    "commands": [
+      { "command": "fileNotes.refresh", "title": "File Notes: Refresh" },
+      { "command": "fileNotes.openFile", "title": "File Notes: Open File" },
+      { "command": "fileNotes.addOrEditNote", "title": "File Notes: Add/Edit Note" },
+      { "command": "fileNotes.generateAllNotes", "title": "File Notes: Generate All Notes" }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+﻿{
+  "fileNotes.notesFile": ".file-notes.json",
+  "fileNotes.rootGlobs": ["public/**"],
+  "fileNotes.maxNoteLength": 30
+}
