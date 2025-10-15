@@ -1,52 +1,53 @@
 pages:
-  stage: deploy
-  image: alpine:3.20
+    stage: deploy
+    image: alpine:3.20
 
-  # 📌 이미지 최적화용
-  before_script:
-    - apk add --no-cache imagemagick findutils
+    # 📌 이미지 최적화용
+    before_script:
+        - apk add --no-cache imagemagick findutils
 
-  script:
-    # 🛠 배포용 작업 디렉터리 생성
-    - rm -rf public_build && mkdir -p public_build
+    script:
+        # 🛠 배포용 작업 디렉터리 생성
+        - rm -rf public_build && mkdir -p public_build
 
-    # 🛠 필요한 것만 추려서 복사 (현재 구조 기준)
-    - cp -r public/css                   public_build/ || true
-    - cp -r public/javaScript            public_build/ || true
-    - cp -r public/icon                  public_build/ || true
-    - cp -r public/guide                 public_build/ || true
-    - cp -r public/helpdesk              public_build/ || true
-    - cp -r public/gagyeong_sportscenter public_build/ || true
-    - cp -r public/manual_image          public_build/ || true
-    - cp -r public/sports_facility_image public_build/ || true
-    - cp -r public/updatecontainer       public_build/ || true
-    - cp -r public/voc                   public_build/ || true
+        # 🛠 필요한 것만 추려서 복사 (현재 구조 기준)
+        - cp -r public/css                   public_build/ || true
+        - cp -r public/javaScript            public_build/ || true
+        - cp -r public/icon                  public_build/ || true
+        - cp -r public/guide                 public_build/ || true
+        - cp -r public/helpdesk              public_build/ || true
+        - cp -r public/gagyeong_sportscenter public_build/ || true
+        - cp -r public/phy_manual            public_build/ || true
+        - cp -r public/manual_image          public_build/ || true
+        - cp -r public/sports_facility_image public_build/ || true
+        - cp -r public/updatecontainer       public_build/ || true
+        - cp -r public/voc                   public_build/ || true
 
-    # ✅ 루트 HTML만 선별 복사 (if문으로 교체 — YAML 안전)
-    - if [ -f public/index.html ]; then cp public/index.html public_build/; fi
-    - if [ -f public/noticePopup.html ]; then cp public/noticePopup.html public_build/; fi
+        # ✅ 루트 HTML만 선별 복사 (if문으로 교체 — YAML 안전)
+        - if [ -f public/index.html ]; then cp public/index.html public_build/; fi
+        - if [ -f public/noticePopup.html ]; then cp public/noticePopup.html public_build/; fi
 
-    # 🧹 배포 불필요/대용량 파일 제외 (PDF/PSD/ZIP/MP4 등)
-    - find public_build -type f \( -iname '*.psd' -o -iname '*.zip' -o -iname '*.mp4' \) -delete
+        # 🧹 배포 불필요/대용량 파일 제외 (PDF/PSD/ZIP/MP4 등)
+        - find public_build -type f \( -iname '*.psd' -o -iname '*.zip' -o -iname '*.mp4' \) -delete
 
-    # 🗜 JPG 800KB↑ → 메타 제거 + 1800px 리사이즈 + 품질 82
-    - find public_build -type f -iname '*.jpg' -size +800k -exec mogrify -strip -resize '1800x>' -quality 82 {} \;
+        # 🗜 JPG 800KB↑ → 메타 제거 + 1800px 리사이즈 + 품질 82
+        - find public_build -type f -iname '*.jpg' -size +800k -exec mogrify -strip -resize '1800x>' -quality 82 {} \;
 
-    # 🗜 PNG 1MB↑ → 메타 제거 + 1800px 리사이즈 + 최대 압축
-    - find public_build -type f -iname '*.png' -size +1000k -exec mogrify -strip -resize '1800x>' -define png:compression-level=9 {} \;
+        # 🗜 PNG 1MB↑ → 메타 제거 + 1800px 리사이즈 + 최대 압축
+        - find public_build -type f -iname '*.png' -size +1000k -exec mogrify -strip -resize '1800x>' -define png:compression-level=9 {} \;
 
-    # 📦 GitLab Pages가 요구하는 디렉터리명은 'public'
-    - rm -rf public && mv public_build public
+        # 📦 GitLab Pages가 요구하는 디렉터리명은 'public'
+        - rm -rf public && mv public_build public
 
-  artifacts:
-    paths:
-      - public
-    exclude:
-      - public/**/originals/**
-      - public/**/*.psd
-      - public/**/*.zip
-      - public/**/*.mp4
-    expire_in: 30 days
+    artifacts:
+        paths:
+            - public
+        exclude:
+            - public/**/originals/**
+            - public/**/*.psd
+            - public/**/*.zip
+            - public/**/*.mp4
+        expire_in: 30 days
 
-  only:
-    - main
+    only:
+        - main
