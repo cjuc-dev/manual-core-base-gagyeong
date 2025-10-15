@@ -21,12 +21,12 @@ pages:
     - cp -r public/sports_facility_image public_build/ || true
     - cp -r public/updatecontainer       public_build/ || true
     - cp -r public/voc                   public_build/ || true
-    # 루트 HTML만 선별 복사
-    - cp public/index.html public_build/ || true
-    - [ -f public/noticePopup.html ] && cp public/noticePopup.html public_build/ || true'
+
+    # ✅ 루트 HTML만 선별 복사 (if문으로 교체 — YAML 안전)
+    - if [ -f public/index.html ]; then cp public/index.html public_build/; fi
+    - if [ -f public/noticePopup.html ]; then cp public/noticePopup.html public_build/; fi
 
     # 🧹 배포 불필요/대용량 파일 제외 (PDF/PSD/ZIP/MP4 등)
-    
     - find public_build -type f \( -iname '*.psd' -o -iname '*.zip' -o -iname '*.mp4' \) -delete
 
     # 🗜 JPG 800KB↑ → 메타 제거 + 1800px 리사이즈 + 품질 82
@@ -41,7 +41,6 @@ pages:
   artifacts:
     paths:
       - public
-    # 📌 혹시 남아 있으면 아예 업로드 제외
     exclude:
       - public/**/originals/**
       - public/**/*.psd
