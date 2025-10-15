@@ -23,7 +23,7 @@ pages:
     - cp -r public/voc                   public_build/ || true
     # 루트 HTML만 선별 복사
     - cp public/index.html public_build/ || true
-    - [ -f public/noticePopup.html ] && cp public/noticePopup.html public_build/ || true
+    - [ -f public/noticePopup.html ] && cp public/noticePopup.html public_build/ || true'
 
     # 🧹 배포 불필요/대용량 파일 제외 (PDF/PSD/ZIP/MP4 등)
     
