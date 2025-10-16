@@ -15,6 +15,7 @@ pages:
         - cp -r public/javaScript            public_build/ || true
         - cp -r public/icon                  public_build/ || true
         - cp -r public/guide                 public_build/ || true
+        - cp -r public/facility_status       public_build/ || true
         - cp -r public/helpdesk              public_build/ || true
         - cp -r public/gagyeong_sportscenter public_build/ || true
         - cp -r public/phy_manual            public_build/ || true
