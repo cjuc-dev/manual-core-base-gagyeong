@@ -26,6 +26,7 @@ pages:
 
         # ✅ 루트 HTML만 선별 복사 (if문으로 교체 — YAML 안전)
         - if [ -f public/index.html ]; then cp public/index.html public_build/; fi
+        - if [ -f public/index_mobile.html ]; then cp public/index_mobile.html public_build/; fi # ← 추가
         - if [ -f public/noticePopup.html ]; then cp public/noticePopup.html public_build/; fi
 
         # 🧹 배포 불필요/대용량 파일 제외 (PDF/PSD/ZIP/MP4 등)
