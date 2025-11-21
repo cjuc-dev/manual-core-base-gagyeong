@@ -114,3 +114,36 @@
 		margin-bottom: 4px;
 	}
 }
+/* ===========================
+   시설안내 (…_guide) 공통 모바일 최적화
+   =========================== */
+@media (max-width: 600px) {
+	/* 1) 시설안내 상위 테이블 전체 폭 사용 */
+	#content-viewport [id$='_guide'] > table {
+		width: 100% !important;
+		border-collapse: collapse;
+		table-layout: fixed;
+	}
+
+	/* 2) 첫 번째 세로 열(세부현황)이 너무 넓음 → 최소/고정 폭 줄이기 */
+	#content-viewport [id$='_guide'] > table > tbody > tr > th:first-child,
+	#content-viewport [id$='_guide'] > table > tr > th:first-child {
+		width: 4% !important;
+		min-width: 35px !important;
+		white-space: nowrap;
+	}
+
+	/* 3) 오른쪽 내용 영역 최대한 넓히기 */
+	#content-viewport [id$='_guide'] > table > tbody > tr > td:nth-child(2),
+	#content-viewport [id$='_guide'] > table > tr > td:nth-child(2) {
+		width: 96% !important;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+
+	/* 4) 내부 테이블은 가로 100% */
+	#content-viewport [id$='_guide'] table table {
+		width: 100% !important;
+		border-collapse: collapse;
+	}
+}
