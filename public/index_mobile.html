@@ -115,6 +115,41 @@
 				padding-bottom: 5rem; /* 하단 탭 높이 + 브라우저 하단바 고려 여유 */
 				box-sizing: border-box;
 			}
+			/* 📌 PC용 HTML을 모바일에서 보기 좋게 감싸는 래퍼 */
+			.pc-html-wrapper table {
+				width: 100% !important;
+				border-collapse: collapse !important;
+				table-layout: fixed; /* 칸 넓이 균등 배분 */
+			}
+
+			/* 표 셀 여백/글자 크기 축소 */
+			.pc-html-wrapper th,
+			.pc-html-wrapper td {
+				padding: 4px !important;
+				font-size: 11px !important;
+			}
+
+			/* 표 안 이미지 전체 폭 대응 */
+			.pc-html-wrapper img {
+				max-width: 100%;
+				height: auto;
+			}
+
+			/* 청주수영장 시설 사진 영역 – 좌우 여백 최소화 */
+			.pc-html-wrapper .image-container {
+				width: 100% !important;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between !important; /* 가운데 정렬 → 양 끝까지 */
+				gap: 4px !important;
+				box-sizing: border-box;
+			}
+
+			/* 사진 5장을 한 줄에 최대한 채워서 배치 */
+			.pc-html-wrapper .image-container img {
+				flex: 1 1 19%; /* 한 줄에 5개 기준 */
+				margin: 0 !important; /* 인라인 margin 제거 */
+			}
 		</style>
 	</head>
 	<body>
@@ -308,11 +343,11 @@
 						})
 						.then((html) => {
 							viewport.innerHTML = `
-                <div class="full-page fade-in">
-                    <div class="bg-white rounded-xl shadow-sm p-3 text-sm">
-                        ${html}
-                    </div>
-                </div>`;
+        <div class="full-page fade-in">
+            <div class="bg-white rounded-xl shadow-sm p-3 text-sm pc-html-wrapper">
+                ${html}
+            </div>
+        </div>`;
 						})
 						.catch((err) => {
 							console.error(err);
