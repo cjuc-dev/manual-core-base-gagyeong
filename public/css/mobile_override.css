@@ -56,10 +56,17 @@
 
 	/* 1) 가장 바깥(세부현황/이용안내) 테이블을 카드 폭에 꽉 차게 */
 	#content-viewport [id$='_guide'] table:first-of-type {
-		width: 100% !important;
+		/* 부모(.full-page)의 padding(12px)을 무시하고 꽉 채우기 위한 계산 */
+		width: calc(100% + 24px) !important;
+		margin-left: -12px !important;
+		margin-right: -12px !important;
+
 		table-layout: fixed;
-		margin: 0 !important;
 		border-collapse: collapse;
+
+		/* 테이블 자체의 테두리가 짤려 보이지 않게 하려면 아래 속성 조절 필요 */
+		border-left: none !important;
+		border-right: none !important;
 	}
 
 	/* 2) 첫 번째 열(세부현황, 주차장, 샤워기 등 세로 막대) 폭만 고정 */
