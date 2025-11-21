@@ -117,22 +117,60 @@
 /* ===========================
    시설안내 (…_guide) 공통 모바일 최적화
    =========================== */
-@media (max-width: 768px) {
-	/* index_mobile에 불러온 시설안내 내용 감싸는 카드 내 테이블 */
-	#content-viewport .bg-white.rounded-xl.shadow-sm.p-3.text-sm table {
-		width: 100% !important;
-		border-collapse: collapse;
+@media (max-width: 600px) {
+	/* 0) 시설안내 전체 컨테이너 좌우 여백 최소화 */
+	#content-viewport [id$='_guide'] {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
 	}
 
-	/* 세부현황 옆의 내용 테이블을 꽉 채우기 */
-	#content-viewport .bg-white.rounded-xl.shadow-sm.p-3.text-sm td > table {
+	/* 1) 최상단 테이블은 카드 안쪽 폭 100% 사용 */
+	#content-viewport [id$='_guide'] > table {
 		width: 100% !important;
+		border-collapse: collapse;
+		table-layout: fixed;
 		margin: 0 !important;
 	}
 
-	/* 바깥 td padding 완만하게 감소 */
-	#content-viewport .bg-white.rounded-xl.shadow-sm.p-3.text-sm td[style*='padding: 10px'] {
+	/* 2) “세부현황” 세로막대(첫 번째 열) 폭은 고정, 나머지는 자동 */
+	#content-viewport [id$='_guide'] > table > tbody > tr > th:first-child,
+	#content-viewport [id$='_guide'] > table > tr > th:first-child {
+		width: 12% !important; /* 너무 얇으면 글자가 겹치니까 약간 여유 */
+		min-width: 55px !important;
+		white-space: nowrap;
+	}
+
+	/* 3) 오른쪽 큰 내용 칸은 남는 폭 전부 사용 + 안쪽 패딩 최소화 */
+	#content-viewport [id$='_guide'] > table > tbody > tr > td:nth-child(2),
+	#content-viewport [id$='_guide'] > table > tr > td:nth-child(2) {
+		width: auto !important;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+
+	/* 4) 세부현황 안쪽에 들어가는 모든 서브테이블은 폭 100% */
+	#content-viewport [id$='_guide'] td > table,
+	#content-viewport [id$='_guide'] table table {
+		width: 100% !important;
+		border-collapse: collapse;
+		table-layout: fixed;
+		margin: 0 !important;
+	}
+
+	/* 5) 안쪽 셀 좌우 여백 조금만 (표가 최대한 넓어 보이도록) */
+	#content-viewport [id$='_guide'] table th,
+	#content-viewport [id$='_guide'] table td {
 		padding-left: 4px !important;
 		padding-right: 4px !important;
+	}
+
+	/* 6) 맨 위 “청주수영장 / 사진” 행에서 텍스트 칸·사진 칸 비율 조정
+	      (청주수영장: 20%, 사진쪽: 80%) */
+	#content-viewport [id$='_guide'] td[style*='width: 11%'] {
+		width: 20% !important;
+	}
+	#content-viewport [id$='_guide'] td[style*='width: 90%'] {
+		width: 80% !important;
+		padding-right: 0 !important;
 	}
 }
