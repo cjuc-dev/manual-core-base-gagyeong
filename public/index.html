@@ -16,24 +16,31 @@
 		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/table_styles.css" />
 		<script>
 			(function () {
-				// 1) URL 파라미터로 view=pc 가 들어오면 강제 PC버전 유지
+				// 1) URL 파라미터로 ?view=pc 가 들어오면 PC 버전 강제 유지
 				const params = new URLSearchParams(window.location.search);
 				if (params.get('view') === 'pc') return;
 
-				// 2) 이미 모바일 페이지면 다시 이동하지 않도록 방지
-				const isAlreadyMobile = window.location.pathname.indexOf('index_mobile.html') !== -1;
+				// 2) 이미 모바일 페이지라면 다시 이동하지 않도록 방지
+				const path = window.location.pathname; // 예: /manual-5d03dc/index.html
+				const isAlreadyMobile = path.indexOf('index_mobile.html') !== -1;
 
-				// 3) 모바일 기기 판별 (userAgent 기반)
+				// 3) 모바일 기기 판별 (userAgent)
 				const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi/i.test(
 					navigator.userAgent
 				);
 
-				// 4) 모바일에서 PC index.html 로 들어온 경우 → index_mobile.html 로 리다이렉트
+				// 4) 모바일 + PC index 에서 들어온 경우 → 같은 폴더의 index_mobile.html 로 이동
 				if (isMobile && !isAlreadyMobile) {
-					// 쿼리스트링/해시 그대로 넘겨주기
+					// 현재 경로에서 index.html / index 제거 → 폴더 경로만 추출
+					//  /manual-5d03dc/index.html  → /manual-5d03dc/
+					//  /index.html                 → /
+					const basePath = path.replace(/index\.html?$/i, '').replace(/\/$/, '/');
+
 					const query = window.location.search || '';
 					const hash = window.location.hash || '';
-					window.location.href = 'index_mobile.html' + query + hash;
+
+					// history.back() 했을 때 다시 튕기지 않도록 replace 사용
+					window.location.replace(basePath + 'index_mobile.html' + query + hash);
 				}
 			})();
 		</script>
