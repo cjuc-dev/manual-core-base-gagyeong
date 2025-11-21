@@ -1,10 +1,10 @@
 /* ===========================================
    📱 MOBILE OVERRIDE (index_mobile 전용)
-   - PC HTML 구조 그대로 유지하고 디자인만 모바일화
+   - PC HTML 구조는 그대로 두고, 모바일에서만 스타일 덮어쓰기
    =========================================== */
 
 @media (max-width: 768px) {
-	/* 공통 여백 및 기본 설정 */
+	/* 공통 여백 정리 */
 	html,
 	body {
 		margin: 0;
@@ -15,28 +15,26 @@
 		background: #f9fafb;
 	}
 
-	/* index_mobile 내부 카드(p-3)의 좌우 패딩 제거 → 여백 제거 핵심 */
+	/* ✅ index_mobile에서 불러온 HTML을 감싸는 카드 패딩 제거
+	   (오른쪽 여백의 주범) */
 	#content-viewport .full-page > .bg-white.rounded-xl.shadow-sm.p-3.text-sm {
 		padding-left: 0 !important;
 		padding-right: 0 !important;
 	}
 
+	/* full-page 살짝만 패딩 */
 	#content-viewport .full-page {
-		padding-top: 12px;
-		padding-left: 0;
-		padding-right: 0;
-		padding-bottom: 20px;
+		padding: 8px 8px 16px 8px;
 		box-sizing: border-box;
 	}
 
-	/* 모든 이미지 */
+	/* 기본 이미지 처리 */
 	#content-viewport img {
 		max-width: 100%;
 		height: auto;
-		display: block;
 	}
 
-	/* 테이블 기본값 */
+	/* 기본 테이블 처리 */
 	#content-viewport table {
 		width: 100% !important;
 		border-collapse: collapse;
@@ -49,61 +47,62 @@
 		padding: 6px !important;
 		white-space: normal !important;
 		word-break: keep-all;
+		vertical-align: middle;
 	}
 }
 
 /* ===========================================
-   📌 시설안내 페이지 공통 적용 (…_guide 전체)
+   📌 시설안내 전용 (…_guide 모든 시설 공통)
    =========================================== */
 
 @media (max-width: 600px) {
-	/* 시설안내 전체 좌우 꽉 채우기 */
+	/* 컨테이너 좌우 꽉 채우기
+	   (각 시설 …_guide div에 있던 margin-left:20px 무력화) */
 	#content-viewport [id$='_guide'] {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 	}
 
-	/* 상위 구조 테이블 */
+	/* 상위 테이블 100% */
 	#content-viewport [id$='_guide'] > table {
 		width: 100% !important;
-		border-collapse: collapse;
 		table-layout: fixed;
 		margin: 0 !important;
+		border-collapse: collapse;
 	}
 
-	/* 왼쪽 세로영역(청주수영장, 주차장, 샤워기 등) */
+	/* 왼쪽 세로영역(세부현황 / 주차장 / 샤워기 등) */
 	#content-viewport [id$='_guide'] > table th:first-child {
 		width: 12% !important;
 		min-width: 55px !important;
 		white-space: nowrap;
 	}
 
-	/* 오른쪽 메인 내용 칸 */
+	/* 오른쪽 내용 칸 → 남는 폭 전부 사용 */
 	#content-viewport [id$='_guide'] > table td:nth-child(2) {
 		width: auto !important;
 		padding-left: 0 !important;
 		padding-right: 0 !important;
 	}
 
-	/* 내부 테이블 전체 100% */
+	/* 내부 서브테이블 100% */
 	#content-viewport [id$='_guide'] td > table,
 	#content-viewport [id$='_guide'] table table {
 		width: 100% !important;
-		border-collapse: collapse;
 		table-layout: fixed;
 		margin: 0 !important;
+		border-collapse: collapse;
 	}
 
-	/* 내부 셀 패딩 최소화 → 화면 꽉 채우기 */
+	/* 내부 셀 패딩 줄이기 (표가 더 넓어보이도록) */
 	#content-viewport [id$='_guide'] table th,
 	#content-viewport [id$='_guide'] table td {
 		padding-left: 4px !important;
 		padding-right: 4px !important;
 	}
 
-	/* --------------------------------------
-	   상단 사진테이블 → width 11%, 90% 처리된 경우 강제 교정
-	   -------------------------------------- */
+	/* 상단 “청주수영장 / 사진” 행 비율 조정
+	   (청주수영장: 20%, 사진: 80%) */
 	#content-viewport [id$='_guide'] td[style*='width: 11'] {
 		width: 20% !important;
 		min-width: 60px !important;
@@ -113,9 +112,7 @@
 		padding-right: 0 !important;
 	}
 
-	/* ==========================================
-	   공통 이미지 레이아웃 튜닝
-	   ========================================== */
+	/* 시설 사진 모음 공통 튜닝 */
 	#content-viewport [id$='_guide'] .image-container {
 		display: flex;
 		flex-wrap: wrap;
@@ -124,7 +121,7 @@
 	}
 
 	#content-viewport [id$='_guide'] .image-container img {
-		width: 31% !important; /* 한 줄에 3개 */
+		width: 31% !important; /* 한 줄에 최대 3장 */
 		max-width: 31% !important;
 	}
 }
