@@ -1,0 +1,116 @@
+/* =========================================
+   📱 모바일 전용 공통 오버라이드 CSS
+   - index_mobile.html 로 들어온 화면에서만 사용
+   - PC용 HTML 구조는 건드리지 않고 스타일만 조정
+   ========================================= */
+
+@media (max-width: 768px) {
+	/* 기본 여백/배경 정리 */
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+	}
+
+	/* index_mobile 메인 뷰포트 배경 */
+	#content-viewport {
+		background-color: #f9fafb;
+	}
+
+	/* 모바일에서 공통 패딩 약간 줄이기 */
+	#content-viewport .full-page {
+		padding: 12px 12px 20px 12px;
+		box-sizing: border-box;
+	}
+
+	/* ===========================
+     1) 테이블 공통 최적화
+     =========================== */
+
+	/* 모든 표를 화면 폭 안에 맞추기 */
+	#content-viewport table {
+		width: 100% !important;
+		table-layout: fixed;
+		border-collapse: collapse;
+		font-size: 13px; /* 모바일용 글자 조금 축소 */
+	}
+
+	#content-viewport th,
+	#content-viewport td {
+		padding: 6px !important; /* 너무 큰 패딩 줄이기 */
+		white-space: normal !important; /* 줄바꿈 허용 (PC에서 걸어둔 nowrap 무시) */
+		word-break: keep-all; /* 단어 단위로 줄바꿈 (한글 자연스럽게) */
+		vertical-align: middle;
+	}
+
+	/* 왼쪽 세로 제목 셀(세부현황/이용안내 등) 폭 제한 */
+	#content-viewport th[style*='width: 7%'],
+	#content-viewport th[style*='width: 10%'],
+	#content-viewport td[style*='width: 7%'],
+	#content-viewport td[style*='width: 10%'] {
+		width: 80px !important;
+	}
+
+	/* 표가 화면보다 살짝 넓어질 경우 대비(가로 스크롤 허용) */
+	#content-viewport table {
+		overflow-x: auto;
+	}
+
+	/* ===========================
+     2) 이미지 공통 최적화
+     =========================== */
+
+	/* 모든 이미지가 칸 밖으로 넘치지 않도록 */
+	#content-viewport img {
+		max-width: 100% !important;
+		height: auto !important;
+	}
+
+	/* “이용안내” 같은 세로 이미지 간 간격 */
+	#content-viewport td img + img {
+		margin-top: 8px;
+	}
+
+	/* ===========================
+     3) 청주수영장 시설안내 전용 튜닝
+        (id="cheongju_swimming_pool_guide")
+     =========================== */
+
+	/* 시설 사진 모음(5장) 레이아웃 정리 */
+	#cheongju_swimming_pool_guide .image-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px;
+	}
+
+	/* 한 줄에 최대 3장까지, 자동 줄바꿈 */
+	#cheongju_swimming_pool_guide .image-container img {
+		flex: 1 1 calc(33.333% - 8px);
+		max-width: calc(33.333% - 8px);
+	}
+
+	/* 세부현황/이용안내 큰 표 안 여백 살짝 줄이기 */
+	#cheongju_swimming_pool_guide table {
+		font-size: 13px;
+	}
+
+	/* ===========================
+     4) 기타 콘텐츠(다른 시설/매뉴얼 페이지) 공통
+     =========================== */
+
+	/* 긴 문단/설명 텍스트 줄바꿈 */
+	#content-viewport p {
+		font-size: 14px;
+		line-height: 1.5;
+		word-break: keep-all;
+	}
+
+	/* 리스트 여백 조정 */
+	#content-viewport ul,
+	#content-viewport ol {
+		padding-left: 18px;
+		margin-top: 4px;
+		margin-bottom: 4px;
+	}
+}
