@@ -466,31 +466,46 @@
 						'청주수영장',
 						'cheongjuSwimming_guide',
 						'휴장일 매월 첫째, 셋째, 다섯째 주 일요일, 법정공휴일',
-						'blue'
+						'blue',
+						false,
+						'충북 청주시 서원구 흥덕로 61',
+						'평일 21:30 / 주말 16:50'
 					)}
                     ${facilityCardHTML(
 						'푸르미스포츠센터',
 						'purmi_guide',
 						'휴장일 매월 둘째, 넷째 주 일요일, 법정공휴일',
-						'yellow'
+						'yellow',
+						false,
+						'충북 청주시 흥덕구 가로수로 969-1',
+						'평일 20:50 / 주말 16:50'
 					)}
                     ${facilityCardHTML(
 						'영운국민체육센터',
 						'youngun_sportscenter_guide',
 						'휴장일 매월 둘째, 넷째 주 일요일, 법정공휴일',
-						'green'
+						'green',
+						false,
+						'충북 청주시 상당구 수영로 101번길 65',
+						'평일 21:30 / 주말 16:30'
 					)}
                     ${facilityCardHTML(
 						'복대국민체육센터',
 						'bokdae_sportscenter_guide',
 						'휴장일 매주 월요일, 법정공휴일',
-						'orange'
+						'orange',
+						false,
+						'충북 청주시 흥덕구 진재로 140',
+						'평일 22:00 / 주말 17:00'
 					)}
                     ${facilityCardHTML(
 						'가경국민체육센터',
 						'gagyeong_sportscenter_guide',
 						'휴장일 매주 월요일, 법정공휴일',
-						'purple'
+						'purple',
+						false,
+						'충북 청주시 흥덕구 서현로 102-10',
+						'평일 22:00 / 주말 17:00'
 					)}
                 </div>
 
@@ -533,7 +548,7 @@
 			}
 
 			/* 시설 안내 카드 템플릿 */
-			function facilityCardHTML(name, section, statusText, color, closed = false) {
+			function facilityCardHTML(name, section, statusText, color, closed = false, address = '', closeTime = '') {
 				const statusColorClass = {
 					blue: 'bg-blue-100 text-blue-700',
 					yellow: 'bg-yellow-100 text-yellow-700',
@@ -544,21 +559,30 @@
 				}[color];
 
 				return `
-            <article class="bg-white rounded-xl shadow-md p-4 border-l-4 border-${color}-500 ${
+        <article class="bg-white rounded-xl shadow-md p-4 border-l-4 border-${color}-500 ${
 					closed ? 'opacity-70 grayscale' : ''
 				}">
-                <div class="flex justify-between items-start mb-2">
+            <!-- 상단 : 시설명 + 휴장일 라벨 -->
+            <div class="flex justify-between items-start mb-1">
+                <div>
                     <h3 class="font-bold text-gray-800 text-sm">${name}</h3>
-                    <span class="${statusColorClass} text-[11px] px-2 py-1 rounded-full font-bold">
-                        ${statusText}
-                    </span>
+                    ${address ? `<p class="text-[11px] text-gray-500 mt-1">${address}</p>` : ''}
                 </div>
-                <button class="text-[11px] text-blue-600 font-bold hover:underline"
+                <span class="${statusColorClass} text-[11px] px-2 py-1 rounded-full font-bold">
+                    ${statusText}
+                </span>
+            </div>
+
+            <!-- 하단 : 상세보기(왼쪽) / 마감시간(오른쪽) -->
+            <div class="mt-3 flex justify-between items-center text-[11px]">
+                <button class="text-blue-600 font-bold hover:underline"
                         onclick="loadContentMobile('${section}','${name}')">
                     상세보기 →
                 </button>
-            </article>
-        `;
+                ${closeTime ? `<span class="text-gray-500">마감: ${closeTime}</span>` : ''}
+            </div>
+        </article>
+    `;
 			}
 
 			/* 행정/기술/체육 매뉴얼 카드 템플릿 */
