@@ -28,14 +28,16 @@
 			body {
 				font-family: Arial, sans-serif;
 				background-color: #e5e7eb;
-				overflow: hidden; /* 전체 창 스크롤 고정 */
+				/* 🔧 전체 페이지 스크롤 허용 (하단 탭이 브라우저 툴바에 가려져도 내려서 볼 수 있게) */
+				overflow-y: auto;
 			}
 
 			.app-wrapper {
 				max-width: 480px;
 				width: 100%;
 				margin: 0 auto;
-				height: 100vh;
+				/* 🔧 고정 height 대신 min-height 사용 (콘텐츠 길이에 따라 자연스럽게 늘어나도록) */
+				min-height: 100vh;
 				display: flex;
 				flex-direction: column;
 				background-color: #ffffff;
@@ -105,10 +107,12 @@
 				display: inline;
 			}
 
-			/* 메인 뷰포트는 폭만 100%, 패딩/폭은 .full-page에서 통일 */
+			/* 🔧 메인 뷰포트: 아래에 여유 공간을 줘서 하단 탭/브라우저 툴바에 내용이 가려지지 않도록 */
 			#content-viewport {
 				width: 100%;
 				max-width: 100%;
+				padding-bottom: 5rem; /* 하단 탭 높이 + 브라우저 하단바 고려 여유 */
+				box-sizing: border-box;
 			}
 		</style>
 	</head>
@@ -143,8 +147,8 @@
 				</button>
 			</header>
 
-			<!-- 메인 (패딩 없음, 세로 스크롤만) -->
-			<main id="content-viewport" class="flex-1 overflow-y-scroll bg-gray-50 no-scrollbar"></main>
+			<!-- 메인 (이제 여기서는 별도 스크롤 제거 → 페이지 전체 스크롤) -->
+			<main id="content-viewport" class="flex-1 bg-gray-50"></main>
 
 			<!-- 하단 탭바 -->
 			<nav class="bg-white border-t border-gray-200 h-16 flex justify-around items-center pb-1">
@@ -447,14 +451,14 @@
                         <!-- 6. VOC -->
                         <button type="button"
                                 onclick="toggleVocList()"
-        						class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
-						    <div class="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
-        						<span class="text-red-500 text-lg">📣</span>
-    						</div>
-    						<div class="text-left">
-        						<p class="text-sm font-semibold text-gray-800">VOC</p>
-        						<p class="text-[11px] text-gray-500">고객의 소리</p>
-    						</div>
+                                class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
+                            <div class="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
+                                <span class="text-red-500 text-lg">📣</span>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-sm font-semibold text-gray-800">VOC</p>
+                                <p class="text-[11px] text-gray-500">고객의 소리</p>
+                            </div>
                         </button>
 
                     </div>
@@ -535,13 +539,13 @@
                     ${manualCardHTML('대상별 하임리히법 매뉴얼', 'phy_manual_4', true, 'emerald')}
                 </div>
 
-				<!-- VOC 리스트 -->
-				<div id="voc-list" class="hidden space-y-3 mt-2">
-    				${vocCardHTML('수영장', 'voc_swimming_pool')}
-    				${vocCardHTML('다목적체육관', 'voc_multipurpose_sports_hall')}
-    				${vocCardHTML('프로그램실', 'voc_program_room')}
-    				${vocCardHTML('기타', 'voc_other_information')}
-				</div>
+                <!-- VOC 리스트 -->
+                <div id="voc-list" class="hidden space-y-3 mt-2">
+                    ${vocCardHTML('수영장', 'voc_swimming_pool')}
+                    ${vocCardHTML('다목적체육관', 'voc_multipurpose_sports_hall')}
+                    ${vocCardHTML('프로그램실', 'voc_program_room')}
+                    ${vocCardHTML('기타', 'voc_other_information')}
+                </div>
             </div>
         `;
 				viewport.innerHTML = html;
@@ -614,16 +618,16 @@
 			/* VOC 카드 템플릿 */
 			function vocCardHTML(label, sectionKey) {
 				return `
-        	<article class="bg-white rounded-xl shadow-md p-4 border-l-4 border-red-400">
-            	<div class="flex justify-between items-center mb-1">
-                	<h3 class="font-bold text-gray-800 text-sm">${label}</h3>
-            	</div>
-            	<button class="text-[11px] text-blue-600 font-bold hover:underline"
-                    onclick="loadContentMobile('${sectionKey}','VOC - ${label}')">
-                	상세보기 →
-            	</button>
-        	</article>
-    	`;
+            <article class="bg-white rounded-xl shadow-md p-4 border-l-4 border-red-400">
+                <div class="flex justify-between items-center mb-1">
+                    <h3 class="font-bold text-gray-800 text-sm">${label}</h3>
+                </div>
+                <button class="text-[11px] text-blue-600 font-bold hover:underline"
+                        onclick="loadContentMobile('${sectionKey}','VOC - ${label}')">
+                    상세보기 →
+                </button>
+            </article>
+        `;
 			}
 
 			/* 하단/홈 버튼에서 사용하는 리스트 토글 공통 처리 */
