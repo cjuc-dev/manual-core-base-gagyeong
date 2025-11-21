@@ -1,6 +1,6 @@
 /* ===========================================
    📱 MOBILE OVERRIDE (index_mobile 전용)
-   - PC HTML 구조는 그대로 두고, 모바일에서만 스타일 덮어쓰기
+   - PC HTML 구조 그대로 유지하고 디자인만 모바일화
    =========================================== */
 
 @media (max-width: 768px) {
@@ -15,16 +15,8 @@
 		background: #f9fafb;
 	}
 
-	/* ✅ index_mobile에서 불러온 HTML을 감싸는 카드 패딩 제거
-	   (오른쪽 여백의 주범) */
-	#content-viewport .full-page > .bg-white.rounded-xl.shadow-sm.p-3.text-sm {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
-	}
-
-	/* full-page 살짝만 패딩 */
 	#content-viewport .full-page {
-		padding: 8px 8px 16px 8px;
+		padding: 12px;
 		box-sizing: border-box;
 	}
 
@@ -56,53 +48,52 @@
    =========================================== */
 
 @media (max-width: 600px) {
-	/* 컨테이너 좌우 꽉 채우기
-	   (각 시설 …_guide div에 있던 margin-left:20px 무력화) */
+	/* 0) 시설안내 컨테이너 좌우 여백 제거 */
 	#content-viewport [id$='_guide'] {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 	}
 
-	/* 상위 테이블 100% */
-	#content-viewport [id$='_guide'] > table {
+	/* 1) 가장 바깥(세부현황/이용안내) 테이블을 카드 폭에 꽉 차게 */
+	#content-viewport [id$='_guide'] table:first-of-type {
 		width: 100% !important;
 		table-layout: fixed;
 		margin: 0 !important;
 		border-collapse: collapse;
 	}
 
-	/* 왼쪽 세로영역(세부현황 / 주차장 / 샤워기 등) */
-	#content-viewport [id$='_guide'] > table th:first-child {
+	/* 2) 첫 번째 열(세부현황, 주차장, 샤워기 등 세로 막대) 폭만 고정 */
+	#content-viewport [id$='_guide'] table:first-of-type th:first-child {
 		width: 12% !important;
 		min-width: 55px !important;
 		white-space: nowrap;
 	}
 
-	/* 오른쪽 내용 칸 → 남는 폭 전부 사용 */
-	#content-viewport [id$='_guide'] > table td:nth-child(2) {
-		width: auto !important;
+	/* 3) 바깥 테이블의 모든 td(오른쪽 영역) 안쪽 가로 패딩 제거
+	      → 안쪽 서브테이블이 바깥 테두리까지 딱 닿도록 */
+	#content-viewport [id$='_guide'] table:first-of-type td {
 		padding-left: 0 !important;
 		padding-right: 0 !important;
 	}
 
-	/* 내부 서브테이블 100% */
-	#content-viewport [id$='_guide'] td > table,
-	#content-viewport [id$='_guide'] table table {
+	/* 4) 바깥 td 안에 들어가는 모든 서브테이블은 폭 100%로 */
+	#content-viewport [id$='_guide'] table:first-of-type td > table,
+	#content-viewport [id$='_guide'] table:first-of-type table table {
 		width: 100% !important;
 		table-layout: fixed;
 		margin: 0 !important;
 		border-collapse: collapse;
 	}
 
-	/* 내부 셀 패딩 줄이기 (표가 더 넓어보이도록) */
-	#content-viewport [id$='_guide'] table th,
-	#content-viewport [id$='_guide'] table td {
+	/* 5) 서브테이블 내부 셀 패딩은 살짝만 */
+	#content-viewport [id$='_guide'] table:first-of-type td > table th,
+	#content-viewport [id$='_guide'] table:first-of-type td > table td {
 		padding-left: 4px !important;
 		padding-right: 4px !important;
 	}
 
-	/* 상단 “청주수영장 / 사진” 행 비율 조정
-	   (청주수영장: 20%, 사진: 80%) */
+	/* 6) “청주수영장 / 사진” 같은 상단 2열 구조의 비율(텍스트:사진) 조정
+	      - inline style 로 width:11%, 90% 되어 있는 것 덮어쓰기 */
 	#content-viewport [id$='_guide'] td[style*='width: 11'] {
 		width: 20% !important;
 		min-width: 60px !important;
@@ -112,7 +103,9 @@
 		padding-right: 0 !important;
 	}
 
-	/* 시설 사진 모음 공통 튜닝 */
+	/* ==============================
+	   시설 사진 공통 (5장, 6장 등)
+	   ============================== */
 	#content-viewport [id$='_guide'] .image-container {
 		display: flex;
 		flex-wrap: wrap;
@@ -121,7 +114,7 @@
 	}
 
 	#content-viewport [id$='_guide'] .image-container img {
-		width: 31% !important; /* 한 줄에 최대 3장 */
+		width: 31% !important; /* 한 줄 최대 3장 */
 		max-width: 31% !important;
 	}
 }
