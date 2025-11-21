@@ -92,8 +92,7 @@
 		padding-right: 4px !important;
 	}
 
-	/* 6) “청주수영장 / 사진” 같은 상단 2열 구조의 비율(텍스트:사진) 조정
-	      - inline style 로 width:11%, 90% 되어 있는 것 덮어쓰기 */
+	/* 6) “청주수영장 / 사진” 같은 상단 2열 구조의 비율(텍스트:사진) 조정 */
 	#content-viewport [id$='_guide'] td[style*='width: 11'] {
 		width: 20% !important;
 		min-width: 60px !important;
