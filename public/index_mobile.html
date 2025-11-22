@@ -113,21 +113,48 @@
 				box-sizing: border-box;
 			}
 
-			/* 외부 HTML 스타일 보정 */
+			/* [수정] 외부 HTML 스타일 보정 - 업데이트 현황 테이블 및 제목 제어 */
 			.pc-html-wrapper {
 				position: relative;
 				z-index: 1;
 			}
+
+			/* 1. 내부 제목 숨기기 (h1, h2, 또는 p 태그 중 굵은 글씨 등) */
+			.pc-html-wrapper h1,
+			.pc-html-wrapper h2,
+			.pc-html-wrapper h3,
+			.pc-html-wrapper > p:first-child {
+				display: none !important;
+			}
+
+			/* 2. 테이블 레이아웃 변경 (fixed -> auto) */
 			.pc-html-wrapper table {
 				width: 100% !important;
 				border-collapse: collapse !important;
-				table-layout: fixed;
+				table-layout: auto !important; /* [중요] 내용 길이에 따라 칸 조절 */
 			}
+
 			.pc-html-wrapper th,
 			.pc-html-wrapper td {
-				padding: 4px !important;
+				padding: 8px 4px !important; /* 좌우 패딩을 줄여 공간 확보 */
 				font-size: 11px !important;
+				vertical-align: top !important; /* 글자 상단 정렬 */
 			}
+
+			/* 3. 첫 번째(버전), 두 번째(날짜) 컬럼 줄바꿈 방지 및 최소 너비 설정 */
+			.pc-html-wrapper tr > *:nth-child(1),
+			.pc-html-wrapper tr > *:nth-child(2) {
+				white-space: nowrap !important; /* 줄바꿈 강제 금지 */
+				width: 1% !important; /* 내용물만큼만 크기 차지 */
+				text-align: center !important;
+			}
+
+			/* 4. 세 번째(내용) 컬럼은 줄바꿈 허용 */
+			.pc-html-wrapper tr > *:nth-child(3) {
+				white-space: normal !important;
+				word-break: break-all !important; /* 긴 단어도 줄바꿈 */
+			}
+
 			.pc-html-wrapper img {
 				max-width: 100%;
 				height: auto;
@@ -145,7 +172,7 @@
 				margin: 0 !important;
 			}
 
-			/* 🔧 하단 탭바 스타일 (z-index 최상위, 터치 이슈 해결) */
+			/* 🔧 하단 탭바 스타일 */
 			nav.bottom-tabbar {
 				position: fixed;
 				bottom: 0;
@@ -183,7 +210,6 @@
 				user-select: none;
 			}
 
-			/* 버튼 내부 요소가 터치를 막지 않도록 */
 			nav.bottom-tabbar button.tab-btn > * {
 				pointer-events: none;
 			}
