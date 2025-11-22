@@ -1,203 +1,385 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>청주수영장 시설안내</title>
-    <link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/styles_manual.css">
-</head>
-<body>
-<div class="toggle-button" id="toggleUpdateButton" onclick="toggleTable('cheongju_swimming_pool_guide')" style="text-align: center; margin: 20px auto 0 auto; width: fit-content;">
-    <h1>청주수영장 시설안내</h1>
-</div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>시설안내</title>
+		<!-- Tailwind CSS CDN 로드 -->
+		<script src="https://cdn.tailwindcss.com"></script>
+		<style>
+			/* 기본 폰트 설정 */
+			body {
+				font-family: 'Inter', sans-serif;
+				background-color: #f0f4f8;
+			}
 
+			/* 시설 정보 섹션의 기본 스타일 (테이블 대체) */
+			.info-section {
+				display: flex;
+				flex-direction: column;
+				border: 1px solid #e5e7eb;
+				background-color: white;
+				margin-bottom: 1px;
+			}
 
-<!-- 펼치기/접기 내용 영역 -->
-<div id="cheongju_swimming_pool_guide" style="margin-left: 20px;">
+			/* 각 항목 (시설명, 주차장 등)의 행 스타일 */
+			.info-row {
+				display: grid;
+				grid-template-columns: 20% 80%; /* 왼쪽 항목(Label) 20%, 오른쪽 내용(Value) 80% */
+				min-height: 50px;
+				border-bottom: 1px solid #e5e7eb;
+				width: 100%;
+				/* Grid의 기본 align-items: stretch 덕분에 info-label과 info-value가 행 전체 높이를 채웁니다. */
+			}
 
-    <!-- 상위 테이블 -->
-    <table style="width: 100%; margin: 0; border-collapse: collapse; text-align: center; font-size: 18px; white-space: nowrap;">
-        <tr>
-            <th style="border: 1px solid #ccc; width: 7%; text-align: center;">세부현황</th> <!-- 글씨를 가운데 정렬 -->
-            <td>
-                        <div id="detailTable0" class="details">
-                            <table style="width: 100%; border-collapse: collapse; text-align: center;">
-                                <tr>
-                                    <td style="border: 1px solid #ccc; padding: 10px; white-space: nowrap; text-align: center; width: 11%; font-weight: bold; max-width: 100%; overflow: hidden; text-overflow: ellipsis;">청주수영장</td>
-                                        <td style="border: 1px solid #ccc; padding: 10px; text-align: center; width: 90%;"> <!-- 사진을 가운데 정렬 -->
-                                        <table style="width: 100%; border-collapse: collapse; text-align: center;">
-                                            <tr>
-                                                
-                                                    <div class="image-container" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-                                                <!-- 1, 2, 3번 사진 한 줄에 배치 -->
-                                                <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility1.jpg" alt="청주수영장 사진 1" style="width: 30%; margin: 5px;">
-                                                <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility2.jpg" alt="청주수영장 사진 2" style="width: 30%; margin: 5px;">
-                                                <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility3.jpg" alt="청주수영장 사진 3" style="width: 30%; margin: 5px;">
-                                                <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility4.jpg" alt="청주수영장 사진 4" style="width: 30%; margin: 5px;">
-                                                <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility5.jpg" alt="청주수영장 사진 5" style="width: 30%; margin: 5px;">
-                                                
-                                            </div>
-                                            
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ccc; padding: 10px; text-align: center; font-weight: bold;">주차장</td>
-                                <td style="border: 1px solid #ccc; padding: 10px;">
-                                    <table style="width: 100%; border-collapse: collapse; text-align: center;">
-                                    <tr>
-                                        <th style="border: 1px solid #ccc; width: 30%;">구분</th>
-                                                    <th style="border: 1px solid #ccc;">대수</th>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">일반</td>
-                                        <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">?</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">장애인</td>
-                                        <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">?</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">전기차</td>
-                                        <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">?</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">합계</td>
-                                        <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">?</td>
-                                    </tr>
-                                    </table>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; padding: 10px; text-align: center; font-weight: bold;">샤워기</td>
-                                        <td style="border: 1px solid #ccc; padding: 10px;">
-                                            <table style="width: 100%; border-collapse: collapse; text-align: center;">
-                                                <tr>
-                                                    <th style="border: 1px solid #ccc; width: 30%;">구분</th>
-                                                    <th style="border: 1px solid #ccc;">개</th>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">샤워장(남)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">23</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">샤워장(여)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">43</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">가족실(남)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">2</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">합계</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">56</td>
-                                                </tr>
-                                            </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ccc; padding: 10px; text-align: center; font-weight: bold;">락커</td>
-                                        <td style="border: 1px solid #ccc; padding: 10px;">
-                                            <table style="width: 100%; border-collapse: collapse; text-align: center;">
-                                                <tr>
-                                                    <th style="border: 1px solid #ccc; width: 30%;">구분</th>
-                                                    <th style="border: 1px solid #ccc;">?개</th>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">2층 탈의실(남)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">118(장애인 락커:2)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">2층 탈의실(여)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">158(장애인 락커:2)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">2층 가족실</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">6(장애인 락커:2)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">4층 탈의실(남)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">16(장애인 락커:2)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">4층 탈의실(여)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">16(장애인 락커:2)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">4층 탈의실 신발장(남)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">18</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">4층 탈의실 신발장(여)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">18</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">합계</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">344</td>
-                                                </tr>
-                                            </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ccc; padding: 10px; text-align: center; font-weight: bold;">화장실</td>
-                                        <td style="border: 1px solid #ccc; padding: 10px;">
-                                            <table style="width: 100%; border-collapse: collapse; text-align: center;">
-                                                <tr>
-                                                    <th style="border: 1px solid #ccc; width: 30%;">구분</th>
-                                                    <th style="border: 1px solid #ccc;">개</th>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">1층 소변기</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">1</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">1층 대변기(남)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">2(장애인:1)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">1층 대변기(여)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">3(장애인:1)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">2층 소변기</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">1</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">2층 대변기(남)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">2(장애인:1)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">2층 대변기(여)</td>
-                                                    <td style="border: 1px solid #ccc; padding: 5px; text-align: center;">3(장애인:1)</td>
-                                                </tr>
-                                            </table>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ccc; padding: 10px; text-align: center; font-weight: bold;">승강기</td>
-                                        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">
-                                            1
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; padding: 10px; text-align: center; font-weight: bold;">정수기</td>
-                                        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">1
-                                        </td>
-                            </tr>
-                            
-                        </table>
-                    </div>
-                </td>
-                <tr>
-                    <th style="border: 1px solid #ccc; width: 10%; text-align: center;">
-                        이용안내
-                        </th>
-                        <td style="border: 1px solid #ccc; text-align: center; vertical-align: top;">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_usage_guide1.jpg" alt="이용안내 이미지 1" style="width: auto; height: auto; display: block; margin-bottom: 10px;">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_usage_guide2.jpg" alt="이용안내 이미지 2" style="width: auto; height: auto; display: block;">
-                    </td>
-                </tr>
-            </tr>
-        </table>
-            <!-- 원하는 추가 콘텐츠를 여기에 추가 -->
-        </div>
-    </li>
-</body>
+			.info-row:last-child {
+				border-bottom: none;
+			}
+
+			/* 왼쪽 헤더 (Label) 스타일 */
+			.info-label {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-weight: bold;
+				background-color: #f3f4f6;
+				color: #1f2937;
+				text-align: center;
+				padding: 10px;
+				border-right: 1px solid #e5e7eb;
+			}
+
+			/* 오른쪽 내용 컨테이너 스타일 */
+			.info-value {
+				padding: 10px;
+				text-align: center;
+				display: flex;
+				align-items: center; /* 기본적으로 수직 중앙 정렬 */
+				justify-content: center;
+				font-size: 1rem;
+			}
+
+			/* 내용이 길 때 왼쪽 정렬 및 상단 정렬 (시설 사진, 주소 등) */
+			.info-value.align-start {
+				justify-content: flex-start;
+				align-items: flex-start;
+				text-align: left;
+			}
+
+			/* 모바일에서 항목과 사진 갤러리를 100% 사용하도록 조정 */
+			@media (max-width: 768px) {
+				.info-row {
+					grid-template-columns: 30% 70%;
+				}
+			}
+
+			/* 이전 facility-row 스타일 제거 (info-row 기본 규칙 사용) */
+
+			/* == 중첩 테이블 대체 섹션 (주차장, 샤워기 등) 스타일 == */
+			.nested-table-alt {
+				width: 100%;
+				display: block;
+				padding: 0;
+				text-align: center;
+			}
+
+			.nested-row-alt {
+				display: grid;
+				grid-template-columns: 30% 70%; /* 내부 테이블의 비율 (30% vs 70%) */
+				border: 1px solid #e5e7eb;
+				border-bottom: none;
+				align-items: center;
+				font-size: 16px;
+			}
+			.nested-table-alt .nested-row-alt:last-child {
+				border-bottom: 1px solid #e5e7eb; /* 마지막 줄에만 아래 보더 추가 */
+			}
+
+			.nested-header-alt {
+				padding: 8px;
+				font-weight: 500;
+				background-color: #f9fafb;
+				border-right: 1px solid #e5e7eb;
+			}
+			.nested-data-alt {
+				padding: 8px;
+				text-align: center;
+				background-color: white;
+				color: #374151; /* 텍스트 색상 추가 */
+			}
+		</style>
+	</head>
+	<body class="p-4">
+		<!-- 토글 버튼 (제목 변경: 청주수영장 삭제) -->
+		<div
+			class="toggle-button bg-blue-600 hover:bg-blue-700 transition duration-300 text-white p-3 rounded-t-lg shadow-xl cursor-pointer"
+			id="toggleUpdateButton"
+			onclick="toggleTable('cheongju_swimming_pool_guide')"
+			style="text-align: center; margin: 0 auto; width: 100%; max-width: 800px">
+			<h1 class="text-xl font-semibold">시설안내</h1>
+		</div>
+
+		<!-- 펼치기/접기 내용 영역 -->
+		<div id="cheongju_swimming_pool_guide" class="max-w-4xl mx-auto" style="display: block">
+			<!-- 전체 컨테이너 -->
+			<div class="border-x border-b border-gray-200 shadow-lg rounded-b-lg overflow-hidden">
+				<!-- 1. 시설명 -->
+				<div class="info-row">
+					<div class="info-label">시설명</div>
+					<div class="info-value font-semibold text-gray-800">청주수영장</div>
+				</div>
+
+				<!-- 2. 운영 현황 (변경: 운영시간, 값 00:00~00:00) -->
+				<div class="info-row">
+					<div class="info-label">운영시간</div>
+					<div class="info-value text-green-600 font-bold">00:00~00:00</div>
+				</div>
+
+				<!-- 3. 주소 -->
+				<div class="info-row">
+					<div class="info-label">주소</div>
+					<div class="info-value text-gray-700 align-start">충북 청주시 청원구 상당로 316</div>
+				</div>
+
+				<!-- 4. 연락처 -->
+				<div class="info-row">
+					<div class="info-label">연락처</div>
+					<div class="info-value text-gray-700">043-200-4740</div>
+				</div>
+
+				<!-- 5. 시설 사진 섹션 (facility-row 클래스 제거) -->
+				<div class="info-row">
+					<div class="info-label">시설 사진</div>
+					<div class="info-value align-start">
+						<div class="w-full text-left">
+							<div class="font-semibold text-base mb-2 text-gray-800">시설 현황 이미지</div>
+							<div class="image-container flex flex-wrap gap-2 justify-start">
+								<!-- 이미지 로드 오류 처리 (onerror) 추가 -->
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility1.jpg"
+									alt="청주수영장 사진 1"
+									class="w-full sm:w-[calc(33.33%-8px)] rounded-md shadow-sm object-cover aspect-[4/3]"
+									onerror="this.onerror=null; this.src='https://placehold.co/400x300/60A5FA/ffffff?text=Image%201%20Error';" />
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility2.jpg"
+									alt="청주수영장 사진 2"
+									class="w-full sm:w-[calc(33.33%-8px)] rounded-md shadow-sm object-cover aspect-[4/3]"
+									onerror="this.onerror=null; this.src='https://placehold.co/400x300/3B82F6/ffffff?text=Image%202%20Error';" />
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility3.jpg"
+									alt="청주수영장 사진 3"
+									class="w-full sm:w-[calc(33.33%-8px)] rounded-md shadow-sm object-cover aspect-[4/3]"
+									onerror="this.onerror=null; this.src='https://placehold.co/400x300/2563EB/ffffff?text=Image%203%20Error';" />
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility4.jpg"
+									alt="청주수영장 사진 4"
+									class="w-full sm:w-[calc(33.33%-8px)] rounded-md shadow-sm object-cover aspect-[4/3]"
+									onerror="this.onerror=null; this.src='https://placehold.co/400x300/1D4ED8/ffffff?text=Image%204%20Error';" />
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility5.jpg"
+									alt="청주수영장 사진 5"
+									class="w-full sm:w-[calc(33.33%-8px)] rounded-md shadow-sm object-cover aspect-[4/3]"
+									onerror="this.onerror=null; this.src='https://placehold.co/400x300/1E3A8A/ffffff?text=Image%205%20Error';" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 6. 주차장 섹션 -->
+				<div class="info-row">
+					<div class="info-label">주차장</div>
+					<div class="info-value p-0">
+						<div class="nested-table-alt">
+							<!-- Header Row -->
+							<div class="nested-row-alt font-bold text-base bg-gray-100 border-t-0">
+								<div class="nested-header-alt">구분</div>
+								<div class="nested-data-alt">대수</div>
+							</div>
+							<!-- Data Rows -->
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">일반</div>
+								<div class="nested-data-alt text-gray-700">?</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">장애인</div>
+								<div class="nested-data-alt text-gray-700">?</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">전기차</div>
+								<div class="nested-data-alt text-gray-700">?</div>
+							</div>
+							<div class="nested-row-alt bg-blue-50">
+								<div class="nested-header-alt font-extrabold text-blue-600 bg-blue-100">합계</div>
+								<div class="nested-data-alt font-extrabold text-blue-600 bg-blue-50">?</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 7. 샤워기 섹션 -->
+				<div class="info-row">
+					<div class="info-label">샤워기</div>
+					<div class="info-value p-0">
+						<div class="nested-table-alt">
+							<!-- Header Row -->
+							<div class="nested-row-alt font-bold text-base bg-gray-100 border-t-0">
+								<div class="nested-header-alt">구분</div>
+								<div class="nested-data-alt">개</div>
+							</div>
+							<!-- Data Rows -->
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">샤워장(남)</div>
+								<div class="nested-data-alt text-gray-700">23</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">샤워장(여)</div>
+								<div class="nested-data-alt text-gray-700">43</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">가족실(남)</div>
+								<div class="nested-data-alt text-gray-700">2</div>
+							</div>
+							<div class="nested-row-alt bg-blue-50">
+								<div class="nested-header-alt font-extrabold text-blue-600 bg-blue-100">합계</div>
+								<div class="nested-data-alt font-extrabold text-blue-600 bg-blue-50">56</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 8. 락커 섹션 -->
+				<div class="info-row">
+					<div class="info-label">락커</div>
+					<div class="info-value p-0">
+						<div class="nested-table-alt">
+							<!-- Header Row -->
+							<div class="nested-row-alt font-bold text-base bg-gray-100 border-t-0">
+								<div class="nested-header-alt">구분</div>
+								<div class="nested-data-alt">개</div>
+							</div>
+							<!-- Data Rows -->
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">2층 탈의실(남)</div>
+								<div class="nested-data-alt text-gray-700">118(장애인 락커:2)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">2층 탈의실(여)</div>
+								<div class="nested-data-alt text-gray-700">158(장애인 락커:2)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">2층 가족실</div>
+								<div class="nested-data-alt text-gray-700">6(장애인 락커:2)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">4층 탈의실(남)</div>
+								<div class="nested-data-alt text-gray-700">16(장애인 락커:2)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">4층 탈의실(여)</div>
+								<div class="nested-data-alt text-gray-700">16(장애인 락커:2)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">4층 탈의실 신발장(남)</div>
+								<div class="nested-data-alt text-gray-700">18</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">4층 탈의실 신발장(여)</div>
+								<div class="nested-data-alt text-gray-700">18</div>
+							</div>
+							<div class="nested-row-alt bg-blue-50">
+								<div class="nested-header-alt font-extrabold text-blue-600 bg-blue-100">합계</div>
+								<div class="nested-data-alt font-extrabold text-blue-600 bg-blue-50">344</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 9. 화장실 섹션 -->
+				<div class="info-row">
+					<div class="info-label">화장실</div>
+					<div class="info-value p-0">
+						<div class="nested-table-alt">
+							<!-- Header Row -->
+							<div class="nested-row-alt font-bold text-base bg-gray-100 border-t-0">
+								<div class="nested-header-alt">구분</div>
+								<div class="nested-data-alt">개</div>
+							</div>
+							<!-- Data Rows -->
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">1층 소변기</div>
+								<div class="nested-data-alt text-gray-700">1</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">1층 대변기(남)</div>
+								<div class="nested-data-alt text-gray-700">2(장애인:1)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">1층 대변기(여)</div>
+								<div class="nested-data-alt text-gray-700">3(장애인:1)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">2층 소변기</div>
+								<div class="nested-data-alt text-gray-700">1</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">2층 대변기(남)</div>
+								<div class="nested-data-alt text-gray-700">2(장애인:1)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">2층 대변기(여)</div>
+								<div class="nested-data-alt text-gray-700">3(장애인:1)</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 10. 승강기 섹션 (일반 정보) -->
+				<div class="info-row">
+					<div class="info-label">승강기</div>
+					<div class="info-value text-gray-700">1</div>
+				</div>
+
+				<!-- 11. 정수기 섹션 (일반 정보) -->
+				<div class="info-row">
+					<div class="info-label">정수기</div>
+					<div class="info-value text-gray-700">1</div>
+				</div>
+
+				<!-- 12. 이용 안내 섹션 (이미지) -->
+				<div class="info-row">
+					<div class="info-label">이용안내</div>
+					<div class="info-value align-start p-4 flex-col">
+						<img
+							src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_usage_guide1.jpg"
+							alt="이용안내 이미지 1"
+							class="w-full h-auto max-w-sm rounded-lg shadow-md mb-4"
+							onerror="this.onerror=null; this.src='https://placehold.co/400x300/10B981/ffffff?text=Guide%20Image%201%20Error';" />
+						<img
+							src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_usage_guide2.jpg"
+							alt="이용안내 이미지 2"
+							class="w-full h-auto max-w-sm rounded-lg shadow-md"
+							onerror="this.onerror=null; this.src='https://placehold.co/400x300/059669/ffffff?text=Guide%20Image%202%20Error';" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			// 토글 함수 (기존 HTML에 있던 함수를 그대로 유지)
+			function toggleTable(id) {
+				const element = document.getElementById(id);
+				const button = document.getElementById('toggleUpdateButton');
+
+				if (element.style.display === 'none' || element.style.display === '') {
+					element.style.display = 'block';
+					button.classList.add('rounded-t-lg');
+					button.classList.remove('rounded-lg');
+				} else {
+					element.style.display = 'none';
+					button.classList.add('rounded-lg');
+					button.classList.remove('rounded-t-lg');
+				}
+			}
+		</script>
+	</body>
+</html>
