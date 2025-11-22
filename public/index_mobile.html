@@ -379,12 +379,10 @@
 
 			const contentPathsMobile = {
 				update: 'updatecontainer/updatecontainer_main.html',
-
-				// [수정됨] 시설현황 메인 화면을 우리가 만든 모바일 파일로 교체
-				facility: 'facility_status/m_facility_status.html',
+				facility: 'facility_status/m_facility_status.html', // 시설현황 카드뷰
 
 				// 시설 안내 상세 페이지 연결
-				cheongjuSwimming_guide: 'guide/cheongju_swimming_pool_guide.html',
+				cheongjuSwimming_guide: 'guide/m_cheongju_swimming_pool_guide.html',
 				purmi_guide: 'guide/m_purmi_guide.html',
 				youngun_sportscenter_guide: 'guide/m_youngun_sportscenter_guide.html',
 				bokdae_sportscenter_guide: 'guide/m_bokdae_sportscenter_guide.html',
@@ -438,6 +436,7 @@
 						.then((html) => {
 							viewport.innerHTML = `<div class="full-page fade-in"><div class="bg-white rounded-xl shadow-sm p-3 text-sm pc-html-wrapper ${specificClass}">${html}</div></div>`;
 
+							// 업데이트 현황 제목 제거 로직
 							if (section === 'update') {
 								const titles = viewport.querySelectorAll(
 									'.pc-html-wrapper h1, .pc-html-wrapper h2, .pc-html-wrapper h3, .pc-html-wrapper p'
@@ -481,7 +480,7 @@
 					renderDashboard();
 				} else if (tab === 'status') {
 					headerTitle.innerText = '시설현황';
-					loadContentMobile('facility', '시설현황'); // [수정됨] 탭 클릭 시 모바일 전용 파일 로드
+					loadContentMobile('facility', '시설현황'); // 탭 클릭 시 모바일 전용 파일 로드
 				} else if (tab === 'manual') {
 					headerTitle.innerText = '안전관리 매뉴얼';
 					renderAccordion();
@@ -514,12 +513,13 @@
 				switchTab('home');
 			}
 
+			/* 렌더링 함수들 */
 			function renderDashboard() {
 				viewport.innerHTML = `
             <div class="full-page fade-in space-y-6">
                 <div class="bg-blue-500 rounded-2xl p-4 text-white shadow-md">
                     <p class="text-xs font-semibold mb-1">오늘의 공지사항 📢</p>
-                    <p class="text-sm">모바일 웹 구현 중입니다</p>
+                    <p class="text-sm">가경국민체육센터 11월 신규 개관 안내 및 회원 모집</p>
                 </div>
                 <section>
                     <h2 class="text-gray-700 font-bold mb-3">주요 메뉴</h2>
@@ -528,10 +528,12 @@
                             <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center"><span class="text-green-500 text-lg">✅</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">업데이트 현황</p><p class="text-[11px] text-gray-500">최신 반영 내용</p></div>
                         </button>
-                        <button type="button" onclick="switchTab('status')" class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
+                        
+                        <button type="button" onclick="toggleFacilityList()" class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
                             <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center"><span class="text-blue-500 text-lg">🏛</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">시설 안내</p><p class="text-[11px] text-gray-500">청주수영장 등 시설별 안내</p></div>
                         </button>
+                        
                         <button type="button" onclick="toggleAdminList()" class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
                             <div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center"><span class="text-indigo-500 text-lg">📂</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">행정 매뉴얼</p><p class="text-[11px] text-gray-500">시설별 행정 매뉴얼</p></div>
@@ -628,6 +630,7 @@
         `;
 			}
 
+			/* 3. 안전관리 매뉴얼 탭 */
 			function renderAccordion() {
 				viewport.innerHTML = `
             <div class="full-page fade-in space-y-3">
@@ -665,6 +668,7 @@
             </div>`;
 			}
 
+			/* 4. Help 탭 */
 			function renderHelp() {
 				viewport.innerHTML = `
             <div class="full-page fade-in space-y-4">
@@ -683,6 +687,7 @@
             </div>`;
 			}
 
+			/* 헬퍼 함수들 */
 			function facilityCardHTML(name, section, statusText, color, closed, address, closeTime) {
 				const statusColorClass = {
 					blue: 'bg-blue-100 text-blue-700',
