@@ -106,7 +106,7 @@
 				box-sizing: border-box;
 			}
 
-			/* === 외부 HTML 공통 === */
+			/* === [공통] 외부 HTML 래퍼 기본 스타일 === */
 			.pc-html-wrapper {
 				position: relative;
 				z-index: 1;
@@ -126,7 +126,9 @@
 				vertical-align: middle !important;
 			}
 
-			/* 1. [업데이트 현황 스타일] */
+			/* ================================================================== */
+			/* 1. [업데이트 현황 페이지 전용 스타일] (.type-update)              */
+			/* ================================================================== */
 			.pc-html-wrapper.type-update > h2:first-child,
 			.pc-html-wrapper.type-update > h3:first-child,
 			.pc-html-wrapper.type-update > p:first-child,
@@ -149,7 +151,7 @@
 			}
 
 			/* ================================================================== */
-			/* 2. [VOC 페이지 스타일] - 안전관리 매뉴얼과 동일한 디자인 적용      */
+			/* 2. [VOC 페이지 전용 스타일] (.type-voc)                           */
 			/* ================================================================== */
 
 			/* 아코디언 전체 래퍼 */
@@ -171,7 +173,7 @@
 
 			/* 열렸을 때 스타일 */
 			.pc-html-wrapper.type-voc details.voc-details[open] {
-				border-color: #3b82f6; /* 파란색 테두리 */
+				border-color: #3b82f6;
 				box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
 			}
 
@@ -181,7 +183,7 @@
 				align-items: center;
 				padding: 16px;
 				cursor: pointer;
-				list-style: none; /* 기본 삼각형 제거 */
+				list-style: none;
 				background-color: #fff;
 				transition: background-color 0.2s;
 			}
@@ -190,7 +192,7 @@
 			}
 
 			.pc-html-wrapper.type-voc details[open] summary.voc-summary {
-				background-color: #eff6ff; /* 열리면 연한 파란색 배경 */
+				background-color: #eff6ff;
 				border-bottom: 1px solid #dbeafe;
 			}
 
@@ -226,11 +228,11 @@
 				transition: transform 0.2s;
 			}
 			.pc-html-wrapper.type-voc details[open] .voc-arrow {
-				transform: rotate(180deg); /* 열리면 회전 */
+				transform: rotate(180deg);
 				color: #3b82f6;
 			}
 
-			/* 내부 내용 영역 (내용 + 답변) */
+			/* 내부 내용 영역 */
 			.pc-html-wrapper.type-voc .voc-body {
 				padding: 16px;
 				background-color: #f9fafb;
@@ -248,7 +250,7 @@
 				margin-bottom: 0;
 			}
 
-			/* 내용/답변 라벨 */
+			/* 라벨 스타일 */
 			.pc-html-wrapper.type-voc .voc-label {
 				display: inline-block;
 				font-size: 11px;
@@ -260,11 +262,11 @@
 			.pc-html-wrapper.type-voc .voc-label.content {
 				background-color: #e5e7eb;
 				color: #374151;
-			} /* 회색 */
+			}
 			.pc-html-wrapper.type-voc .voc-label.answer {
 				background-color: #d1fae5;
 				color: #059669;
-			} /* 초록색 */
+			}
 
 			/* 텍스트 강제 표시 */
 			.pc-html-wrapper.type-voc .voc-body p {
@@ -275,6 +277,7 @@
 
 			/* ================================================================== */
 
+			/* 하단 탭바 */
 			nav.bottom-tabbar {
 				position: fixed;
 				bottom: 0;
@@ -400,12 +403,12 @@
 				gagyeong_sportscenter_manual_2_2_5: 'gagyeong_sportscenter/manual_2_2_5_main.html',
 				gagyeong_admin: 'gagyeong_sportscenter/manual_2_1_5_main.html',
 
-				// [중요] 모바일용 새 파일 경로로 연결
+				// [수정됨] 모바일 전용 VOC 파일 4개 연결
 				voc_swimming_pool: 'voc/voc_swimming_pool_mobile.html',
+				voc_multipurpose_sports_hall: 'voc/voc_multipurpose_sports_hall_mobile.html',
+				voc_program_room: 'voc/voc_program_room_mobile.html',
+				voc_other_information: 'voc/voc_other_information_mobile.html',
 
-				voc_multipurpose_sports_hall: 'voc/voc_multipurpose_sports_hall.html',
-				voc_program_room: 'voc/voc_program_room.html',
-				voc_other_information: 'voc/voc_other_information.html',
 				phy_manual_1: 'phy_manual/phy_manual_1.html',
 				phy_manual_2: 'phy_manual/phy_manual_2.html',
 				phy_manual_3: 'phy_manual/phy_manual_3.html',
@@ -504,8 +507,7 @@
 					});
 				});
 
-				// details 태그는 브라우저가 알아서 토글해주므로 별도의 JS가 필요 없습니다.
-				// 단, 하나만 열리게 하고 싶다면 아래 코드를 추가해도 됩니다. (지금은 모두 열 수 있게 둠)
+				/* 모바일용 VOC 파일은 <details> 태그를 사용하므로 별도의 JS가 필요 없습니다. */
 
 				switchTab('home');
 			});
@@ -514,7 +516,7 @@
 				switchTab('home');
 			}
 
-			/* 렌더링 함수들 (변경 없음) */
+			/* 렌더링 함수들 */
 			function renderDashboard() {
 				viewport.innerHTML = `
             <div class="full-page fade-in space-y-6">
