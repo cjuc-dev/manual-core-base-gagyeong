@@ -151,6 +151,28 @@
 				flex: 1 1 19%; /* 한 줄에 5개 기준 */
 				margin: 0 !important; /* 인라인 margin 제거 */
 			}
+
+			/* 하단 탭바 고정 및 클릭 가능 영역 확보 */
+			nav.bottom-tabbar {
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				z-index: 1000; /* 다른 레이어보다 위에 */
+			}
+
+			/* 탭버튼가 충분히 크고 터치 가능하게 */
+			nav.bottom-tabbar button.tab-btn {
+				padding: 0.5rem 0; /* 높이 확보 */
+				width: 25%; /* 4개 버튼이면 각 25% */
+				font-size: 0.75rem;
+				pointer-events: auto; /* 클릭 가능 보장 */
+			}
+
+			/* 만약 상위에 투명 레이어 있다면 pointer-events none 처리 */
+			.overlay-blocking-layer {
+				pointer-events: none;
+			}
 		</style>
 	</head>
 	<body>
@@ -880,6 +902,16 @@
         `;
 				viewport.innerHTML = html;
 			}
+			// 탭버튼 클릭/터치 이벤트 보강
+			document.querySelectorAll('nav.bottom-tabbar button.tab-btn').forEach((btn) => {
+				btn.addEventListener(
+					'touchstart',
+					function (e) {
+						btn.click();
+					},
+					{ passive: true }
+				);
+			});
 
 			/* 초기 로딩 */
 			switchTab('home');
