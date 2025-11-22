@@ -153,15 +153,24 @@
 			/* ================================================================== */
 			/* 2. [VOC 페이지 전용 스타일] (.type-voc)                           */
 			/* ================================================================== */
-
-			/* 아코디언 전체 래퍼 */
+			.pc-html-wrapper.type-voc h3,
+			.pc-html-wrapper.type-voc h4,
+			.pc-html-wrapper.type-voc p,
+			.pc-html-wrapper.type-voc div,
+			.pc-html-wrapper.type-voc span,
+			.pc-html-wrapper.type-voc td,
+			.pc-html-wrapper.type-voc li {
+				visibility: visible !important;
+				opacity: 1 !important;
+				color: #333 !important;
+				text-align: left !important;
+				white-space: normal !important;
+			}
 			.pc-html-wrapper.type-voc .voc-accordion-wrapper {
 				display: flex;
 				flex-direction: column;
 				gap: 12px;
 			}
-
-			/* 개별 질문 박스 (details 태그) */
 			.pc-html-wrapper.type-voc details.voc-details {
 				background-color: #fff;
 				border: 1px solid #e5e7eb;
@@ -170,14 +179,10 @@
 				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 				transition: all 0.2s ease;
 			}
-
-			/* 열렸을 때 스타일 */
 			.pc-html-wrapper.type-voc details.voc-details[open] {
 				border-color: #3b82f6;
 				box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
 			}
-
-			/* 요약(질문) 줄 (summary 태그) */
 			.pc-html-wrapper.type-voc summary.voc-summary {
 				display: flex;
 				align-items: center;
@@ -190,13 +195,10 @@
 			.pc-html-wrapper.type-voc summary.voc-summary::-webkit-details-marker {
 				display: none;
 			}
-
 			.pc-html-wrapper.type-voc details[open] summary.voc-summary {
 				background-color: #eff6ff;
 				border-bottom: 1px solid #dbeafe;
 			}
-
-			/* Q 뱃지 */
 			.pc-html-wrapper.type-voc .voc-q-badge {
 				width: 24px;
 				height: 24px;
@@ -211,8 +213,6 @@
 				margin-right: 10px;
 				flex-shrink: 0;
 			}
-
-			/* 질문 텍스트 */
 			.pc-html-wrapper.type-voc .voc-title-text {
 				font-size: 14px;
 				font-weight: 600;
@@ -220,8 +220,6 @@
 				flex: 1;
 				text-align: left;
 			}
-
-			/* 화살표 아이콘 */
 			.pc-html-wrapper.type-voc .voc-arrow {
 				font-size: 10px;
 				color: #9ca3af;
@@ -231,8 +229,6 @@
 				transform: rotate(180deg);
 				color: #3b82f6;
 			}
-
-			/* 내부 내용 영역 */
 			.pc-html-wrapper.type-voc .voc-body {
 				padding: 16px;
 				background-color: #f9fafb;
@@ -241,16 +237,9 @@
 				line-height: 1.6;
 				text-align: left;
 			}
-
-			/* 내용/답변 섹션 */
 			.pc-html-wrapper.type-voc .voc-section {
 				margin-bottom: 12px;
 			}
-			.pc-html-wrapper.type-voc .voc-section:last-child {
-				margin-bottom: 0;
-			}
-
-			/* 라벨 스타일 */
 			.pc-html-wrapper.type-voc .voc-label {
 				display: inline-block;
 				font-size: 11px;
@@ -267,15 +256,11 @@
 				background-color: #d1fae5;
 				color: #059669;
 			}
-
-			/* 텍스트 강제 표시 */
 			.pc-html-wrapper.type-voc .voc-body p {
 				display: block !important;
 				visibility: visible !important;
 				margin: 4px 0 0 0;
 			}
-
-			/* ================================================================== */
 
 			/* 하단 탭바 */
 			nav.bottom-tabbar {
@@ -395,15 +380,20 @@
 			const contentPathsMobile = {
 				update: 'updatecontainer/updatecontainer_main.html',
 				facility: 'facility_status/facility_status.html',
-				cheongjuSwimming_guide: 'guide/cheongju_swimming_pool_guide.html',
-				purmi_guide: 'guide/purmi_guide.html',
-				youngun_sportscenter_guide: 'guide/youngun_sportscenter_guide.html',
-				bokdae_sportscenter_guide: 'guide/bokdae_sportscenter_guide.html',
-				gagyeong_sportscenter_guide: 'guide/gagyeong_sportscenter_guide.html',
+
+				// [최종 수정 완료] 시설안내 파일들을 우리가 새로 만든 모바일용 파일로 교체!
+				cheongjuSwimming_guide: 'guide/cheongju_swimming_pool_guide.html', // 청주수영장 (기존 유지)
+
+				// 아래 4개는 새로 만든 파일로 연결
+				purmi_guide: 'guide/m_purmi_guide.html',
+				youngun_sportscenter_guide: 'guide/m_youngun_sportscenter_guide.html',
+				bokdae_sportscenter_guide: 'guide/m_bokdae_sportscenter_guide.html',
+				gagyeong_sportscenter_guide: 'guide/m_gagyeong_sportscenter_guide.html',
+
 				gagyeong_sportscenter_manual_2_2_5: 'gagyeong_sportscenter/manual_2_2_5_main.html',
 				gagyeong_admin: 'gagyeong_sportscenter/manual_2_1_5_main.html',
 
-				// [수정됨] 모바일 전용 VOC 파일 4개 연결
+				// VOC 파일 연결
 				voc_swimming_pool: 'voc/voc_swimming_pool_mobile.html',
 				voc_multipurpose_sports_hall: 'voc/voc_multipurpose_sports_hall_mobile.html',
 				voc_program_room: 'voc/voc_program_room_mobile.html',
@@ -447,6 +437,18 @@
 						})
 						.then((html) => {
 							viewport.innerHTML = `<div class="full-page fade-in"><div class="bg-white rounded-xl shadow-sm p-3 text-sm pc-html-wrapper ${specificClass}">${html}</div></div>`;
+
+							// 업데이트 현황 제목 제거 로직
+							if (section === 'update') {
+								const titles = viewport.querySelectorAll(
+									'.pc-html-wrapper h1, .pc-html-wrapper h2, .pc-html-wrapper h3, .pc-html-wrapper p'
+								);
+								titles.forEach((el) => {
+									if (el.innerText.replace(/\s/g, '').includes('업데이트현황')) {
+										el.style.display = 'none';
+									}
+								});
+							}
 						})
 						.catch((err) => {
 							console.error(err);
@@ -506,9 +508,7 @@
 						if (tab) switchTab(tab);
 					});
 				});
-
-				/* 모바일용 VOC 파일은 <details> 태그를 사용하므로 별도의 JS가 필요 없습니다. */
-
+				// 모바일용 아코디언(details)는 별도 JS 불필요
 				switchTab('home');
 			});
 

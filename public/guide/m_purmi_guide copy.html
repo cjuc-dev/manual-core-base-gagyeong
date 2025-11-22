@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>시설안내</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<style>
+			/* 기본 폰트 설정 */
+			body {
+				font-family: 'Inter', sans-serif;
+				background-color: #f0f4f8;
+			}
+
+			/* 시설 정보 섹션의 기본 스타일 */
+			.info-section {
+				display: flex;
+				flex-direction: column;
+				border: 1px solid #e5e7eb;
+				background-color: white;
+				margin-bottom: 1px;
+			}
+
+			/* 각 항목 (시설명, 주차장 등)의 행 스타일 - Grid 사용 */
+			.info-row {
+				display: grid;
+				grid-template-columns: 25% 75%; /* 청주수영장과 동일한 비율 */
+				min-height: 50px;
+				border-bottom: 1px solid #e5e7eb;
+				width: 100%;
+			}
+
+			.info-row:last-child {
+				border-bottom: none;
+			}
+
+			/* 왼쪽 헤더 (Label) 스타일 */
+			.info-label {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-weight: bold;
+				background-color: #f3f4f6;
+				color: #1f2937;
+				text-align: center;
+				padding: 10px;
+				border-right: 1px solid #e5e7eb;
+				font-size: 14px;
+			}
+
+			/* 오른쪽 내용 컨테이너 스타일 */
+			.info-value {
+				padding: 10px;
+				text-align: center;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 14px;
+			}
+
+			/* 내용이 길 때 왼쪽 정렬 및 상단 정렬 */
+			.info-value.align-start {
+				justify-content: flex-start;
+				align-items: flex-start;
+				text-align: left;
+			}
+
+			/* 모바일 대응 */
+			@media (max-width: 768px) {
+				.info-row {
+					grid-template-columns: 30% 70%; /* 모바일에서는 제목 칸을 조금 더 넓게 */
+				}
+			}
+
+			/* == 중첩 테이블 (주차장, 샤워기 등) 스타일 == */
+			.nested-table-alt {
+				width: 100%;
+				display: block;
+				padding: 0;
+				text-align: center;
+			}
+
+			.nested-row-alt {
+				display: grid;
+				grid-template-columns: 40% 60%; /* 내부 비율 조정 */
+				border-bottom: 1px solid #e5e7eb;
+				align-items: center;
+				font-size: 13px;
+			}
+			.nested-row-alt:last-child {
+				border-bottom: none;
+			}
+
+			.nested-header-alt {
+				padding: 8px;
+				font-weight: 500;
+				background-color: #f9fafb;
+				border-right: 1px solid #e5e7eb;
+			}
+			.nested-data-alt {
+				padding: 8px;
+				text-align: center;
+				background-color: white;
+				color: #374151;
+			}
+		</style>
+	</head>
+	<body class="p-4">
+		<div
+			class="bg-blue-600 text-white p-3 rounded-t-lg shadow-xl cursor-default"
+			style="text-align: center; margin: 0 auto; width: 100%; max-width: 800px">
+			<h1 class="text-xl font-semibold">시설안내</h1>
+		</div>
+
+		<div class="max-w-4xl mx-auto">
+			<div class="border-x border-b border-gray-200 shadow-lg rounded-b-lg overflow-hidden bg-white">
+				<div class="info-row">
+					<div class="info-label">시설명</div>
+					<div class="info-value font-semibold text-gray-800">푸르미스포츠센터</div>
+				</div>
+
+				<div class="info-row">
+					<div class="info-label">운영시간</div>
+					<div class="info-value text-green-600 font-bold">
+						평일 05:30 ~ 20:50
+						<br />
+						주말 06:00 ~ 16:50
+					</div>
+				</div>
+
+				<div class="info-row">
+					<div class="info-label">주소</div>
+					<div class="info-value text-gray-700">충북 청주시 흥덕구 가로수로 969-1</div>
+				</div>
+
+				<div class="info-row">
+					<div class="info-label">연락처</div>
+					<div class="info-value text-gray-700">043-270-8523</div>
+				</div>
+
+				<div class="info-row">
+					<div class="info-label">시설 사진</div>
+					<div class="info-value align-start">
+						<div class="w-full text-left">
+							<div class="font-semibold text-base mb-2 text-gray-800">시설 현황 이미지</div>
+							<div class="flex flex-wrap gap-2 justify-start">
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility1.jpg"
+									class="w-[31%] h-16 object-cover rounded shadow-sm"
+									alt="시설1" />
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility2.jpg"
+									class="w-[31%] h-16 object-cover rounded shadow-sm"
+									alt="시설2" />
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility3.jpg"
+									class="w-[31%] h-16 object-cover rounded shadow-sm"
+									alt="시설3" />
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility4.jpg"
+									class="w-[31%] h-16 object-cover rounded shadow-sm"
+									alt="시설4" />
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility5.jpg"
+									class="w-[31%] h-16 object-cover rounded shadow-sm"
+									alt="시설5" />
+								<img
+									src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility6.jpg"
+									class="w-[31%] h-16 object-cover rounded shadow-sm"
+									alt="시설6" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="info-row">
+					<div class="info-label">주차장</div>
+					<div class="info-value p-0" style="display: block">
+						<div class="nested-table-alt">
+							<div class="nested-row-alt font-bold bg-gray-100">
+								<div class="nested-header-alt">구분</div>
+								<div class="nested-data-alt">대수</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">일반</div>
+								<div class="nested-data-alt text-gray-700">?</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">장애인</div>
+								<div class="nested-data-alt text-gray-700">?</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">전기차</div>
+								<div class="nested-data-alt text-gray-700">?</div>
+							</div>
+							<div class="nested-row-alt bg-blue-50">
+								<div class="nested-header-alt text-blue-600">합계</div>
+								<div class="nested-data-alt font-bold text-blue-600">?</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="info-row">
+					<div class="info-label">샤워기</div>
+					<div class="info-value p-0" style="display: block">
+						<div class="nested-table-alt">
+							<div class="nested-row-alt font-bold bg-gray-100">
+								<div class="nested-header-alt">구분</div>
+								<div class="nested-data-alt">개수</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">샤워장(남)</div>
+								<div class="nested-data-alt text-gray-700">23</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">샤워장(여)</div>
+								<div class="nested-data-alt text-gray-700">43</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">가족실(남)</div>
+								<div class="nested-data-alt text-gray-700">2</div>
+							</div>
+							<div class="nested-row-alt bg-blue-50">
+								<div class="nested-header-alt text-blue-600">합계</div>
+								<div class="nested-data-alt font-bold text-blue-600">68</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="info-row">
+					<div class="info-label">락커</div>
+					<div class="info-value p-0" style="display: block">
+						<div class="nested-table-alt">
+							<div class="nested-row-alt font-bold bg-gray-100">
+								<div class="nested-header-alt">구분</div>
+								<div class="nested-data-alt">개수</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">2층 남</div>
+								<div class="nested-data-alt text-gray-700">118 (장애인:2)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">2층 여</div>
+								<div class="nested-data-alt text-gray-700">158 (장애인:2)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">2층 가족</div>
+								<div class="nested-data-alt text-gray-700">6 (장애인:2)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">4층 남</div>
+								<div class="nested-data-alt text-gray-700">16 (장애인:2)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">4층 여</div>
+								<div class="nested-data-alt text-gray-700">16 (장애인:2)</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">4층 신발장</div>
+								<div class="nested-data-alt text-gray-700">남 18 / 여 18</div>
+							</div>
+							<div class="nested-row-alt bg-blue-50">
+								<div class="nested-header-alt text-blue-600">합계</div>
+								<div class="nested-data-alt font-bold text-blue-600">350</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="info-row">
+					<div class="info-label">화장실</div>
+					<div class="info-value p-0" style="display: block">
+						<div class="nested-table-alt">
+							<div class="nested-row-alt font-bold bg-gray-100">
+								<div class="nested-header-alt">구분</div>
+								<div class="nested-data-alt">개수</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">1층</div>
+								<div class="nested-data-alt text-gray-700">
+									소변기 1
+									<br />
+									남 2(1) / 여 3(1)
+								</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">2층</div>
+								<div class="nested-data-alt text-gray-700">
+									소변기 1
+									<br />
+									남 2(1) / 여 3(1)
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="info-row">
+					<div class="info-label">기타</div>
+					<div class="info-value p-0" style="display: block">
+						<div class="nested-table-alt">
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">승강기</div>
+								<div class="nested-data-alt text-gray-700">1대</div>
+							</div>
+							<div class="nested-row-alt">
+								<div class="nested-header-alt">정수기</div>
+								<div class="nested-data-alt text-gray-700">3대</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="info-row">
+					<div class="info-label">이용안내</div>
+					<div class="info-value align-start p-4 flex-col">
+						<img
+							src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_usage_guide1.jpg"
+							class="w-full rounded shadow-sm mb-2"
+							alt="이용안내1" />
+						<img
+							src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_usage_guide2.jpg"
+							class="w-full rounded shadow-sm"
+							alt="이용안내2" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
