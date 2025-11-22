@@ -21,10 +21,8 @@
 				margin: 0;
 				padding: 0;
 				height: 100%;
-				/* 모바일 터치 시 파란색 하이라이트 제거 */
 				-webkit-tap-highlight-color: transparent;
 			}
-
 			body {
 				font-family: Arial, sans-serif;
 				background-color: #e5e7eb;
@@ -41,7 +39,6 @@
 				background-color: #ffffff;
 				position: relative;
 			}
-
 			.full-page {
 				width: 100%;
 				max-width: 480px;
@@ -49,7 +46,6 @@
 				padding: 16px;
 				box-sizing: border-box;
 			}
-
 			.no-scrollbar::-webkit-scrollbar {
 				display: none;
 			}
@@ -57,7 +53,6 @@
 				-ms-overflow-style: none;
 				scrollbar-width: none;
 			}
-
 			.fade-in {
 				animation: fadeIn 0.25s ease-in-out;
 			}
@@ -72,7 +67,6 @@
 				}
 			}
 
-			/* 링크 스타일 */
 			a.menu-link,
 			a.menu-link:visited,
 			a.menu-link:hover {
@@ -105,7 +99,6 @@
 				display: inline;
 			}
 
-			/* 🔧 메인 뷰포트: 하단 탭바 높이 + Safe Area 만큼 패딩 확보 */
 			#content-viewport {
 				width: 100%;
 				max-width: 100%;
@@ -113,66 +106,175 @@
 				box-sizing: border-box;
 			}
 
-			/* [수정] 외부 HTML 스타일 보정 - 업데이트 현황 테이블 및 제목 제어 */
+			/* === 외부 HTML 공통 === */
 			.pc-html-wrapper {
 				position: relative;
 				z-index: 1;
 			}
-
-			/* 1. 내부 제목 숨기기 (h1, h2, 또는 p 태그 중 굵은 글씨 등) */
-			.pc-html-wrapper h1,
-			.pc-html-wrapper h2,
-			.pc-html-wrapper h3,
-			.pc-html-wrapper > p:first-child {
-				display: none !important;
-			}
-
-			/* 2. 테이블 레이아웃 변경 (fixed -> auto) */
-			.pc-html-wrapper table {
-				width: 100% !important;
-				border-collapse: collapse !important;
-				table-layout: auto !important; /* [중요] 내용 길이에 따라 칸 조절 */
-			}
-
-			.pc-html-wrapper th,
-			.pc-html-wrapper td {
-				padding: 8px 4px !important; /* 좌우 패딩을 줄여 공간 확보 */
-				font-size: 11px !important;
-				vertical-align: top !important; /* 글자 상단 정렬 */
-			}
-
-			/* 3. 첫 번째(버전), 두 번째(날짜) 컬럼 줄바꿈 방지 및 최소 너비 설정 */
-			.pc-html-wrapper tr > *:nth-child(1),
-			.pc-html-wrapper tr > *:nth-child(2) {
-				white-space: nowrap !important; /* 줄바꿈 강제 금지 */
-				width: 1% !important; /* 내용물만큼만 크기 차지 */
-				text-align: center !important;
-			}
-
-			/* 4. 세 번째(내용) 컬럼은 줄바꿈 허용 */
-			.pc-html-wrapper tr > *:nth-child(3) {
-				white-space: normal !important;
-				word-break: break-all !important; /* 긴 단어도 줄바꿈 */
-			}
-
 			.pc-html-wrapper img {
 				max-width: 100%;
 				height: auto;
 			}
-			.pc-html-wrapper .image-container {
+			.pc-html-wrapper table {
 				width: 100% !important;
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between !important;
-				gap: 4px !important;
-				box-sizing: border-box;
+				border-collapse: collapse !important;
 			}
-			.pc-html-wrapper .image-container img {
-				flex: 1 1 19%;
-				margin: 0 !important;
+			.pc-html-wrapper th,
+			.pc-html-wrapper td {
+				padding: 8px 4px !important;
+				font-size: 11px !important;
+				vertical-align: middle !important;
 			}
 
-			/* 🔧 하단 탭바 스타일 */
+			/* 1. [업데이트 현황 스타일] */
+			.pc-html-wrapper.type-update > h2:first-child,
+			.pc-html-wrapper.type-update > h3:first-child,
+			.pc-html-wrapper.type-update > p:first-child,
+			.pc-html-wrapper.type-update > div:first-child > h2:first-child {
+				display: none !important;
+			}
+			.pc-html-wrapper.type-update table {
+				table-layout: auto !important;
+			}
+			.pc-html-wrapper.type-update tr > *:nth-child(1),
+			.pc-html-wrapper.type-update tr > *:nth-child(2) {
+				text-align: center !important;
+				white-space: nowrap !important;
+				width: 1% !important;
+			}
+			.pc-html-wrapper.type-update tr > *:nth-child(3) {
+				text-align: left !important;
+				white-space: normal !important;
+				word-break: break-all !important;
+			}
+
+			/* ================================================================== */
+			/* 2. [VOC 페이지 스타일] - 안전관리 매뉴얼과 동일한 디자인 적용      */
+			/* ================================================================== */
+
+			/* 아코디언 전체 래퍼 */
+			.pc-html-wrapper.type-voc .voc-accordion-wrapper {
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+			}
+
+			/* 개별 질문 박스 (details 태그) */
+			.pc-html-wrapper.type-voc details.voc-details {
+				background-color: #fff;
+				border: 1px solid #e5e7eb;
+				border-radius: 12px;
+				overflow: hidden;
+				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+				transition: all 0.2s ease;
+			}
+
+			/* 열렸을 때 스타일 */
+			.pc-html-wrapper.type-voc details.voc-details[open] {
+				border-color: #3b82f6; /* 파란색 테두리 */
+				box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
+			}
+
+			/* 요약(질문) 줄 (summary 태그) */
+			.pc-html-wrapper.type-voc summary.voc-summary {
+				display: flex;
+				align-items: center;
+				padding: 16px;
+				cursor: pointer;
+				list-style: none; /* 기본 삼각형 제거 */
+				background-color: #fff;
+				transition: background-color 0.2s;
+			}
+			.pc-html-wrapper.type-voc summary.voc-summary::-webkit-details-marker {
+				display: none;
+			}
+
+			.pc-html-wrapper.type-voc details[open] summary.voc-summary {
+				background-color: #eff6ff; /* 열리면 연한 파란색 배경 */
+				border-bottom: 1px solid #dbeafe;
+			}
+
+			/* Q 뱃지 */
+			.pc-html-wrapper.type-voc .voc-q-badge {
+				width: 24px;
+				height: 24px;
+				background-color: #3b82f6;
+				color: white;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 12px;
+				font-weight: bold;
+				margin-right: 10px;
+				flex-shrink: 0;
+			}
+
+			/* 질문 텍스트 */
+			.pc-html-wrapper.type-voc .voc-title-text {
+				font-size: 14px;
+				font-weight: 600;
+				color: #1f2937;
+				flex: 1;
+				text-align: left;
+			}
+
+			/* 화살표 아이콘 */
+			.pc-html-wrapper.type-voc .voc-arrow {
+				font-size: 10px;
+				color: #9ca3af;
+				transition: transform 0.2s;
+			}
+			.pc-html-wrapper.type-voc details[open] .voc-arrow {
+				transform: rotate(180deg); /* 열리면 회전 */
+				color: #3b82f6;
+			}
+
+			/* 내부 내용 영역 (내용 + 답변) */
+			.pc-html-wrapper.type-voc .voc-body {
+				padding: 16px;
+				background-color: #f9fafb;
+				font-size: 13px;
+				color: #4b5563;
+				line-height: 1.6;
+				text-align: left;
+			}
+
+			/* 내용/답변 섹션 */
+			.pc-html-wrapper.type-voc .voc-section {
+				margin-bottom: 12px;
+			}
+			.pc-html-wrapper.type-voc .voc-section:last-child {
+				margin-bottom: 0;
+			}
+
+			/* 내용/답변 라벨 */
+			.pc-html-wrapper.type-voc .voc-label {
+				display: inline-block;
+				font-size: 11px;
+				font-weight: bold;
+				padding: 2px 8px;
+				border-radius: 4px;
+				margin-bottom: 4px;
+			}
+			.pc-html-wrapper.type-voc .voc-label.content {
+				background-color: #e5e7eb;
+				color: #374151;
+			} /* 회색 */
+			.pc-html-wrapper.type-voc .voc-label.answer {
+				background-color: #d1fae5;
+				color: #059669;
+			} /* 초록색 */
+
+			/* 텍스트 강제 표시 */
+			.pc-html-wrapper.type-voc .voc-body p {
+				display: block !important;
+				visibility: visible !important;
+				margin: 4px 0 0 0;
+			}
+
+			/* ================================================================== */
+
 			nav.bottom-tabbar {
 				position: fixed;
 				bottom: 0;
@@ -181,19 +283,13 @@
 				background-color: #ffffff;
 				z-index: 2147483647;
 				border-top: 1px solid #e5e7eb;
-
-				height: 4rem;
-				padding-bottom: env(safe-area-inset-bottom);
 				height: calc(4rem + env(safe-area-inset-bottom));
-
 				display: flex;
 				justify-content: space-around;
 				align-items: flex-start;
 				padding-top: 0.25rem;
-
 				box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 			}
-
 			nav.bottom-tabbar button.tab-btn {
 				padding: 0;
 				width: 25%;
@@ -209,7 +305,6 @@
 				-webkit-user-select: none;
 				user-select: none;
 			}
-
 			nav.bottom-tabbar button.tab-btn > * {
 				pointer-events: none;
 			}
@@ -228,11 +323,9 @@
 							d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
 					</svg>
 				</button>
-
 				<h1 id="header-title" class="text-lg font-bold text-gray-800 truncate max-w-[200px]">
 					체육시설 통합 매뉴얼
 				</h1>
-
 				<button class="text-gray-500 p-1" aria-label="뒤로가기" onclick="goBack()">
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
@@ -257,7 +350,6 @@
 					</svg>
 					<span class="text-[10px] font-medium mt-1">홈</span>
 				</button>
-
 				<button data-tab="status" class="tab-btn text-gray-400">
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
@@ -268,7 +360,6 @@
 					</svg>
 					<span class="text-[10px] font-medium mt-1">시설현황</span>
 				</button>
-
 				<button data-tab="manual" class="tab-btn text-gray-400">
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
@@ -279,7 +370,6 @@
 					</svg>
 					<span class="text-[10px] font-medium mt-1">안전관리 매뉴얼</span>
 				</button>
-
 				<button data-tab="help" class="tab-btn text-gray-400">
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
@@ -296,12 +386,9 @@
 		<script>
 			const viewport = document.getElementById('content-viewport');
 			const headerTitle = document.getElementById('header-title');
+			let currentActiveTab = 'home';
+			let isDetailView = false;
 
-			// [수정 1] 현재 상태를 추적하는 변수 추가
-			let currentActiveTab = 'home'; // 현재 선택된 탭 (기본값 home)
-			let isDetailView = false; // 상세 페이지(콘텐츠)를 보고 있는지 여부
-
-			/* 콘텐츠 경로 */
 			const contentPathsMobile = {
 				update: 'updatecontainer/updatecontainer_main.html',
 				facility: 'facility_status/facility_status.html',
@@ -312,7 +399,10 @@
 				gagyeong_sportscenter_guide: 'guide/gagyeong_sportscenter_guide.html',
 				gagyeong_sportscenter_manual_2_2_5: 'gagyeong_sportscenter/manual_2_2_5_main.html',
 				gagyeong_admin: 'gagyeong_sportscenter/manual_2_1_5_main.html',
-				voc_swimming_pool: 'voc/voc_swimming_pool.html',
+
+				// [중요] 모바일용 새 파일 경로로 연결
+				voc_swimming_pool: 'voc/voc_swimming_pool_mobile.html',
+
 				voc_multipurpose_sports_hall: 'voc/voc_multipurpose_sports_hall.html',
 				voc_program_room: 'voc/voc_program_room.html',
 				voc_other_information: 'voc/voc_other_information.html',
@@ -324,50 +414,26 @@
 
 			function generateContentMobile(section) {
 				const contentTemplates = {
-					admin: `
-                <p style="display:flex;align-items:center;">
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
-                    <span class="hidden-text">2.1.1.</span>
-                    <a href="#" class="menu-link" onclick="location.href='tech2.html';">
-                        <span class="highlight">청주수영장 행정분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. &lt;미구현&gt;
-                    </a>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
-                </p>
-            `,
-					tech: `
-                <p style="display:flex;align-items:center;">
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
-                    <span class="hidden-text">2.2.1.</span>
-                    <a href="#" class="menu-link" onclick="location.href='tech2.html';">
-                        <span class="highlight">청주수영장 기술분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. &lt;미구현&gt;
-                    </a>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
-                </p>
-            `,
-					phy: `
-                <p style="display:flex;align-items:center;">
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon">
-                    <span class="hidden-text">2.3.1.</span>
-                    <a href="#" class="menu-link" onclick="location.href='tech2.html';">
-                        <span class="highlight">체육분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. &lt;미구현&gt;
-                    </a>
-                    <img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon">
-                </p>
-            `,
+					admin: `<p style="display:flex;align-items:center;"><img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon"><span class="hidden-text">2.1.1.</span><a href="#" class="menu-link" onclick="location.href='tech2.html';"><span class="highlight">청주수영장 행정분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. &lt;미구현&gt;</a><img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon"></p>`,
+					tech: `<p style="display:flex;align-items:center;"><img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon"><span class="hidden-text">2.2.1.</span><a href="#" class="menu-link" onclick="location.href='tech2.html';"><span class="highlight">청주수영장 기술분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. &lt;미구현&gt;</a><img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon"></p>`,
+					phy: `<p style="display:flex;align-items:center;"><img src="https://manual-5d03dc.gitlab.io/icon/link_icon.png" class="info-icon"><span class="hidden-text">2.3.1.</span><a href="#" class="menu-link" onclick="location.href='tech2.html';"><span class="highlight">체육분야</span>를 클릭하면 해당 매뉴얼 페이지로 이동합니다. &lt;미구현&gt;</a><img src="https://manual-5d03dc.gitlab.io/icon/link_icon2.png" class="hover-icon"></p>`,
 				};
 				return contentTemplates[section] || '<p>올바른 섹션이 아닙니다.</p>';
 			}
 
 			function loadContentMobile(section, titleOverride) {
-				// [수정 2] 콘텐츠를 불러올 때 상세 뷰 상태임을 기록
 				isDetailView = true;
-
 				if (titleOverride) headerTitle.innerText = titleOverride;
 				viewport.innerHTML =
 					'<div class="full-page fade-in text-sm text-gray-500 text-center py-10">콘텐츠를 불러오는 중입니다...</div>';
-
-				// 스크롤을 맨 위로
 				window.scrollTo(0, 0);
+
+				let specificClass = '';
+				if (section === 'update') {
+					specificClass = 'type-update';
+				} else if (section.startsWith('voc_')) {
+					specificClass = 'type-voc';
+				}
 
 				if (contentPathsMobile[section]) {
 					const url = `https://manual-5d03dc.gitlab.io/${contentPathsMobile[section]}`;
@@ -377,12 +443,7 @@
 							return res.text();
 						})
 						.then((html) => {
-							viewport.innerHTML = `
-        <div class="full-page fade-in">
-            <div class="bg-white rounded-xl shadow-sm p-3 text-sm pc-html-wrapper">
-                ${html}
-            </div>
-        </div>`;
+							viewport.innerHTML = `<div class="full-page fade-in"><div class="bg-white rounded-xl shadow-sm p-3 text-sm pc-html-wrapper ${specificClass}">${html}</div></div>`;
 						})
 						.catch((err) => {
 							console.error(err);
@@ -390,20 +451,15 @@
 								'<div class="full-page fade-in text-red-500 text-sm text-center py-10">콘텐츠를 불러오는 데 실패했습니다.</div>';
 						});
 				} else {
-					viewport.innerHTML = `
-            <div class="full-page fade-in bg-white rounded-xl shadow-sm p-3 text-sm">
-                ${generateContentMobile(section)}
-            </div>`;
+					viewport.innerHTML = `<div class="full-page fade-in bg-white rounded-xl shadow-sm p-3 text-sm">${generateContentMobile(
+						section
+					)}</div>`;
 				}
 			}
 
-			/* 탭 전환 */
 			function switchTab(tab) {
-				// [수정 3] 탭 전환 시 상태 업데이트
-				currentActiveTab = tab; // 현재 탭 기억
-				isDetailView = false; // 리스트 화면이므로 상세 뷰 아님
-
-				// 스크롤을 맨 위로
+				currentActiveTab = tab;
+				isDetailView = false;
 				window.scrollTo(0, 0);
 
 				document.querySelectorAll('.tab-btn').forEach((btn) => {
@@ -431,34 +487,26 @@
 				}
 			}
 
-			/* [수정 4] goBack 함수 로직 완전 변경 (history.back 제거) */
 			function goBack() {
 				if (isDetailView) {
-					// 상세 페이지를 보고 있었다면 -> 현재 활성화된 탭의 목록 화면으로 복귀
 					switchTab(currentActiveTab);
 				} else {
-					// 이미 탭 목록 화면이라면
-					if (currentActiveTab !== 'home') {
-						// 홈이 아니면 홈으로 이동
-						switchTab('home');
-					} else {
-						// 홈 화면에서는 아무 동작 하지 않음 (또는 종료 확인 등)
-						console.log('Already at home');
-					}
+					if (currentActiveTab !== 'home') switchTab('home');
 				}
 			}
 
-			/* 🚨 모바일 터치 오류 해결을 위한 이벤트 리스너 등록 */
 			document.addEventListener('DOMContentLoaded', () => {
-				const tabButtons = document.querySelectorAll('.tab-btn');
-				tabButtons.forEach((btn) => {
+				document.querySelectorAll('.tab-btn').forEach((btn) => {
 					btn.addEventListener('click', (e) => {
 						e.preventDefault();
 						const tab = btn.dataset.tab;
 						if (tab) switchTab(tab);
 					});
 				});
-				/* 초기 로딩 */
+
+				// details 태그는 브라우저가 알아서 토글해주므로 별도의 JS가 필요 없습니다.
+				// 단, 하나만 열리게 하고 싶다면 아래 코드를 추가해도 됩니다. (지금은 모두 열 수 있게 둠)
+
 				switchTab('home');
 			});
 
@@ -466,17 +514,14 @@
 				switchTab('home');
 			}
 
-			/* ===== 렌더링 함수들 ===== */
-
-			/* 1. 대시보드 */
+			/* 렌더링 함수들 (변경 없음) */
 			function renderDashboard() {
-				const html = `
+				viewport.innerHTML = `
             <div class="full-page fade-in space-y-6">
                 <div class="bg-blue-500 rounded-2xl p-4 text-white shadow-md">
                     <p class="text-xs font-semibold mb-1">오늘의 공지사항 📢</p>
                     <p class="text-sm">가경국민체육센터 11월 신규 개관 안내 및 회원 모집</p>
                 </div>
-
                 <section>
                     <h2 class="text-gray-700 font-bold mb-3">주요 메뉴</h2>
                     <div class="grid grid-cols-2 gap-3">
@@ -484,34 +529,29 @@
                             <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center"><span class="text-green-500 text-lg">✅</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">업데이트 현황</p><p class="text-[11px] text-gray-500">최신 반영 내용</p></div>
                         </button>
-
                         <button type="button" onclick="toggleFacilityList()" class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
                             <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center"><span class="text-blue-500 text-lg">🏛</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">시설 안내</p><p class="text-[11px] text-gray-500">청주수영장 등 시설별 안내</p></div>
                         </button>
-
                         <button type="button" onclick="toggleAdminList()" class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
                             <div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center"><span class="text-indigo-500 text-lg">📂</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">행정 매뉴얼</p><p class="text-[11px] text-gray-500">시설별 행정 매뉴얼</p></div>
                         </button>
-
                         <button type="button" onclick="toggleTechList()" class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
                             <div class="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center"><span class="text-orange-500 text-lg">📘</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">기술 매뉴얼</p><p class="text-[11px] text-gray-500">시설별 매뉴얼 선택</p></div>
                         </button>
-
                         <button type="button" onclick="togglePhyList()" class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
                             <div class="w-9 h-9 rounded-full bg-yellow-100 flex items-center justify-center"><span class="text-yellow-500 text-lg">🏃</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">체육 매뉴얼</p><p class="text-[11px] text-gray-500">교육·운영 매뉴얼</p></div>
                         </button>
-
                         <button type="button" onclick="toggleVocList()" class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
                             <div class="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center"><span class="text-red-500 text-lg">📣</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">VOC</p><p class="text-[11px] text-gray-500">고객의 소리</p></div>
                         </button>
                     </div>
                 </section>
-
+                
                 <div id="facility-list" class="hidden space-y-3 mt-2">
                     ${facilityCardHTML(
 						'청주수영장',
@@ -559,7 +599,6 @@
 						'평일 22:00 / 주말 17:00'
 					)}
                 </div>
-
                 <div id="admin-list" class="hidden space-y-3 mt-2">
                     ${manualCardHTML('청주수영장 행정분야', null, false, 'indigo')}
                     ${manualCardHTML('푸르미스포츠센터 행정분야', null, false, 'indigo')}
@@ -567,7 +606,6 @@
                     ${manualCardHTML('복대국민체육센터 행정분야', null, false, 'indigo')}
                     ${manualCardHTML('가경국민체육센터 행정분야', 'gagyeong_admin', true, 'indigo')}
                 </div>
-
                 <div id="tech-list" class="hidden space-y-3 mt-2">
                     ${manualCardHTML('청주수영장 기술분야', null, false, 'orange')}
                     ${manualCardHTML('푸르미스포츠센터 기술분야', null, false, 'orange')}
@@ -575,14 +613,12 @@
                     ${manualCardHTML('복대국민체육센터 기술분야', null, false, 'orange')}
                     ${manualCardHTML('가경국민체육센터 기술분야', 'gagyeong_sportscenter_manual_2_2_5', true, 'orange')}
                 </div>
-
                 <div id="phy-list" class="hidden space-y-3 mt-2">
                     ${manualCardHTML('체육시설 안전관리 매뉴얼', 'phy_manual_1', true, 'emerald')}
                     ${manualCardHTML('심폐소생술 매뉴얼', 'phy_manual_2', true, 'emerald')}
                     ${manualCardHTML('자동심장충격기(AED) 매뉴얼', 'phy_manual_3', true, 'emerald')}
                     ${manualCardHTML('대상별 하임리히법 매뉴얼', 'phy_manual_4', true, 'emerald')}
                 </div>
-
                 <div id="voc-list" class="hidden space-y-3 mt-2">
                     ${vocCardHTML('수영장', 'voc_swimming_pool')}
                     ${vocCardHTML('다목적체육관', 'voc_multipurpose_sports_hall')}
@@ -591,12 +627,10 @@
                 </div>
             </div>
         `;
-				viewport.innerHTML = html;
 			}
 
-			/* 2. 시설현황 탭 */
 			function renderCards() {
-				const html = `
+				viewport.innerHTML = `
             <div class="full-page fade-in space-y-4">
                 <article class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-blue-500">
                     <div class="p-4">
@@ -610,7 +644,6 @@
                         <button class="text-[11px] text-blue-600 font-bold hover:underline" onclick="loadContentMobile('cheongjuSwimming_guide','청주수영장 안내')">상세보기 →</button>
                     </div>
                 </article>
-
                 <article class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-yellow-500">
                     <div class="p-4">
                         <div class="flex justify-between items-start mb-2"><h3 class="text-base font-bold text-gray-800">푸르미스포츠센터</h3><span class="bg-yellow-100 text-yellow-800 text-[11px] px-2 py-1 rounded-full font-bold">혼잡</span></div>
@@ -623,7 +656,6 @@
                         <button class="text-[11px] text-blue-600 font-bold hover:underline" onclick="loadContentMobile('purmi_guide','푸르미스포츠센터 안내')">상세보기 →</button>
                     </div>
                 </article>
-
                 <article class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-red-500 grayscale opacity-80">
                     <div class="p-4">
                         <div class="flex justify-between items-start mb-2"><h3 class="text-base font-bold text-gray-800">가경국민체육센터</h3><span class="bg-red-100 text-red-800 text-[11px] px-2 py-1 rounded-full font-bold">휴관일</span></div>
@@ -635,15 +667,12 @@
                     </div>
                 </article>
             </div>`;
-				viewport.innerHTML = html;
 			}
 
-			/* 3. 안전관리 매뉴얼 탭 */
 			function renderAccordion() {
-				const html = `
+				viewport.innerHTML = `
             <div class="full-page fade-in space-y-3">
                 <p class="text-xs text-gray-500 mb-2">심폐소생술·AED·하임리히 등 주요 응급 매뉴얼 요약입니다.</p>
-                
                 <details class="group bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-4 bg-gray-50 group-open:bg-blue-50 transition">
                         <span class="flex items-center"><span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs mr-2">1</span>심폐소생술 (CPR) 절차</span>
@@ -654,7 +683,6 @@
                         <button class="mt-3 text-[11px] text-blue-600 font-bold hover:underline" onclick="loadContentMobile('phy_manual_2','심폐소생술 매뉴얼')">▶ 상세 매뉴얼 페이지 열기</button>
                     </div>
                 </details>
-
                 <details class="group bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-4 bg-gray-50 group-open:bg-blue-50 transition">
                         <span class="flex items-center"><span class="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs mr-2">2</span>자동심장충격기 (AED)</span>
@@ -665,7 +693,6 @@
                         <button class="mt-3 text-[11px] text-blue-600 font-bold hover:underline" onclick="loadContentMobile('phy_manual_3','AED 매뉴얼')">▶ 상세 매뉴얼 페이지 열기</button>
                     </div>
                 </details>
-
                 <details class="group bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-4 bg-gray-50 group-open:bg-blue-50 transition">
                         <span class="flex items-center"><span class="w-6 h-6 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-xs mr-2">3</span>기도 폐쇄 (하임리히법)</span>
@@ -677,12 +704,10 @@
                     </div>
                 </details>
             </div>`;
-				viewport.innerHTML = html;
 			}
 
-			/* 4. Help 탭 */
 			function renderHelp() {
-				const html = `
+				viewport.innerHTML = `
             <div class="full-page fade-in space-y-4">
                 <article class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-blue-500">
                     <div class="p-4">
@@ -690,24 +715,15 @@
                             <h3 class="text-base font-bold text-gray-800">Help</h3>
                             <span class="bg-blue-100 text-blue-800 text-[11px] px-2 py-1 rounded-full font-bold">문의하기</span>
                         </div>
-                        <p class="text-sm text-gray-600 mt-2 mb-4">
-                            수정 · 개선 요청사항을 작성할 수 있습니다.
-                        </p>
+                        <p class="text-sm text-gray-600 mt-2 mb-4">수정 · 개선 요청사항을 작성할 수 있습니다.</p>
                     </div>
-                    
                     <div class="bg-gray-50 px-4 py-2 border-t border-gray-100 flex justify-end items-center">
-                        <button class="text-[11px] text-blue-600 font-bold hover:underline"
-                                onclick="location.href='https://docs.google.com/spreadsheets/d/1gkFP9ARlFcD6uUwKhKYZTIWMENFj7Hs1k6FgW8fN1uA/edit?usp=sharing'">
-                            이동하기 →
-                        </button>
+                        <button class="text-[11px] text-blue-600 font-bold hover:underline" onclick="location.href='https://docs.google.com/spreadsheets/d/1gkFP9ARlFcD6uUwKhKYZTIWMENFj7Hs1k6FgW8fN1uA/edit?usp=sharing'">이동하기 →</button>
                     </div>
                 </article>
-            </div>
-            `;
-				viewport.innerHTML = html;
+            </div>`;
 			}
 
-			/* 헬퍼 함수들 */
 			function facilityCardHTML(name, section, statusText, color, closed, address, closeTime) {
 				const statusColorClass = {
 					blue: 'bg-blue-100 text-blue-700',
