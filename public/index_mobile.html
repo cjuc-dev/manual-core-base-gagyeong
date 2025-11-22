@@ -271,6 +271,10 @@
 			const viewport = document.getElementById('content-viewport');
 			const headerTitle = document.getElementById('header-title');
 
+			// [수정 1] 현재 상태를 추적하는 변수 추가
+			let currentActiveTab = 'home'; // 현재 선택된 탭 (기본값 home)
+			let isDetailView = false; // 상세 페이지(콘텐츠)를 보고 있는지 여부
+
 			/* 콘텐츠 경로 */
 			const contentPathsMobile = {
 				update: 'updatecontainer/updatecontainer_main.html',
@@ -329,9 +333,15 @@
 			}
 
 			function loadContentMobile(section, titleOverride) {
+				// [수정 2] 콘텐츠를 불러올 때 상세 뷰 상태임을 기록
+				isDetailView = true;
+
 				if (titleOverride) headerTitle.innerText = titleOverride;
 				viewport.innerHTML =
 					'<div class="full-page fade-in text-sm text-gray-500 text-center py-10">콘텐츠를 불러오는 중입니다...</div>';
+
+				// 스크롤을 맨 위로
+				window.scrollTo(0, 0);
 
 				if (contentPathsMobile[section]) {
 					const url = `https://manual-5d03dc.gitlab.io/${contentPathsMobile[section]}`;
@@ -363,6 +373,13 @@
 
 			/* 탭 전환 */
 			function switchTab(tab) {
+				// [수정 3] 탭 전환 시 상태 업데이트
+				currentActiveTab = tab; // 현재 탭 기억
+				isDetailView = false; // 리스트 화면이므로 상세 뷰 아님
+
+				// 스크롤을 맨 위로
+				window.scrollTo(0, 0);
+
 				document.querySelectorAll('.tab-btn').forEach((btn) => {
 					if (btn.dataset.tab === tab) {
 						btn.classList.remove('text-gray-400');
@@ -388,7 +405,24 @@
 				}
 			}
 
-			/* 🚨 [핵심] 모바일 터치 오류 해결을 위한 이벤트 리스너 직접 등록 */
+			/* [수정 4] goBack 함수 로직 완전 변경 (history.back 제거) */
+			function goBack() {
+				if (isDetailView) {
+					// 상세 페이지를 보고 있었다면 -> 현재 활성화된 탭의 목록 화면으로 복귀
+					switchTab(currentActiveTab);
+				} else {
+					// 이미 탭 목록 화면이라면
+					if (currentActiveTab !== 'home') {
+						// 홈이 아니면 홈으로 이동
+						switchTab('home');
+					} else {
+						// 홈 화면에서는 아무 동작 하지 않음 (또는 종료 확인 등)
+						console.log('Already at home');
+					}
+				}
+			}
+
+			/* 🚨 모바일 터치 오류 해결을 위한 이벤트 리스너 등록 */
 			document.addEventListener('DOMContentLoaded', () => {
 				const tabButtons = document.querySelectorAll('.tab-btn');
 				tabButtons.forEach((btn) => {
@@ -404,14 +438,6 @@
 
 			function goHome() {
 				switchTab('home');
-			}
-
-			function goBack() {
-				if (window.history.length > 1) {
-					window.history.back();
-				} else {
-					switchTab('home');
-				}
 			}
 
 			/* ===== 렌더링 함수들 ===== */
@@ -628,7 +654,7 @@
 				viewport.innerHTML = html;
 			}
 
-			/* 4. [수정] Help 카드 탭 (시설현황 스타일 적용) */
+			/* 4. Help 탭 */
 			function renderHelp() {
 				const html = `
             <div class="full-page fade-in space-y-4">
