@@ -379,10 +379,12 @@
 
 			const contentPathsMobile = {
 				update: 'updatecontainer/updatecontainer_main.html',
-				facility: 'facility_status/facility_status.html',
 
-				// [최종 수정 완료] 시설안내 파일들을 우리가 새로 만든 모바일용 파일로 교체!
-				cheongjuSwimming_guide: 'guide/m_cheongju_swimming_pool_guide.html', // 청주수영장
+				// [수정됨] 시설현황 메인 화면을 우리가 만든 모바일 파일로 교체
+				facility: 'facility_status/m_facility_status.html',
+
+				// 시설 안내 상세 페이지 연결
+				cheongjuSwimming_guide: 'guide/cheongju_swimming_pool_guide.html',
 				purmi_guide: 'guide/m_purmi_guide.html',
 				youngun_sportscenter_guide: 'guide/m_youngun_sportscenter_guide.html',
 				bokdae_sportscenter_guide: 'guide/m_bokdae_sportscenter_guide.html',
@@ -436,7 +438,6 @@
 						.then((html) => {
 							viewport.innerHTML = `<div class="full-page fade-in"><div class="bg-white rounded-xl shadow-sm p-3 text-sm pc-html-wrapper ${specificClass}">${html}</div></div>`;
 
-							// 업데이트 현황 제목 제거 로직
 							if (section === 'update') {
 								const titles = viewport.querySelectorAll(
 									'.pc-html-wrapper h1, .pc-html-wrapper h2, .pc-html-wrapper h3, .pc-html-wrapper p'
@@ -480,7 +481,7 @@
 					renderDashboard();
 				} else if (tab === 'status') {
 					headerTitle.innerText = '시설현황';
-					renderCards();
+					loadContentMobile('facility', '시설현황'); // [수정됨] 탭 클릭 시 모바일 전용 파일 로드
 				} else if (tab === 'manual') {
 					headerTitle.innerText = '안전관리 매뉴얼';
 					renderAccordion();
@@ -506,7 +507,6 @@
 						if (tab) switchTab(tab);
 					});
 				});
-				// 모바일용 아코디언(details)는 별도 JS 불필요
 				switchTab('home');
 			});
 
@@ -514,7 +514,6 @@
 				switchTab('home');
 			}
 
-			/* 렌더링 함수들 */
 			function renderDashboard() {
 				viewport.innerHTML = `
             <div class="full-page fade-in space-y-6">
@@ -529,7 +528,7 @@
                             <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center"><span class="text-green-500 text-lg">✅</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">업데이트 현황</p><p class="text-[11px] text-gray-500">최신 반영 내용</p></div>
                         </button>
-                        <button type="button" onclick="toggleFacilityList()" class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
+                        <button type="button" onclick="switchTab('status')" class="bg-white rounded-xl shadow-sm px-4 py-3 flex items-center space-x-3 border border-gray-100">
                             <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center"><span class="text-blue-500 text-lg">🏛</span></div>
                             <div class="text-left"><p class="text-sm font-semibold text-gray-800">시설 안내</p><p class="text-[11px] text-gray-500">청주수영장 등 시설별 안내</p></div>
                         </button>
@@ -627,46 +626,6 @@
                 </div>
             </div>
         `;
-			}
-
-			function renderCards() {
-				viewport.innerHTML = `
-            <div class="full-page fade-in space-y-4">
-                <article class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-blue-500">
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2"><h3 class="text-base font-bold text-gray-800">청주수영장</h3><span class="bg-blue-100 text-blue-800 text-[11px] px-2 py-1 rounded-full font-bold">운영 중</span></div>
-                        <p class="text-xs text-gray-500 mb-3">충북 청주시 서원구 사직대로</p>
-                        <div class="flex justify-between text-xs mb-1"><span class="text-gray-600">혼잡도</span><span class="text-blue-600 font-bold">여유 (30%)</span></div>
-                        <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width:30%"></div></div>
-                    </div>
-                    <div class="bg-gray-50 px-4 py-2 border-t border-gray-100 flex justify-between items-center">
-                        <span class="text-[11px] text-gray-500">마감: 21:00</span>
-                        <button class="text-[11px] text-blue-600 font-bold hover:underline" onclick="loadContentMobile('cheongjuSwimming_guide','청주수영장 안내')">상세보기 →</button>
-                    </div>
-                </article>
-                <article class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-yellow-500">
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2"><h3 class="text-base font-bold text-gray-800">푸르미스포츠센터</h3><span class="bg-yellow-100 text-yellow-800 text-[11px] px-2 py-1 rounded-full font-bold">혼잡</span></div>
-                        <p class="text-xs text-gray-500 mb-3">충북 청주시 흥덕구</p>
-                        <div class="flex justify-between text-xs mb-1"><span class="text-gray-600">혼잡도</span><span class="text-yellow-600 font-bold">높음 (85%)</span></div>
-                        <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-yellow-500 h-2 rounded-full" style="width:85%"></div></div>
-                    </div>
-                    <div class="bg-gray-50 px-4 py-2 border-t border-gray-100 flex justify-between items-center">
-                        <span class="text-[11px] text-gray-500">마감: 22:00</span>
-                        <button class="text-[11px] text-blue-600 font-bold hover:underline" onclick="loadContentMobile('purmi_guide','푸르미스포츠센터 안내')">상세보기 →</button>
-                    </div>
-                </article>
-                <article class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-red-500 grayscale opacity-80">
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2"><h3 class="text-base font-bold text-gray-800">가경국민체육센터</h3><span class="bg-red-100 text-red-800 text-[11px] px-2 py-1 rounded-full font-bold">휴관일</span></div>
-                        <p class="text-xs text-gray-500 mb-3">충북 청주시 흥덕구 가경동</p>
-                        <div class="flex items-center text-xs text-red-600 font-medium">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            오늘은 정기 휴관일입니다.
-                        </div>
-                    </div>
-                </article>
-            </div>`;
 			}
 
 			function renderAccordion() {
