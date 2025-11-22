@@ -381,7 +381,7 @@
 				update: 'updatecontainer/updatecontainer_main.html',
 				facility: 'facility_status/m_facility_status.html', // 시설현황 카드뷰
 
-				// 시설 안내 상세 페이지 연결
+				// [시설 안내] 우리가 만든 모바일 전용 파일 연결
 				cheongjuSwimming_guide: 'guide/m_cheongju_swimming_pool_guide.html',
 				purmi_guide: 'guide/m_purmi_guide.html',
 				youngun_sportscenter_guide: 'guide/m_youngun_sportscenter_guide.html',
@@ -391,7 +391,7 @@
 				gagyeong_sportscenter_manual_2_2_5: 'gagyeong_sportscenter/manual_2_2_5_main.html',
 				gagyeong_admin: 'gagyeong_sportscenter/manual_2_1_5_main.html',
 
-				// VOC 파일 연결
+				// [VOC] 모바일 전용 파일 연결
 				voc_swimming_pool: 'voc/voc_swimming_pool_mobile.html',
 				voc_multipurpose_sports_hall: 'voc/voc_multipurpose_sports_hall_mobile.html',
 				voc_program_room: 'voc/voc_program_room_mobile.html',
@@ -480,7 +480,11 @@
 					renderDashboard();
 				} else if (tab === 'status') {
 					headerTitle.innerText = '시설현황';
-					loadContentMobile('facility', '시설현황'); // 탭 클릭 시 모바일 전용 파일 로드
+					// [수정됨] 탭 클릭 시 파일 로드 -> 카드형 리스트 표시
+					loadContentMobile('facility', '시설현황');
+					// [중요] loadContentMobile은 isDetailView를 true로 만드는데,
+					// 시설현황 탭 메인 화면은 상세화면이 아니므로 false로 강제 변경해야 함.
+					isDetailView = false;
 				} else if (tab === 'manual') {
 					headerTitle.innerText = '안전관리 매뉴얼';
 					renderAccordion();
@@ -491,10 +495,24 @@
 			}
 
 			function goBack() {
+				// 1. 상세 페이지를 보고 있는 경우 (VOC 내용, 시설 상세 등)
 				if (isDetailView) {
-					switchTab(currentActiveTab);
-				} else {
-					if (currentActiveTab !== 'home') switchTab('home');
+					// 만약 현재 탭이 '시설현황(status)'이라면 -> 시설 목록(카드뷰)으로 돌아가야 함
+					if (currentActiveTab === 'status') {
+						loadContentMobile('facility', '시설현황');
+						isDetailView = false; // 목록 화면이므로 false
+					} else {
+						// 다른 탭이면 해당 탭의 메인 화면으로 복귀
+						switchTab(currentActiveTab);
+					}
+				}
+				// 2. 탭 메인 화면인 경우
+				else {
+					if (currentActiveTab !== 'home') {
+						switchTab('home');
+					} else {
+						console.log('Already at home');
+					}
 				}
 			}
 
@@ -513,7 +531,7 @@
 				switchTab('home');
 			}
 
-			/* 렌더링 함수들 */
+			/* 1. 대시보드 (Home) */
 			function renderDashboard() {
 				viewport.innerHTML = `
             <div class="full-page fade-in space-y-6">
