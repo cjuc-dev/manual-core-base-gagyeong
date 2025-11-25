@@ -27,115 +27,149 @@
 			}
 
 			/* 원본 HTML의 인라인 스타일 (고정값) */
-			/* ✅ 개별 이미지 컨테이너 */
 			.image-wrapper {
 				position: relative;
-				width: 900px; /* PC 고정값. 모바일에서 덮어쓸 예정 */
-				height: 600px; /* PC 고정값. 모바일에서 덮어쓸 예정 */
+				width: 900px;
+				height: 600px;
 				text-align: center;
 				overflow: hidden;
 				border-radius: 5px;
 				margin-top: 10px;
 				box-sizing: border-box;
 			}
-			/* ... 나머지 기존 인라인 스타일 유지 ... */
+			p + .image-container {
+				margin-top: -15px;
+			}
+			.image-wrapper img {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+			}
 
 			/* ======================================= */
-			/* 📱 미디어 쿼리: 600px 이하 모바일 화면 최적화 */
+			/* 📱 미디어 쿼리: 600px 이하 모바일 화면 최적화 및 구분 강화 */
 			/* ======================================= */
 			@media (max-width: 600px) {
 				/* 1. 메인 테이블 레이아웃 오버라이드 */
 				table {
-					/* PC 레이아웃(table-layout: fixed)을 모바일에서 유동적으로 변경 */
 					table-layout: auto !important;
 					width: 100% !important;
-					border: none !important; /* 메인 테두리 제거 또는 변경 가능 */
+					border: none !important;
 				}
 
 				/* 2. 메인 td 셀을 블록 요소로 변경하여 전체 너비 사용 */
 				td[style*='width: 90%'] {
 					width: 100% !important;
-					display: block !important; /* 블록 요소로 전환하여 수직 배치 */
-					padding: 10px 15px !important; /* 모바일 좌우 여백 확보 */
+					display: block !important;
+					padding: 10px 0px !important; /* 좌우 패딩을 항목에 맡김 */
 					box-sizing: border-box;
 					border: none !important;
+					background-color: #f4f4f9; /* 배경색 통일 */
 				}
 
-				/* 3. 아코디언 메뉴 항목 디자인 개선 */
-				div[id^='admission tickets'],
-				div[id^='Cancel tickets'] {
-					padding-right: 0px !important;
-				}
-
+				/* 3. 아코디언 메뉴 항목 디자인 개선 및 구분 강화 */
 				.section-item {
 					padding: 0;
-					border: 1px solid #ddd;
-					margin-bottom: 8px;
-					border-radius: 6px;
-					background-color: white;
+					margin: 10px 0px; /* 항목 간 외부 마진 추가로 분리 */
+					border: 1px solid #cceeff; /* 연한 파란색 테두리 */
+					border-radius: 8px; /* 항목 모서리 둥글게 */
+					background-color: white; /* 항목 배경색 */
+					box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* 부각되는 그림자 */
+					overflow: hidden;
+					transition: all 0.2s ease;
+				}
+				.section-item:last-child {
+					border-bottom: 1px solid #cceeff;
 				}
 
 				/* 4. 메뉴 제목 클릭 영역 확장 및 아이콘 정렬 */
 				h3 {
 					margin: 0 !important;
+					/* border-bottom: 1px solid #eee; -> 클릭 피드백으로 대체 */
 				}
 				.section-header {
-					padding: 12px 15px !important;
+					padding: 15px 15px !important;
 					display: block;
 					cursor: pointer;
+					transition: background-color 0.1s;
+				}
+				.section-header:hover,
+				.section-header:active {
+					background-color: #eef5ff; /* 클릭 시 더 밝은 파란색 피드백 */
 				}
 				.section-header strong {
 					font-size: 1.1em;
 					display: flex;
 					align-items: center;
+					color: #1a202c; /* 제목 색상을 진하게 유지 */
 				}
 				.section-header strong::before {
 					content: attr(data-icon);
 					margin-right: 8px;
 					font-size: 1.1em;
+					color: #1e40af; /* 이모지 색상을 파란색으로 강조 */
 				}
 
-				/* 5. 이미지 래퍼 및 이미지 반응형 처리 (고정값 오버라이드) */
+				/* 5. 콘텐츠 영역 패딩 */
+				.section-content {
+					padding: 10px 15px 20px 15px !important; /* 내용 내부 패딩 */
+					border-top: 1px solid #f0f0f0; /* 내용이 펼쳐질 때 얇은 선으로 제목과 분리 */
+				}
+
+				/* 6. 이미지 래퍼 및 이미지 반응형 처리 */
 				.image-wrapper {
-					width: 100% !important; /* PC 900px 덮어쓰기 */
-					height: auto !important; /* PC 600px 덮어쓰기 */
-					max-width: 100%;
+					width: 100% !important;
+					height: auto !important;
 					margin: 10px 0 !important;
 					border: 1px solid #eee;
+					border-radius: 5px;
 				}
 				.image-wrapper img {
-					height: auto !important; /* 비율 유지 */
+					height: auto !important;
 					width: 100% !important;
 				}
 
-				/* 6. 이미지 컨테이너 (다중 이미지를 2열로 배치 시도) */
+				/* 7. 이미지 컨테이너 (다중 이미지 2열 배치) */
 				.image-container {
 					display: flex;
 					flex-wrap: wrap;
-					justify-content: space-around; /* 중앙 정렬 대신 간격 분산 */
-					gap: 5px;
-					margin: 15px 0;
-					padding: 0 5px;
+					justify-content: space-around;
+					gap: 10px;
+					margin: 15px -5px;
+					padding: 0;
 				}
-				/* 2개 이미지를 나란히 배치 */
 				.image-container .image-wrapper {
 					width: calc(50% - 5px) !important;
-					min-width: 140px; /* 너무 작아지지 않게 */
+					min-width: 140px;
+					margin: 5px 0 !important;
 				}
-				/* 화면이 아주 작으면 1열로 배치 */
 				@media (max-width: 400px) {
 					.image-container .image-wrapper {
 						width: 100% !important;
-						max-width: none;
 					}
 				}
 
-				/* 7. 텍스트 요소 여백 조정 */
-				ul,
-				li,
+				/* 8. 텍스트 요소 여백 조정 */
+				ul {
+					list-style-type: disc;
+					padding-left: 20px !important;
+					margin: 0 !important;
+				}
+				li {
+					margin: 10px 0 !important;
+					font-size: 0.95em;
+				}
 				p {
-					padding-left: 15px !important;
-					margin: 8px 0 !important;
+					padding-left: 0px !important;
+					margin: 10px 0 !important;
+				}
+				/* 9. 툴팁/주의 텍스트 강조 */
+				p:has(> strong) {
+					background-color: #fff9e6; /* 밝은 노란색 배경 */
+					padding: 8px 10px !important;
+					border-radius: 4px;
+					margin: 10px 0 !important;
+					border-left: 3px solid #ffc107; /* 왼쪽 강조 선 */
 				}
 			}
 		</style>
@@ -164,17 +198,16 @@
 		</style>
 	</head>
 	<body>
+		<!-- 메인 컨테이너는 PC 레이아웃의 table과 td로 구성되어 있습니다. -->
 		<table style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed">
 			<tr>
+				<!-- td 안에 모든 아코디언 콘텐츠가 들어 있습니다. -->
 				<td style="width: 90%; border: 1px solid #ccc; text-align: left; padding: 10px">
-					<!-- 테이블 대신 div/ul 구조를 사용했지만, 원본 테이블 안에 삽입합니다. -->
 					<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
-						<!-- 1️⃣ 입장권 발행 섹션 -->
+						<!-- 1️⃣ 입장권 발행 섹션 시작 -->
 						<div class="section-item">
 							<h3 class="section-header" onclick="toggleDiv('admission tickets')">
-								<strong style="cursor: pointer; color: rgb(0, 0, 0)" data-icon="1️⃣">
-									입장권 발행📋
-								</strong>
+								<strong data-icon="1️⃣">입장권 발행📋</strong>
 							</h3>
 							<div id="admission tickets" class="section-content" style="display: none">
 								<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
@@ -278,13 +311,12 @@
 								</ul>
 							</div>
 						</div>
+						<!-- 1️⃣ 입장권 발행 섹션 끝 -->
 
-						<!-- 2️⃣ 입장권 취소(일반) 섹션 -->
+						<!-- 2️⃣ 입장권 취소(일반) 섹션 시작 -->
 						<div class="section-item">
 							<h3 class="section-header" onclick="toggleDiv('Cancel tickets')">
-								<strong style="cursor: pointer; color: rgb(0, 0, 0)" data-icon="2️⃣">
-									입장권 취소(일반)📋
-								</strong>
+								<strong data-icon="2️⃣">입장권 취소(일반)📋</strong>
 							</h3>
 							<div id="Cancel tickets" class="section-content" style="display: none">
 								<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
@@ -351,13 +383,12 @@
 								</ul>
 							</div>
 						</div>
+						<!-- 2️⃣ 입장권 취소(일반) 섹션 끝 -->
 
-						<!-- 3️⃣ 입장권 취소(카드가 없을 경우) 섹션 -->
+						<!-- 3️⃣ 입장권 취소(카드가 없을 경우) 섹션 시작 -->
 						<div class="section-item">
 							<h3 class="section-header" onclick="toggleDiv('Cancel tickets2')">
-								<strong style="cursor: pointer; color: rgb(0, 0, 0)" data-icon="3️⃣">
-									입장권 취소(카드가 없을 경우)📋
-								</strong>
+								<strong data-icon="3️⃣">입장권 취소(카드가 없을 경우)📋</strong>
 							</h3>
 							<div id="Cancel tickets2" class="section-content" style="display: none">
 								<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
@@ -430,13 +461,12 @@
 								</ul>
 							</div>
 						</div>
+						<!-- 3️⃣ 입장권 취소(카드가 없을 경우) 섹션 끝 -->
 
-						<!-- 4️⃣ 입장권 취소(이중결제) 섹션 -->
+						<!-- 4️⃣ 입장권 취소(이중결제가 되어 통합 회원에 없는 경우) 섹션 시작 -->
 						<div class="section-item" style="border-bottom: none">
 							<h3 class="section-header" onclick="toggleDiv('Cancel tickets3')">
-								<strong style="cursor: pointer; color: rgb(0, 0, 0)" data-icon="4️⃣">
-									입장권 취소(이중결제가 되어 통합 회원에 없는 경우)📋
-								</strong>
+								<strong data-icon="4️⃣">입장권 취소(이중결제가 되어 통합 회원에 없는 경우)📋</strong>
 							</h3>
 							<div id="Cancel tickets3" class="section-content" style="display: none">
 								<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
@@ -604,7 +634,7 @@
 								</ul>
 							</div>
 						</div>
-						<!-- 원본 <table>이 닫히지 않은 상태로 ul/div가 종료됩니다. 이는 HTML 구조적으로는 완벽하지 않지만, 원본 구조를 최대한 유지하고 모바일에 맞추기 위해 이렇게 처리했습니다. -->
+						<!-- 4️⃣ 입장권 취소(이중결제가 되어 통합 회원에 없는 경우) 섹션 끝 -->
 					</ul>
 				</td>
 			</tr>
