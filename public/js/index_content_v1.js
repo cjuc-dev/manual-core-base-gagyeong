@@ -1,7 +1,13 @@
 // --- CONTENT LOADING LOGIC ---
-function loadContent(section) {
+function loadContent(section, addHistory = true) {
     // 뷰 전환
     showContent();
+
+    // History API
+    if (addHistory) {
+        history.pushState({ section: section }, null, `#${section}`);
+    }
+
     const contentArea = document.getElementById('content-area');
     contentArea.innerHTML = '<div class="flex flex-col items-center justify-center h-64 text-gray-500"><i data-lucide="loader" class="w-10 h-10 animate-spin mb-4"></i><p>로딩 중...</p></div>';
     if (window.lucide) lucide.createIcons();

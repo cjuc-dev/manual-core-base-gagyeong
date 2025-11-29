@@ -3,9 +3,13 @@ const dashboardView = document.getElementById('dashboardView');
 const contentView = document.getElementById('contentView');
 const contentArea = document.getElementById('content-area');
 
-function showDashboard() {
+function showDashboard(addHistory = true) {
     contentView.classList.add('hidden');
     dashboardView.classList.remove('hidden');
+
+    if (addHistory) {
+        history.pushState(null, null, window.location.pathname);
+    }
 }
 
 function showContent() {
@@ -36,5 +40,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lucide 아이콘 초기화
     if (window.lucide) {
         lucide.createIcons();
+    }
+
+    // History API: 뒤로가기/앞으로가기 처리
+    window.addEventListener('popstate', (event) => {
+        if (event.state && event.state.section) {
+            // loadContent가 정의되어 있는지 확인
+            if (typeof loadContent === 'function') {
+                loadContent(event.state.section, false);
+            }
+        } else {
+            showDashboard(false);
+        }
+    });
+
+    // 초기 로드 시 해시 확인 및 상태 설정
+    const hash = window.location.hash.substring(1);
+    if (hash && typeof loadContent === 'function') {
+        loadContent(hash, false);
+        history.replaceState({ section: hash }, null, window.location.href);
+    } else {
+        history.replaceState(null, null, window.location.pathname);
     }
 });
