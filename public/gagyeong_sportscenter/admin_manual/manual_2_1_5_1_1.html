@@ -38,7 +38,7 @@
 				margin: 0 auto;
 			}
 
-			/* VOC 아코디언 공통 스타일 */
+			/* VOC 아코디언 공통 스타일 (모바일 기본값) */
 			.voc-details {
 				margin-bottom: 10px;
 				border: 1px solid #e5e7eb;
@@ -90,25 +90,32 @@
 				border-top: 1px solid #e5e7eb;
 			}
 
-			/* 이미지 및 텍스트 스타일은 모바일 CSS를 기본으로 함 */
+			/* 이미지 및 텍스트 스타일 (모바일 기본값) */
 			.image-container {
 				display: flex;
 				flex-wrap: wrap;
-				justify-content: space-around;
+				justify-content: flex-start; /* ✅ 모바일: 왼쪽 정렬 기본 */
 				gap: 10px;
 				margin: 15px 0px;
 				padding: 0;
 			}
 			.image-wrapper {
-				width: 100% !important;
-				height: auto !important;
+				position: relative;
+				width: 100% !important; /* 모바일: 100% */
+				height: auto !important; /* 모바일: 자동 */
 				margin: 5px 0 !important;
 				border: 1px solid #eee;
 				border-radius: 5px;
 				box-shadow: none;
+				text-align: left !important;
 			}
 			.image-container .image-wrapper {
 				width: 100% !important; /* 항상 1열로 강제 */
+			}
+			.image-wrapper img {
+				width: 100%;
+				height: auto;
+				object-fit: contain;
 			}
 
 			.voc-label {
@@ -138,42 +145,68 @@
 			}
 
 			/* ======================================= */
-			/* 🖥️ PC 모드 개선 (601px 이상) */
+			/* 🖥️ PC 모드 개선 (601px 이상): 원본 크기 및 좌측 정렬 복구 */
 			/* ======================================= */
 			@media (min-width: 601px) {
-				/* PC 모드에서 table, td를 복구하여 원래 외부 CSS 레이아웃에 맞춤 */
+				/* 테이블 및 TD 레이아웃 복구 */
 				table {
 					display: table !important;
 				}
 				td[style*='width: 90%'] {
 					display: table-cell !important;
-					width: 90% !important;
+					width: 900px !important;
 					padding: 10px !important;
-					background-color: white !important; /* 배경색 복구 */
-					border: 1px solid #ccc !important; /* 테두리 복구 */
+					background-color: white !important;
+					border: 1px solid #ccc !important;
+					text-align: left !important; /* 텍스트 및 블록 요소 좌측 정렬 */
 				}
-				.voc-accordion-wrapper {
-					padding: 0;
+
+				/* 이미지 크기 및 정렬 복구 */
+				.image-container {
+					/* Flexbox를 사용하지 않고 block/float 레이아웃을 사용하도록 초기화 */
+					display: block !important;
+					text-align: left !important;
+					margin: 10px 0 !important;
+					/* float 정렬을 위해 clearfix 적용 */
+					content: '';
+					display: table;
+					clear: both;
+				}
+				.image-wrapper {
+					/* PC 원본 값 복구 */
+					width: 900px !important;
+					height: 600px !important;
+					margin: 10px 0 !important;
+					text-align: left !important;
+
+					/* ✅ 좌측 정렬 강제: float 속성 사용 */
+					display: block !important;
+					float: left !important;
+					clear: none !important;
+				}
+				.image-wrapper img {
+					width: 100%;
+					height: 100%;
 				}
 
 				/* PC 모드에서 VOC 항목의 크기 및 간격 조정 */
 				.voc-details {
-					margin-bottom: 15px; /* 항목 간 수직 간격 확대 */
-					box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 유지 */
+					margin-bottom: 15px;
+					box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 				}
 				.voc-summary {
-					padding: 20px 25px; /* 클릭 영역을 더 크게 */
+					padding: 20px 25px;
 				}
 				.voc-title-text {
-					font-size: 1.15em; /* 글자 크기 증가 */
+					font-size: 1.15em;
 				}
 				.voc-body {
 					padding: 0 25px 25px;
 				}
 				.voc-body p,
 				.voc-body ul li {
-					font-size: 1em; /* 본문 텍스트 크기 복구 */
-					line-height: 1.6; /* 수직 간격 복구 */
+					font-size: 1em;
+					line-height: 1.6;
 					margin: 10px 0;
 				}
 			}
@@ -677,7 +710,6 @@
 						</details>
 						<!-- 4️⃣ 입장권 취소(이중결제가 되어 통합 회원에 없는 경우) 섹션 끝 -->
 					</div>
-					<!-- VOC 스타일에서는 table 구조를 제거하고 div로 대체했으므로, 닫는 태그를 제거합니다. -->
 					<!-- 원본 HTML의 팝업은 그대로 유지 -->
 					<div id="popup" onclick="closePopup()" style="display: none; z-index: 9999">
 						<span>&times;</span>
@@ -689,10 +721,6 @@
 	</body>
 	<!-- JavaScript 코드는 외부 링크를 유지합니다. -->
 	<script>
-		// VOC 스타일에서는 details/summary를 사용하므로 toggleDiv 함수는 필요하지 않지만,
-		// 외부 스크립트의 의존성을 유지하기 위해 더미 함수를 정의하거나,
-		// 인라인 onclick을 제거하고 details/summary 네이티브 기능만 사용하도록 HTML을 수정합니다.
-
 		// HTML의 onclick 속성을 모두 제거하고 details/summary 네이티브 기능만 사용했습니다.
 		// openPopup/closePopup 함수는 인라인 onclick이 필요하므로 여기서 다시 정의합니다.
 

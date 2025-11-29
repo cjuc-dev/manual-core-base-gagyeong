@@ -73,21 +73,12 @@
     let isAdmin = false;
     let pendingAction = null;
 
-    // 이전 리스너가 있다면 구독 해제 (중복 실행 및 타 페이지 리스너 간섭 방지)
-    const unsubscribes = [
-        'vocSwimmingUnsubscribe',
-        'vocGymUnsubscribe',
-        'vocProgramUnsubscribe',
-        'vocOtherUnsubscribe'
-    ];
-
-    unsubscribes.forEach(name => {
-        if (window[name]) {
-            console.log(`Unsubscribing from ${name}`);
-            window[name]();
-            window[name] = null;
-        }
-    });
+    // 이전 리스너가 있다면 구독 해제 (중복 실행 방지)
+    if (window.vocSwimmingUnsubscribe) {
+        console.log('Unsubscribing from previous VOC listener');
+        window.vocSwimmingUnsubscribe();
+        window.vocSwimmingUnsubscribe = null;
+    }
 
     // 비밀번호 모달 열기
     window.openPasswordModal = function(actionCallback) {
@@ -342,7 +333,7 @@
     }
 
     // Firebase 데이터 로드 및 렌더링
-    function loadVocDataSwimming() {
+    function loadVocData() {
         if (!window.db) return;
 
         // onSnapshot의 리턴값(구독 해제 함수)을 전역 변수에 저장
@@ -377,7 +368,7 @@
     }
 
     // 초기 실행
-    loadVocDataSwimming();
+    loadVocData();
     lucide.createIcons();
 }
 </script>
