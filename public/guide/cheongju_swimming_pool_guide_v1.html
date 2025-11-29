@@ -205,49 +205,48 @@
             </section>
 
             <!-- 4. 시설 현황 이미지 갤러리 (이미지 경로 수정됨) -->
+            <!-- 4. 시설 현황 이미지 갤러리 (Bento Grid) -->
             <section id="facility" class="mb-16">
                 <h3 class="text-3xl font-extrabold text-white mb-6 pl-4">주요 시설 현황 (갤러리)</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    <!-- 이미지 1 -->
-                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility1.jpg" alt="청주수영장 사진 1" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
-                            <span class="text-white text-sm font-semibold">시설 전경</span>
+                <div class="grid grid-cols-1 md:grid-cols-4 auto-rows-[200px] gap-4">
+                    <!-- 이미지 1 (메인 - 큰 박스) -->
+                    <div class="col-span-1 md:col-span-2 md:row-span-2 w-full h-full bg-gray-800 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer border border-gray-700 hover:border-emerald-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transition-all duration-300 z-0 hover:z-10">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility1.jpg" alt="청주수영장 전경" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <span class="text-emerald-400 text-sm font-bold tracking-wider mb-1">FACILITY VIEW</span>
+                            <span class="text-white text-2xl font-bold">시설 전경</span>
                         </div>
                     </div>
+
                     <!-- 이미지 2 -->
-                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility2.jpg" alt="청주수영장 사진 2" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
-                            <span class="text-white text-sm font-semibold">안내데스크</span>
+                    <div class="col-span-1 w-full h-full bg-gray-800 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer border border-gray-700 hover:border-emerald-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transition-all duration-300 z-0 hover:z-10">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility2.jpg" alt="안내데스크" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <span class="text-white text-lg font-bold">안내데스크</span>
                         </div>
                     </div>
+
                     <!-- 이미지 3 -->
-                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility3.jpg" alt="청주수영장 사진 3" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
-                            <span class="text-white text-sm font-semibold">로비</span>
+                    <div class="col-span-1 w-full h-full bg-gray-800 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer border border-gray-700 hover:border-emerald-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transition-all duration-300 z-0 hover:z-10">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility3.jpg" alt="수영장" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <span class="text-white text-lg font-bold">수영장</span>
                         </div>
                     </div>
+
                     <!-- 이미지 4 -->
-                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility4.jpg" alt="청주수영장 사진 4" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
-                            <span class="text-white text-sm font-semibold">수영장</span>
+                    <div class="col-span-1 w-full h-full bg-gray-800 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer border border-gray-700 hover:border-emerald-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transition-all duration-300 z-0 hover:z-10">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility4.jpg" alt="유아풀" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <span class="text-white text-lg font-bold">유아풀</span>
                         </div>
                     </div>
+
                     <!-- 이미지 5 -->
-                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility5.jpg" alt="청주수영장 사진 5" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
-                            <span class="text-white text-sm font-semibold">다목적체육관</span>
-                        </div>
-                    </div>
-                    <!-- 이미지 6 -->
-                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/purmi_sportscenter_facility6.jpg" alt="청주수영장 사진 6" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
-                            <span class="text-white text-sm font-semibold">프로그램실</span>
+                    <div class="col-span-1 w-full h-full bg-gray-800 rounded-2xl overflow-hidden shadow-lg relative group cursor-pointer border border-gray-700 hover:border-emerald-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transition-all duration-300 z-0 hover:z-10">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility5.jpg" alt="체력단련장" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <span class="text-white text-lg font-bold">체력단련장</span>
                         </div>
                     </div>
                 </div>

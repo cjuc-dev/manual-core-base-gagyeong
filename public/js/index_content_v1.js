@@ -16,7 +16,7 @@ function loadContent(section, addHistory = true) {
         update: 'updatecontainer/updatecontainer_main_v2.html',
         facility: 'facility_status/facility_status.html',
         cheongjuSwimming_guide: 'guide/cheongju_swimming_pool_guide.html',
-        purmi_guide: 'guide/purmi_guide.html',
+        purmi_guide: 'guide/purmi_guide_v1.html',
         youngun_sportscenter_guide: 'guide/youngun_sportscenter_guide_v1.html',
         bokdae_sportscenter_guide: 'guide/bokdae_sportscenter_guide.html',
         gagyeong_sportscenter_guide: 'guide/gagyeong_sportscenter_guide.html',
