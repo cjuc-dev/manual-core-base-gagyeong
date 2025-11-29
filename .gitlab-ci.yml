@@ -13,6 +13,7 @@ pages:
         # 🛠 필요한 것만 추려서 복사 (현재 구조 기준)
         - cp -r public/css                   public_build/ || true
         - cp -r public/javaScript            public_build/ || true
+        - cp -r public/js                    public_build/ || true         # ⭐ 이 부분을 새로 추가합니다 ⭐
         - cp -r public/icon                  public_build/ || true
         - cp -r public/guide                 public_build/ || true
         - cp -r public/facility_status       public_build/ || true
