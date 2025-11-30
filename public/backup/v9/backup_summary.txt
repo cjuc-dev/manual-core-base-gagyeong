@@ -1,0 +1,10 @@
+Backup Date: 2025-11-30
+
+[Targeted Backup]
+Only modified files included to save space.
+
+[Changes]
+1. gagyeong_sportscenter_guide_v1.html: Fixed file corruption.
+2. gagyeong_sportscenter_guide_v1.html: Updated Multipurpose Gym Operating Hours & Notes.
+3. gagyeong_sportscenter_guide_v1.html: Updated Gallery Images (Desk/Kiosk swapped).
+4. gagyeong_sportscenter_guide_v1.html: Updated Facility Quantities.
