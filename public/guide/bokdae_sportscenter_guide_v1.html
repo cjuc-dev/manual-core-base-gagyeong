@@ -70,6 +70,43 @@
             text-align: left;
         }
 
+        /* 네비게이션 반응형: 글씨 크기 조정 */
+        #bokdae-guide-wrapper nav a {
+            white-space: nowrap;
+        }
+        @media (max-width: 1100px) {
+            #bokdae-guide-wrapper nav a {
+                font-size: 0.85rem;
+                padding: 0.5rem 0.7rem;
+            }
+        }
+        @media (max-width: 1024px) {
+            #bokdae-guide-wrapper nav a {
+                font-size: 0.75rem;
+                padding: 0.5rem 0.6rem;
+            }
+        }
+        @media (max-width: 900px) {
+            #bokdae-guide-wrapper nav a {
+                font-size: 0.65rem;
+                padding: 0.4rem 0.4rem;
+            }
+        }
+        @media (max-width: 820px) {
+            #bokdae-guide-wrapper nav a {
+                font-size: 0.6rem;
+                padding: 0.3rem 0.3rem;
+            }
+        }
+
+        /* 모바일 반응형: 테이블 셀 패딩 축소 */
+        @media (max-width: 768px) {
+            #bokdae-guide-wrapper .facility-table th,
+            #bokdae-guide-wrapper .facility-table td {
+                padding: 0.5rem 0.25rem;
+            }
+        }
+
         /* Top 버튼 스타일 */
         #topBtn {
             display: none;
