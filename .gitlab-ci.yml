@@ -31,6 +31,7 @@ pages:
         - if [ -f public/noticePopup.html ]; then cp public/noticePopup.html public_build/; fi
         - if [ -f public/index_renewal.html ]; then cp public/index_renewal.html public_build/; fi # index_renewal.html 추가
         - if [ -f public/index_renewal2.html ]; then cp public/index_renewal2.html public_build/; fi # index_renewal2.html 추가
+        - if [ -f public/index_renewal3.html ]; then cp public/index_renewal3.html public_build/; fi # index_renewal3.html 추가 (검색 기능 포함)
         # 🧹 배포 불필요/대용량 파일 제외 (PDF/PSD/ZIP/MP4 등)
         - find public_build -type f \( -iname '*.psd' -o -iname '*.zip' -o -iname '*.mp4' \) -delete
 
