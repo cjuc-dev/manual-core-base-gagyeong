@@ -35,6 +35,32 @@ function toggleModule(selectorId, iconId) {
     }
 }
 
+function toggleCard(cardId, selectorId, iconId) {
+    const card = document.getElementById(cardId);
+    const selector = document.getElementById(selectorId);
+    const icon = document.getElementById(iconId);
+    
+    // 다른 열린 모듈 닫기 (선택 사항 - 필요 시 주석 해제)
+    // document.querySelectorAll('[id$="Selector"]').forEach(el => {
+    //     if(el.id !== selectorId && !el.classList.contains('hidden')) {
+    //         // 로직 추가 필요: 해당 카드의 col-span 클래스 제거 등
+    //     }
+    // });
+
+    selector.classList.toggle('hidden');
+    
+    // 카드 너비 확장 토글
+    if (selector.classList.contains('hidden')) {
+        icon.classList.remove('rotate-180');
+        // 원래 크기로 복귀
+        card.classList.remove('md:col-span-2', 'lg:col-span-3');
+    } else {
+        icon.classList.add('rotate-180');
+        // 전체 너비로 확장
+        card.classList.add('md:col-span-2', 'lg:col-span-3');
+    }
+}
+
 // 초기화: 페이지 로드 시 실행
 document.addEventListener('DOMContentLoaded', () => {
     // Lucide 아이콘 초기화
