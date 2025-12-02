@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>복대국민체육센터 시설 안내</title>
+    <title>가경국민체육센터 시설 안내</title>
     <!-- Tailwind CSS CDN (Conditional Load) -->
     <script>
         if (!window.tailwind) {
@@ -19,7 +19,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         
         /* Scoped Wrapper Styles */
-        #bokdae-guide-wrapper {
+        #gagyeong-guide-wrapper {
             font-family: 'Inter', sans-serif;
             background-color: transparent;
             color: #e2e8f0; /* Slate 200 */
@@ -27,84 +27,54 @@
         }
         
         /* 액센트 색상 (Dark Mode에 맞게 조정) */
-        #bokdae-guide-wrapper .accent-color {
+        #gagyeong-guide-wrapper .accent-color {
             color: #38bdf8; /* Sky 400 (밝은 파랑) */
         }
-        #bokdae-guide-wrapper .accent-bg {
+        #gagyeong-guide-wrapper .accent-bg {
             background-color: #0284c7; /* Sky 600 */
         }
-        #bokdae-guide-wrapper .accent-bg:hover {
+        #gagyeong-guide-wrapper .accent-bg:hover {
             background-color: #0369a1; /* Sky 700 */
         }
 
         /* 카드 스타일 (Dark Mode) */
-        #bokdae-guide-wrapper .info-card {
+        #gagyeong-guide-wrapper .info-card {
             background-color: #1e293b; /* Slate 800 */
             border: 1px solid #334155; /* Slate 700 */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
             transition: all 0.3s;
         }
-        #bokdae-guide-wrapper .info-card:hover {
+        #gagyeong-guide-wrapper .info-card:hover {
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
             transform: translateY(-2px);
             border-color: #38bdf8; /* Hover 시 Sky 400 */
         }
 
         /* 시설 정보 테이블 스타일 (Dark Mode) */
-        #bokdae-guide-wrapper .facility-table th {
+        #gagyeong-guide-wrapper .facility-table th {
             background-color: #0f172a; /* Slate 900 */
             color: #94a3b8; /* Slate 400 */
-            padding: 0.75rem 1rem;
+            padding: 0.5rem 0.25rem; /* Mobile padding reduced */
             text-align: center; /* 기본 가운데 정렬 */
             border-bottom: 1px solid #334155; /* Slate 700 */
         }
-        #bokdae-guide-wrapper .facility-table td {
-            padding: 0.75rem 1rem;
+        #gagyeong-guide-wrapper .facility-table td {
+            padding: 0.5rem 0.25rem; /* Mobile padding reduced */
             border-bottom: 1px solid #334155; /* Slate 700 */
             color: #cbd5e1; /* Slate 300 */
             text-align: center; /* 기본 가운데 정렬 */
         }
+
+        @media (min-width: 768px) {
+            #gagyeong-guide-wrapper .facility-table th,
+            #gagyeong-guide-wrapper .facility-table td {
+                padding: 0.75rem 1rem; /* Restore original padding on desktop */
+            }
+        }
         /* 왼쪽 정렬이 필요한 특정 테이블을 위한 클래스 */
-        #bokdae-guide-wrapper .text-left-table th, 
-        #bokdae-guide-wrapper .text-left-table td {
+        #gagyeong-guide-wrapper .text-left-table th, 
+        #gagyeong-guide-wrapper .text-left-table td {
             text-align: left;
-        }
-
-        /* 네비게이션 반응형: 글씨 크기 조정 */
-        #bokdae-guide-wrapper nav a {
-            white-space: nowrap;
-        }
-        @media (max-width: 1100px) {
-            #bokdae-guide-wrapper nav a {
-                font-size: 0.85rem;
-                padding: 0.5rem 0.7rem;
-            }
-        }
-        @media (max-width: 1024px) {
-            #bokdae-guide-wrapper nav a {
-                font-size: 0.75rem;
-                padding: 0.5rem 0.6rem;
-            }
-        }
-        @media (max-width: 900px) {
-            #bokdae-guide-wrapper nav a {
-                font-size: 0.65rem;
-                padding: 0.4rem 0.4rem;
-            }
-        }
-        @media (max-width: 820px) {
-            #bokdae-guide-wrapper nav a {
-                font-size: 0.6rem;
-                padding: 0.3rem 0.3rem;
-            }
-        }
-
-        /* 모바일 반응형: 테이블 셀 패딩 축소 */
-        @media (max-width: 768px) {
-            #bokdae-guide-wrapper .facility-table th,
-            #bokdae-guide-wrapper .facility-table td {
-                padding: 0.5rem 0.25rem;
-            }
         }
 
         /* Top 버튼 스타일 */
@@ -130,19 +100,19 @@
         }
         
         /* 네비게이션 강제 스타일 (대시보드 스타일 오버라이드) */
-        #bokdae-guide-wrapper .custom-nav-link {
+        #gagyeong-guide-wrapper .custom-nav-link {
             text-decoration: none !important;
             box-shadow: none !important;
         }
     </style>
 
-    <div id="bokdae-guide-wrapper">
+    <div id="gagyeong-guide-wrapper">
         <!-- 1. 상단 고정 헤더 (Dark Mode) -->
         <header class="sticky top-0 bg-gray-900/95 backdrop-blur shadow-md z-10 border-b border-gray-700">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
                 <div class="flex items-center space-x-2 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 accent-color" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4.5v9L12 22l-8-4.5v-9L12 2z"/><polyline points="12 2 12 12 20 7.5"/><polyline points="12 12 4 7.5 12 2"/></svg>
-                    <h1 class="text-xl font-bold text-white">복대국민체육센터 <span class="text-gray-500 font-normal">| 시설 안내</span></h1>
+                    <h1 class="text-xl font-bold text-white">가경국민체육센터 <span class="text-gray-500 font-normal">| 시설 안내</span></h1>
                 </div>
                 <nav class="hidden md:flex space-x-1 text-sm font-medium">
                     <a href="#overview" onclick="event.preventDefault(); document.getElementById('overview')?.scrollIntoView({behavior: 'smooth'});" class="custom-nav-link px-3 py-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition">시설 개요</a>
@@ -161,7 +131,7 @@
             <section id="overview" class="mb-12">
                 <p class="text-xl text-gray-400 font-medium mb-2">시설 개요</p>
                 <h2 class="text-5xl font-extrabold text-white leading-tight">
-                    <span class="accent-color">복대국민체육센터</span> 시설 안내
+                    <span class="accent-color">가경국민체육센터</span> 시설 안내
                 </h2>
                 <p class="text-lg text-gray-400 mt-4 max-w-4xl">
                     청주시민의 건강 증진과 여가 선용을 위한 복합 체육 시설입니다. 수영장, 다목적체육관, 프로그램실 등 다양한 시설을 갖추고 있습니다.
@@ -179,8 +149,8 @@
                     </div>
                     <p class="text-gray-400 text-sm mb-2">평일/주말 운영 시간</p>
                     <div class="mt-4">
-                        <p class="text-2xl font-extrabold accent-color">화~금 06:00~22:00</p>
-                        <p class="text-lg font-bold text-gray-300">토일 06:00~17:00</p>
+                        <p class="text-2xl font-extrabold accent-color">화~금 06:00~21:30</p>
+                        <p class="text-lg font-bold text-gray-300">토일 06:00~16:30</p>
                     </div>
                 </div>
 
@@ -205,8 +175,8 @@
                     </div>
                     <p class="text-gray-400 text-sm mb-2">궁금한 점은 연락처로 문의해주세요.</p>
                     <div class="mt-4">
-                        <p class="text-2xl font-extrabold accent-color">043-820-7221</p>
-                        <p class="text-sm text-gray-400">대관: 043-820-7223</p>
+                        <p class="text-2xl font-extrabold accent-color">043-820-7250</p>
+                        <p class="text-sm text-gray-400">대관: 043-820-7250</p>
                     </div>
                 </div>
             </section>
@@ -217,42 +187,42 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <!-- 이미지 1 -->
                     <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/bokdae_sportscenter_facility1.jpg" alt="복대국민체육센터 사진 1" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/gagyeong_sportscenter_facility1.jpg" alt="가경국민체육센터 사진 1" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
                             <span class="text-white text-sm font-semibold">시설 전경</span>
                         </div>
                     </div>
                     <!-- 이미지 2 -->
                     <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/bokdae_sportscenter_facility3.jpg" alt="복대국민체육센터 사진 2" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/gagyeong_sportscenter_facility2.jpg" alt="가경국민체육센터 사진 2" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
                             <span class="text-white text-sm font-semibold">안내데스크</span>
                         </div>
                     </div>
                     <!-- 이미지 3 -->
                     <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/bokdae_sportscenter_facility2.jpg" alt="복대국민체육센터 사진 3" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/gagyeong_sportscenter_facility3.jpg" alt="가경국민체육센터 사진 3" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
-                            <span class="text-white text-sm font-semibold">1층 로비</span>
+                            <span class="text-white text-sm font-semibold">키오스크</span>
                         </div>
                     </div>
                     <!-- 이미지 4 -->
                     <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/bokdae_sportscenter_facility4.jpg" alt="복대국민체육센터 사진 4" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/gagyeong_sportscenter_facility4.jpg" alt="가경국민체육센터 사진 4" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
                             <span class="text-white text-sm font-semibold">수영장</span>
                         </div>
                     </div>
                     <!-- 이미지 5 -->
                     <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/bokdae_sportscenter_facility5.jpg" alt="복대국민체육센터 사진 5" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/gagyeong_sportscenter_facility5.jpg" alt="가경국민체육센터 사진 5" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
                             <span class="text-white text-sm font-semibold">다목적체육관</span>
                         </div>
                     </div>
                     <!-- 이미지 6 -->
                     <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
-                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/bokdae_sportscenter_facility6.jpg" alt="복대국민체육센터 사진 6" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/gagyeong_sportscenter_facility6.jpg" alt="가경국민체육센터 사진 6" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
                             <span class="text-white text-sm font-semibold">프로그램실</span>
                         </div>
@@ -282,22 +252,22 @@
                                 <tbody>
                                     <tr>
                                         <td>일반</td>
-                                        <td class="font-bold text-white">-</td>
+                                        <td class="font-bold text-white">31</td>
                                         <td class="text-gray-500">-</td>
                                     </tr>
                                     <tr>
                                         <td>장애인</td>
-                                        <td class="font-bold text-white">-</td>
+                                        <td class="font-bold text-white">2</td>
                                         <td class="text-gray-500">-</td>
                                     </tr>
                                     <tr>
                                         <td>전기차 충전 구역</td>
                                         <td class="font-bold text-emerald-400">-</td>
-                                        <td class="text-gray-500">-</td>
+                                        <td class="text-gray-500">주차면수 50면 이상 의무설치 대상으로 해당없음</td>
                                     </tr>
                                     <tr class="font-extrabold ">
                                         <td class="text-white">총계</td>
-                                        <td class="accent-color">-</td>
+                                        <td class="accent-color">33</td>
                                         <td></td>
                                     </tr>
                                 </tbody>
@@ -320,38 +290,38 @@
                                 <tbody>
                                     <tr>
                                         <td>샤워장(남)</td>
-                                        <td class="font-bold text-white">-</td>
+                                        <td class="font-bold text-white">23</td>
                                         <td class="text-gray-500">-</td>
                                     </tr>
                                      <tr>
                                         <td>샤워장(여)</td>
-                                        <td class="font-bold text-white">-</td>
+                                        <td class="font-bold text-white">43</td>
                                         <td class="text-gray-500">-</td>
                                     </tr>
                                     <tr>
-                                        <td>락커 (1층 남)</td>
-                                        <td class="font-bold text-white">-</td>
+                                        <td>가족실(남)</td>
+                                        <td class="font-bold text-white">2</td>
                                         <td class="text-gray-500">-</td>
                                     </tr>
                                     <tr>
-                                        <td>락커 (1층 여)</td>
-                                        <td class="font-bold text-white">-</td>
-                                        <td class="text-gray-500">-</td>
+                                        <td>2층 락커(남)</td>
+                                        <td class="font-bold text-white">118</td>
+                                        <td class="text-gray-500">장애인 2 포함</td>
                                     </tr>
                                     <tr>
-                                        <td>락커 (2층 남)</td>
-                                        <td class="font-bold text-white">-</td>
-                                        <td class="text-gray-500">-</td>
+                                        <td>2층 락커(여)</td>
+                                        <td class="font-bold text-white">158</td>
+                                        <td class="text-gray-500">장애인 2 포함</td>
                                     </tr>
                                     <tr>
-                                        <td>락커 (2층 여)</td>
-                                        <td class="font-bold text-white">-</td>
-                                        <td class="text-gray-500">-</td>
+                                        <td>4층 락커(남/여)</td>
+                                        <td class="font-bold text-white">32</td>
+                                        <td class="text-gray-500">남 16, 여 16</td>
                                     </tr>
                                     <tr class="font-extrabold">
                                         <td class="text-white">락커 총계</td>
-                                        <td class="accent-color">-</td>
-                                        <td class="text-gray-500">-</td>
+                                        <td class="accent-color">370</td>
+                                        <td class="text-gray-500">신발장 및 기타 포함</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -373,22 +343,22 @@
                                 <tbody>
                                     <tr>
                                         <td>화장실 (1층)</td>
-                                        <td class="font-bold text-white">-</td>
-                                        <td class="text-gray-500">-</td>
+                                        <td class="font-bold text-white">남 3, 여 3</td>
+                                        <td class="text-gray-500">남(대2, 소1), 여(대3)</td>
                                     </tr>
                                     <tr>
                                         <td>화장실 (2층)</td>
-                                        <td class="font-bold text-white">-</td>
-                                        <td class="text-gray-500">-</td>
+                                        <td class="font-bold text-white">남 3, 여 3</td>
+                                        <td class="text-gray-500">남(대2, 소1), 여(대3)</td>
                                     </tr>
                                     <tr>
                                         <td>승강기</td>
-                                        <td class="font-bold text-white">-</td>
+                                        <td class="font-bold text-white">1</td>
                                         <td class="text-gray-500">-</td>
                                     </tr>
                                     <tr>
                                         <td>정수기</td>
-                                        <td class="font-bold text-white">-</td>
+                                        <td class="font-bold text-white">7</td>
                                         <td class="text-gray-500">-</td>
                                     </tr>
                                 </tbody>
@@ -475,14 +445,13 @@
                     <div class="info-card p-0 rounded-xl overflow-hidden">
                         <h4 class="text-xl font-extrabold bg-sky-700 text-white p-4">다목적체육관 운영 시간</h4>
                         <p class="p-4 text-sm text-emerald-400 font-semibold border-b border-gray-700">
-                            ※ 배드민턴 이용 1일 1회 1시간 기준<br>
+                            ※ 탁구, 배드민턴 이용 1일 1회 1시간 기준<br>
                             ※ 개인장비 지참 (라켓, 공, 셔틀콕 등)<br>
-                            ※ 대관사용 1일 1회 4시간<br>
-                            ※ 배드민턴 강습 시 코트 사용 불가(수, 금)
+                            ※ 대관사용 1일 1회 4시간
                         </p>
                         
                         <div class="p-4 overflow-x-auto">
-                            <table class="w-full facility-table border-collapse text-sm">
+                            <table class="w-full facility-table border-collapse text-sm mb-4">
                                 <thead>
                                     <tr class="bg-gray-800/50">
                                         <th class="w-1/6">구분</th>
@@ -493,10 +462,10 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td rowspan="4" class="font-bold text-white">평일<br>(화~금)</td>
+                                        <td rowspan="5" class="font-bold text-white">평일<br>(화~금)</td>
                                         <td>1부</td>
-                                        <td class="font-bold text-white">06:00 ~ 12:00</td>
-                                        <td>배드민턴</td>
+                                        <td class="font-bold text-white">08:00 ~ 12:00</td>
+                                        <td>복합운영<br>(탁구/배드민턴)</td>
                                     </tr>
                                     <tr>
                                         <td>클리닝</td>
@@ -506,26 +475,45 @@
                                     <tr>
                                         <td>2부</td>
                                         <td class="font-bold text-white">13:30 ~ 17:30</td>
-                                        <td>배드민턴</td>
+                                        <td>복합운영<br>(탁구/배드민턴)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>클리닝</td>
+                                        <td class="text-red-400">17:30 ~ 17:50</td>
+                                        <td>코트 정비</td>
                                     </tr>
                                     <tr>
                                         <td>3부</td>
-                                        <td class="font-bold text-white">18:00 ~ 22:00</td>
-                                        <td>대관</td>
+                                        <td class="font-bold text-white">17:50 ~ 21:50</td>
+                                        <td>복합운영<br>(탁구/배드민턴)</td>
                                     </tr>
                                     <tr>
-                                        <td rowspan="2" class="font-bold text-white">주말<br>(토~일)</td>
+                                        <td rowspan="3" class="font-bold text-white">주말<br>(토~일)</td>
                                         <td>1부</td>
-                                        <td class="font-bold text-white">09:00 ~ 13:00</td>
-                                        <td>대관</td>
+                                        <td class="font-bold text-white">08:00 ~ 12:00</td>
+                                        <td>복합운영<br>(탁구/배드민턴)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>클리닝</td>
+                                        <td class="text-red-400">12:00 ~ 12:50</td>
+                                        <td>코트 정비</td>
                                     </tr>
                                     <tr>
                                         <td>2부</td>
                                         <td class="font-bold text-white">12:50 ~ 16:50</td>
-                                        <td>대관</td>
+                                        <td>복합운영<br>(탁구/배드민턴)</td>
                                     </tr>
                                 </tbody>
                             </table>
+                            
+                            <div class="text-xs text-gray-400 space-y-1 bg-gray-800/30 p-3 rounded">
+                                <p>※ 주말, 월요일 선착순 대관 사용</p>
+                                <p>※ 『청주시 체육시설의 설치 및 운영 조례 제 4조(사용허가 우선순위)』에 의거 운영</p>
+                                <p>※ 주말 다목적 체육관 대관으로 인한 탁구/배드민턴 서비스 운영 일시중지 될 수 있음</p>
+                                <p>※ 대관문의: 가경국민체육센터 안내데스크 (043)820-7250</p>
+                                <p>※ 체육관 바닥표면 손상 최소화 및 안전사고 예방을 위해 실내 전용 운동화, 운동복 착용</p>
+                                <p>※ 대관신청: 사용일 전월 첫 번째 화요일부터 20일까지 선착순 접수</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -544,10 +532,10 @@
                             <table class="w-full facility-table border-collapse text-sm">
                                 <thead>
                                     <tr class="bg-gray-800/50">
-                                        <th>구분</th>
-                                        <th>강습A<br>(화,수,목)</th>
-                                        <th>강습B<br>(토,일)</th>
-                                        <th>단기속성<br>(금 2h)</th>
+                                        <th class="w-1/6">구분</th>
+                                        <th class="w-1/4">강습A<br>(화,수,목)</th>
+                                        <th class="w-1/4">강습B<br>(토,일)</th>
+                                        <th class="w-1/4">단기속성<br>(금 2h)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -605,9 +593,9 @@
                             <table class="w-full facility-table border-collapse text-sm">
                                 <thead>
                                     <tr class="bg-gray-800/50">
-                                        <th>구분</th>
-                                        <th>1일</th>
-                                        <th>월회원권</th>
+                                        <th class="w-1/6">구분</th>
+                                        <th class="w-1/3">1일</th>
+                                        <th class="w-1/3">월회원권</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -663,7 +651,7 @@
 
                     <!-- 배드민턴 요금 -->
                     <div class="info-card p-6 rounded-xl">
-                        <h4 class="text-xl font-bold text-white mb-4">배드민턴 이용 요금</h4>
+                        <h4 class="text-xl font-bold text-white mb-4">배드민턴 & 탁구 이용 요금</h4>
                         <p class="text-sm text-gray-400 mb-4">※ 1시간 기준, 부속사용료 실비 포함 (샤워실 등 부속시설 미사용)</p>
                         <div class="overflow-x-auto">
                             <table class="w-full facility-table border-collapse text-sm">
@@ -687,7 +675,7 @@
 
                     <!-- 프로그램실 요금 -->
                     <div class="info-card p-6 rounded-xl">
-                        <h4 class="text-xl font-bold text-white mb-4">프로그램실 (라인댄스)</h4>
+                        <h4 class="text-xl font-bold text-white mb-4">프로그램실 (라인댄스, 에어로빅, 요가, 매트 필라테스 등)</h4>
                         <div class="overflow-x-auto">
                             <table class="w-full facility-table border-collapse text-sm">
                                 <thead>
@@ -747,8 +735,8 @@
                     document.body.appendChild(topBtn);
                 }
 
-                if (!window.bokdaeScrollFunction) {
-                    window.bokdaeScrollFunction = function() {
+                if (!window.gagyeongScrollFunction) {
+                    window.gagyeongScrollFunction = function() {
                         const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
                         const btn = document.getElementById("topBtn");
                         if (btn) {
@@ -761,8 +749,8 @@
                     };
                 }
 
-                window.removeEventListener('scroll', window.bokdaeScrollFunction);
-                window.addEventListener('scroll', window.bokdaeScrollFunction);
+                window.removeEventListener('scroll', window.gagyeongScrollFunction);
+                window.addEventListener('scroll', window.gagyeongScrollFunction);
 
                 if (topBtn) {
                     topBtn.onclick = function() {
@@ -770,7 +758,7 @@
                     };
                 }
 
-                window.bokdaeScrollFunction();
+                window.gagyeongScrollFunction();
             }, 100);
         })();
     </script>
