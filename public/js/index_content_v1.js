@@ -131,7 +131,131 @@ function generateContent(section) {
                     문의 및 개선 요청하기
                 </a>
             </div>
+        `,
+        // --- 가경국민체육센터 행정 매뉴얼 (Placeholder) ---
+        // 1. 입장 및 회원 관리
+        member_ticket: `
+            <h3 class="text-2xl font-bold text-blue-400 mb-4">입장권 발매 및 취소</h3>
+            <div class="p-6 bg-gray-700/50 rounded-lg border border-gray-600">
+                <p class="text-gray-300">입장권 발매, 취소, 환불 처리에 대한 상세 매뉴얼입니다.</p>
+            </div>
+        `,
+        member_registration: `
+            <h3 class="text-2xl font-bold text-blue-400 mb-4">회원 접수 등록</h3>
+            <div class="p-6 bg-gray-700/50 rounded-lg border border-gray-600">
+                <p class="text-gray-300">신규 회원 접수 절차에 대한 상세 매뉴얼입니다.</p>
+            </div>
+        `,
+        member_change: `
+            <h3 class="text-2xl font-bold text-blue-400 mb-4">회원 접수 변경 및 이월</h3>
+            <div class="p-6 bg-gray-700/50 rounded-lg border border-gray-600">
+                <p class="text-gray-300">회원 기간 변경 및 이월 처리에 대한 상세 매뉴얼입니다.</p>
+            </div>
+        `,
+        lesson_management: `
+            <h3 class="text-2xl font-bold text-green-400 mb-4">강습 관리</h3>
+            <div class="p-6 bg-gray-700/50 rounded-lg border border-gray-600">
+                <p class="text-gray-300">이용료 및 강습 등록 관리 매뉴얼 내용이 이곳에 표시됩니다.</p>
+            </div>
+        `,
+        rental_management: `
+            <h3 class="text-2xl font-bold text-purple-400 mb-4">대관 관리</h3>
+            <div class="p-6 bg-gray-700/50 rounded-lg border border-gray-600">
+                <p class="text-gray-300">예약 및 부속 사용료 관리 매뉴얼 내용이 이곳에 표시됩니다.</p>
+            </div>
+        `,
+        kiosk_management: `
+            <h3 class="text-2xl font-bold text-yellow-400 mb-4">키오스크 관리</h3>
+            <div class="p-6 bg-gray-700/50 rounded-lg border border-gray-600">
+                <p class="text-gray-300">무인발권기(키오스크) 기기 관리 매뉴얼 내용이 이곳에 표시됩니다.</p>
+            </div>
+        `,
+        locker_management: `
+            <h3 class="text-2xl font-bold text-orange-400 mb-4">락커룸 관리</h3>
+            <div class="p-6 bg-gray-700/50 rounded-lg border border-gray-600">
+                <p class="text-gray-300">락맨 시스템 및 입장문 관리 매뉴얼 내용이 이곳에 표시됩니다.</p>
+            </div>
+        `,
+        revenue_management: `
+            <h3 class="text-2xl font-bold text-red-400 mb-4">수입금 관리</h3>
+            <div class="p-6 bg-gray-700/50 rounded-lg border border-gray-600">
+                <p class="text-gray-300">매출 및 카드 누락 확인 관리 매뉴얼 내용이 이곳에 표시됩니다.</p>
+            </div>
+        `,
+        parking_management: `
+            <h3 class="text-2xl font-bold text-slate-400 mb-4">주차장 관리</h3>
+            <div class="p-6 bg-gray-700/50 rounded-lg border border-gray-600">
+                <p class="text-gray-300">정기권, 정산, 차단기 관리 매뉴얼 내용이 이곳에 표시됩니다.</p>
+            </div>
         `
     };
     return contentTemplates[section] || '<p>올바른 섹션이 아닙니다.</p>';
+}
+
+function toggleInlineContent(containerId, contentKey) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    if (container.innerHTML.trim() === '') {
+        container.innerHTML = generateContent(contentKey);
+        // Re-initialize icons for the new content
+        if (window.lucide) lucide.createIcons();
+    }
+
+    container.classList.toggle('hidden');
+}
+
+async function toggleInlineExternalContent(containerId, url) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    if (container.innerHTML.trim() === '') {
+        try {
+            container.innerHTML = '<div class="p-4 text-center text-gray-400"><i data-lucide="loader-2" class="w-6 h-6 animate-spin mx-auto mb-2"></i> 로딩 중...</div>';
+            if (window.lucide) lucide.createIcons();
+
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const text = await response.text();
+            
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
+            
+            // Extract styles
+            const styles = doc.querySelectorAll('style, link[rel="stylesheet"]');
+            const styleContainer = document.createElement('div');
+            styles.forEach(style => styleContainer.appendChild(style.cloneNode(true)));
+            
+            // Extract body content (excluding scripts for now to avoid re-execution issues if possible, or handle carefully)
+            // For this specific manual, we want the content inside the table or just the body content.
+            // Let's take the body content but filter out the script tags that might be at the end if they are global.
+            // However, the manual has specific scripts for popup. Let's try to include everything from body.
+            const bodyContent = doc.body.innerHTML;
+
+            container.innerHTML = '';
+            container.appendChild(styleContainer);
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.innerHTML = bodyContent;
+            container.appendChild(contentDiv);
+
+            // Re-execute scripts if necessary (simple approach)
+            const scripts = doc.querySelectorAll('script');
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement('script');
+                Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                container.appendChild(newScript);
+            });
+
+            // Re-initialize icons
+            if (window.lucide) lucide.createIcons();
+
+        } catch (error) {
+            console.error('Error loading external content:', error);
+            container.innerHTML = `<div class="p-4 text-center text-red-400">내용을 불러오는데 실패했습니다.<br>${error.message}</div>`;
+        }
+    }
+
+    container.classList.toggle('hidden');
 }
