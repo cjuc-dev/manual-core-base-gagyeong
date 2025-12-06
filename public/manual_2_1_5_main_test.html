@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가경국민체육센터 행정 분야 매뉴얼 - 테스트</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/index_main_v1.css">
+    <link rel="stylesheet" href="css/index_content_v1.css">
+    
+    <style>
+        /* Body 다크 배경 강제 적용 */
+        body {
+            background-color: #0a0e1a !important;
+            background-image: 
+                linear-gradient(90deg, rgba(6, 214, 160, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(6, 214, 160, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 20% 50%, rgba(6, 214, 160, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%) !important;
+            background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100% !important;
+            background-attachment: fixed !important;
+        }
+        
+        /* PC 레이아웃: 좌측 메인 카드 + 우측 서브 메뉴 */
+        @media (min-width: 1024px) {
+            .member-management-layout {
+                display: grid;
+                grid-template-columns: 350px 1fr;
+                gap: 24px;
+                align-items: start;
+            }
+            
+            .main-card {
+                position: sticky;
+                top: 20px;
+            }
+            
+            .sub-menu-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 16px;
+            }
+        }
+        
+        /* 모바일: 기존 세로 레이아웃 */
+        @media (max-width: 1023px) {
+            .member-management-layout {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .sub-menu-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- 헤더 -->
+        <header class="text-center py-12 mb-10 border-b border-gray-700/50 relative">
+            <div class="flex justify-center items-center gap-6">
+                <div class="text-center">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white neon-text-shadow">
+                        가경국민체육센터 <br class="hidden sm:block"> <span class="text-cyan-400">행정 분야 매뉴얼</span>
+                    </h1>
+                    <p class="mt-4 text-xl font-light text-gray-400">
+                        Gagyeong Sports Center Administrative Manual
+                    </p>
+                    <p class="mt-2 text-sm text-cyan-400">
+                        💡 PC 레이아웃 테스트 버전
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <!-- 통합 대시보드 버튼 -->
+        <div class="mb-6">
+            <button onclick="window.location.href='index_renewal2.html'" class="text-emerald-400 hover:text-emerald-300 flex items-center transition duration-200 font-bold">
+                <i data-lucide="home" class="w-5 h-5 mr-2"></i> 통합 대시보드 (Home)
+            </button>
+        </div>
+
+        <!-- 메인 콘텐츠 영역 -->
+        <main>
+            <!-- 입장 및 회원 관리 섹션 (PC: 좌우 레이아웃) -->
+            <div class="member-management-layout">
+                <!-- 좌측: 메인 카드 -->
+                <div class="main-card">
+                    <div class="neon-module bg-gray-800 p-6 shadow-lg border border-gray-700/50 hover:border-emerald-500/50 group">
+                        <div class="flex justify-between items-center cursor-pointer" onclick="toggleCard('memberCard', 'memberSelector', 'memberToggleIcon')">
+                            <div>
+                                <i data-lucide="ticket" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                                <h2 class="text-xl font-bold mb-1 text-emerald-300">입장 및 회원 관리</h2>
+                                <p class="text-sm text-gray-400">발매/등록/변경 관리</p>
+                            </div>
+                            <i id="memberToggleIcon" data-lucide="chevron-down" class="w-6 h-6 text-emerald-400 transition-transform duration-300"></i>
+                        </div>
+                        
+                        <!-- 모바일용 서브 메뉴 (PC에서는 숨김) -->
+                        <div id="memberSelector" class="mt-4 pt-4 border-t border-gray-700 hidden lg:hidden space-y-2.5">
+                            <!-- 모바일에서만 보이는 서브 메뉴 -->
+                            <div class="flex flex-col rounded-lg bg-gray-700/40 border border-gray-600/40 hover:border-blue-500/50 transition-all duration-200">
+                                <div onclick="loadSubContent('ticket')" class="cursor-pointer hover:bg-blue-600/10 p-3.5 rounded-lg transition-all duration-200 group">
+                                    <div class="flex items-start gap-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                            <i data-lucide="ticket" class="w-4 h-4 text-blue-400"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <h3 class="text-sm font-semibold text-blue-100 mb-1 group-hover:text-white transition-colors">입장권 발매 및 취소</h3>
+                                            <p class="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">발매, 취소, 환불 처리</p>
+                                        </div>
+                                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500 group-hover:text-blue-400 transition-all group-hover:translate-x-0.5"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col rounded-lg bg-gray-700/40 border border-gray-600/40 hover:border-blue-500/50 transition-all duration-200">
+                                <div onclick="loadSubContent('registration')" class="cursor-pointer hover:bg-blue-600/10 p-3.5 rounded-lg transition-all duration-200 group">
+                                    <div class="flex items-start gap-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                            <i data-lucide="user-plus" class="w-4 h-4 text-blue-400"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <h3 class="text-sm font-semibold text-blue-100 mb-1 group-hover:text-white transition-colors">회원 접수 등록</h3>
+                                            <p class="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">신규 회원 접수</p>
+                                        </div>
+                                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500 group-hover:text-blue-400 transition-all group-hover:translate-x-0.5"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col rounded-lg bg-gray-700/40 border border-gray-600/40 hover:border-blue-500/50 transition-all duration-200">
+                                <div onclick="loadSubContent('change')" class="cursor-pointer hover:bg-blue-600/10 p-3.5 rounded-lg transition-all duration-200 group">
+                                    <div class="flex items-start gap-3">
+                                        <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                            <i data-lucide="refresh-cw" class="w-4 h-4 text-blue-400"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <h3 class="text-sm font-semibold text-blue-100 mb-1 group-hover:text-white transition-colors">회원 접수 변경 및 이월</h3>
+                                            <p class="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">기간 변경 및 이월</p>
+                                        </div>
+                                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500 group-hover:text-blue-400 transition-all group-hover:translate-x-0.5"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 우측: 서브 메뉴 카드들 (PC에서만 표시) -->
+                <div class="sub-menu-grid hidden lg:grid">
+                    <!-- 1. 입장권 발매 및 취소 -->
+                    <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-blue-500/50 group" onclick="loadSubContent('ticket')">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                <i data-lucide="ticket" class="w-6 h-6 text-blue-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-blue-200 mb-2 group-hover:text-white transition-colors">입장권 발매 및 취소</h3>
+                                <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">발매, 취소, 환불 처리</p>
+                                <div class="mt-3 flex items-center text-xs text-blue-400 group-hover:text-blue-300">
+                                    <span>상세보기</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 회원 접수 등록 -->
+                    <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-blue-500/50 group" onclick="loadSubContent('registration')">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                <i data-lucide="user-plus" class="w-6 h-6 text-blue-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-blue-200 mb-2 group-hover:text-white transition-colors">회원 접수 등록</h3>
+                                <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">신규 회원 접수</p>
+                                <div class="mt-3 flex items-center text-xs text-blue-400 group-hover:text-blue-300">
+                                    <span>상세보기</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 회원 접수 변경 및 이월 -->
+                    <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-blue-500/50 group" onclick="loadSubContent('change')">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                <i data-lucide="refresh-cw" class="w-6 h-6 text-blue-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-blue-200 mb-2 group-hover:text-white transition-colors">회원 접수 변경 및 이월</h3>
+                                <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">기간 변경 및 이월</p>
+                                <div class="mt-3 flex items-center text-xs text-blue-400 group-hover:text-blue-300">
+                                    <span>상세보기</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 콘텐츠 표시 영역 -->
+            <div id="contentArea" class="mt-8 hidden">
+                <button onclick="hideContent()" class="text-emerald-400 hover:text-emerald-300 mb-6 flex items-center transition duration-200 font-bold">
+                    <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i> 목록으로 돌아가기
+                </button>
+                <div id="contentContainer" class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50"></div>
+            </div>
+
+            <!-- 기타 매뉴얼 카드들 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                <!-- 2. 강습 관리 -->
+                <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                    <i data-lucide="graduation-cap" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                    <h2 class="text-xl font-bold mb-1 text-emerald-300">강습 관리</h2>
+                    <p class="text-sm text-gray-400">프로그램 운영</p>
+                </div>
+
+                <!-- 3. 대관 관리 -->
+                <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                    <i data-lucide="calendar-check" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                    <h2 class="text-xl font-bold mb-1 text-emerald-300">대관 관리</h2>
+                    <p class="text-sm text-gray-400">시설 예약</p>
+                </div>
+
+                <!-- 4. 키오스크 관리 -->
+                <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                    <i data-lucide="monitor" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                    <h2 class="text-xl font-bold mb-1 text-emerald-300">키오스크 관리</h2>
+                    <p class="text-sm text-gray-400">기기 관리</p>
+                </div>
+
+                <!-- 5. 락커룸 관리 -->
+                <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                    <i data-lucide="key" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                    <h2 class="text-xl font-bold mb-1 text-emerald-300">락커룸 관리</h2>
+                    <p class="text-sm text-gray-400">락커 배정</p>
+                </div>
+
+                <!-- 6. 수입금 관리 -->
+                <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                    <i data-lucide="dollar-sign" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                    <h2 class="text-xl font-bold mb-1 text-emerald-300">수입금 관리</h2>
+                    <p class="text-sm text-gray-400">매출/카드 관리</p>
+                </div>
+
+                <!-- 7. 주차장 관리 -->
+                <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                    <i data-lucide="car" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                    <h2 class="text-xl font-bold mb-1 text-emerald-300">주차장 관리</h2>
+                    <p class="text-sm text-gray-400">정기/일일 차량</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/index_ui_v1.js"></script>
+    <script src="js/index_content_v1.js"></script>
+    
+    <script>
+        // 아이콘 초기화
+        lucide.createIcons();
+        
+        // 카드 토글 (모바일용)
+        function toggleCard(cardId, selectorId, iconId) {
+            const selector = document.getElementById(selectorId);
+            const icon = document.getElementById(iconId);
+            
+            selector.classList.toggle('hidden');
+            
+            if (selector.classList.contains('hidden')) {
+                icon.classList.remove('rotate-180');
+            } else {
+                icon.classList.add('rotate-180');
+            }
+        }
+        
+        // 서브 콘텐츠 로드
+        async function loadSubContent(type) {
+            const contentArea = document.getElementById('contentArea');
+            const contentContainer = document.getElementById('contentContainer');
+            
+            let url = '';
+            if (type === 'ticket') {
+                url = 'gagyeong_sportscenter/admin_manual/manual_2_1_5_1_1_v2.html';
+            } else {
+                contentContainer.innerHTML = `
+                    <div class="text-center py-12">
+                        <i data-lucide="construction" class="w-16 h-16 mx-auto mb-4 text-yellow-400"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">준비 중입니다</h3>
+                        <p class="text-gray-400">해당 매뉴얼은 현재 작성 중입니다.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                contentArea.classList.remove('hidden');
+                window.scrollTo({ top: contentArea.offsetTop - 20, behavior: 'smooth' });
+                return;
+            }
+            
+            try {
+                const response = await fetch(url);
+                const html = await response.text();
+                contentContainer.innerHTML = html;
+                contentArea.classList.remove('hidden');
+                lucide.createIcons();
+                window.scrollTo({ top: contentArea.offsetTop - 20, behavior: 'smooth' });
+            } catch (error) {
+                console.error('콘텐츠 로드 실패:', error);
+                contentContainer.innerHTML = `
+                    <div class="text-center py-12 text-red-400">
+                        <p>콘텐츠를 불러오는데 실패했습니다.</p>
+                    </div>
+                `;
+                contentArea.classList.remove('hidden');
+            }
+        }
+        
+        // 콘텐츠 숨기기
+        function hideContent() {
+            const contentArea = document.getElementById('contentArea');
+            contentArea.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

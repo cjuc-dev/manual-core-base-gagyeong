@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가경국민체육센터 행정 분야 매뉴얼 v4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/index_main_v1.css">
+    
+    <style>
+        body {
+            background-color: #0a0e1a !important;
+            background-image: 
+                linear-gradient(90deg, rgba(6, 214, 160, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(6, 214, 160, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 20% 50%, rgba(6, 214, 160, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%) !important;
+            background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100% !important;
+            background-attachment: fixed !important;
+        }
+        
+        /* 아코디언 스타일 */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+        }
+        
+        .accordion-content.open {
+            max-height: 10000px;
+            opacity: 1;
+            transition: max-height 0.6s ease-in, opacity 0.4s ease-in;
+        }
+        
+        .arrow-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .arrow-icon.rotated {
+            transform: rotate(180deg);
+        }
+        
+        /* PC 레이아웃 */
+        @media (min-width: 1024px) {
+            .expanded-grid {
+                display: grid;
+                grid-template-columns: 350px 1fr;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- 헤더 -->
+        <header class="text-center py-12 mb-10 border-b border-gray-700/50">
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white neon-text-shadow">
+                가경국민체육센터 <br class="hidden sm:block"> <span class="text-cyan-400">행정 분야 매뉴얼</span>
+            </h1>
+            <p class="mt-4 text-xl font-light text-gray-400">Gagyeong Sports Center Administrative Manual</p>
+            <p class="mt-2 text-sm text-cyan-400">💡 아코디언 방식 레이아웃 (v3)</p>
+        </header>
+
+        <!-- 통합 대시보드 버튼 -->
+        <div class="mb-6">
+            <button onclick="window.location.href='index_renewal2.html'" class="text-emerald-400 hover:text-emerald-300 flex items-center transition duration-200 font-bold">
+                <i data-lucide="home" class="w-5 h-5 mr-2"></i> 통합 대시보드 (Home)
+            </button>
+        </div>
+
+        <!-- 메인 카드 그리드 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 1. 입장 및 회원 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg border border-gray-700/50 hover:border-emerald-500/50">
+                <div class="cursor-pointer" onclick="toggleMainAccordion()">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <i data-lucide="ticket" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                            <h2 class="text-xl font-bold mb-1 text-emerald-300">입장 및 회원 관리</h2>
+                            <p class="text-sm text-gray-400">발매/등록/변경 관리</p>
+                        </div>
+                        <i id="mainArrow" data-lucide="chevron-down" class="arrow-icon w-6 h-6 text-emerald-400"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 강습 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="graduation-cap" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">강습 관리</h2>
+                <p class="text-sm text-gray-400">프로그램 운영</p>
+            </div>
+
+            <!-- 3. 대관 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="calendar-check" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">대관 관리</h2>
+                <p class="text-sm text-gray-400">시설 예약</p>
+            </div>
+
+            <!-- 4. 키오스크 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="monitor" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">키오스크 관리</h2>
+                <p class="text-sm text-gray-400">기기 관리</p>
+            </div>
+
+            <!-- 5. 락커룸 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="key" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">락커룸 관리</h2>
+                <p class="text-sm text-gray-400">락커 배정</p>
+            </div>
+
+            <!-- 6. 수입금 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="dollar-sign" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">수입금 관리</h2>
+                <p class="text-sm text-gray-400">매출/카드 관리</p>
+            </div>
+
+            <!-- 7. 주차장 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="car" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">주차장 관리</h2>
+                <p class="text-sm text-gray-400">정기/일일 차량</p>
+            </div>
+        </div>
+
+        <!-- 입장 및 회원 관리 아코디언 콘텐츠 -->
+        <div id="mainAccordion" class="accordion-content mt-6">
+            <div class="expanded-grid">
+                <!-- 좌측: 중간 메뉴 -->
+                <div class="space-y-3">
+                    <!-- 1. 입장권 발매 및 취소 -->
+                    <div class="neon-module bg-gray-800 shadow-lg border border-gray-700/50">
+                        <div class="p-4 cursor-pointer hover:bg-gray-700/50 transition group" onclick="toggleMiddleAccordion(0)">
+                            <div class="flex items-start gap-3">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                    <i data-lucide="ticket" class="w-5 h-5 text-blue-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-base font-bold text-blue-200 mb-1 group-hover:text-white transition-colors">입장권 발매 및 취소</h3>
+                                    <p class="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">발매, 취소, 환불 처리</p>
+                                </div>
+                                <i id="middleArrow0" data-lucide="chevron-down" class="arrow-icon w-5 h-5 text-gray-500 group-hover:text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 회원 접수 등록 -->
+                    <div class="neon-module bg-gray-800 shadow-lg border border-gray-700/50">
+                        <div class="p-4 cursor-pointer hover:bg-gray-700/50 transition group" onclick="toggleMiddleAccordion(1)">
+                            <div class="flex items-start gap-3">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                    <i data-lucide="user-plus" class="w-5 h-5 text-blue-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-base font-bold text-blue-200 mb-1 group-hover:text-white transition-colors">회원 접수 등록</h3>
+                                    <p class="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">신규 회원 접수</p>
+                                </div>
+                                <i id="middleArrow1" data-lucide="chevron-down" class="arrow-icon w-5 h-5 text-gray-500 group-hover:text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 회원 접수 변경 및 이월 -->
+                    <div class="neon-module bg-gray-800 shadow-lg border border-gray-700/50">
+                        <div class="p-4 cursor-pointer hover:bg-gray-700/50 transition group" onclick="toggleMiddleAccordion(2)">
+                            <div class="flex items-start gap-3">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                    <i data-lucide="refresh-cw" class="w-5 h-5 text-blue-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-base font-bold text-blue-200 mb-1 group-hover:text-white transition-colors">회원 접수 변경 및 이월</h3>
+                                    <p class="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">기간 변경 및 이월</p>
+                                </div>
+                                <i id="middleArrow2" data-lucide="chevron-down" class="arrow-icon w-5 h-5 text-gray-500 group-hover:text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 우측: 세부 항목 -->
+                <div>
+                    <!-- 입장권 발매 및 취소 세부 항목 -->
+                    <div id="middleAccordion0" class="accordion-content">
+                        <div class="space-y-3">
+                            <!-- 1. 입장권 발행 -->
+                            <div class="neon-module bg-gray-800 shadow-lg border border-gray-700/50">
+                                <div class="p-4 cursor-pointer hover:bg-gray-700/50 transition group" onclick="toggleDetail(0)">
+                                    <div class="flex items-start gap-3">
+                                        <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                                            <i data-lucide="plus-circle" class="w-5 h-5 text-purple-400"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-base font-bold text-purple-200 mb-1 group-hover:text-white transition-colors">입장권 발행</h3>
+                                            <p class="text-xs text-gray-400">입장권 발매 절차</p>
+                                        </div>
+                                        <i id="detailArrow0" data-lucide="chevron-down" class="arrow-icon w-5 h-5 text-gray-500 group-hover:text-purple-400"></i>
+                                    </div>
+                                </div>
+                                <div id="detail0" class="accordion-content">
+                                    <div class="p-4 border-t border-gray-700/50 bg-gray-900/30">
+                                        <div id="content0"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. 입장권 취소 (일반) -->
+                            <div class="neon-module bg-gray-800 shadow-lg border border-gray-700/50">
+                                <div class="p-4 cursor-pointer hover:bg-gray-700/50 transition group" onclick="toggleDetail(1)">
+                                    <div class="flex items-start gap-3">
+                                        <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                                            <i data-lucide="x-circle" class="w-5 h-5 text-purple-400"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-base font-bold text-purple-200 mb-1 group-hover:text-white transition-colors">입장권 취소 (일반)</h3>
+                                            <p class="text-xs text-gray-400">일반 취소 절차</p>
+                                        </div>
+                                        <i id="detailArrow1" data-lucide="chevron-down" class="arrow-icon w-5 h-5 text-gray-500 group-hover:text-purple-400"></i>
+                                    </div>
+                                </div>
+                                <div id="detail1" class="accordion-content">
+                                    <div class="p-4 border-t border-gray-700/50 bg-gray-900/30">
+                                        <div id="content1"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. 입장권 취소 (카드 없음) -->
+                            <div class="neon-module bg-gray-800 shadow-lg border border-gray-700/50">
+                                <div class="p-4 cursor-pointer hover:bg-gray-700/50 transition group" onclick="toggleDetail(2)">
+                                    <div class="flex items-start gap-3">
+                                        <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                                            <i data-lucide="credit-card" class="w-5 h-5 text-purple-400"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-base font-bold text-purple-200 mb-1 group-hover:text-white transition-colors">입장권 취소 (카드 없음)</h3>
+                                            <p class="text-xs text-gray-400">수기 취소 절차</p>
+                                        </div>
+                                        <i id="detailArrow2" data-lucide="chevron-down" class="arrow-icon w-5 h-5 text-gray-500 group-hover:text-purple-400"></i>
+                                    </div>
+                                </div>
+                                <div id="detail2" class="accordion-content">
+                                    <div class="p-4 border-t border-gray-700/50 bg-gray-900/30">
+                                        <div id="content2"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. 입장권 취소 (이중결제) -->
+                            <div class="neon-module bg-gray-800 shadow-lg border border-gray-700/50">
+                                <div class="p-4 cursor-pointer hover:bg-gray-700/50 transition group" onclick="toggleDetail(3)">
+                                    <div class="flex items-start gap-3">
+                                        <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                                            <i data-lucide="alert-triangle" class="w-5 h-5 text-purple-400"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-base font-bold text-purple-200 mb-1 group-hover:text-white transition-colors">입장권 취소 (이중결제)</h3>
+                                            <p class="text-xs text-gray-400">이중결제 취소 절차</p>
+                                        </div>
+                                        <i id="detailArrow3" data-lucide="chevron-down" class="arrow-icon w-5 h-5 text-gray-500 group-hover:text-purple-400"></i>
+                                    </div>
+                                </div>
+                                <div id="detail3" class="accordion-content">
+                                    <div class="p-4 border-t border-gray-700/50 bg-gray-900/30">
+                                        <div id="content3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 회원 접수 등록 세부 항목 -->
+                    <div id="middleAccordion1" class="accordion-content">
+                        <div class="text-center py-12 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                            <i data-lucide="construction" class="w-16 h-16 mx-auto mb-4 text-yellow-400"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">준비 중입니다</h3>
+                            <p class="text-gray-400">회원 접수 등록 세부 항목은 현재 작성 중입니다.</p>
+                        </div>
+                    </div>
+
+                    <!-- 회원 접수 변경 및 이월 세부 항목 -->
+                    <div id="middleAccordion2" class="accordion-content">
+                        <div class="text-center py-12 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                            <i data-lucide="construction" class="w-16 h-16 mx-auto mb-4 text-yellow-400"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">준비 중입니다</h3>
+                            <p class="text-gray-400">회원 접수 변경 및 이월 세부 항목은 현재 작성 중입니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        
+        let manualData = null;
+        
+        // 매뉴얼 데이터 로드
+        async function loadManualData() {
+            if (manualData) return;
+            try {
+                const response = await fetch('gagyeong_sportscenter/admin_manual/manual_2_1_5_1_1_v2.html');
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                manualData = doc.querySelectorAll('.manual-section');
+            } catch (error) {
+                console.error('매뉴얼 데이터 로드 실패:', error);
+            }
+        }
+        
+        // 메인 아코디언 토글
+        async function toggleMainAccordion() {
+            const accordion = document.getElementById('mainAccordion');
+            const arrow = document.getElementById('mainArrow');
+            
+            if (accordion.classList.contains('open')) {
+                accordion.classList.remove('open');
+                arrow.classList.remove('rotated');
+            } else {
+                // 데이터 로드
+                await loadManualData();
+                
+                accordion.classList.add('open');
+                arrow.classList.add('rotated');
+                
+                // 첫 번째 중간 메뉴 자동 열기
+                setTimeout(() => {
+                    toggleMiddleAccordion(0);
+                }, 300);
+            }
+            
+            lucide.createIcons();
+        }
+        
+        // 중간 아코디언 토글
+        function toggleMiddleAccordion(index) {
+            const accordion = document.getElementById(`middleAccordion${index}`);
+            const arrow = document.getElementById(`middleArrow${index}`);
+            
+            // 다른 중간 아코디언 닫기
+            for (let i = 0; i < 3; i++) {
+                if (i !== index) {
+                    const otherAccordion = document.getElementById(`middleAccordion${i}`);
+                    const otherArrow = document.getElementById(`middleArrow${i}`);
+                    if (otherAccordion && otherAccordion.classList.contains('open')) {
+                        otherAccordion.classList.remove('open');
+                        otherArrow.classList.remove('rotated');
+                    }
+                }
+            }
+            
+            // 현재 아코디언 토글
+            if (accordion.classList.contains('open')) {
+                accordion.classList.remove('open');
+                arrow.classList.remove('rotated');
+            } else {
+                accordion.classList.add('open');
+                arrow.classList.add('rotated');
+            }
+            
+            lucide.createIcons();
+        }
+        
+        // 세부 아코디언 토글
+        function toggleDetail(index) {
+            const detail = document.getElementById(`detail${index}`);
+            const arrow = document.getElementById(`detailArrow${index}`);
+            const content = document.getElementById(`content${index}`);
+            
+            if (detail.classList.contains('open')) {
+                detail.classList.remove('open');
+                arrow.classList.remove('rotated');
+            } else {
+                // 콘텐츠 로드 (처음 열 때만)
+                if (!content.innerHTML && manualData && manualData[index]) {
+                    content.innerHTML = manualData[index].innerHTML;
+                }
+                
+                detail.classList.add('open');
+                arrow.classList.add('rotated');
+            }
+            
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>

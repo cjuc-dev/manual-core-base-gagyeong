@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR 코드 생성기 - 체육시설 통합관리센터</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .qr-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .qr-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .qr-card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .qr-card p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .qr-code-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            min-height: 256px;
+            align-items: center;
+        }
+
+        .url-display {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #333;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .custom-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 30px;
+        }
+
+        .custom-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .button-group,
+            .custom-section {
+                display: none;
+            }
+            
+            .qr-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .qr-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 QR 코드 생성기</h1>
+        
+        <div class="qr-grid">
+            <!-- Main Dashboard -->
+            <div class="qr-card">
+                <h2>🏢 메인 대시보드</h2>
+                <p>체육시설 통합관리센터</p>
+                <div class="qr-code-container" id="qr-main"></div>
+                <div class="url-display">https://manual-5d03dc.gitlab.io/</div>
+                <div class="button-group">
+                    <button onclick="downloadQR('qr-main', 'dashboard_qr.png')">다운로드</button>
+                </div>
+            </div>
+
+            <!-- Index Renewal -->
+            <div class="qr-card">
+                <h2>🎨 리뉴얼 대시보드</h2>
+                <p>최신 버전 대시보드</p>
+                <div class="qr-code-container" id="qr-renewal"></div>
+                <div class="url-display">https://manual-5d03dc.gitlab.io/index_renewal3.html</div>
+                <div class="button-group">
+                    <button onclick="downloadQR('qr-renewal', 'renewal_qr.png')">다운로드</button>
+                </div>
+            </div>
+
+            <!-- Manual -->
+            <div class="qr-card">
+                <h2>📚 매뉴얼</h2>
+                <p>입장 및 회원 관리 매뉴얼</p>
+                <div class="qr-code-container" id="qr-manual"></div>
+                <div class="url-display">https://manual-5d03dc.gitlab.io/manual_2_1_5_main_v5.html</div>
+                <div class="button-group">
+                    <button onclick="downloadQR('qr-manual', 'manual_qr.png')">다운로드</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom QR Generator -->
+        <div class="custom-section">
+            <h2>🎯 커스텀 QR 코드 생성</h2>
+            <div class="input-group">
+                <label for="custom-url">URL 주소</label>
+                <input type="text" id="custom-url" placeholder="https://manual-5d03dc.gitlab.io/your-page.html">
+            </div>
+            <div class="input-group">
+                <label for="custom-title">제목</label>
+                <input type="text" id="custom-title" placeholder="예: 가경 스포츠센터">
+            </div>
+            <div class="input-group">
+                <label for="custom-desc">설명</label>
+                <textarea id="custom-desc" placeholder="예: QR 코드를 스캔하여 접속하세요"></textarea>
+            </div>
+            <button onclick="generateCustomQR()">QR 코드 생성</button>
+            
+            <div id="custom-qr-result" style="margin-top: 30px; display: none;">
+                <div class="qr-card">
+                    <h2 id="result-title"></h2>
+                    <p id="result-desc"></p>
+                    <div class="qr-code-container" id="qr-custom"></div>
+                    <div class="url-display" id="result-url"></div>
+                    <div class="button-group">
+                        <button onclick="downloadQR('qr-custom', 'custom_qr.png')">다운로드</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // QR 코드 생성 설정
+        const qrOptions = {
+            width: 256,
+            height: 256,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        };
+
+        // 기본 QR 코드 생성
+        function createQRCode(elementId, url) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = ''; // 기존 내용 제거
+            new QRCode(element, {
+                text: url,
+                ...qrOptions
+            });
+        }
+
+        // 페이지 로드 시 QR 코드 생성
+        window.addEventListener('load', function() {
+            createQRCode('qr-main', 'https://manual-5d03dc.gitlab.io/index.html');
+            createQRCode('qr-renewal', 'https://manual-5d03dc.gitlab.io/index_renewal.html');
+            createQRCode('qr-manual', 'https://manual-5d03dc.gitlab.io/manual_2_1_5_main_v5.html');
+        });
+
+        // 커스텀 QR 코드 생성
+        function generateCustomQR() {
+            const url = document.getElementById('custom-url').value.trim();
+            const title = document.getElementById('custom-title').value.trim();
+            const desc = document.getElementById('custom-desc').value.trim();
+
+            if (!url) {
+                alert('URL을 입력해주세요.');
+                return;
+            }
+
+            // 결과 표시
+            document.getElementById('result-title').textContent = title || '커스텀 QR 코드';
+            document.getElementById('result-desc').textContent = desc || 'QR 코드를 스캔하여 접속하세요';
+            document.getElementById('result-url').textContent = url;
+            
+            createQRCode('qr-custom', url);
+            
+            document.getElementById('custom-qr-result').style.display = 'block';
+            
+            // 결과로 스크롤
+            document.getElementById('custom-qr-result').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // QR 코드 다운로드
+        function downloadQR(elementId, filename) {
+            const qrElement = document.getElementById(elementId);
+            const canvas = qrElement.querySelector('canvas');
+            
+            if (!canvas) {
+                alert('QR 코드를 먼저 생성해주세요.');
+                return;
+            }
+
+            // Canvas를 이미지로 변환
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        // 인쇄 기능
+        function printQRCodes() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

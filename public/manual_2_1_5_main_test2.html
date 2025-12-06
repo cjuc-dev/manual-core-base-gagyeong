@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가경국민체육센터 행정 분야 매뉴얼 - 확장형 레이아웃 테스트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/index_main_v1.css">
+    
+    <style>
+        body {
+            background-color: #0a0e1a !important;
+            background-image: 
+                linear-gradient(90deg, rgba(6, 214, 160, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(6, 214, 160, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 20% 50%, rgba(6, 214, 160, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%) !important;
+            background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100% !important;
+            background-attachment: fixed !important;
+        }
+        
+        /* 확장형 레이아웃 */
+        .expanded-layout {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #0a0e1a;
+            z-index: 50;
+            overflow-y: auto;
+        }
+        
+        .expanded-layout.active {
+            display: block;
+        }
+        
+        @media (min-width: 1024px) {
+            .expanded-content {
+                display: grid;
+                grid-template-columns: 300px 1fr;
+                gap: 0;
+                height: 100%;
+            }
+            
+            .expanded-left {
+                background: #1a1f2e;
+                border-right: 1px solid rgba(6, 214, 160, 0.2);
+                padding: 24px;
+            }
+            
+            .expanded-right {
+                padding: 24px;
+                overflow-y: auto;
+            }
+        }
+        
+        @media (max-width: 1023px) {
+            .expanded-content {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- 헤더 -->
+        <header class="text-center py-12 mb-10 border-b border-gray-700/50">
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white neon-text-shadow">
+                가경국민체육센터 <br class="hidden sm:block"> <span class="text-cyan-400">행정 분야 매뉴얼</span>
+            </h1>
+            <p class="mt-4 text-xl font-light text-gray-400">Gagyeong Sports Center Administrative Manual</p>
+            <p class="mt-2 text-sm text-cyan-400">💡 확장형 레이아웃 테스트 버전</p>
+        </header>
+
+        <!-- 통합 대시보드 버튼 -->
+        <div class="mb-6">
+            <button onclick="window.location.href='index_renewal2.html'" class="text-emerald-400 hover:text-emerald-300 flex items-center transition duration-200 font-bold">
+                <i data-lucide="home" class="w-5 h-5 mr-2"></i> 통합 대시보드 (Home)
+            </button>
+        </div>
+
+        <!-- 메인 카드 그리드 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 1. 입장 및 회원 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group" onclick="openExpanded('member')">
+                <i data-lucide="ticket" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">입장 및 회원 관리</h2>
+                <p class="text-sm text-gray-400">발매/등록/변경 관리</p>
+            </div>
+
+            <!-- 2. 강습 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="graduation-cap" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">강습 관리</h2>
+                <p class="text-sm text-gray-400">프로그램 운영</p>
+            </div>
+
+            <!-- 3. 대관 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="calendar-check" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">대관 관리</h2>
+                <p class="text-sm text-gray-400">시설 예약</p>
+            </div>
+
+            <!-- 4. 키오스크 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="monitor" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">키오스크 관리</h2>
+                <p class="text-sm text-gray-400">기기 관리</p>
+            </div>
+
+            <!-- 5. 락커룸 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="key" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">락커룸 관리</h2>
+                <p class="text-sm text-gray-400">락커 배정</p>
+            </div>
+
+            <!-- 6. 수입금 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="dollar-sign" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">수입금 관리</h2>
+                <p class="text-sm text-gray-400">매출/카드 관리</p>
+            </div>
+
+            <!-- 7. 주차장 관리 -->
+            <div class="neon-module bg-gray-800 p-6 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-emerald-500/50 group">
+                <i data-lucide="car" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                <h2 class="text-xl font-bold mb-1 text-emerald-300">주차장 관리</h2>
+                <p class="text-sm text-gray-400">정기/일일 차량</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 확장형 레이아웃 -->
+    <div id="expandedLayout" class="expanded-layout">
+        <div class="expanded-content">
+            <!-- 좌측: 메인 카드 -->
+            <div class="expanded-left">
+                <div class="mb-6">
+                    <button onclick="closeExpanded()" class="text-emerald-400 hover:text-emerald-300 flex items-center transition duration-200 font-bold">
+                        <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i> 목록으로
+                    </button>
+                </div>
+                
+                <div class="neon-module bg-gray-800 p-6 shadow-lg border border-emerald-500/50">
+                    <i data-lucide="ticket" class="w-10 h-10 mb-3 text-emerald-400"></i>
+                    <h2 class="text-xl font-bold mb-1 text-emerald-300">입장 및 회원 관리</h2>
+                    <p class="text-sm text-gray-400">발매/등록/변경 관리</p>
+                </div>
+            </div>
+
+            <!-- 우측: 서브 메뉴 -->
+            <div class="expanded-right">
+                <div class="space-y-4">
+                    <!-- 1. 입장권 발매 및 취소 -->
+                    <div class="neon-module bg-gray-800 p-5 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-blue-500/50 group" onclick="loadContent('ticket')">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                <i data-lucide="ticket" class="w-6 h-6 text-blue-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-blue-200 mb-1 group-hover:text-white transition-colors">입장권 발매 및 취소</h3>
+                                <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">발매, 취소, 환불 처리</p>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 group-hover:text-blue-400 transition-all group-hover:translate-x-1"></i>
+                        </div>
+                    </div>
+
+                    <!-- 2. 회원 접수 등록 -->
+                    <div class="neon-module bg-gray-800 p-5 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-blue-500/50 group" onclick="loadContent('registration')">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                <i data-lucide="user-plus" class="w-6 h-6 text-blue-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-blue-200 mb-1 group-hover:text-white transition-colors">회원 접수 등록</h3>
+                                <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">신규 회원 접수</p>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 group-hover:text-blue-400 transition-all group-hover:translate-x-1"></i>
+                        </div>
+                    </div>
+
+                    <!-- 3. 회원 접수 변경 및 이월 -->
+                    <div class="neon-module bg-gray-800 p-5 shadow-lg cursor-pointer hover:bg-gray-700/50 transition border border-gray-700/50 hover:border-blue-500/50 group" onclick="loadContent('change')">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                <i data-lucide="refresh-cw" class="w-6 h-6 text-blue-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-blue-200 mb-1 group-hover:text-white transition-colors">회원 접수 변경 및 이월</h3>
+                                <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">기간 변경 및 이월</p>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 group-hover:text-blue-400 transition-all group-hover:translate-x-1"></i>
+                        </div>
+                    </div>
+
+                    <!-- 콘텐츠 표시 영역 -->
+                    <div id="contentArea" class="hidden mt-6">
+                        <button onclick="hideContent()" class="text-emerald-400 hover:text-emerald-300 mb-4 flex items-center transition duration-200 font-bold">
+                            <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i> 서브 메뉴로
+                        </button>
+                        <div id="contentContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        
+        // 확장 레이아웃 열기
+        function openExpanded(type) {
+            document.getElementById('expandedLayout').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+        
+        // 확장 레이아웃 닫기
+        function closeExpanded() {
+            document.getElementById('expandedLayout').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            hideContent();
+        }
+        
+        // 콘텐츠 로드
+        async function loadContent(type) {
+            const contentArea = document.getElementById('contentArea');
+            const contentContainer = document.getElementById('contentContainer');
+            
+            let url = '';
+            if (type === 'ticket') {
+                url = 'gagyeong_sportscenter/admin_manual/manual_2_1_5_1_1_v2.html';
+            } else {
+                contentContainer.innerHTML = `
+                    <div class="text-center py-12 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                        <i data-lucide="construction" class="w-16 h-16 mx-auto mb-4 text-yellow-400"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">준비 중입니다</h3>
+                        <p class="text-gray-400">해당 매뉴얼은 현재 작성 중입니다.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                contentArea.classList.remove('hidden');
+                return;
+            }
+            
+            try {
+                const response = await fetch(url);
+                const html = await response.text();
+                contentContainer.innerHTML = html;
+                contentArea.classList.remove('hidden');
+                lucide.createIcons();
+                
+                // 콘텐츠 영역으로 스크롤
+                contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (error) {
+                console.error('콘텐츠 로드 실패:', error);
+                contentContainer.innerHTML = `
+                    <div class="text-center py-12 bg-gray-800/50 rounded-xl border border-red-700/50 text-red-400">
+                        <p>콘텐츠를 불러오는데 실패했습니다.</p>
+                    </div>
+                `;
+                contentArea.classList.remove('hidden');
+            }
+        }
+        
+        // 콘텐츠 숨기기
+        function hideContent() {
+            document.getElementById('contentArea').classList.add('hidden');
+        }
+        
+        // ESC 키로 닫기
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeExpanded();
+            }
+        });
+    </script>
+</body>
+</html>
