@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>체육시설 통합 매뉴얼 v1 - Command Center</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom CSS for Command Center theme */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+        }
+
+        /* Neon effects */
+        .neon-text-shadow {
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.5), 
+                         0 0 20px rgba(34, 211, 238, 0.3),
+                         0 0 30px rgba(34, 211, 238, 0.2);
+        }
+
+        @keyframes bounce-slow {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animate-bounce-slow {
+            animation: bounce-slow 3s ease-in-out infinite;
+        }
+
+        /* Grid container - matches test_improved.html */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        /* Base box styling with Command Center theme */
+        .box {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Box 1 wrapper - dynamic column spanning like original */
+        .box-1-wrapper {
+            position: relative;
+            min-height: 80px;
+        }
+
+        .box-1-wrapper.span-1 {
+            grid-column: span 1;
+        }
+
+        .box-1-wrapper.span-2 {
+            grid-column: span 2;
+        }
+
+        .box-1-wrapper.span-3 {
+            grid-column: span 3;
+        }
+
+        /* Box 1 single state */
+        .box-1-single {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .box-1-single:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Box 1 expanded - internal grid like original */
+        .box-1-expanded {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            gap: 10px;
+            padding: 10px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.3) 100%);
+            border-radius: 8px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .box-1-expanded.has-1-1 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .box-1-expanded.has-1-1-1 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .box-1-expanded.has-detail {
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto;
+        }
+
+        /* Inner boxes with Command Center styling */
+        .inner-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .inner-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .inner-box-1 {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        .inner-box-1-1 {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+        }
+
+        .inner-box-1-2 {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+        }
+
+        .inner-box-1-3 {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+        }
+
+        .inner-box-1-1-1 {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+        }
+
+        .inner-box-1-1-2 {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+        }
+
+        .inner-box-1-1-3 {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+        }
+
+        .inner-box-1-1-4 {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+        }
+
+        /* Selected state */
+        .inner-box.selected {
+            border: 3px solid #22d3ee;
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Detail box */
+        .detail-box {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(147, 51, 234, 0.25) 100%);
+            grid-column: 1 / -1;
+            padding: 40px;
+            font-size: 16px;
+            line-height: 1.8;
+            text-align: left;
+            max-height: 600px;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease-in;
+            border-radius: 8px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .detail-box.updating {
+            animation: fadeOut 0.15s ease-out;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0.3;
+            }
+        }
+
+        .detail-box h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #e9d5ff;
+            border-bottom: 2px solid rgba(168, 85, 247, 0.4);
+            padding-bottom: 10px;
+        }
+
+        .detail-box h3 {
+            font-size: 20px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #fbbf24;
+        }
+
+        .detail-box p {
+            margin-bottom: 15px;
+        }
+
+        .detail-box ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .detail-box li {
+            margin-bottom: 8px;
+        }
+
+        .detail-box .warning {
+            background: rgba(239, 68, 68, 0.15);
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .detail-box .info {
+            background: rgba(59, 130, 246, 0.15);
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        /* Custom scrollbar for detail box */
+        .detail-box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .detail-box::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 4px;
+        }
+
+        .detail-box::-webkit-scrollbar-thumb {
+            background: rgba(168, 85, 247, 0.5);
+            border-radius: 4px;
+        }
+
+        .detail-box::-webkit-scrollbar-thumb:hover {
+            background: rgba(168, 85, 247, 0.7);
+        }
+
+        /* Search results */
+        .search-results {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+        }
+
+        .search-result-item {
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            transition: background 0.2s;
+            padding: 12px 15px;
+            cursor: pointer;
+        }
+
+        .search-result-item:hover {
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-title {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .search-result-path {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .detail-box {
+                background: white !important;
+                color: black !important;
+                max-height: none;
+                overflow: visible;
+                border: none;
+            }
+            .detail-box h2, .detail-box h3 {
+                color: black !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8 border-b border-gray-700/50 pb-6">
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                <div class="aspect-square">
+                    <img src="sports_facility_image/character_swimming_v1.png" 
+                         alt="Sports Character" 
+                         class="h-24 md:h-32 w-auto object-contain animate-bounce-slow"
+                         onerror="this.style.display='none'">
+                </div>
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white neon-text-shadow">
+                        MANUAL <span class="text-cyan-400">COMMAND CENTER</span>
+                    </h1>
+                    <p class="mt-4 text-xl font-light text-gray-400">
+                        체육시설 통합 운영 매뉴얼 시스템 v1
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sticky Navigation Bar -->
+        <div class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-cyan-500/30 rounded-lg mb-6 p-4 no-print">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
+                <!-- Breadcrumb -->
+                <div id="breadcrumb" class="flex items-center gap-2 text-sm flex-wrap">
+                    <span class="text-cyan-400 cursor-pointer hover:text-cyan-300" onclick="goToState(0)">
+                        <i data-lucide="home" class="w-4 h-4 inline"></i> 홈
+                    </span>
+                </div>
+                
+                <!-- Search -->
+                <div class="relative w-full lg:w-96">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="매뉴얼 검색... (예: 입장권, 할인, 환불)" 
+                        class="w-full bg-gray-800 border border-gray-600 text-white px-4 py-2 pl-10 rounded-full focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                        autocomplete="off"
+                    />
+                    <i data-lucide="search" class="absolute left-3 top-2.5 w-5 h-5 text-gray-400"></i>
+                    <div id="searchResults" class="absolute top-full left-0 right-0 mt-2 search-results rounded-lg shadow-2xl hidden max-h-96 overflow-y-auto"></div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-2">
+                    <button id="pdfBtn" onclick="downloadPDF()" class="hidden px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg transition">
+                        <i data-lucide="file-text" class="w-4 h-4 inline mr-1"></i> PDF
+                    </button>
+                    <button id="backBtn" onclick="goBack()" disabled class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i data-lucide="arrow-left" class="w-4 h-4 inline mr-1"></i> 뒤로
+                    </button>
+                    <button onclick="resetGrid()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition">
+                        <i data-lucide="refresh-cw" class="w-4 h-4 inline mr-1"></i> 처음으로
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid Container -->
+        <main id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></main>
+
+        <!-- Floating Scroll Buttons -->
+        <div class="fixed bottom-6 right-6 flex flex-col gap-2 no-print">
+            <button onclick="scrollToTop()" class="w-12 h-12 rounded-full bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg transition flex items-center justify-center" title="맨 위로">
+                <i data-lucide="arrow-up" class="w-5 h-5"></i>
+            </button>
+            <button onclick="scrollToBottom()" class="w-12 h-12 rounded-full bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg transition flex items-center justify-center" title="맨 아래로">
+                <i data-lucide="arrow-down" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // State management
+        let currentState = 0; // 0: initial, 1: level-1, 2: level-2, 3: detail view
+        let selectedDetail = '';
+
+        // Update breadcrumb navigation
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            const backBtn = document.getElementById('backBtn');
+            
+            let breadcrumbHTML = '<span class="text-cyan-400 cursor-pointer hover:text-cyan-300" onclick="goToState(0)"><i data-lucide="home" class="w-4 h-4 inline"></i> 홈</span>';
+            
+            if (currentState >= 1) {
+                breadcrumbHTML += ' <span class="text-gray-500">&gt;</span> <span class="text-cyan-400 cursor-pointer hover:text-cyan-300" onclick="goToState(1)">입장 및 회원 관리</span>';
+            }
+            if (currentState >= 2) {
+                breadcrumbHTML += ' <span class="text-gray-500">&gt;</span> <span class="text-cyan-400 cursor-pointer hover:text-cyan-300" onclick="goToState(2)">입장권 발급</span>';
+            }
+            if (currentState >= 3) {
+                const detailNames = {
+                    '1-1-1': '일일 입장권',
+                    '1-1-2': '정기 입장권',
+                    '1-1-3': '단체 입장권',
+                    '1-1-4': '무료 입장권'
+                };
+                breadcrumbHTML += ` <span class="text-gray-500">&gt;</span> <span class="text-white font-bold">${detailNames[selectedDetail] || '상세'}</span>`;
+            }
+            
+            breadcrumb.innerHTML = breadcrumbHTML;
+            lucide.createIcons();
+            backBtn.disabled = currentState === 0;
+        }
+
+        // Navigate to specific state
+        function goToState(state) {
+            currentState = state;
+            if (state < 3) selectedDetail = '';
+            renderGrid();
+        }
+
+        // Go back one level
+        function goBack() {
+            if (currentState > 0) {
+                currentState--;
+                if (currentState < 3) selectedDetail = '';
+                renderGrid();
+            }
+        }
+
+        // Scroll functions
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        // Expand detail view
+        function expandDetail(detail) {
+            const existingDetailBox = document.querySelector('.detail-box');
+            if (existingDetailBox && selectedDetail !== detail) {
+                existingDetailBox.classList.add('updating');
+            }
+            
+            selectedDetail = detail;
+            currentState = 3;
+            renderGrid();
+            
+            setTimeout(() => {
+                const detailBox = document.querySelector('.detail-box');
+                if (detailBox) {
+                    const navBar = document.querySelector('.sticky');
+                    const navBarHeight = navBar ? navBar.offsetHeight : 0;
+                    const detailBoxTop = detailBox.getBoundingClientRect().top + window.pageYOffset - navBarHeight - 20;
+                    
+                    window.scrollTo({
+                        top: detailBoxTop,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 100);
+        }
+
+        // Get detail content
+        function getDetailContent(detail) {
+            const contents = {
+                '1-1-1': `
+                    <h2 class="text-2xl font-bold mb-4 pb-3">📝 일일 입장권 발급 매뉴얼</h2>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">1. 개요</h3>
+                    <p class="mb-4">일일 입장권은 체육시설을 1회 이용할 수 있는 입장권으로, 당일에만 유효합니다. 본 매뉴얼은 일일 입장권 발급 절차, 요금 안내, 주의사항 등을 상세히 설명합니다.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">2. 발급 대상</h3>
+                    <ul class="list-disc list-inside mb-4 space-y-2">
+                        <li>정기 회원권이 없는 일반 이용객</li>
+                        <li>1회성 방문 고객</li>
+                        <li>체험 이용 희망자</li>
+                        <li>비회원 동반 고객</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">3. 발급 절차</h3>
+                    <p class="font-bold mb-2">Step 1: 고객 확인</p>
+                    <ul class="list-disc list-inside mb-4 space-y-1">
+                        <li>방문 고객에게 신분증 제시 요청</li>
+                        <li>미성년자의 경우 보호자 동의서 확인</li>
+                        <li>시스템에서 이용 이력 조회</li>
+                    </ul>
+                    
+                    <p class="font-bold mb-2">Step 2: 요금 안내</p>
+                    <ul class="list-disc list-inside mb-4 space-y-1">
+                        <li>성인: 5,000원</li>
+                        <li>청소년 (13-18세): 3,000원</li>
+                        <li>어린이 (7-12세): 2,000원</li>
+                        <li>경로우대 (65세 이상): 2,500원</li>
+                    </ul>
+                    
+                    <div class="info p-4 rounded-lg my-4">
+                        <strong>💡 할인 적용 안내</strong><br>
+                        다자녀 가정 (3자녀 이상): 30% 할인<br>
+                        국가유공자: 50% 할인<br>
+                        장애인: 50% 할인 (동반 1인 포함)
+                    </div>
+                    
+                    <p class="font-bold mb-2">Step 3: 결제 처리</p>
+                    <ul class="list-disc list-inside mb-4 space-y-1">
+                        <li>결제 방법 선택: 현금, 카드, 간편결제</li>
+                        <li>시스템에 결제 정보 입력</li>
+                        <li>영수증 출력 및 제공</li>
+                    </ul>
+                    
+                    <p class="font-bold mb-2">Step 4: 입장권 발급</p>
+                    <ul class="list-disc list-inside mb-4 space-y-1">
+                        <li>입장권 번호 자동 생성</li>
+                        <li>QR 코드 포함된 입장권 출력</li>
+                        <li>유효시간 안내 (당일 운영시간 내)</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">4. 시스템 조작 방법</h3>
+                    <ul class="list-disc list-inside mb-4 space-y-1">
+                        <li>메인 화면에서 [입장권 발급] 메뉴 선택</li>
+                        <li>[일일 입장권] 탭 클릭</li>
+                        <li>이용자 정보 입력</li>
+                        <li>이용 시설 선택</li>
+                        <li>요금 자동 계산 확인</li>
+                        <li>할인 사항 적용</li>
+                        <li>[발급] 버튼 클릭</li>
+                    </ul>
+                    
+                    <div class="warning p-4 rounded-lg my-4">
+                        <strong>⚠️ 주의사항</strong><br>
+                        • 발급 후 취소는 입장 전에만 가능합니다<br>
+                        • 재발급 시 재발급 수수료 1,000원이 부과됩니다<br>
+                        • 타인에게 양도 불가능합니다
+                    </div>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">5. 환불 처리</h3>
+                    <p class="mb-4">입장 전 취소 시 전액 환불이 가능하며, 입장 후에는 환불이 불가능합니다.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">6. 문제 상황 대응</h3>
+                    <p class="font-bold mb-2">시스템 오류 발생 시</p>
+                    <ul class="list-disc list-inside mb-4 space-y-1">
+                        <li>수기 입장권 발급 (별도 양식 사용)</li>
+                        <li>IT 담당자에게 즉시 보고</li>
+                        <li>복구 후 시스템에 수기 발급 내역 입력</li>
+                    </ul>
+                `,
+                '1-1-2': `
+                    <h2 class="text-2xl font-bold mb-4 pb-3">📝 정기 입장권 발급 매뉴얼</h2>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">1. 개요</h3>
+                    <p class="mb-4">정기 입장권은 1개월 또는 3개월 동안 무제한으로 시설을 이용할 수 있는 회원권입니다.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">2. 종류</h3>
+                    <ul class="list-disc list-inside mb-4 space-y-2">
+                        <li>1개월권: 30일간 무제한 이용</li>
+                        <li>3개월권: 90일간 무제한 이용</li>
+                        <li>6개월권: 180일간 무제한 이용</li>
+                        <li>연간권: 365일간 무제한 이용</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">3. 요금 안내</h3>
+                    <ul class="list-disc list-inside mb-4 space-y-2">
+                        <li>1개월권: 50,000원</li>
+                        <li>3개월권: 135,000원 (10% 할인)</li>
+                        <li>6개월권: 255,000원 (15% 할인)</li>
+                        <li>연간권: 450,000원 (25% 할인)</li>
+                    </ul>
+                    
+                    <div class="info p-4 rounded-lg my-4">
+                        <strong>💡 특별 할인</strong><br>
+                        가족회원 등록 시 추가 10% 할인<br>
+                        기업 복지 제휴 회원 20% 할인
+                    </div>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">4. 발급 절차</h3>
+                    <p class="mb-4">회원 등록 → 사진 촬영 → 결제 → 회원증 발급</p>
+                    
+                    <div class="warning p-4 rounded-lg my-4">
+                        <strong>⚠️ 유의사항</strong><br>
+                        • 타인 명의 도용 시 회원 자격 박탈<br>
+                        • 휴회는 1회만 가능 (최대 30일)<br>
+                        • 중도 해지 시 위약금 발생
+                    </div>
+                `,
+                '1-1-3': `
+                    <h2 class="text-2xl font-bold mb-4 pb-3">📝 단체 입장권 발급 매뉴얼</h2>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">1. 개요</h3>
+                    <p class="mb-4">10인 이상의 단체가 시설을 이용할 때 적용되는 특별 요금제입니다.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">2. 할인율</h3>
+                    <ul class="list-disc list-inside mb-4 space-y-2">
+                        <li>10-19인: 10% 할인</li>
+                        <li>20-49인: 15% 할인</li>
+                        <li>50인 이상: 20% 할인</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">3. 사전 예약 필수</h3>
+                    <p class="mb-2">단체 이용은 최소 3일 전 사전 예약이 필요합니다.</p>
+                    <ul class="list-disc list-inside mb-4 space-y-2">
+                        <li>전화 예약: 043-200-1234</li>
+                        <li>온라인 예약: www.cjsports.go.kr</li>
+                        <li>방문 예약: 1층 안내데스크</li>
+                    </ul>
+                    
+                    <div class="info p-4 rounded-lg my-4">
+                        <strong>💡 단체 전용 혜택</strong><br>
+                        전용 탈의실 제공<br>
+                        전용 주차공간 배정<br>
+                        간식 제공 (50인 이상)
+                    </div>
+                `,
+                '1-1-4': `
+                    <h2 class="text-2xl font-bold mb-4 pb-3">📝 무료 입장권 발급 매뉴얼</h2>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">1. 대상</h3>
+                    <ul class="list-disc list-inside mb-4 space-y-2">
+                        <li>국가유공자 및 유가족</li>
+                        <li>장애인 (1-3급 및 동반 1인)</li>
+                        <li>기초생활수급자</li>
+                        <li>6세 이하 미취학 아동</li>
+                        <li>65세 이상 경로우대 (수요일만)</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">2. 제출 서류</h3>
+                    <ul class="list-disc list-inside mb-4 space-y-2">
+                        <li>국가유공자증 또는 유가족증</li>
+                        <li>장애인복지카드</li>
+                        <li>기초생활수급자증명서</li>
+                        <li>주민등록증 (연령 확인용)</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-3">3. 발급 절차</h3>
+                    <p class="mb-4">증빙서류 제시 → 시스템 등록 → 무료 입장권 발급</p>
+                    
+                    <div class="warning p-4 rounded-lg my-4">
+                        <strong>⚠️ 주의사항</strong><br>
+                        • 증빙서류 미지참 시 발급 불가<br>
+                        • 본인만 사용 가능 (양도 불가)<br>
+                        • 부정 사용 시 향후 이용 제한
+                    </div>
+                `
+            };
+            
+            return contents[detail] || '<p>내용을 불러오는 중...</p>';
+        }
+
+        // Render grid based on current state (matching test_improved.html logic)
+        function renderGrid() {
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '';
+            container.className = 'grid'; // Reset to base grid class
+
+            // 1번 박스 래퍼
+            const box1Wrapper = document.createElement('div');
+            box1Wrapper.className = 'box-1-wrapper';
+
+            // 상태에 따라 그리드 칸 수 변경
+            if (currentState === 0) {
+                box1Wrapper.classList.add('span-1');
+            } else if (currentState === 1) {
+                box1Wrapper.classList.add('span-2');
+            } else if (currentState >= 2) {
+                box1Wrapper.classList.add('span-3');
+            }
+
+            if (currentState === 0) {
+                // 초기 상태 - 단일 박스
+                const box1Single = document.createElement('div');
+                box1Single.className = 'box-1-single';
+                box1Single.textContent = '입장 및 회원 관리';
+                box1Single.onclick = () => goToState(1);
+                box1Wrapper.appendChild(box1Single);
+            } else if (currentState === 1) {
+                // State 1: 1 + (1-1, 1-2, 1-3)
+                const box1Expanded = document.createElement('div');
+                box1Expanded.className = 'box-1-expanded has-1-1';
+
+                const innerBox1 = document.createElement('div');
+                innerBox1.className = 'inner-box inner-box-1';
+                innerBox1.textContent = '입장 및 회원 관리';
+                box1Expanded.appendChild(innerBox1);
+
+                const subContainer = document.createElement('div');
+                subContainer.style.display = 'grid';
+                subContainer.style.gridTemplateRows = 'repeat(3, 1fr)';
+                subContainer.style.gap = '10px';
+
+                ['입장권 발급', '회원 등록', '회원 정보 수정'].forEach((text, idx) => {
+                    const innerBox = document.createElement('div');
+                    innerBox.className = `inner-box inner-box-1-${idx + 1}`;
+                    innerBox.textContent = text;
+                    if (idx === 0) {
+                        innerBox.onclick = (e) => {
+                            e.stopPropagation();
+                            goToState(2);
+                        };
+                    }
+                    subContainer.appendChild(innerBox);
+                });
+
+                box1Expanded.appendChild(subContainer);
+                box1Wrapper.appendChild(box1Expanded);
+            } else if (currentState === 2) {
+                // State 2: 1 + (1-1, 1-2, 1-3) + (1-1-1~4)
+                const box1Expanded = document.createElement('div');
+                box1Expanded.className = 'box-1-expanded has-1-1-1';
+
+                const innerBox1 = document.createElement('div');
+                innerBox1.className = 'inner-box inner-box-1';
+                innerBox1.textContent = '입장 및 회원 관리';
+                box1Expanded.appendChild(innerBox1);
+
+                // 1-1, 1-2, 1-3
+                const subContainer1 = document.createElement('div');
+                subContainer1.style.display = 'grid';
+                subContainer1.style.gridTemplateRows = 'repeat(3, 1fr)';
+                subContainer1.style.gap = '10px';
+
+                ['입장권 발급', '회원 등록', '회원 정보 수정'].forEach((text) => {
+                    const innerBox = document.createElement('div');
+                    innerBox.className = 'inner-box inner-box-1-1';
+                    innerBox.textContent = text;
+                    subContainer1.appendChild(innerBox);
+                });
+
+                box1Expanded.appendChild(subContainer1);
+
+                // 1-1-1~4
+                const subContainer2 = document.createElement('div');
+                subContainer2.style.display = 'grid';
+                subContainer2.style.gridTemplateRows = 'repeat(4, 1fr)';
+                subContainer2.style.gap = '10px';
+
+                const details = [
+                    { text: '일일 입장권', id: '1-1-1' },
+                    { text: '정기 입장권', id: '1-1-2' },
+                    { text: '단체 입장권', id: '1-1-3' },
+                    { text: '무료 입장권', id: '1-1-4' }
+                ];
+
+                details.forEach((detail) => {
+                    const innerBox = document.createElement('div');
+                    innerBox.className = 'inner-box inner-box-1-1-1';
+                    innerBox.textContent = detail.text;
+                    innerBox.onclick = (e) => {
+                        e.stopPropagation();
+                        expandDetail(detail.id);
+                    };
+                    subContainer2.appendChild(innerBox);
+                });
+
+                box1Expanded.appendChild(subContainer2);
+                box1Wrapper.appendChild(box1Expanded);
+            } else if (currentState === 3) {
+                // State 3: 모든 박스 + 상세 내용
+                const box1Expanded = document.createElement('div');
+                box1Expanded.className = 'box-1-expanded has-detail';
+
+                const innerBox1 = document.createElement('div');
+                innerBox1.className = 'inner-box inner-box-1';
+                innerBox1.textContent = '입장 및 회원 관리';
+                box1Expanded.appendChild(innerBox1);
+
+                // 1-1, 1-2, 1-3
+                const subContainer1 = document.createElement('div');
+                subContainer1.style.display = 'grid';
+                subContainer1.style.gridTemplateRows = 'repeat(3, 1fr)';
+                subContainer1.style.gap = '10px';
+
+                ['입장권 발급', '회원 등록', '회원 정보 수정'].forEach((text) => {
+                    const innerBox = document.createElement('div');
+                    innerBox.className = 'inner-box inner-box-1-1';
+                    innerBox.textContent = text;
+                    subContainer1.appendChild(innerBox);
+                });
+
+                box1Expanded.appendChild(subContainer1);
+
+                // 1-1-1~4
+                const subContainer2 = document.createElement('div');
+                subContainer2.style.display = 'grid';
+                subContainer2.style.gridTemplateRows = 'repeat(4, 1fr)';
+                subContainer2.style.gap = '10px';
+
+                const details = [
+                    { text: '일일 입장권', id: '1-1-1' },
+                    { text: '정기 입장권', id: '1-1-2' },
+                    { text: '단체 입장권', id: '1-1-3' },
+                    { text: '무료 입장권', id: '1-1-4' }
+                ];
+
+                details.forEach((detail) => {
+                    const innerBox = document.createElement('div');
+                    innerBox.className = 'inner-box inner-box-1-1-1';
+                    
+                    // 선택된 항목에 하이라이트 추가
+                    if (detail.id === selectedDetail) {
+                        innerBox.classList.add('selected');
+                    }
+                    
+                    innerBox.textContent = detail.text;
+                    innerBox.onclick = (e) => {
+                        e.stopPropagation();
+                        expandDetail(detail.id);
+                    };
+                    subContainer2.appendChild(innerBox);
+                });
+
+                box1Expanded.appendChild(subContainer2);
+
+                // 상세 내용 박스
+                const detailBox = document.createElement('div');
+                detailBox.className = 'detail-box';
+                detailBox.innerHTML = getDetailContent(selectedDetail);
+                box1Expanded.appendChild(detailBox);
+
+                box1Wrapper.appendChild(box1Expanded);
+            }
+
+            container.appendChild(box1Wrapper);
+
+            // 나머지 박스들 (2-6)
+            const boxTitles = ['시설 운영 관리', '요금 및 할인', 'VOC 처리', '안전 관리', '시스템 관리'];
+            
+            if (currentState === 0) {
+                boxTitles.forEach((title) => {
+                    const box = document.createElement('div');
+                    box.className = 'box';
+                    box.textContent = title;
+                    container.appendChild(box);
+                });
+            } else if (currentState === 1) {
+                // 2번 박스
+                const box2 = document.createElement('div');
+                box2.className = 'box';
+                box2.textContent = boxTitles[0];
+                container.appendChild(box2);
+
+                // 3-6번 박스
+                for (let i = 1; i < 5; i++) {
+                    const box = document.createElement('div');
+                    box.className = 'box';
+                    box.textContent = boxTitles[i];
+                    container.appendChild(box);
+                }
+            } else {
+                // State 2, 3: 나머지 박스들 (grid 하단줄에 배치)
+                boxTitles.forEach((title) => {
+                    const box = document.createElement('div');
+                    box.className = 'box';
+                    box.textContent = title;
+                    container.appendChild(box);
+                });
+            }
+            
+            lucide.createIcons();
+            updateBreadcrumb();
+            
+            // Update PDF button visibility
+            const pdfBtn = document.getElementById('pdfBtn');
+            pdfBtn.style.display = (currentState === 3 && selectedDetail) ? 'inline-block' : 'none';
+        }
+
+        // Reset to initial state
+        function resetGrid() {
+            currentState = 0;
+            selectedDetail = '';
+            renderGrid();
+            scrollToTop();
+        }
+
+        // PDF download
+        function downloadPDF() {
+            window.print();
+        }
+
+        // Search functionality
+        const searchData = [
+            { title: '일일 입장권', path: '입장 및 회원 관리 > 입장권 발급', detail: '1-1-1', keywords: '일일 1회 당일 체험 비회원' },
+            { title: '정기 입장권', path: '입장 및 회원 관리 > 입장권 발급', detail: '1-1-2', keywords: '정기 1개월 3개월 6개월 연간 회원권' },
+            { title: '단체 입장권', path: '입장 및 회원 관리 > 입장권 발급', detail: '1-1-3', keywords: '단체 10인 단체할인 예약' },
+            { title: '무료 입장권', path: '입장 및 회원 관리 > 입장권 발급', detail: '1-1-4', keywords: '무료 국가유공자 장애인 기초생활수급자 경로' },
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.trim().toLowerCase();
+            
+            if (query.length === 0) {
+                searchResults.classList.add('hidden');
+                return;
+            }
+            
+            const results = searchData.filter(item => 
+                item.title.toLowerCase().includes(query) ||
+                item.keywords.toLowerCase().includes(query) ||
+                item.path.toLowerCase().includes(query)
+            );
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item p-4 text-gray-400">검색 결과가 없습니다</div>';
+                searchResults.classList.remove('hidden');
+                return;
+            }
+            
+            searchResults.innerHTML = results.map(item => `
+                <div class="search-result-item p-4 cursor-pointer" onclick="navigateToManual('${item.detail}')">
+                    <div class="font-bold text-white mb-1">${item.title}</div>
+                    <div class="text-sm text-gray-400">${item.path}</div>
+                </div>
+            `).join('');
+            
+            searchResults.classList.remove('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.relative')) {
+                searchResults.classList.add('hidden');
+            }
+        });
+
+        function navigateToManual(detailId) {
+            searchResults.classList.add('hidden');
+            searchInput.value = '';
+            expandDetail(detailId);
+        }
+
+        // Initial render
+        renderGrid();
+    </script>
+</body>
+</html>
