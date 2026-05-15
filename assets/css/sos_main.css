@@ -1,0 +1,293 @@
+/* 커스텀 테마 색상 설정 */
+:root {
+    --color-primary: #06d6a0; /* Cyan/Turquoise - Command Center theme */
+    --color-primary-glow: rgba(6, 214, 160, 0.4);
+    --color-secondary: #6366f1; /* indigo-500 */
+    --color-bg-dark: #0a0e1a; /* Darker navy background */
+    --color-bg-card: #1a1f2e; /* Card background */
+    --color-border: rgba(6, 214, 160, 0.2);
+}
+
+/* 전체 다크 배경 및 회로 기판 패턴 */
+body {
+    background-color: var(--color-bg-dark);
+    color: #e5e7eb; /* gray-200, 더 밝은 색상으로 조정 */
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background-image: 
+        linear-gradient(90deg, rgba(6, 214, 160, 0.03) 1px, transparent 1px),
+        linear-gradient(rgba(6, 214, 160, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 20% 50%, rgba(6, 214, 160, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
+    background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%;
+    background-position: 0 0, 0 0, 0 0, 0 0;
+}
+
+/* 공통 모듈 스타일 - 향상된 카드 디자인 */
+.neon-module {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid var(--color-border);
+    background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(26, 31, 46, 0.8) 100%);
+    box-shadow: 
+        0 4px 6px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.neon-module:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-primary);
+    box-shadow: 
+        0 15px 40px rgba(6, 214, 160, 0.25),
+        0 0 20px var(--color-primary-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* 대시보드 모듈 강조 - 더 강한 그림자 */
+.dashboard-module {
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(6, 214, 160, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.dashboard-module:hover {
+    box-shadow: 
+        0 20px 50px rgba(6, 214, 160, 0.3),
+        0 0 40px var(--color-primary-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* 시설 패널 - 더 subtle하게 */
+.facility-panel {
+    opacity: 0.95;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* 텍스트 네온 효과 - 시안 컬러 */
+.neon-text-shadow {
+    text-shadow: 
+        0 0 10px var(--color-primary-glow),
+        0 0 20px var(--color-primary-glow),
+        0 0 30px var(--color-primary-glow);
+}
+
+/* 인덱스 항목 스타일 */
+.index-item {
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+}
+
+.index-item:hover {
+    background: linear-gradient(90deg, rgba(6, 214, 160, 0.15) 0%, rgba(6, 214, 160, 0.05) 100%);
+    border-left-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 0 15px rgba(6, 214, 160, 0.1);
+}
+
+/* 모듈 토글 버튼 회전 */
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+/* 느린 바운스 애니메이션 (캐릭터용) */
+@keyframes bounce-slow {
+    0%, 100% {
+        transform: translateY(-5%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+        transform: translateY(0);
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+.animate-bounce-slow {
+    animation: bounce-slow 3s infinite;
+}
+
+/* 캐릭터 컨테이너 - 회로 기판 테마 통합 - 모바일 최적화 */
+.character-container {
+    position: relative;
+    padding: 0.5rem; /* 모바일에서 패딩 축소 */
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(6, 214, 160, 0.05) 0%, transparent 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .character-container {
+        padding: 1rem;
+    }
+}
+
+.character-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    border-radius: 50%;
+    border: 2px solid rgba(6, 214, 160, 0.2);
+    animation: circuit-pulse 3s ease-in-out infinite;
+}
+
+.character-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140%;
+    height: 140%;
+    border-radius: 50%;
+    border: 1px solid rgba(6, 214, 160, 0.1);
+    animation: circuit-pulse 3s ease-in-out infinite 0.5s;
+}
+
+@keyframes circuit-pulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
+
+/* 캐릭터 자연스러운 그림자 효과 - 회로 기판 테마와 조화 */
+.character-natural-shadow {
+    position: relative;
+}
+
+/* 캐릭터 이미지 자체 스타일 - 투명 배경 최적화 */
+.character-container img {
+    background: transparent;
+    /* 투명 배경 PNG를 위한 필터 효과 */
+    filter: 
+        brightness(1.05)
+        contrast(1.1)
+        drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5))
+        drop-shadow(0 0 30px rgba(6, 214, 160, 0.5))
+        drop-shadow(0 0 50px rgba(6, 214, 160, 0.3));
+}
+
+/* 캐릭터 주변 회로 효과 */
+.character-natural-shadow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(6, 214, 160, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+/* 헤더 스타일 개선 - 모바일 최적화 */
+header {
+    background: linear-gradient(180deg, rgba(26, 31, 46, 0.5) 0%, transparent 100%);
+    border-bottom: 1px solid var(--color-border) !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+}
+
+@media (min-width: 768px) {
+    header {
+        padding-top: 3rem !important;
+        padding-bottom: 2.5rem !important;
+    }
+}
+
+/* Firebase 버튼 스타일 개선 - 모바일 최적화 */
+header button {
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(6, 214, 160, 0.1);
+}
+
+@media (max-width: 767px) {
+    header button {
+        font-size: 0.7rem;
+        padding: 0.375rem 0.625rem;
+    }
+    
+    header button i {
+        width: 0.75rem;
+        height: 0.75rem;
+    }
+}
+
+/* Sticky 검색 컨테이너 */
+.search-container {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    transition: all 0.3s ease;
+    padding: 1rem 0;
+    margin: -1rem 0 1rem 0;
+}
+
+.search-container.scrolled {
+    background: rgba(10, 14, 26, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 0.75rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* 검색 결과 모바일 최적화 */
+@media (max-width: 767px) {
+    #searchResults {
+        max-height: 60vh !important;
+    }
+}
+
+/* 포커스 가능한 요소 스타일 */
+.focusable:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.focusable:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* 📌 표 하단 간격 확보 및 실선 중복 방지 (사용자 요청 반영) */
+#content-area table {
+    margin-bottom: 2rem !important; /* 표끼리 겹치지 않게 충분한 여백 부여 */
+}
+
+#content-area p, #content-area div {
+    margin-bottom: 1rem;
+}
+
+/* 표 바로 다음 요소가 구분선(hr)일 경우 공백 제거 */
+#content-area table + hr,
+#content-area table + p + hr {
+    display: block !important;
+}

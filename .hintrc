@@ -1,4 +1,5 @@
 {
+  "_comment": "📌 [.hintrc] 해당 파일은 웹 표준 및 접근성 검사 규칙을 정의하는 파일입니다.",
   "extends": [
     "development"
   ],

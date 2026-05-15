@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>입장권 발행 및 취소</title>
+	
+	<style>
+		/* ========== 기본 스타일 ========== */
+		* {
+			box-sizing: border-box;
+		}
+		
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: transparent;
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+			color: #d1d5db;
+			line-height: 1.6;
+		}
+		
+		/* ========== 아코디언 스타일 ========== */
+		.manual-wrapper {
+			padding: 0;
+			max-width: 100%;
+		}
+		
+		.manual-section {
+			margin-bottom: 12px;
+			border: 1px solid #374151;
+			border-radius: 8px;
+			background-color: #1f2937;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+			transition: all 0.2s ease;
+		}
+		
+		.manual-section[open] {
+			background-color: #111827;
+			border-color: #3b82f6;
+		}
+		
+		.manual-summary {
+			display: flex;
+			align-items: center;
+			padding: 16px 18px;
+			cursor: pointer;
+			list-style: none;
+			user-select: none;
+		}
+		
+		.manual-summary::-webkit-details-marker {
+			display: none;
+		}
+		
+		.section-badge {
+			font-size: 1.2em;
+			color: #60a5fa;
+			margin-right: 12px;
+			font-weight: 600;
+			flex-shrink: 0;
+		}
+		
+		.section-title {
+			font-weight: 600;
+			color: #f3f4f6;
+			font-size: 1.05em;
+			flex-grow: 1;
+		}
+		
+		.section-arrow {
+			font-size: 0.9em;
+			color: #9ca3af;
+			margin-left: 12px;
+			transition: transform 0.2s ease;
+			flex-shrink: 0;
+		}
+		
+		.manual-section[open] .section-arrow {
+			transform: rotate(180deg);
+		}
+		
+		.manual-content {
+			padding: 0 18px 18px;
+			border-top: 1px solid #374151;
+		}
+		
+		/* ========== 라벨 스타일 ========== */
+		.content-label {
+			display: inline-block;
+			font-size: 0.75em;
+			font-weight: 600;
+			padding: 4px 10px;
+			border-radius: 4px;
+			margin: 12px 0 8px;
+			color: white;
+			background-color: #4b5563;
+		}
+		
+		/* ========== 텍스트 스타일 ========== */
+		.manual-content p {
+			margin: 8px 0;
+			font-size: 0.95em;
+			color: #d1d5db;
+		}
+		
+		.manual-content ul {
+			margin: 8px 0;
+			padding-left: 24px;
+			list-style-type: disc;
+		}
+		
+		.manual-content li {
+			margin: 6px 0;
+			font-size: 0.95em;
+			color: #d1d5db;
+		}
+		
+		/* ========== 이미지 스타일 ========== */
+		.image-grid {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+			margin: 16px 0;
+		}
+		
+		.image-item {
+			position: relative;
+			width: 100%;
+			border: 1px solid #374151;
+			border-radius: 6px;
+			overflow: hidden;
+			background-color: #111827;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+		
+		.image-item:hover {
+			border-color: #60a5fa;
+			box-shadow: 0 4px 8px rgba(96, 165, 250, 0.2);
+		}
+		
+		.image-item img {
+			width: 100%;
+			height: auto;
+			display: block;
+			object-fit: contain;
+		}
+		
+		.image-caption {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+			color: #f3f4f6;
+			padding: 8px 12px;
+			font-size: 0.85em;
+			font-weight: 500;
+		}
+		
+		/* ========== 팝업 스타일 ========== */
+		.image-popup {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.9);
+			z-index: 9999;
+			justify-content: center;
+			align-items: center;
+			padding: 20px;
+		}
+		
+		.image-popup.active {
+			display: flex;
+		}
+		
+		.popup-content {
+			max-width: 90%;
+			max-height: 90%;
+			position: relative;
+		}
+		
+		.popup-content img {
+			max-width: 100%;
+			max-height: 90vh;
+			object-fit: contain;
+			border-radius: 8px;
+		}
+		
+		.popup-close {
+			position: absolute;
+			top: -40px;
+			right: 0;
+			background: none;
+			border: none;
+			color: white;
+			font-size: 32px;
+			cursor: pointer;
+			padding: 0;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+		}
+		
+		.popup-close:hover {
+			color: #60a5fa;
+		}
+		
+		/* ========== 반응형 (PC 모드) ========== */
+		@media (min-width: 768px) {
+			.manual-wrapper {
+				padding: 12px;
+			}
+			
+			.manual-section {
+				margin-bottom: 16px;
+			}
+			
+			.manual-summary {
+				padding: 20px 24px;
+			}
+			
+			.section-title {
+				font-size: 1.15em;
+			}
+			
+			.manual-content {
+				padding: 0 24px 24px;
+			}
+			
+			.manual-content p,
+			.manual-content li {
+				font-size: 1em;
+				line-height: 1.7;
+			}
+			
+			.image-grid {
+				gap: 16px;
+				margin: 20px 0;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- 이미지 팝업 -->
+	<div id="imagePopup" class="image-popup" onclick="closePopup()">
+		<div class="popup-content" onclick="event.stopPropagation()">
+			<button class="popup-close" onclick="closePopup()">&times;</button>
+			<img id="popupImage" src="" alt="확대 이미지">
+		</div>
+	</div>
+
+	<!-- 매뉴얼 콘텐츠 -->
+	<div class="manual-wrapper">
+		<!-- 1️⃣ 입장권 발행 -->
+		<details class="manual-section" open>
+			<summary class="manual-summary">
+				<span class="section-badge">1️⃣</span>
+				<span class="section-title">입장권 발행</span>
+				<span class="section-arrow">▼</span>
+			</summary>
+			<div class="manual-content">
+				<span class="content-label">절차 및 내용</span>
+				<ul>
+					<li>❗ <strong>청주사랑카드, e그린카드, 장애인(활동보조인), 탁구, 배드민턴</strong>의 경우에만 이 방법으로 입장권을 발행한다.</li>
+					<li>통합회원정보시스템에서 <strong>통합회원</strong>을 선택한다.</li>
+				</ul>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_1.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_1.png" alt="통합회원 들어가기">
+						<div class="image-caption">통합회원 들어가기</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li><strong>입장관리</strong>를 선택한다.</li>
+				</ul>
+				<p>💡 혹은 즐겨찾기의 <strong>일일입장권발매</strong>를 선택하여도 된다.</p>
+				<p>❗ 청주사랑카드, e그린카드, 장애인(활동보조인)이 가능한지 확인한다.</p>
+				<p>💡 장애인(활동보조인)은 장애인이 3급이상이여야 가능하다.</p>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_2.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_2.png" alt="입장관리 선택">
+						<div class="image-caption">입장관리 선택</div>
+					</div>
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_3.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_3.png" alt="일일입장권발매 선택">
+						<div class="image-caption">일일입장권발매 선택</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li>발행입장권 선택에서 원하는 입장권을 선택한다.</li>
+				</ul>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_4.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_4.png" alt="입장권 선택">
+						<div class="image-caption">입장권 선택</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li>카드결제를 선택후 카드승인을 선택한다.</li>
+				</ul>
+				<p>❗ 현금을 받지 않고 있기 때문에 카드결제를 선택한다.</p>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_5.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_5.png" alt="카드결제">
+						<div class="image-caption">카드결제</div>
+					</div>
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_6.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_6.png" alt="카드승인">
+						<div class="image-caption">카드승인</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li>카드결제 단말기에 카드를 투입하여 결제를 진행한다.</li>
+				</ul>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_7.jpg')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_7.jpg" alt="카드 단말기 결제">
+						<div class="image-caption">카드 단말기 결제</div>
+					</div>
+				</div>
+				
+				<p>💡 이용객에게 영수증 필요 여부를 묻고 필요에 따라 카드단말기 1번 출력을 눌러 출력된 영수증과 결제카드를 돌려준다.</p>
+				<p>💡 영수증 미발행시 2번 출력안함을 선택한다.</p>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_7_1.jpg')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_7_1.jpg" alt="영수증 발행 및 미발행">
+						<div class="image-caption">영수증 발행 및 미발행</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li>수영장 입장객일 경우 비어 있는 락커룸을 선택하여 체크인을 해준다.</li>
+				</ul>
+				<p>💡 자세한 내용은 락커룸 내용을 참고바람</p>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_8.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_8.png" alt="락커룸 배정">
+						<div class="image-caption">락커룸 배정</div>
+					</div>
+				</div>
+			</div>
+		</details>
+
+		<!-- 2️⃣ 입장권 취소 (일반) -->
+		<details class="manual-section">
+			<summary class="manual-summary">
+				<span class="section-badge">2️⃣</span>
+				<span class="section-title">입장권 취소 (일반)</span>
+				<span class="section-arrow">▼</span>
+			</summary>
+			<div class="manual-content">
+				<span class="content-label">취소 절차</span>
+				<ul>
+					<li>통합회원정보시스템에서 통합회원을 선택한다.</li>
+				</ul>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_9.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_9.png" alt="통합회원 들어가기">
+						<div class="image-caption">통합회원 들어가기</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li>즐겨찾기의 수입금 결제취소를 선택</li>
+				</ul>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_10.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_10.png" alt="수입금 결제 취소 들어가기">
+						<div class="image-caption">수입금 결제 취소 들어가기</div>
+					</div>
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_11.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_11.png" alt="결제 내역 찾기">
+						<div class="image-caption">결제 내역 찾기</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li>시간, 카드사, 카드번호를 확인하여 결제번호를 찾는다.</li>
+				</ul>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_12.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_12.png" alt="결제 내역 찾기">
+						<div class="image-caption">결제 내역 찾기</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li>취소하고자 하는 결제내역의 취소를 누르면 팝업이 뜨며 카드승인취소 확인을 누른다.</li>
+				</ul>
+				<p>❗ 취소 사유는 필수 입력 사항이다.</p>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_13.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_13.png" alt="카드승인취소 확인">
+						<div class="image-caption">카드승인취소 확인</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li>카드결제 단말기에 카드를 투입하여 취소를 진행한다.</li>
+				</ul>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_14.jpg')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_14.jpg" alt="카드 단말기 취소">
+						<div class="image-caption">카드 단말기 취소</div>
+					</div>
+				</div>
+				
+				<p>💡 이용객에게 영수증 필요 여부를 묻고 필요에 따라 카드단말기 1번 출력을 눌러 출력된 영수증과 결제카드를 돌려준다.</p>
+				<p>💡 영수증 미발행시 2번 출력안함을 선택한다.</p>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_14_1.jpg')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_14_1.jpg" alt="영수증 발행 및 미발행">
+						<div class="image-caption">영수증 발행 및 미발행</div>
+					</div>
+				</div>
+			</div>
+		</details>
+
+		<!-- 3️⃣ 입장권 취소 (카드가 없을 경우) -->
+		<details class="manual-section">
+			<summary class="manual-summary">
+				<span class="section-badge">3️⃣</span>
+				<span class="section-title">입장권 취소 (카드가 없을 경우)</span>
+				<span class="section-arrow">▼</span>
+			</summary>
+			<div class="manual-content">
+				<span class="content-label">취소 절차</span>
+				<p>❗ 카드가 없을 경우 수기 취소를 진행한다.</p>
+				<ul>
+					<li>통합회원정보시스템에서 통합회원을 선택한다.</li>
+					<li>즐겨찾기의 수입금 결제취소를 선택한다.</li>
+					<li>시간, 카드사, 카드번호를 확인하여 결제번호를 찾는다.</li>
+					<li>취소하고자 하는 결제내역의 취소를 누르면 팝업이 뜨며 카드승인취소 확인을 누른다.</li>
+				</ul>
+				<p>❗ 취소 사유는 필수 입력 사항이다.</p>
+				<ul>
+					<li>카드결제 단말기에서 <strong>메뉴 → 취소 → 수기취소</strong>를 선택한다.</li>
+				</ul>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_15.jpg')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_15.jpg" alt="수기취소 선택">
+						<div class="image-caption">수기취소 선택</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li>승인번호를 입력한다.</li>
+				</ul>
+				<p>💡 승인번호는 결제내역에서 확인 가능하다.</p>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_16.png')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_16.png" alt="승인번호 확인">
+						<div class="image-caption">승인번호 확인</div>
+					</div>
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_17.jpg')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_17.jpg" alt="승인번호 입력">
+						<div class="image-caption">승인번호 입력</div>
+					</div>
+				</div>
+				
+				<p>💡 이용객에게 영수증 필요 여부를 묻고 필요에 따라 카드단말기 1번 출력을 눌러 출력된 영수증을 돌려준다.</p>
+				<p>💡 영수증 미발행시 2번 출력안함을 선택한다.</p>
+			</div>
+		</details>
+
+		<!-- 4️⃣ 입장권 취소 (이중결제가 되어 통합 회원에 없는 경우) -->
+		<details class="manual-section">
+			<summary class="manual-summary">
+				<span class="section-badge">4️⃣</span>
+				<span class="section-title">입장권 취소 (이중결제가 되어 통합 회원에 없는 경우)</span>
+				<span class="section-arrow">▼</span>
+			</summary>
+			<div class="manual-content">
+				<span class="content-label">취소 절차</span>
+				<p>❗ 이중결제로 인해 통합회원정보시스템에 결제내역이 없는 경우</p>
+				<ul>
+					<li>카드결제 단말기에서 <strong>메뉴 → 취소 → 당일취소</strong>를 선택한다.</li>
+				</ul>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_18.jpg')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_18.jpg" alt="당일취소 선택">
+						<div class="image-caption">당일취소 선택</div>
+					</div>
+				</div>
+				
+				<ul>
+					<li>거래번호를 입력한다.</li>
+				</ul>
+				<p>💡 거래번호는 카드 영수증에서 확인 가능하다.</p>
+				
+				<div class="image-grid">
+					<div class="image-item" onclick="openPopup('https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_19.jpg')">
+						<img src="https://manual-5d03dc.gitlab.io/manual_image/image_2_1_5_1_1_19.jpg" alt="거래번호 입력">
+						<div class="image-caption">거래번호 입력</div>
+					</div>
+				</div>
+				
+				<p>💡 이용객에게 영수증 필요 여부를 묻고 필요에 따라 카드단말기 1번 출력을 눌러 출력된 영수증을 돌려준다.</p>
+				<p>💡 영수증 미발행시 2번 출력안함을 선택한다.</p>
+			</div>
+		</details>
+	</div>
+
+	<script>
+		// 이미지 팝업 열기
+		function openPopup(imageSrc) {
+			const popup = document.getElementById('imagePopup');
+			const popupImage = document.getElementById('popupImage');
+			popupImage.src = imageSrc;
+			popup.classList.add('active');
+		}
+		
+		// 이미지 팝업 닫기
+		function closePopup() {
+			const popup = document.getElementById('imagePopup');
+			popup.classList.remove('active');
+		}
+		
+		// ESC 키로 팝업 닫기
+		document.addEventListener('keydown', function(e) {
+			if (e.key === 'Escape') {
+				closePopup();
+			}
+		});
+	</script>
+</body>
+</html>

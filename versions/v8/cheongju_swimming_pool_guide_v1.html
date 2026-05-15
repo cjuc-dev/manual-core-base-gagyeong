@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청주수영장 시설 안내</title>
+    <!-- Tailwind CSS CDN (Conditional Load) -->
+    <script>
+        if (!window.tailwind) {
+            var script = document.createElement('script');
+            script.src = "https://cdn.tailwindcss.com";
+            document.head.appendChild(script);
+        }
+    </script>
+</head>
+<body class="text-gray-200 relative">
+    <style>
+        /* 'Inter' 폰트를 기본으로 사용 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* Scoped Wrapper Styles */
+        #cheongju-guide-wrapper {
+            font-family: 'Inter', sans-serif;
+            background-color: transparent;
+            color: #e2e8f0; /* Slate 200 */
+            scroll-behavior: smooth;
+        }
+        
+        /* 액센트 색상 (Dark Mode에 맞게 조정) */
+        #cheongju-guide-wrapper .accent-color {
+            color: #38bdf8; /* Sky 400 (밝은 파랑) */
+        }
+        #cheongju-guide-wrapper .accent-bg {
+            background-color: #0284c7; /* Sky 600 */
+        }
+        #cheongju-guide-wrapper .accent-bg:hover {
+            background-color: #0369a1; /* Sky 700 */
+        }
+
+        /* 카드 스타일 (Dark Mode) */
+        #cheongju-guide-wrapper .info-card {
+            background-color: #1e293b; /* Slate 800 */
+            border: 1px solid #334155; /* Slate 700 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+        #cheongju-guide-wrapper .info-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+            border-color: #38bdf8; /* Hover 시 Sky 400 */
+        }
+
+        /* 시설 정보 테이블 스타일 (Dark Mode) */
+        #cheongju-guide-wrapper .facility-table th {
+            background-color: #0f172a; /* Slate 900 */
+            color: #94a3b8; /* Slate 400 */
+            padding: 0.75rem 1rem;
+            text-align: center; /* 기본 가운데 정렬 */
+            border-bottom: 1px solid #334155; /* Slate 700 */
+        }
+        #cheongju-guide-wrapper .facility-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #334155; /* Slate 700 */
+            color: #cbd5e1; /* Slate 300 */
+            text-align: center; /* 기본 가운데 정렬 */
+        }
+        #cheongju-guide-wrapper .facility-table tr:last-child td {
+            border-bottom: none;
+        }
+        /* 왼쪽 정렬이 필요한 특정 테이블을 위한 클래스 */
+        #cheongju-guide-wrapper .text-left-table th, 
+        #cheongju-guide-wrapper .text-left-table td {
+            text-align: left;
+        }
+
+        /* 플로우 차트 개별 단계 스타일 (Dark Mode) - 박스 형태 강화 */
+        #cheongju-guide-wrapper .flow-step {
+            min-width: 120px;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 2px solid #38bdf8; /* Sky 400 */
+            background-color: #0c4a6e; /* Sky 900 */
+            color: #e0f2fe; /* Sky 100 */
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+        #cheongju-guide-wrapper .flow-step:hover {
+            transform: scale(1.05);
+        }
+        #cheongju-guide-wrapper .flow-number {
+            font-size: 2rem; /* text-4xl -> reduced */
+            line-height: 1;
+            font-weight: 900;
+            color: #38bdf8; /* Sky 400 */
+            margin-bottom: 0.25rem;
+        }
+
+        /* Top 버튼 스타일 */
+        #topBtn {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999; /* z-index 상향 조정 */
+            border: none;
+            outline: none;
+            background-color: #0ea5e9;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        #topBtn:hover {
+            background-color: #0284c7;
+            transform: translateY(-3px);
+        }
+        
+        /* 네비게이션 강제 스타일 (대시보드 스타일 오버라이드) */
+        #cheongju-guide-wrapper .custom-nav-link {
+            text-decoration: none !important;
+            box-shadow: none !important;
+        }
+    </style>
+
+    <div id="cheongju-guide-wrapper">
+        <!-- 1. 상단 고정 헤더 (Dark Mode) -->
+        <header class="sticky top-0 bg-gray-900/95 backdrop-blur shadow-md z-10 border-b border-gray-700">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-2 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 accent-color" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4.5v9L12 22l-8-4.5v-9L12 2z"/><polyline points="12 2 12 12 20 7.5"/><polyline points="12 12 4 7.5 12 2"/></svg>
+                    <h1 class="text-xl font-bold text-white">청주수영장 <span class="text-gray-500 font-normal">| 시설 안내</span></h1>
+                </div>
+                <nav class="hidden md:flex space-x-1 text-sm font-medium">
+                    <a href="#overview" onclick="event.preventDefault(); document.getElementById('overview')?.scrollIntoView({behavior: 'smooth'});" class="custom-nav-link px-3 py-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition">시설 개요</a>
+                    <a href="#facility" onclick="event.preventDefault(); document.getElementById('facility')?.scrollIntoView({behavior: 'smooth'});" class="custom-nav-link px-3 py-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition">시설 사진</a>
+                    <a href="#parking" onclick="event.preventDefault(); document.getElementById('parking')?.scrollIntoView({behavior: 'smooth'});" class="custom-nav-link px-3 py-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition">시설 상세</a>
+                    <a href="#guide" onclick="event.preventDefault(); document.getElementById('guide')?.scrollIntoView({behavior: 'smooth'});" class="custom-nav-link px-3 py-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition">이용 안내</a>
+                    <a href="#fees" onclick="event.preventDefault(); document.getElementById('fees')?.scrollIntoView({behavior: 'smooth'});" class="custom-nav-link px-3 py-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition">이용 요금</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- 2. 메인 컨테이너 -->
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+
+            
+            <!-- 대형 타이틀 및 소개 -->
+            <section id="overview" class="mb-12">
+                <p class="text-xl text-gray-400 font-medium mb-2">시설 개요</p>
+                <h2 class="text-5xl font-extrabold text-white leading-tight">
+                    <span class="accent-color">청주수영장</span> 시설 안내
+                </h2>
+                <p class="text-lg text-gray-400 mt-4 max-w-4xl">
+                    청주시민의 건강과 행복을 위한 최신 시설을 갖춘 청주수영장입니다. 운영 시간, 강습 프로그램, 이용 요금 등을 확인하실 수 있습니다.
+                </p>
+            </section>
+
+            <!-- 3. 핵심 정보 요약 카드 (3열 레이아웃) -->
+            <section class="grid md:grid-cols-3 gap-6 mb-16">
+                
+                <!-- 카드 1: 운영 시간 -->
+                <div class="info-card p-6 rounded-xl">
+                    <div class="flex items-center mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <h3 class="text-xl font-bold text-white">운영 시간</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-2">평일/주말 운영 시간</p>
+                    <div class="mt-4">
+                        <p class="text-2xl font-extrabold accent-color">평일 05:30 ~ 21:30</p>
+                        <p class="text-lg font-bold text-gray-300">주말 06:00 ~ 16:50</p>
+                    </div>
+                </div>
+
+                <!-- 카드 2: 휴장일 -->
+                <div class="info-card p-6 rounded-xl">
+                    <div class="flex items-center mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <h3 class="text-xl font-bold text-white">휴장일 안내</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-2">매월 첫째, 셋째, 다섯째 주 일요일</p>
+                    <div class="mt-4">
+                        <p class="text-lg font-bold text-red-400">법정공휴일 휴장</p>
+                        <p class="text-sm text-gray-400">공사 방침에 따른 휴장</p>
+                    </div>
+                </div>
+
+                <!-- 카드 3: 연락처 -->
+                <div class="info-card p-6 rounded-xl">
+                    <div class="flex items-center mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-7.5-7.5A19.79 19.79 0 0 1 2 4.18 2 2 0 0 1 4.18 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <h3 class="text-xl font-bold text-white">안내데스크 연락처</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-2">궁금한 점은 연락처로 문의해주세요.</p>
+                    <div class="mt-4">
+                        <p class="text-2xl font-extrabold accent-color">043-270-8523</p>
+                        <p class="text-sm text-gray-400">팩스: 043-270-8546</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. 시설 현황 이미지 갤러리 (이미지 경로 수정됨) -->
+            <!-- 4. 시설 현황 이미지 갤러리 (Bento Grid) -->
+            <section class="mb-16">
+                <h3 id="facility" class="text-3xl font-extrabold text-white mb-6 pl-4">주요 시설 현황 (갤러리)</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <!-- 이미지 1 -->
+                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility1.jpg" alt="청주수영장 사진 1" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
+                            <span class="text-white text-sm font-semibold">시설 전경</span>
+                        </div>
+                    </div>
+                    <!-- 이미지 2 -->
+                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility2.jpg" alt="청주수영장 사진 2" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
+                            <span class="text-white text-sm font-semibold">안내데스크</span>
+                        </div>
+                    </div>
+                    <!-- 이미지 3 -->
+                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility3.jpg" alt="청주수영장 사진 3" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
+                            <span class="text-white text-sm font-semibold">수영장</span>
+                        </div>
+                    </div>
+                    <!-- 이미지 4 -->
+                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility4.jpg" alt="청주수영장 사진 4" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
+                            <span class="text-white text-sm font-semibold">유아풀</span>
+                        </div>
+                    </div>
+                    <!-- 이미지 5 -->
+                    <div class="w-full aspect-square bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 relative group cursor-pointer border border-gray-600">
+                        <img src="https://manual-5d03dc.gitlab.io/sports_facility_image/Cheongju_Swimming_Pool_Facility5.jpg" alt="청주수영장 사진 5" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-end p-3 opacity-0 group-hover:opacity-100 transition">
+                            <span class="text-white text-sm font-semibold">체력단련장</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4-1. 시설 상세 (주차장, 샤워기, 락커, 화장실 등) -->
+            <section class="mb-16">
+                <h3 id="parking" class="text-3xl font-extrabold text-white mb-6 pl-4">시설 상세 및 편의 시설</h3>
+                
+                <div class="info-card p-0 rounded-xl overflow-hidden">
+                    <h4 class="text-xl font-extrabold !bg-sky-700 text-white p-4" style="background-color: #0369a1;">시설 상세 현황</h4>
+                    
+                    <!-- 주차장 정보 -->
+                    <div class="p-4 border-b border-gray-700">
+                        <h5 class="text-lg font-bold text-gray-200 mb-2">주차장 현황</h5>
+                        <table class="w-full facility-table border-collapse text-sm table-fixed">
+                            <thead>
+                                <tr class="bg-gray-800/50">
+                                    <th class="w-1/4 font-bold text-gray-300">구분</th>
+                                    <th class="w-1/4 font-bold text-gray-300">대수</th>
+                                    <th class="w-1/2 font-bold text-gray-300">비고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>일반</td>
+                                    <td class="font-bold text-white">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                                <tr>
+                                    <td>장애인</td>
+                                    <td class="font-bold text-white">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                                <tr>
+                                    <td>전기차 충전 구역</td>
+                                    <td class="font-bold text-emerald-400">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                                <tr class="font-extrabold ">
+                                    <td class="text-white">총계</td>
+                                    <td class="accent-color">-</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- 탈의실 및 샤워 시설 상세 -->
+                    <div class="p-4 border-b border-gray-700">
+                        <h5 class="text-lg font-bold text-gray-200 mb-2">탈의실 및 샤워 시설 상세</h5>
+                        <table class="w-full facility-table border-collapse text-sm table-fixed">
+                            <thead>
+                                <tr class="bg-gray-800/50">
+                                    <th class="w-1/4 font-bold text-gray-300">시설 구분</th>
+                                    <th class="w-1/4 font-bold text-gray-300">개수</th>
+                                    <th class="w-1/2 font-bold text-gray-300">비고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>샤워장(남)</td>
+                                    <td class="font-bold text-white">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                                 <tr>
+                                    <td>샤워장(여)</td>
+                                    <td class="font-bold text-white">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                                <tr>
+                                    <td>락커 (남)</td>
+                                    <td class="font-bold text-white">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                                <tr>
+                                    <td>락커 (여)</td>
+                                    <td class="font-bold text-white">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                                <tr class="font-extrabold">
+                                    <td class="text-white">락커 총계</td>
+                                    <td class="accent-color">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- 화장실 및 기타 시설 현황 -->
+                    <div class="p-4">
+                        <h5 class="text-lg font-bold text-gray-200 mb-2">화장실 및 기타 시설</h5>
+                        <table class="w-full facility-table border-collapse text-sm table-fixed">
+                            <thead>
+                                <tr class="bg-gray-800/50">
+                                    <th class="w-1/4 font-bold text-gray-300">시설 구분</th>
+                                    <th class="w-1/4 font-bold text-gray-300">수량</th>
+                                    <th class="w-1/2 font-bold text-gray-300">상세</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>화장실 (1층)</td>
+                                    <td class="font-bold text-white">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                                <tr>
+                                    <td>화장실 (2층)</td>
+                                    <td class="font-bold text-white">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                                <tr>
+                                    <td>승강기</td>
+                                    <td class="font-bold text-white">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                                <tr>
+                                    <td>정수기</td>
+                                    <td class="font-bold text-white">-</td>
+                                    <td class="text-gray-500">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- 5. 이용 안내 (운영시간, 사용료) -->
+            <section class="mb-16">
+                <h3 id="guide" class="text-3xl font-extrabold text-white mb-6 pl-4">상세 이용 안내</h3>
+
+                <div class="grid md:grid-cols-1 gap-8">
+                    <!-- 5-1. 수영장 상세 이용 안내 -->
+                    <div class="info-card p-0 rounded-xl overflow-hidden">
+                        <h4 class="text-xl font-extrabold bg-sky-700 text-white p-4">세부 운영 시간</h4>
+                        <p class="p-4 text-sm text-emerald-400 font-semibold border-b border-gray-700">
+                            ※ 평일 및 주말 11:50 ~ 13:20 입장불가 (아쿠아강습 및 수질관리 안전점검)<br>
+                            ※ 이용시간은 1일 1회 최대 2시간 이용가능<br>
+                            ※ 토/일 주말은 정규 강습이 없으며 자유수영으로 진행됩니다.
+                        </p>
+                        
+                        <div class="p-4 border-b border-gray-700">
+                            <table class="w-full facility-table border-collapse text-sm">
+                                <thead>
+                                    <tr class="bg-gray-800/50">
+                                        <th class="w-1/6">구분</th>
+                                        <th class="w-1/6">부</th>
+                                        <th class="w-1/4">이용 시간</th>
+                                        <th class="w-1/4">비고</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="4" class="font-bold text-white">평일</td>
+                                        <td>1부</td>
+                                        <td class="font-bold text-white">05:30 ~ 11:50</td>
+                                        <td>강습 각 반 30~40명/일일입장 (월~금)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>아쿠아</td>
+                                        <td class="font-bold text-white">12:00 ~ 12:50</td>
+                                        <td>150명 (월,수,금)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>클리닝</td>
+                                        <td class="text-red-400">12:50 ~ 13:20 (월,수,금)<br>11:50 ~ 13:20 (화,목)</td>
+                                        <td>입장 불가</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2부</td>
+                                        <td class="font-bold text-white">13:20 ~ 21:30</td>
+                                        <td>강습 각 반 30~40명/일일입장 (월~금)</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="3" class="font-bold text-white">주말</td>
+                                        <td>1부</td>
+                                        <td class="font-bold text-white">06:00 ~ 11:50</td>
+                                        <td>자유수영</td>
+                                    </tr>
+                                    <tr>
+                                        <td>클리닝</td>
+                                        <td class="text-red-400">11:50 ~ 13:20</td>
+                                        <td>입장 불가</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2부</td>
+                                        <td class="font-bold text-white">13:20 ~ 16:50</td>
+                                        <td>자유수영</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="mt-2 text-sm text-gray-400">
+                                ※ 고객의 샤워 및 수영장 마감을 위하여 평일 20시 50분, 주말 16시 20분 입장 종료<br>
+                                ※ 평일 오전은 이용객 안전보장 및 원활한 강습진행을 위하여 어린이 입장불가
+                            </p>
+                        </div>
+
+                        <!-- 강습 프로그램 -->
+                        <div class="p-4 border-b border-gray-700">
+                            <h5 class="text-lg font-bold text-gray-200 mb-2">강습 프로그램</h5>
+                            <table class="w-full facility-table border-collapse text-sm">
+                                <thead>
+                                    <tr class="bg-gray-800/50">
+                                        <th class="w-1/4">구분</th>
+                                        <th class="w-3/4">내용</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-bold text-white">주 3회 강습<br>(월·수·금)</td>
+                                        <td class="text-left">
+                                            <span class="font-bold text-sky-400">종합수료반 6개월 과정 (교정B/교정A/연수/마스터)</span><br>
+                                            - 최대 6개월 이용(재등록) 가능, 매년 6월/12월 말 종료<br>
+                                            - 매월 재등록 기간 미등록 시 신규회원으로 전환<br>
+                                            - 강습 정원 미달(15인 미만) 시 합반 또는 폐강
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-white">주 2회 강습<br>(화·목)</td>
+                                        <td class="text-left">
+                                            <span class="font-bold text-sky-400">기초수료반 6개월 과정 (기초1~기초6)</span><br>
+                                            - 최대 6개월 이용 가능, 수료 후 프로그램 종료<br>
+                                            - 기초과정 수료 후 주3회 강습 신규 등록 가능<br>
+                                            - 강습 정원 미달(15인 미만) 시 합반 또는 폐강
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- 접수 안내 -->
+                        <div class="p-4">
+                            <h5 class="text-lg font-bold text-gray-200 mb-2">강습 접수 안내</h5>
+                            <ul class="list-disc list-inside text-sm text-gray-300 space-y-1">
+                                <li><span class="font-bold text-white">접수기간:</span> 매월 21일부터 ~ 말일까지 (접수기간 이후 불가)</li>
+                                <li><span class="font-bold text-white">기존회원:</span> 매월 21일 05:30 ~ 23일 18:00</li>
+                                <li><span class="font-bold text-white">신규/추가:</span> 강습반 정원 미달 시 접수 가능</li>
+                                <li><span class="font-bold text-white">접수방법:</span> 온라인접수 (아쿠아로빅은 현장방문 및 온라인)</li>
+                                <li><span class="font-bold text-white">결제방법:</span> 온라인(계좌이체/카드), 방문(카드결제만 가능)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. 이용 요금 및 할인 -->
+            <section class="mb-16">
+                <h3 id="fees" class="text-3xl font-extrabold text-white mb-6 pl-4">이용 요금 및 할인 안내</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- 강습 요금 -->
+                    <div class="info-card p-6 rounded-xl">
+                        <h4 class="text-xl font-bold text-white mb-4">강습 요금 (월)</h4>
+                        <table class="w-full facility-table border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-gray-800/50">
+                                    <th>구분</th>
+                                    <th>주 3회 (월,수,금)</th>
+                                    <th>주 2회 (화,목)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>일반</td>
+                                    <td class="font-bold text-white">60,000원</td>
+                                    <td class="font-bold text-white">56,000원</td>
+                                </tr>
+                                <tr>
+                                    <td>군인, 청소년</td>
+                                    <td class="font-bold text-white">45,000원</td>
+                                    <td class="font-bold text-white">41,000원</td>
+                                </tr>
+                                <tr>
+                                    <td>어린이, 경로</td>
+                                    <td class="font-bold text-white">40,000원</td>
+                                    <td class="font-bold text-white">36,000원</td>
+                                </tr>
+                                <tr>
+                                    <td>유아</td>
+                                    <td class="font-bold text-white">30,000원</td>
+                                    <td class="font-bold text-white">27,000원</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="mt-2 text-xs text-gray-400">※ 조례 개정에 따라 강습료는 감면 대상에서 제외됩니다.</p>
+                    </div>
+
+                    <!-- 자유수영 요금 -->
+                    <div class="info-card p-6 rounded-xl">
+                        <h4 class="text-xl font-bold text-white mb-4">자유수영 요금</h4>
+                        <table class="w-full facility-table border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-gray-800/50">
+                                    <th>구분</th>
+                                    <th>월 회원권</th>
+                                    <th>1일권</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>일반</td>
+                                    <td class="font-bold text-white">50,000원</td>
+                                    <td class="font-bold text-white">3,000원</td>
+                                </tr>
+                                <tr>
+                                    <td>여성할인</td>
+                                    <td class="font-bold text-white">45,000원</td>
+                                    <td class="font-bold text-white">3,000원</td>
+                                </tr>
+                                <tr>
+                                    <td>군인, 청소년</td>
+                                    <td class="font-bold text-white">35,000원</td>
+                                    <td class="font-bold text-white">2,000원</td>
+                                </tr>
+                                <tr>
+                                    <td>어린이, 경로</td>
+                                    <td class="font-bold text-white">30,000원</td>
+                                    <td class="font-bold text-white">1,500원</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="mt-2 text-xs text-gray-400">※ 1회 이용시간: 2시간 (초과 시 요금 징수)</p>
+                    </div>
+                </div>
+
+                <!-- 할인 안내 -->
+                <div class="info-card p-6 rounded-xl mt-6">
+                    <h4 class="text-xl font-bold text-white mb-4">이용료 감면 안내</h4>
+                    <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div class="bg-gray-800 p-4 rounded-lg">
+                            <h5 class="font-bold text-emerald-400 mb-2">전액 감면</h5>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                                <li>장애인 (심한 장애: 보조인 1명 포함)</li>
+                                <li>국민기초생활수급자</li>
+                                <li>소년소녀 가장</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg">
+                            <h5 class="font-bold text-sky-400 mb-2">50% 감면</h5>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                                <li>경로 (65세 이상)</li>
+                                <li>국가유공자 및 유족</li>
+                                <li>청주사랑카드 소지자</li>
+                                <li>다자녀 가정 (아이사랑카드)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg">
+                            <h5 class="font-bold text-yellow-400 mb-2">기타 감면</h5>
+                            <ul class="list-disc list-inside text-gray-300 space-y-1">
+                                <li>30%: 우수자원봉사자</li>
+                                <li>10%: 가임기 여성 (13~53세, 월회원)</li>
+                                <li>10%: 그린카드 소지자</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. 유의사항 -->
+            <section class="mb-16">
+                <div class="info-card p-6 rounded-xl bg-red-900/20 border-red-800">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">🚨 이용 시 유의사항</h3>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li><span class="font-bold text-white">수심 2m 이용 주의:</span> 초보자 및 어린이 이용 금지, 오리발/스노클 사용 금지 (강습 제외)</li>
+                        <li><span class="font-bold text-white">입장 금지 복장:</span> 래시가드 외 비치웨어, 면 티셔츠, 반바지 등 입장 불가 (실내수영복 착용 필수)</li>
+                        <li><span class="font-bold text-white">준비물:</span> 실내수영복, 수모, 수경, 개인샤워도구, 수건 (개인 지참)</li>
+                        <li><span class="font-bold text-white">환불 규정:</span> 개시일 이전 10% 공제, 이후 이용일수+10% 공제 후 환불</li>
+                        <li><span class="font-bold text-white">연기 신청:</span> 자유수영에 한해 잔여기간 15일 이상 시 1회(1개월) 연기 가능</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Top 버튼 -->
+    <button id="topBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <script>
+        // Top 버튼 기능 - 동적 로딩 대응 (개선)
+        (function() {
+            // DOM이 완전히 로드된 후 실행되도록 setTimeout 사용
+            setTimeout(function() {
+                let topBtn = document.getElementById("topBtn");
+                
+                // 버튼이 없으면 생성 (동적 로딩 시)
+                if (!topBtn) {
+                    topBtn = document.createElement('button');
+                    topBtn.id = 'topBtn';
+                    topBtn.title = 'Go to top';
+                    topBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>';
+                    document.body.appendChild(topBtn);
+                }
+
+                // 스크롤 감지 함수를 전역에 저장 (중복 방지)
+                if (!window.cheongjuScrollFunction) {
+                    window.cheongjuScrollFunction = function() {
+                        const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+                        const btn = document.getElementById("topBtn");
+                        if (btn) {
+                            if (scrollTop > 200) {
+                                btn.style.display = "block";
+                            } else {
+                                btn.style.display = "none";
+                            }
+                        }
+                    };
+                }
+
+                // 기존 이벤트 리스너 제거 후 재등록 (중복 방지)
+                window.removeEventListener('scroll', window.cheongjuScrollFunction);
+                window.addEventListener('scroll', window.cheongjuScrollFunction);
+
+                // 버튼 클릭 이벤트
+                if (topBtn) {
+                    topBtn.onclick = function() {
+                        window.scrollTo({top: 0, behavior: 'smooth'});
+                    };
+                }
+
+                // 초기 상태 확인
+                window.cheongjuScrollFunction();
+            }, 100);
+        })();
+    </script>
+</body>
+</html>

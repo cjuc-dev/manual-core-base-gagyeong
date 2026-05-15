@@ -1,0 +1,389 @@
+<div class="p-4 sm:p-6 animate-fade-in">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 border-b border-gray-700/50 pb-6 gap-4">
+        <div>
+            <h2 class="text-xl sm:text-3xl font-bold text-yellow-400 flex items-center gap-2 sm:gap-3">
+                업데이트 현황 <span class="text-gray-500 text-sm sm:text-lg font-normal whitespace-nowrap">(Update History)</span>
+            </h2>
+            <p class="text-gray-400 mt-2 text-sm">시스템 업데이트 및 변경 사항을 확인하세요.</p>
+        </div>
+        <button onclick="tryOpenUpdateWriteForm()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all shadow-lg shadow-indigo-900/20 flex items-center gap-2 font-medium group w-full sm:w-auto justify-center">
+            <i data-lucide="pen-tool" class="w-4 h-4 group-hover:scale-110 transition-transform"></i> 글쓰기
+        </button>
+    </div>
+
+    <!-- Password Modal -->
+    <div id="passwordModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 border border-gray-700 rounded-xl p-6 w-full max-w-sm shadow-2xl transform transition-all scale-100">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <i data-lucide="shield-alert" class="w-5 h-5 text-emerald-400"></i> 관리자 인증
+            </h3>
+            <p class="text-gray-400 text-sm mb-4">글쓰기 및 수정/삭제 권한을 위해 비밀번호를 입력하세요.</p>
+            <input type="password" id="adminPassword" placeholder="비밀번호 입력" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition mb-4" onkeypress="handlePasswordEnter(event)">
+            <div class="flex justify-end gap-3">
+                <button onclick="closePasswordModal()" class="px-4 py-2 text-gray-400 hover:text-white transition">취소</button>
+                <button onclick="checkAdminPassword()" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium shadow-lg shadow-emerald-900/20 transition">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Write Form -->
+    <div id="writeForm" class="hidden mb-8 bg-gray-800/50 p-6 rounded-xl border border-gray-700 backdrop-blur-sm shadow-xl transition-all duration-300">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <i data-lucide="pen-tool" class="w-4 h-4 text-indigo-400"></i> 업데이트 기록 작성
+        </h3>
+        <input type="hidden" id="editDocId"> <!-- 수정 시 문서 ID 저장 -->
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">버전 (Version)</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-gray-400 select-none">v </span>
+                    <input type="text" id="updateVersion" placeholder="1.0" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg pl-8 pr-4 py-2 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition">
+                </div>
+                <p class="text-xs text-gray-600 mt-1">* 숫자만 입력하세요 (예: 1.0 -> v 1.0)</p>
+            </div>
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">날짜 (Date)</label>
+                <div class="relative">
+                    <input type="text" id="updateDate" placeholder="YYYYMMDD" maxlength="8" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg pl-4 pr-10 py-2 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition font-mono" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    <button type="button" onclick="document.getElementById('hiddenDatePicker').showPicker()" class="absolute right-3 top-2 text-gray-400 hover:text-white transition cursor-pointer">
+                        <i data-lucide="calendar" class="w-5 h-5"></i>
+                    </button>
+                    <input type="date" id="hiddenDatePicker" class="absolute opacity-0 pointer-events-none top-0 left-0 h-0 w-0" tabindex="-1">
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-xs text-gray-500 mb-1">업데이트 내용</label>
+            <textarea id="updateContent" placeholder="- 업데이트 내용을 입력하세요&#13;&#10;- 줄바꿈으로 구분됩니다" class="w-full h-48 bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition resize-none font-mono text-sm"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-3">
+            <button onclick="closeWriteForm()" class="px-4 py-2 text-gray-400 hover:text-white transition">취소</button>
+            <button onclick="submitUpdate()" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium shadow-lg shadow-emerald-900/20 transition">등록하기</button>
+        </div>
+    </div>
+
+    <!-- List Container -->
+    <div id="updateList" class="space-y-4">
+        <!-- Firebase Data will be loaded here -->
+    </div>
+</div>
+
+<script>
+{
+    // 전역 변수 충돌 방지를 위한 블록 스코프
+    let isAdmin = false;
+    let pendingAction = null;
+
+    // 이전 리스너가 있다면 구독 해제
+    const unsubscribes = [
+        'vocSwimmingUnsubscribe',
+        'vocGymUnsubscribe',
+        'vocProgramUnsubscribe',
+        'vocOtherUnsubscribe',
+        'updateHistoryUnsubscribe'
+    ];
+
+    unsubscribes.forEach(name => {
+        if (window[name]) {
+            console.log(`Unsubscribing from ${name}`);
+            window[name]();
+            window[name] = null;
+        }
+    });
+
+    // Date Picker Synchronization Logic
+    const updateDateInput = document.getElementById('updateDate');
+    const hiddenDatePicker = document.getElementById('hiddenDatePicker');
+
+    if (updateDateInput && hiddenDatePicker) {
+        // 1. Calendar -> Text Input
+        hiddenDatePicker.addEventListener('change', (e) => {
+            if (e.target.value) {
+                updateDateInput.value = e.target.value.replace(/-/g, '');
+            }
+        });
+
+        // 2. Text Input -> Calendar
+        updateDateInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            if (val.length === 8) {
+                const yyyy = val.substring(0, 4);
+                const mm = val.substring(4, 6);
+                const dd = val.substring(6, 8);
+                // 유효성 검사 (간단하게)
+                if (mm > 0 && mm <= 12 && dd > 0 && dd <= 31) {
+                    hiddenDatePicker.value = `${yyyy}-${mm}-${dd}`;
+                }
+            }
+        });
+    }
+
+    // 비밀번호 모달 열기
+    window.openPasswordModal = function(actionCallback) {
+        pendingAction = actionCallback;
+        document.getElementById('passwordModal').classList.remove('hidden');
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('adminPassword').focus();
+    };
+
+    // 비밀번호 모달 닫기
+    window.closePasswordModal = function() {
+        document.getElementById('passwordModal').classList.add('hidden');
+        pendingAction = null;
+    };
+
+    // 비밀번호 엔터 처리
+    window.handlePasswordEnter = function(event) {
+        if (event.key === 'Enter') {
+            checkAdminPassword();
+        }
+    };
+
+    // 관리자 비밀번호 확인
+    window.checkAdminPassword = function() {
+        const password = document.getElementById('adminPassword').value;
+        if (password === 'admin') {
+            isAdmin = true;
+            closePasswordModal();
+            if (pendingAction) {
+                pendingAction();
+                pendingAction = null;
+            }
+        } else {
+            alert('비밀번호가 올바르지 않습니다.');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminPassword').focus();
+        }
+    };
+
+    // 글쓰기 시도
+    window.tryOpenUpdateWriteForm = function() {
+        if (isAdmin) {
+            openWriteForm();
+        } else {
+            openPasswordModal(openWriteForm);
+        }
+    };
+
+    // 글쓰기 폼 열기
+    window.openWriteForm = function(docId = null) {
+        const form = document.getElementById('writeForm');
+        form.classList.remove('hidden');
+        
+        // 초기화
+        if (!docId) {
+            document.getElementById('editDocId').value = '';
+            document.getElementById('updateVersion').value = '';
+            
+            // 오늘 날짜 자동 설정 (YYYYMMDD)
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            
+            document.getElementById('updateDate').value = `${yyyy}${mm}${dd}`;
+            document.getElementById('hiddenDatePicker').value = `${yyyy}-${mm}-${dd}`;
+            
+            document.getElementById('updateContent').value = '';
+            document.querySelector('#writeForm h3').innerHTML = '<i data-lucide="pen-tool" class="w-4 h-4 text-indigo-400"></i> 업데이트 기록 작성';
+        }
+        
+        document.getElementById('updateVersion').focus();
+    };
+
+    // 글쓰기 폼 닫기
+    window.closeWriteForm = function() {
+        document.getElementById('writeForm').classList.add('hidden');
+    };
+
+    // 업데이트 아이템 HTML 생성 함수 (항상 펼쳐짐)
+    function createUpdateItemHtml(id, data) {
+        // 관리자 버튼 (수정/삭제)
+        const adminButtons = `
+            <div class="flex gap-2 mt-4 pt-4 border-t border-gray-700/50 justify-end">
+                <button onclick="editUpdate('${id}', '${data.version}', '${data.date}', \`${data.content.replace(/`/g, '\\`')}\`)" class="text-xs px-3 py-1.5 rounded bg-gray-700 hover:bg-gray-600 text-gray-300 transition">수정</button>
+                <button onclick="deleteUpdate('${id}')" class="text-xs px-3 py-1.5 rounded bg-red-900/30 hover:bg-red-900/50 text-red-400 transition">삭제</button>
+            </div>
+        `;
+
+        return `
+            <div id="item-${id}" class="dynamic-item bg-gray-800/40 rounded-xl border border-gray-700/50 overflow-hidden animate-fade-in-up hover:border-yellow-500/30 transition-colors">
+                <div class="p-5">
+                    <div class="flex items-start gap-4">
+                        <!-- Version Badge -->
+                        <div class="w-16 h-16 rounded-lg bg-gray-900/50 flex flex-col items-center justify-center border border-gray-700/50 shrink-0">
+                            <span class="text-xs text-gray-500 font-medium">VER</span>
+                            <span class="text-lg font-bold text-yellow-400">${data.version.replace(/^v\s*/i, '')}</span>
+                        </div>
+                        
+                        <div class="flex-1 min-w-0">
+                            <!-- Top Row: Date -->
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-sm text-gray-400 font-mono">${data.date}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">UPDATE</span>
+                            </div>
+                            
+                            <!-- Full Content -->
+                            <div class="prose prose-invert prose-sm max-w-none">
+                                <pre class="whitespace-pre-wrap font-sans text-gray-300 leading-relaxed">${data.content}</pre>
+                            </div>
+
+                            ${adminButtons}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    window.submitUpdate = function() {
+        if (!window.db) {
+            alert('Firebase가 아직 초기화되지 않았습니다. 잠시 후 다시 시도해주세요.');
+            return;
+        }
+
+        const docId = document.getElementById('editDocId').value;
+        const versionInput = document.getElementById('updateVersion').value.trim();
+        const dateInput = document.getElementById('updateDate').value.trim(); // YYYYMMDD
+        const content = document.getElementById('updateContent').value;
+
+        if (!versionInput || !dateInput || !content) {
+            alert('모든 항목을 입력해주세요.');
+            return;
+        }
+
+        if (dateInput.length !== 8) {
+            alert('날짜는 8자리 숫자로 입력해주세요 (예: 20241128)');
+            return;
+        }
+
+        // 버전 포맷팅 (v 1.0)
+        let version = versionInput;
+        if (!version.toLowerCase().startsWith('v')) {
+            version = 'v ' + version;
+        } else if (version.toLowerCase().startsWith('v') && !version.startsWith('v ')) {
+             version = version.replace(/^v/i, 'v ');
+        }
+
+        // 날짜 포맷팅 (YYYYMMDD -> YYYY. MM. DD)
+        const yyyy = dateInput.substring(0, 4);
+        const mm = dateInput.substring(4, 6);
+        const dd = dateInput.substring(6, 8);
+        const formattedDate = `${yyyy}. ${mm}. ${dd}`;
+        const isoDate = `${yyyy}-${mm}-${dd}`; // Date 객체 생성용
+
+        const data = {
+            version: version,
+            date: formattedDate,
+            content: content,
+            timestamp: new Date(isoDate) // 정렬용 (Date 객체)
+        };
+
+        if (docId) {
+            // 수정
+            window.db.collection('update_history').doc(docId).update(data)
+            .then(() => {
+                alert('수정되었습니다.');
+                closeWriteForm();
+            })
+            .catch((error) => {
+                console.error("Error updating document: ", error);
+                alert('수정 중 오류가 발생했습니다: ' + error.message);
+            });
+        } else {
+            // 신규 등록
+            window.db.collection('update_history').add(data)
+            .then(() => {
+                alert('등록되었습니다.');
+                closeWriteForm();
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+                alert('등록 중 오류가 발생했습니다: ' + error.message);
+            });
+        }
+    };
+
+    // 수정 모드로 폼 열기
+    window.editUpdate = function(id, version, date, content) {
+        if (!isAdmin) {
+            openPasswordModal(() => editUpdate(id, version, date, content));
+            return;
+        }
+        
+        openWriteForm(id);
+        document.getElementById('editDocId').value = id;
+        
+        // 버전에서 'v ' 제거하고 입력창에 표시
+        let cleanVersion = version.replace(/^v\s*/i, '');
+        document.getElementById('updateVersion').value = cleanVersion;
+        
+        // 날짜 변환 (YYYY. MM. DD -> YYYYMMDD)
+        // 공백 제거 후 .으로 분리
+        const dateParts = date.replace(/\s/g, '').split('.');
+        if (dateParts.length >= 3) {
+            const yyyy = dateParts[0];
+            const mm = dateParts[1].padStart(2, '0');
+            const dd = dateParts[2].padStart(2, '0');
+            document.getElementById('updateDate').value = `${yyyy}${mm}${dd}`;
+            document.getElementById('hiddenDatePicker').value = `${yyyy}-${mm}-${dd}`;
+        } else {
+            document.getElementById('updateDate').value = '';
+        }
+        
+        document.getElementById('updateContent').value = content;
+        document.querySelector('#writeForm h3').innerHTML = '<i data-lucide="edit" class="w-4 h-4 text-indigo-400"></i> 기록 수정하기';
+    };
+
+    // 삭제 함수
+    window.deleteUpdate = function(id) {
+        if (!isAdmin) {
+            openPasswordModal(() => deleteUpdate(id));
+            return;
+        }
+
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            window.db.collection('update_history').doc(id).delete()
+            .then(() => {
+                alert('삭제되었습니다.');
+            })
+            .catch((error) => {
+                console.error("Error removing document: ", error);
+                alert('삭제 중 오류가 발생했습니다.');
+            });
+        }
+    };
+
+    // Firebase 데이터 로드 및 렌더링
+    function loadUpdateHistory() {
+        if (!window.db) return;
+
+        // onSnapshot의 리턴값(구독 해제 함수)을 전역 변수에 저장
+        window.updateHistoryUnsubscribe = window.db.collection('update_history').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
+            // 전체 다시 그리기 방식 적용
+            renderAllUpdates(snapshot.docs);
+        });
+    }
+    
+    function renderAllUpdates(docs) {
+        const list = document.getElementById('updateList');
+        list.innerHTML = ''; // 초기화
+        
+        docs.forEach(doc => {
+            const data = doc.data();
+            const id = doc.id;
+            const itemHtml = createUpdateItemHtml(id, data);
+            list.insertAdjacentHTML('beforeend', itemHtml);
+        });
+        lucide.createIcons();
+    }
+
+    // 초기 실행
+    loadUpdateHistory();
+    lucide.createIcons();
+}
+</script>

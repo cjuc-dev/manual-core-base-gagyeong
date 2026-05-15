@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ko" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청주도시공사 체육시설 통합 매뉴얼 (Command Center)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // 클래스 기반 다크모드 활성화
+        }
+    </script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- DOMPurify for XSS Protection (시큐어 코딩 의무 지침) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/index_main_v2.css">
+    <link rel="stylesheet" href="css/index_content_v2.css">
+</head>
+<!-- 배경색 및 글자색: 라이트모드(기본) / 다크모드(dark:) 분리 -->
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 flex h-screen overflow-hidden transition-colors duration-300">
+    
+    <!-- 오버레이 (모바일용 사이드바 배경) -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden" onclick="toggleSidebar()" aria-hidden="true"></div>
+
+    <!-- 좌측 아코디언 사이드바 -->
+    <aside id="sidebar" class="fixed top-0 left-0 w-72 h-full bg-white dark:bg-gray-800 z-50 transform -translate-x-full transition-transform duration-300 overflow-y-auto lg:relative lg:translate-x-0 border-r border-gray-200 dark:border-gray-700 flex flex-col shadow-xl">
+        <!-- 사이드바 헤더 -->
+        <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <div>
+                <h1 class="text-lg font-bold text-emerald-600 dark:text-emerald-400">통합 매뉴얼</h1>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Smart Operations Suite</p>
+            </div>
+            <!-- 모바일 닫기 버튼 -->
+            <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-gray-800 dark:hover:text-white focus:outline-none" aria-label="사이드바 닫기">
+                <i class="ph ph-x text-2xl" aria-hidden="true"></i>
+            </button>
+        </div>
+        
+        <!-- 아코디언 메뉴 네비게이션 -->
+        <nav class="flex-1 overflow-y-auto py-4" aria-label="메인 내비게이션">
+            
+            <!-- 1. 시설 분류 아코디언 -->
+            <div class="mb-2">
+                <button onclick="toggleAccordion('facility-menu', 'facility-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="true" aria-controls="facility-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-buildings text-lg text-emerald-600 dark:text-emerald-400" aria-hidden="true"></i> 시설 바로가기
+                    </span>
+                    <i id="facility-icon" class="ph ph-caret-down transition-transform duration-300 transform rotate-180" aria-hidden="true"></i>
+                </button>
+                <div id="facility-menu" class="overflow-hidden transition-all duration-300 max-h-96">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50">
+                        <li>
+                            <button onclick="loadContent('cheongjuSwimming_guide')" class="w-full flex items-center gap-3 px-10 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-gray-700 transition-colors">
+                                <i class="ph ph-bank text-emerald-500" aria-hidden="true"></i> 청주수영장
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('purmi_guide')" class="w-full flex items-center gap-3 px-10 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-gray-700 transition-colors">
+                                <i class="ph ph-warehouse text-emerald-500" aria-hidden="true"></i> 푸르미스포츠센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('youngun_sportscenter_guide')" class="w-full flex items-center gap-3 px-10 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-gray-700 transition-colors">
+                                <i class="ph ph-warehouse text-emerald-500" aria-hidden="true"></i> 영운국민체육센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('bokdae_sportscenter_guide')" class="w-full flex items-center gap-3 px-10 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-gray-700 transition-colors">
+                                <i class="ph ph-warehouse text-emerald-500" aria-hidden="true"></i> 복대국민체육센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('gagyeong_sportscenter_guide')" class="w-full flex items-center gap-3 px-10 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-gray-700 transition-colors">
+                                <i class="ph ph-building text-emerald-500" aria-hidden="true"></i> 가경국민체육센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('sannam_sportscenter_guide')" class="w-full flex items-center gap-3 px-10 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-gray-700 transition-colors">
+                                <i class="ph ph-building text-emerald-500" aria-hidden="true"></i> 산남국민체육센터
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 2. 관리자/설정 메뉴 (보안 통제) -->
+            <div class="mb-2">
+                <button onclick="toggleAccordion('admin-menu', 'admin-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false" aria-controls="admin-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-shield-check text-lg text-indigo-500 dark:text-indigo-400" aria-hidden="true"></i> 사이버보안 (Admin)
+                    </span>
+                    <i id="admin-icon" class="ph ph-caret-down transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div id="admin-menu" class="overflow-hidden transition-all duration-300 max-h-0">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50">
+                        <li>
+                            <!-- 관리자 접근 통제 (MFA 안내) -->
+                            <button onclick="alert('접근이 통제되었습니다. 사이버보안 규정에 따라 관리자(MFA) 다중 인증을 통해 접속해야 합니다.')" class="w-full flex items-center gap-3 px-10 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors">
+                                <i class="ph ph-lock-key" aria-hidden="true"></i> 관리자 대시보드
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 사이드바 푸터 (법적 고지 링크) -->
+        <div class="p-4 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 text-center">
+            <p>Smart Operations Suite v5</p>
+            <div class="mt-2 space-x-2">
+                <a href="pages/privacy_policy.html" class="hover:text-emerald-600 dark:hover:text-emerald-400 underline" title="개인정보처리방침 읽기">개인정보처리방침</a>
+                <span>|</span>
+                <a href="pages/terms_of_use.html" class="hover:text-emerald-600 dark:hover:text-emerald-400 underline" title="이용약관 읽기">이용약관</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 우측 메인 콘텐츠 영역 -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden relative">
+        
+        <!-- 상단 헤더바 (Sticky) -->
+        <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex justify-between items-center z-30 shadow-sm dark:shadow-md transition-colors duration-300">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-500 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white focus:outline-none" aria-label="메뉴 열기">
+                    <i class="ph ph-list text-2xl" aria-hidden="true"></i>
+                </button>
+                <h2 class="text-xl font-extrabold text-gray-800 dark:text-white hidden sm:block tracking-tight">
+                    COMMAND <span class="text-emerald-600 dark:text-cyan-400">CENTER</span>
+                </h2>
+            </div>
+            
+            <!-- 데스크탑 검색 창 -->
+            <div class="relative w-full max-w-md mx-4 hidden sm:block">
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="검색어 입력 (예: 수영장, 행정, 소화기...)" 
+                        class="w-full bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white px-4 py-2 pl-10 rounded-full focus:outline-none focus:border-emerald-500 dark:focus:border-cyan-500 focus:ring-1 focus:ring-emerald-500 dark:focus:ring-cyan-500 transition-all text-sm"
+                        aria-label="통합 검색 (PDF 메타데이터 연동)">
+                    <i class="ph ph-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-lg" aria-hidden="true"></i>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <button onclick="toggleTheme()" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-amber-500 dark:text-yellow-400 transition-colors focus:outline-none" aria-label="다크/라이트 모드 전환">
+                    <!-- 라이트모드일때는 달 아이콘 표시 (다크로 가기 위해) -->
+                    <i class="ph ph-moon text-xl block dark:hidden" id="moonIcon" aria-hidden="true"></i>
+                    <!-- 다크모드일때는 해 아이콘 표시 (라이트로 가기 위해) -->
+                    <i class="ph ph-sun text-xl hidden dark:block" id="sunIcon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- 모바일 전용 검색창 -->
+        <div class="p-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sm:hidden">
+            <div class="relative">
+                <input type="text" id="searchInputMobile" placeholder="검색어 입력..." 
+                    class="w-full bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white px-4 py-2 pl-10 rounded-full focus:outline-none focus:border-emerald-500 dark:focus:border-cyan-500 text-sm"
+                    aria-label="모바일 통합 검색">
+                <i class="ph ph-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-lg" aria-hidden="true"></i>
+            </div>
+        </div>
+
+        <!-- 메인 스크롤 영역 -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-8" id="mainScrollArea" role="main">
+            
+            <div class="max-w-6xl mx-auto">
+                <!-- 브레드크럼 -->
+                <nav id="breadcrumbNav" class="hidden mb-6 text-sm text-gray-500 dark:text-gray-400" aria-label="Breadcrumb">
+                    <button onclick="showDashboard()" class="hover:text-emerald-600 dark:hover:text-cyan-400 transition-colors focus:outline-none" aria-label="홈으로 가기">
+                        <i class="ph ph-house mr-1" aria-hidden="true"></i>홈
+                    </button>
+                    <span class="mx-2" aria-hidden="true">/</span>
+                    <span id="breadcrumbCurrent" class="text-emerald-700 dark:text-emerald-400 font-medium" aria-current="page">현재 문서</span>
+                </nav>
+
+                <!-- 2-A: 대시보드 뷰 -->
+                <div id="dashboardView" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- 모듈 1: 매뉴얼 -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:border-emerald-500 dark:hover:border-emerald-500/50 transition-colors">
+                        <div class="flex justify-between items-center cursor-pointer focus:outline-none" 
+                             onclick="toggleAccordion('dashboardManualSelector', 'dashboardManualToggleIcon')" 
+                             tabindex="0" role="button" aria-expanded="false" aria-controls="dashboardManualSelector">
+                            <div>
+                                <i class="ph ph-book-open text-4xl mb-3 text-emerald-600 dark:text-emerald-400" aria-hidden="true"></i>
+                                <h2 class="text-xl font-bold mb-1 text-emerald-700 dark:text-emerald-300">매뉴얼 (Manual)</h2>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">운영 및 기술 지침서</p>
+                            </div>
+                            <i id="dashboardManualToggleIcon" class="ph ph-caret-down text-2xl text-emerald-600 dark:text-emerald-400 transition-transform duration-300" aria-hidden="true"></i>
+                        </div>
+                        
+                        <div id="dashboardManualSelector" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 max-h-0">
+                            <div class="space-y-2">
+                                <button onclick="loadContent('admin')" class="w-full text-left p-2.5 rounded bg-gray-50 dark:bg-gray-700/50 text-gray-700 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-600/50 transition-colors flex items-center gap-2">
+                                    <i class="ph ph-file-text" aria-hidden="true"></i> 행정 (Admin)
+                                </button>
+                                <button onclick="loadContent('tech')" class="w-full text-left p-2.5 rounded bg-gray-50 dark:bg-gray-700/50 text-gray-700 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-600/50 transition-colors flex items-center gap-2">
+                                    <i class="ph ph-cpu" aria-hidden="true"></i> 기술 (Tech)
+                                </button>
+                                <button onclick="loadContent('safety')" class="w-full text-left p-2.5 rounded bg-gray-50 dark:bg-gray-700/50 text-gray-700 dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-600/50 transition-colors flex items-center gap-2">
+                                    <i class="ph ph-shield-warning" aria-hidden="true"></i> 안전관리 표준매뉴얼 (PDF)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 모듈 2: 현황 -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:border-yellow-500 dark:hover:border-yellow-500/50 transition-colors">
+                        <div class="flex justify-between items-center cursor-pointer focus:outline-none" 
+                             onclick="toggleAccordion('dashboardStatusSelector', 'dashboardStatusToggleIcon')" 
+                             tabindex="0" role="button" aria-expanded="false" aria-controls="dashboardStatusSelector">
+                            <div>
+                                <i class="ph ph-chart-bar text-4xl mb-3 text-yellow-500 dark:text-yellow-400" aria-hidden="true"></i>
+                                <h2 class="text-xl font-bold mb-1 text-yellow-600 dark:text-yellow-300">현황 (Status)</h2>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">업데이트 및 시설 상태</p>
+                            </div>
+                            <i id="dashboardStatusToggleIcon" class="ph ph-caret-down text-2xl text-yellow-500 dark:text-yellow-400 transition-transform duration-300" aria-hidden="true"></i>
+                        </div>
+                        <div id="dashboardStatusSelector" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 max-h-0">
+                            <div class="space-y-2">
+                                <button onclick="loadContent('update')" class="w-full text-left p-2.5 rounded bg-gray-50 dark:bg-gray-700/50 text-gray-700 dark:text-yellow-200 hover:bg-yellow-50 dark:hover:bg-yellow-600/50 transition-colors flex items-center gap-2">
+                                    <i class="ph ph-clock-counter-clockwise" aria-hidden="true"></i> 업데이트 히스토리
+                                </button>
+                                <button onclick="loadContent('facility')" class="w-full text-left p-2.5 rounded bg-gray-50 dark:bg-gray-700/50 text-gray-700 dark:text-yellow-200 hover:bg-yellow-50 dark:hover:bg-yellow-600/50 transition-colors flex items-center gap-2">
+                                    <i class="ph ph-activity" aria-hidden="true"></i> 실시간 모니터링
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!-- 2-B: 콘텐츠 뷰어 -->
+                <div id="contentView" class="hidden">
+                    <div id="content-area" class="bg-white dark:bg-gray-800 p-6 sm:p-10 shadow-md dark:shadow-xl min-h-[500px] rounded-xl border border-gray-200 dark:border-gray-700" aria-live="polite">
+                        <!-- 콘텐츠 로딩 영역 -->
+                        <div class="flex flex-col items-center justify-center h-full text-gray-400 dark:text-gray-500 py-20">
+                            <i class="ph ph-spinner-gap text-4xl animate-spin mb-4" aria-hidden="true"></i>
+                            <p>콘텐츠를 안전하게 불러오는 중입니다...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- 스크립트 로직 -->
+    <script>
+        // 초기 테마 설정 확인
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function toggleAccordion(menuId, iconId) {
+            const menu = document.getElementById(menuId);
+            const icon = document.getElementById(iconId);
+            const isMenuExpanded = menu.style.maxHeight && menu.style.maxHeight !== '0px';
+
+            if (isMenuExpanded) {
+                menu.style.maxHeight = '0px';
+                icon.classList.remove('rotate-180');
+                menu.previousElementSibling.setAttribute('aria-expanded', 'false');
+            } else {
+                menu.style.maxHeight = menu.scrollHeight + 'px';
+                icon.classList.add('rotate-180');
+                menu.previousElementSibling.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        function toggleTheme() {
+            const htmlClasses = document.documentElement.classList;
+            if (htmlClasses.contains('dark')) {
+                htmlClasses.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlClasses.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function loadContent(contentId) {
+            if(window.innerWidth < 1024) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+                document.getElementById('sidebar-overlay').classList.add('hidden');
+            }
+
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('contentView').classList.remove('hidden');
+            
+            const breadcrumbNav = document.getElementById('breadcrumbNav');
+            const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
+            breadcrumbNav.classList.remove('hidden');
+            breadcrumbNav.classList.add('flex');
+            
+            // 보안 가이드라인: DOMPurify XSS 검증
+            const safeId = DOMPurify.sanitize(contentId);
+            breadcrumbCurrent.textContent = "문서: " + safeId;
+
+            const contentArea = document.getElementById('content-area');
+            
+            if(safeId === 'safety') {
+                contentArea.innerHTML = `
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">🛡️ 체육시설 안전관리 표준매뉴얼</h2>
+                    <p class="mb-4 text-gray-600 dark:text-gray-400">아래 뷰어를 통해 원본을 확인하거나 다운로드할 수 있습니다.</p>
+                    <div class="w-full h-[600px] border border-gray-300 dark:border-gray-600 rounded bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+                        <embed src="docs/체육시설 안전관리 표준매뉴얼.pdf" type="application/pdf" width="100%" height="100%" />
+                    </div>
+                `;
+            } else {
+                contentArea.innerHTML = `
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4 capitalize">` + safeId + ` 매뉴얼</h2>
+                    <p class="mb-4 leading-relaxed text-gray-700 dark:text-gray-300">이 영역에는 Phase 3에서 <strong>marked.js</strong>를 통해 변환된 마크다운(.md) 파일이 렌더링됩니다.</p>
+                    
+                    <div class="bg-emerald-50 dark:bg-gray-900/50 p-4 rounded text-sm text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30">
+                        <i class="ph ph-check-circle inline mr-1"></i> <strong>시큐어 코딩 지침 준수</strong>
+                        <ul class="list-disc pl-5 mt-2 text-gray-600 dark:text-gray-400">
+                            <li>DOMPurify를 통해 XSS 악성 스크립트 렌더링 사전 차단.</li>
+                            <li>개인정보 (이름, 연락처) 노출 시 즉각 마스킹 처리 로직 연동 대기 중.</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('mainScrollArea').scrollTop = 0;
+        }
+
+        function showDashboard() {
+            document.getElementById('contentView').classList.add('hidden');
+            document.getElementById('dashboardView').classList.remove('hidden');
+            
+            const breadcrumbNav = document.getElementById('breadcrumbNav');
+            breadcrumbNav.classList.remove('flex');
+            breadcrumbNav.classList.add('hidden');
+        }
+
+        window.onload = () => {
+            const facilityMenu = document.getElementById('facility-menu');
+            if(facilityMenu) facilityMenu.style.maxHeight = facilityMenu.scrollHeight + 'px';
+        };
+    </script>
+</body>
+</html>

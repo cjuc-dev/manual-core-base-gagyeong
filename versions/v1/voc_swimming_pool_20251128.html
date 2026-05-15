@@ -1,0 +1,361 @@
+<div class="p-4 sm:p-6 animate-fade-in">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 border-b border-gray-700/50 pb-6 gap-4">
+        <div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-emerald-400 flex items-center gap-3">
+                수영장 VOC <span class="text-gray-500 text-lg font-normal">(시민의 소리)</span>
+            </h2>
+            <p class="text-gray-400 mt-2 text-sm">수영장 이용과 관련된 건의사항을 자유롭게 남겨주세요.</p>
+        </div>
+        <button onclick="tryOpenWriteForm()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all shadow-lg shadow-indigo-900/20 flex items-center gap-2 font-medium group">
+            <i data-lucide="pen-tool" class="w-4 h-4 group-hover:scale-110 transition-transform"></i> 글쓰기
+        </button>
+    </div>
+
+    <!-- Password Modal -->
+    <div id="passwordModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div class="bg-gray-800 border border-gray-700 rounded-xl p-6 w-full max-w-sm shadow-2xl transform transition-all scale-100">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <i data-lucide="shield-alert" class="w-5 h-5 text-emerald-400"></i> 관리자 인증
+            </h3>
+            <p class="text-gray-400 text-sm mb-4">글쓰기 및 수정/삭제 권한을 위해 비밀번호를 입력하세요.</p>
+            <input type="password" id="adminPassword" placeholder="비밀번호 입력" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition mb-4" onkeypress="handlePasswordEnter(event)">
+            <div class="flex justify-end gap-3">
+                <button onclick="closePasswordModal()" class="px-4 py-2 text-gray-400 hover:text-white transition">취소</button>
+                <button onclick="checkAdminPassword()" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium shadow-lg shadow-emerald-900/20 transition">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Write Form -->
+    <div id="writeForm" class="hidden mb-8 bg-gray-800/50 p-6 rounded-xl border border-gray-700 backdrop-blur-sm shadow-xl transition-all duration-300">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <i data-lucide="pen-tool" class="w-4 h-4 text-indigo-400"></i> 관리자 글쓰기 / 수정
+        </h3>
+        <input type="hidden" id="editDocId"> <!-- 수정 시 문서 ID 저장 -->
+        
+        <div class="grid grid-cols-1 gap-4 mb-4">
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">제목</label>
+                <input type="text" id="vocTitle" placeholder="제목을 입력하세요" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition">
+            </div>
+            <div>
+                <label class="block text-xs text-gray-500 mb-1">작성자</label>
+                <input type="text" id="vocAuthor" value="익명" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition">
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-xs text-gray-500 mb-1">질문 내용</label>
+            <textarea id="vocContent" placeholder="건의하실 내용을 상세히 적어주세요..." class="w-full h-32 bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition resize-none"></textarea>
+        </div>
+
+        <div class="mb-4 border-t border-gray-700 pt-4">
+            <label class="block text-xs text-emerald-500 mb-1 font-bold">답변 내용 (관리자 작성)</label>
+            <textarea id="vocAnswer" placeholder="답변 내용을 입력하세요..." class="w-full h-32 bg-gray-900/50 border border-emerald-500/30 rounded-lg px-4 py-2 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition resize-none"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-3">
+            <button onclick="closeWriteForm()" class="px-4 py-2 text-gray-400 hover:text-white transition">취소</button>
+            <button onclick="submitVocSwimming()" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium shadow-lg shadow-emerald-900/20 transition">등록하기</button>
+        </div>
+    </div>
+
+    <!-- List Container -->
+    <div id="vocList" class="space-y-4">
+        <!-- Firebase Data will be loaded here -->
+    </div>
+</div>
+
+<script>
+{
+    // 전역 변수 충돌 방지를 위한 블록 스코프
+    let isAdmin = false;
+    let pendingAction = null;
+
+    // 이전 리스너가 있다면 구독 해제 (중복 실행 방지)
+    if (window.vocSwimmingUnsubscribe) {
+        console.log('Unsubscribing from previous VOC listener');
+        window.vocSwimmingUnsubscribe();
+        window.vocSwimmingUnsubscribe = null;
+    }
+
+    // 비밀번호 모달 열기
+    window.openPasswordModal = function(actionCallback) {
+        pendingAction = actionCallback;
+        document.getElementById('passwordModal').classList.remove('hidden');
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('adminPassword').focus();
+    };
+
+    // 비밀번호 모달 닫기
+    window.closePasswordModal = function() {
+        document.getElementById('passwordModal').classList.add('hidden');
+        pendingAction = null;
+    };
+
+    // 비밀번호 엔터 처리
+    window.handlePasswordEnter = function(event) {
+        if (event.key === 'Enter') {
+            checkAdminPassword();
+        }
+    };
+
+    // 관리자 비밀번호 확인
+    window.checkAdminPassword = function() {
+        const password = document.getElementById('adminPassword').value;
+        if (password === 'admin') {
+            isAdmin = true;
+            closePasswordModal();
+            if (pendingAction) {
+                pendingAction();
+                pendingAction = null;
+            }
+        } else {
+            alert('비밀번호가 올바르지 않습니다.');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminPassword').focus();
+        }
+    };
+
+    // 글쓰기 시도
+    window.tryOpenWriteForm = function() {
+        if (isAdmin) {
+            openWriteForm();
+        } else {
+            openPasswordModal(openWriteForm);
+        }
+    };
+
+    // 글쓰기 폼 열기
+    window.openWriteForm = function(docId = null) {
+        const form = document.getElementById('writeForm');
+        form.classList.remove('hidden');
+        
+        // 초기화
+        if (!docId) {
+            document.getElementById('editDocId').value = '';
+            document.getElementById('vocTitle').value = '';
+            document.getElementById('vocAuthor').value = '익명';
+            document.getElementById('vocContent').value = '';
+            document.getElementById('vocAnswer').value = '';
+            document.querySelector('#writeForm h3').innerHTML = '<i data-lucide="pen-tool" class="w-4 h-4 text-indigo-400"></i> 글쓰기';
+        }
+        
+        document.getElementById('vocTitle').focus();
+    };
+
+    // 글쓰기 폼 닫기
+    window.closeWriteForm = function() {
+        document.getElementById('writeForm').classList.add('hidden');
+    };
+
+    // 아이템 토글 함수
+    window.toggleVocItem = function(id) {
+        const content = document.getElementById(`content-${id}`);
+        const icon = document.getElementById(`icon-${id}`);
+        
+        content.classList.toggle('hidden');
+        if (content.classList.contains('hidden')) {
+            icon.classList.remove('rotate-180');
+        } else {
+            icon.classList.add('rotate-180');
+        }
+    };
+
+    // VOC 제출 함수 (등록 및 수정)
+    window.submitVocSwimming = function() {
+        if (!window.db) {
+            alert('Firebase가 아직 초기화되지 않았습니다. 잠시 후 다시 시도해주세요.');
+            return;
+        }
+
+        const docId = document.getElementById('editDocId').value;
+        const title = document.getElementById('vocTitle').value;
+        const author = document.getElementById('vocAuthor').value;
+        const content = document.getElementById('vocContent').value;
+        const answer = document.getElementById('vocAnswer').value;
+
+        if (!title || !author || !content) {
+            alert('필수 항목을 모두 입력해주세요.');
+            return;
+        }
+
+        const status = answer.trim() ? '답변완료' : '접수완료';
+        const data = {
+            title: title,
+            author: author,
+            content: content,
+            answer: answer,
+            status: status,
+            timestamp: new Date() // 수정 시에도 타임스탬프 업데이트 (선택 사항)
+        };
+
+        if (docId) {
+            // 수정
+            window.db.collection('voc_swimming').doc(docId).update(data)
+            .then(() => {
+                alert('수정되었습니다.');
+                closeWriteForm();
+            })
+            .catch((error) => {
+                console.error("Error updating document: ", error);
+                alert('수정 중 오류가 발생했습니다: ' + error.message);
+            });
+        } else {
+            // 신규 등록
+            window.db.collection('voc_swimming').add(data)
+            .then(() => {
+                alert('등록되었습니다.');
+                closeWriteForm();
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+                alert('등록 중 오류가 발생했습니다: ' + error.message);
+            });
+        }
+    };
+
+    // 수정 모드로 폼 열기
+    window.editVoc = function(id, title, author, content, answer) {
+        if (!isAdmin) {
+            openPasswordModal(() => editVoc(id, title, author, content, answer));
+            return;
+        }
+        
+        openWriteForm(id);
+        document.getElementById('editDocId').value = id;
+        document.getElementById('vocTitle').value = title;
+        document.getElementById('vocAuthor').value = author;
+        document.getElementById('vocContent').value = content;
+        document.getElementById('vocAnswer').value = answer || '';
+        document.querySelector('#writeForm h3').innerHTML = '<i data-lucide="edit" class="w-4 h-4 text-indigo-400"></i> 글 수정하기';
+    };
+
+    // 삭제 함수
+    window.deleteVoc = function(id) {
+        if (!isAdmin) {
+            openPasswordModal(() => deleteVoc(id));
+            return;
+        }
+
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            window.db.collection('voc_swimming').doc(id).delete()
+            .then(() => {
+                alert('삭제되었습니다.');
+            })
+            .catch((error) => {
+                console.error("Error removing document: ", error);
+                alert('삭제 중 오류가 발생했습니다.');
+            });
+        }
+    };
+
+    // VOC 아이템 HTML 생성 함수 (내부 사용)
+    function createVocItemHtml(id, data) {
+        // 상태 뱃지 스타일
+        const statusClass = data.status === '답변완료' 
+            ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' 
+            : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+        
+        // 답변 영역 HTML
+        let answerHtml = '';
+        if (data.answer) {
+            answerHtml = `
+                <div class="pl-4 border-l-2 border-indigo-500/50">
+                    <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2 mb-2">
+                        <i data-lucide="corner-down-right" class="w-3 h-3"></i> 답변
+                    </span>
+                    <p class="text-gray-300 leading-relaxed whitespace-pre-wrap">${data.answer}</p>
+                </div>
+            `;
+        } else {
+            answerHtml = `
+                <div class="pl-4 border-l-2 border-gray-700">
+                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2 mb-2">
+                        <i data-lucide="corner-down-right" class="w-3 h-3"></i> 답변
+                    </span>
+                    <p class="text-gray-500 italic">아직 답변이 등록되지 않았습니다.</p>
+                </div>
+            `;
+        }
+
+        // 관리자 버튼 (수정/삭제)
+        const adminButtons = `
+            <div class="flex gap-2 mt-4 pt-4 border-t border-gray-700/50 justify-end">
+                <button onclick="editVoc('${id}', '${data.title}', '${data.author}', \`${data.content.replace(/`/g, '\\`')}\`, \`${(data.answer || '').replace(/`/g, '\\`')}\`)" class="text-xs px-3 py-1.5 rounded bg-gray-700 hover:bg-gray-600 text-gray-300 transition">수정</button>
+                <button onclick="deleteVoc('${id}')" class="text-xs px-3 py-1.5 rounded bg-red-900/30 hover:bg-red-900/50 text-red-400 transition">삭제</button>
+            </div>
+        `;
+
+        return `
+            <div id="item-${id}" class="dynamic-item bg-gray-800/50 rounded-xl border border-gray-700 overflow-hidden animate-fade-in-up">
+                <div class="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-700/50 transition" onclick="toggleVocItem('${id}')">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400 font-bold border border-indigo-500/20">Q</div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">${data.title}</h3>
+                            <p class="text-sm text-gray-400">${data.author}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="px-2 py-1 rounded text-xs font-medium border ${statusClass}">${data.status || '접수완료'}</span>
+                        <i id="icon-${id}" data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform"></i>
+                    </div>
+                </div>
+                <div id="content-${id}" class="hidden border-t border-gray-700 bg-gray-900/30">
+                    <div class="p-6 space-y-6">
+                        <div>
+                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2 mb-2">
+                                <i data-lucide="message-square" class="w-3 h-3"></i> 내용
+                            </span>
+                            <p class="text-gray-300 leading-relaxed whitespace-pre-wrap">${data.content}</p>
+                        </div>
+                        ${answerHtml}
+                        ${adminButtons}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Firebase 데이터 로드 및 렌더링
+    function loadVocData() {
+        if (!window.db) return;
+
+        // onSnapshot의 리턴값(구독 해제 함수)을 전역 변수에 저장
+        window.vocSwimmingUnsubscribe = window.db.collection('voc_swimming').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
+            const list = document.getElementById('vocList');
+            if (!list) return; // 요소가 없으면 중단
+
+            snapshot.docChanges().forEach((change) => {
+                const data = change.doc.data();
+                const id = change.doc.id;
+
+                if (change.type === "added") {
+                    const itemHtml = createVocItemHtml(id, data);
+                    list.insertAdjacentHTML('afterbegin', itemHtml);
+                    lucide.createIcons();
+                } else if (change.type === "modified") {
+                    // 기존 아이템 찾기
+                    const oldItem = document.getElementById(`item-${id}`);
+                    if (oldItem) {
+                        // 새 HTML 생성
+                        const newItemHtml = createVocItemHtml(id, data);
+                        // 기존 아이템을 새 아이템으로 교체 (outerHTML 사용)
+                        oldItem.outerHTML = newItemHtml;
+                        lucide.createIcons();
+                    }
+                } else if (change.type === "removed") {
+                    const item = document.getElementById(`item-${id}`);
+                    if (item) item.remove();
+                }
+            });
+        });
+    }
+
+    // 초기 실행
+    loadVocData();
+    lucide.createIcons();
+}
+</script>

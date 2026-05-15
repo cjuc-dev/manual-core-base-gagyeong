@@ -1,0 +1,7 @@
+{
+  "name": "smart-operations-suite",
+  "description": "📌 [package.json] 해당 파일은 시스템 이름, 버전 및 라이브러리 정보를 관리하는 핵심 파일입니다.",
+  "dependencies": {
+    "jimp": "^1.6.0"
+  }
+}

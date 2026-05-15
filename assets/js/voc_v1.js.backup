@@ -1,0 +1,624 @@
+// VOC Feature Logic
+
+const VOC_STORAGE_KEY = 'voc_data_v3';
+
+function getCollectionName(category) {
+    const map = {
+        'swimming_pool': 'voc_swimming',
+        'multipurpose_sports_hall': 'voc_gym',
+        'program_room': 'voc_program',
+        'other_information': 'voc_other'
+    };
+    return map[category] || 'voc_other';
+}
+
+async function loadVocList(category) {
+    console.log("loadVocList called for:", category);
+    let list = [];
+    
+    // 1. Try to load from Firestore with Timeout (Compat SDK)
+    try {
+        if (window.db) {
+            const collectionName = getCollectionName(category);
+            console.log("Fetching from Firestore collection:", collectionName);
+            
+            // Create a timeout promise (2 seconds)
+            const timeout = new Promise((_, reject) => 
+                setTimeout(() => reject(new Error("Firestore timeout")), 2000)
+            );
+
+            // Race between fetch and timeout - COMPAT SDK SYNTAX
+            const querySnapshot = await Promise.race([
+                window.db.collection(collectionName).orderBy("id", "desc").get(),
+                timeout
+            ]);
+
+            querySnapshot.forEach((doc) => {
+                list.push({ firestoreId: doc.id, ...doc.data(), category: category }); // Ensure category is set
+            });
+            console.log("Firestore loaded:", list.length);
+        } else {
+            console.warn("Firebase not initialized or db not available.");
+        }
+    } catch (e) {
+        console.error("Error loading from Firestore (or timeout): ", e);
+        // Fallback will happen below
+    }
+
+
+    // 2. Fallback to LocalStorage / Legacy Data
+    if (list.length === 0) {
+        console.log("Firestore empty or failed, checking LocalStorage/Legacy");
+        const localData = localStorage.getItem(VOC_STORAGE_KEY);
+        if (localData) {
+            const parsed = JSON.parse(localData);
+            // Filter by category for local storage fallback
+            list = parsed.filter(item => item.category === category);
+        } else if (typeof vocDataFile !== 'undefined' && Array.isArray(vocDataFile)) {
+            list = vocDataFile.filter(item => item.category === category);
+        }
+    }
+
+    return list;
+}
+
+function saveVocList(list) {
+    // Legacy local storage save (optional, maybe not needed if using Firestore)
+    // For local storage, we need to merge with existing data of other categories
+    const allData = localStorage.getItem(VOC_STORAGE_KEY) ? JSON.parse(localStorage.getItem(VOC_STORAGE_KEY)) : [];
+    // Remove items of current category from allData to replace them
+    // This is tricky without category context in saveVocList. 
+    // Simplified: Just save the full list if passed, but here we usually pass filtered list.
+    // For now, let's assume LocalStorage is a secondary fallback and might be less granular.
+    localStorage.setItem(VOC_STORAGE_KEY, JSON.stringify(list));
+}
+
+async function renderVocList(category) {
+    console.log("renderVocList called for:", category);
+    const contentArea = document.getElementById('content-area');
+    
+    // Show Loading
+    contentArea.innerHTML = '<div class="flex flex-col items-center justify-center py-12 text-gray-500">' +
+        '<i data-lucide="loader" class="w-8 h-8 animate-spin mb-3 text-emerald-500"></i>' +
+        '<p>데이터를 불러오는 중입니다...</p>' +
+        '</div>';
+    lucide.createIcons();
+
+    try {
+        const list = await loadVocList(category);
+        console.log("List loaded for render:", list.length);
+        
+        // No need to filter again if loadVocList handles it, but safe to keep for local storage fallback structure
+        const filtered = list; 
+        // Sort by id (desc)
+        filtered.sort((a, b) => b.id - a.id);
+
+        const categoryTitles = {
+            'swimming': '수영장 VOC',
+            'voc_swimming_pool': '수영장 민원',
+            'voc_multipurpose_sports_hall': '다목적체육관 민원',
+            'voc_program_room': '프로그램실 민원',
+            'voc_other_information': '기타 문의'
+        };
+        
+        let displayTitle = categoryTitles[category] || category;
+        if (category === 'swimming_pool') displayTitle = '수영장 민원';
+        else if (category === 'multipurpose_sports_hall') displayTitle = '다목적체육관 민원';
+        else if (category === 'program_room') displayTitle = '프로그램실 민원';
+        else if (category === 'other_information') displayTitle = '기타 문의';
+
+        let html = '';
+        html += '<div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">';
+        html += '    <h2 class="text-2xl font-bold text-indigo-400 m-0">' + displayTitle + '</h2>';
+        html += '    <button onclick="tryOpenVocWriteModal(\'' + category + '\')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg flex items-center transition">';
+        html += '        <i data-lucide="plus" class="w-4 h-4 mr-2"></i> 글쓰기';
+        html += '    </button>';
+        html += '</div>';
+        html += '<div class="space-y-4" id="vocList">';
+
+        if (filtered.length === 0) {
+            html += '<div class="text-center py-12 text-gray-500 bg-gray-800/50 rounded-lg border border-gray-700 border-dashed">';
+            html += '    <i data-lucide="inbox" class="w-12 h-12 mx-auto mb-3 opacity-50"></i>';
+            html += '    <p>등록된 게시글이 없습니다.</p>';
+            html += '</div>';
+        } else {
+            filtered.forEach(item => {
+                // Use firestoreId for edit/delete if available, fallback to id for legacy
+                const editId = item.firestoreId ? '\'' + item.firestoreId + '\'' : item.id;
+                const deleteId = item.firestoreId ? '\'' + item.firestoreId + '\'' : item.id;
+                
+                let adminButtons = '';
+                // Always show buttons to allow auth trigger
+                adminButtons += '<button onclick="tryEditVoc(' + editId + ', \'' + category + '\')" class="p-2 text-gray-400 hover:text-blue-400 transition-colors" title="수정">';
+                adminButtons += '    <i data-lucide="edit-2" class="w-4 h-4"></i>';
+                adminButtons += '</button>';
+                adminButtons += '<button onclick="deleteVoc(' + deleteId + ', \'' + category + '\')" class="p-2 text-gray-400 hover:text-red-400 transition-colors" title="삭제">';
+                adminButtons += '    <i data-lucide="trash-2" class="w-4 h-4"></i>';
+                adminButtons += '</button>';
+
+                html += '<details class="group bg-gray-800 rounded-lg border border-gray-700 overflow-hidden transition-all duration-200 hover:border-gray-600">';
+                html += '    <summary class="flex items-center justify-between p-5 cursor-pointer select-none bg-gray-800 hover:bg-gray-750">';
+                html += '        <div class="flex items-center space-x-4 flex-1">';
+                html += '            <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-900/50 text-indigo-400 font-bold text-sm">Q</span>';
+                html += '            <div class="flex-1 min-w-0">';
+                html += '                <h3 class="text-lg font-medium text-gray-200 group-open:text-indigo-400 transition-colors truncate pr-4">' + item.title + '</h3>';
+                html += '                <div class="flex items-center text-xs text-gray-500 mt-1 space-x-3">';
+                html += '                    <span>' + item.author + '</span>';
+                html += '                    <span>•</span>';
+                html += '                    <span>' + item.date + '</span>';
+                html += '                </div>';
+                html += '            </div>';
+                html += '        </div>';
+                html += '        <div class="flex items-center space-x-3">';
+                html += '            ' + adminButtons;
+                html += '            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-500 transition-transform duration-300 group-open:rotate-180"></i>';
+                html += '        </div>';
+                html += '    </summary>';
+                html += '    <div class="p-5 pt-0 border-t border-gray-700/50 bg-gray-800/50">';
+                html += '        <div class="mt-4 space-y-4">';
+                html += '            <div class="bg-gray-900/50 p-4 rounded-lg">';
+                html += '                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">내용</span>';
+// VOC Feature Logic
+
+const VOC_STORAGE_KEY = 'voc_data_v3';
+
+// VOC Logic (Compat Version)
+
+// ... (Helper functions remain same) ...
+
+function getCollectionName(category) {
+    const map = {
+        'swimming_pool': 'voc_swimming',
+        'multipurpose_sports_hall': 'voc_gym',
+        'program_room': 'voc_program',
+        'other_information': 'voc_other'
+    };
+    return map[category] || 'voc_other';
+}
+
+async function loadVocList(category) {
+    console.log("loadVocList called for:", category);
+    let list = [];
+    
+    // 1. Try to load from Firestore with Timeout
+    try {
+        if (window.db) { // Only check for window.db
+            const collectionName = getCollectionName(category);
+            console.log("Fetching from Firestore collection:", collectionName);
+            
+            // Compat: db.collection().orderBy().get()
+            const querySnapshot = await Promise.race([
+                window.db.collection(collectionName).orderBy("id", "desc").get(),
+                new Promise((_, reject) => setTimeout(() => reject(new Error("Firestore timeout")), 2000))
+            ]);
+
+            querySnapshot.forEach((doc) => {
+                list.push({ firestoreId: doc.id, ...doc.data(), category: category }); // Ensure category is set
+            });
+            console.log("Firestore loaded:", list.length);
+        } else {
+            console.warn("Firebase not initialized or global functions missing.");
+        }
+    } catch (e) {
+        console.error("Error loading from Firestore (or timeout): ", e);
+        // Fallback will happen below
+    }
+
+    // 2. Fallback to LocalStorage / Legacy Data
+    if (list.length === 0) {
+        console.log("Firestore empty or failed, checking LocalStorage/Legacy");
+        const localData = localStorage.getItem(VOC_STORAGE_KEY);
+        if (localData) {
+            const parsed = JSON.parse(localData);
+            // Filter by category for local storage fallback
+            list = parsed.filter(item => item.category === category);
+        } else if (typeof vocDataFile !== 'undefined' && Array.isArray(vocDataFile)) {
+            list = vocDataFile.filter(item => item.category === category);
+        }
+    }
+
+    return list;
+}
+
+function saveVocList(list) {
+    // Legacy local storage save (optional, maybe not needed if using Firestore)
+    // For local storage, we need to merge with existing data of other categories
+    const allData = localStorage.getItem(VOC_STORAGE_KEY) ? JSON.parse(localStorage.getItem(VOC_STORAGE_KEY)) : [];
+    // Remove items of current category from allData to replace them
+    // This is tricky without category context in saveVocList. 
+    // Simplified: Just save the full list if passed, but here we usually pass filtered list.
+    // For now, let's assume LocalStorage is a secondary fallback and might be less granular.
+    localStorage.setItem(VOC_STORAGE_KEY, JSON.stringify(list));
+}
+
+async function renderVocList(category) {
+    console.log("renderVocList called for:", category);
+    const contentArea = document.getElementById('content-area');
+    
+    // Show Loading
+    contentArea.innerHTML = '<div class="flex flex-col items-center justify-center py-12 text-gray-500">' +
+        '<i data-lucide="loader" class="w-8 h-8 animate-spin mb-3 text-emerald-500"></i>' +
+        '<p>데이터를 불러오는 중입니다...</p>' +
+        '</div>';
+    lucide.createIcons();
+
+    try {
+        const list = await loadVocList(category);
+        console.log("List loaded for render:", list.length);
+        
+        // No need to filter again if loadVocList handles it, but safe to keep for local storage fallback structure
+        const filtered = list; 
+        // Sort by id (desc)
+        filtered.sort((a, b) => b.id - a.id);
+
+        const categoryTitles = {
+            'swimming': '수영장 VOC',
+            'voc_swimming_pool': '수영장 민원',
+            'voc_multipurpose_sports_hall': '다목적체육관 민원',
+            'voc_program_room': '프로그램실 민원',
+            'voc_other_information': '기타 문의'
+        };
+        
+        let displayTitle = categoryTitles[category] || category;
+        if (category === 'swimming_pool') displayTitle = '수영장 민원';
+        else if (category === 'multipurpose_sports_hall') displayTitle = '다목적체육관 민원';
+        else if (category === 'program_room') displayTitle = '프로그램실 민원';
+        else if (category === 'other_information') displayTitle = '기타 문의';
+
+        let html = '';
+        html += '<div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">';
+        html += '    <h2 class="text-2xl font-bold text-indigo-400 m-0">' + displayTitle + '</h2>';
+        html += '    <button onclick="tryOpenVocWriteModal(\'' + category + '\')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg flex items-center transition">';
+        html += '        <i data-lucide="plus" class="w-4 h-4 mr-2"></i> 글쓰기';
+        html += '    </button>';
+        html += '</div>';
+        html += '<div class="space-y-4" id="vocList">';
+
+        if (filtered.length === 0) {
+            html += '<div class="text-center py-12 text-gray-500 bg-gray-800/50 rounded-lg border border-gray-700 border-dashed">';
+            html += '    <i data-lucide="inbox" class="w-12 h-12 mx-auto mb-3 opacity-50"></i>';
+            html += '    <p>등록된 게시글이 없습니다.</p>';
+            html += '</div>';
+        } else {
+            filtered.forEach(item => {
+                // Use firestoreId for edit/delete if available, fallback to id for legacy
+                const editId = item.firestoreId ? '\'' + item.firestoreId + '\'' : item.id;
+                const deleteId = item.firestoreId ? '\'' + item.firestoreId + '\'' : item.id;
+                
+                let adminButtons = '';
+                // Always show buttons to allow auth trigger
+                adminButtons += '<button onclick="tryEditVoc(' + editId + ', \'' + category + '\')" class="p-2 text-gray-400 hover:text-blue-400 transition-colors" title="수정">';
+                adminButtons += '    <i data-lucide="edit-2" class="w-4 h-4"></i>';
+                adminButtons += '</button>';
+                adminButtons += '<button onclick="deleteVoc(' + deleteId + ', \'' + category + '\')" class="p-2 text-gray-400 hover:text-red-400 transition-colors" title="삭제">';
+                adminButtons += '    <i data-lucide="trash-2" class="w-4 h-4"></i>';
+                adminButtons += '</button>';
+
+                html += '<details class="group bg-gray-800 rounded-lg border border-gray-700 overflow-hidden transition-all duration-200 hover:border-gray-600">';
+                html += '    <summary class="flex items-center justify-between p-5 cursor-pointer select-none bg-gray-800 hover:bg-gray-750">';
+                html += '        <div class="flex items-center space-x-4 flex-1">';
+                html += '            <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-900/50 text-indigo-400 font-bold text-sm">Q</span>';
+                html += '            <div class="flex-1 min-w-0">';
+                html += '                <h3 class="text-lg font-medium text-gray-200 group-open:text-indigo-400 transition-colors truncate pr-4">' + item.title + '</h3>';
+                html += '                <div class="flex items-center text-xs text-gray-500 mt-1 space-x-3">';
+                html += '                    <span>' + item.author + '</span>';
+                html += '                    <span>•</span>';
+                html += '                    <span>' + item.date + '</span>';
+                html += '                </div>';
+                html += '            </div>';
+                html += '        </div>';
+                html += '        <div class="flex items-center space-x-3">';
+                html += '            ' + adminButtons;
+                html += '            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-500 transition-transform duration-300 group-open:rotate-180"></i>';
+                html += '        </div>';
+                html += '    </summary>';
+                html += '    <div class="p-5 pt-0 border-t border-gray-700/50 bg-gray-800/50">';
+                html += '        <div class="mt-4 space-y-4">';
+                html += '            <div class="bg-gray-900/50 p-4 rounded-lg">';
+                html += '                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">내용</span>';
+                html += '                <p class="text-gray-300 whitespace-pre-wrap leading-relaxed">' + item.content + '</p>';
+                html += '            </div>';
+                
+                if (item.answer) {
+                    html += '            <div class="bg-indigo-900/20 p-4 rounded-lg border border-indigo-500/20">';
+                    html += '                <div class="flex items-center mb-2">';
+                    html += '                    <i data-lucide="corner-down-right" class="w-4 h-4 text-indigo-400 mr-2"></i>';
+                    html += '                    <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">답변</span>';
+                    html += '                </div>';
+                    html += '                <p class="text-indigo-200 whitespace-pre-wrap leading-relaxed">' + item.answer + '</p>';
+                    html += '            </div>';
+                }
+
+                html += '        </div>';
+                html += '    </div>';
+                html += '</details>';
+            });
+        }
+        html += '</div>';
+        
+        contentArea.innerHTML = html;
+        lucide.createIcons();
+    } catch (e) {
+        console.error("Error in renderVocList:", e);
+        contentArea.innerHTML = '<p class="text-center text-red-500 py-8">데이터를 불러오는 중 오류가 발생했습니다.<br>' + e.message + '</p>';
+    }
+}
+
+function toggleVocContent(id) {
+    const content = document.getElementById('voc-content-' + id);
+    const icon = document.getElementById('voc-icon-' + id);
+    
+    content.classList.toggle('hidden');
+    if (content.classList.contains('hidden')) {
+        icon.classList.remove('rotate-180');
+    } else {
+        icon.classList.add('rotate-180');
+    }
+}
+
+// --- VOC WRITE MODAL ---
+const vocWriteModal = document.getElementById('vocWriteModal');
+const vocTitle = document.getElementById('vocTitle');
+const vocAuthor = document.getElementById('vocAuthor');
+const vocContent = document.getElementById('vocContent');
+const vocAnswer = document.getElementById('vocAnswer');
+const vocCategoryInput = document.getElementById('vocCategory');
+const vocIdInput = document.getElementById('vocId');
+const vocFirestoreIdInput = document.getElementById('vocFirestoreId');
+
+function tryOpenVocWriteModal(category) {
+    if (window.isAdminAuthenticated) {
+        window.openVocWriteModal(category);
+    } else {
+        window.pendingAction = 'voc_write';
+        window.pendingCategory = category;
+        window.showAdminAuthModal();
+    }
+}
+
+function openVocWriteModal(category) {
+    vocTitle.value = '';
+    vocAuthor.value = '익명';
+    vocContent.value = '';
+    vocAnswer.value = '';
+    vocCategoryInput.value = category;
+    vocIdInput.value = '';
+    vocFirestoreIdInput.value = '';
+    
+    vocWriteModal.classList.remove('hidden');
+}
+
+function openVocEditModal(firestoreId, category) {
+    // Load item
+    loadVocList(category).then(list => {
+        const item = list.find(i => i.firestoreId === firestoreId || i.id == firestoreId);
+        if (item) {
+            vocTitle.value = item.title;
+            vocAuthor.value = item.author;
+            vocContent.value = item.content;
+            vocAnswer.value = item.answer || '';
+            vocCategoryInput.value = category; // Keep category
+            vocIdInput.value = item.id || ''; // Legacy ID
+            vocFirestoreIdInput.value = item.firestoreId || '';
+            
+            vocWriteModal.classList.remove('hidden');
+        }
+    });
+}
+
+function tryEditVoc(firestoreId, category) {
+    if (window.isAdminAuthenticated) {
+        openVocEditModal(firestoreId, category);
+    } else {
+        window.pendingAction = 'voc_edit';
+        window.pendingTargetId = firestoreId;
+        window.pendingCategory = category;
+        window.showAdminAuthModal();
+    }
+}
+
+function deleteVoc(firestoreId, category) {
+    if (window.isAdminAuthenticated) {
+        window.showConfirmModal('정말로 삭제하시겠습니까?', async () => {
+            try {
+                const collectionName = getCollectionName(category);
+                if (window.db && typeof firestoreId === 'string') { // Only check for window.db
+                    // Compat: db.collection().doc().delete()
+                    await window.db.collection(collectionName).doc(firestoreId).delete();
+                    console.log("Deleted from Firestore collection:", collectionName);
+                } else {
+                    // Legacy delete
+                    const list = await loadVocList(category);
+                    const newList = list.filter(i => i.id != firestoreId);
+                    saveVocList(newList);
+                }
+                
+                renderVocList(category);
+                
+                // Feedback
+                const successMsg = document.createElement('div');
+                successMsg.className = 'fixed bottom-4 right-4 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in-up';
+                successMsg.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5 inline mr-2"></i> 삭제 완료';
+                document.body.appendChild(successMsg);
+                lucide.createIcons();
+                setTimeout(() => successMsg.remove(), 2000);
+                
+            } catch (e) {
+                console.error("Delete failed:", e);
+                alert("삭제 실패: " + e.message);
+            }
+        });
+    } else {
+        window.pendingAction = 'voc_delete';
+        window.pendingTargetId = firestoreId;
+        window.pendingCategory = category;
+        window.showAdminAuthModal();
+    }
+}
+
+function closeVocWriteModal() {
+    vocWriteModal.classList.add('hidden');
+}
+
+async function saveVoc() {
+    const title = vocTitle.value;
+    const author = vocAuthor.value;
+    const content = vocContent.value;
+    const answer = vocAnswer.value;
+    const category = vocCategoryInput.value;
+    const id = vocIdInput.value;
+    const firestoreId = vocFirestoreIdInput.value;
+
+    if (!title || !content) {
+        alert('제목과 내용을 입력해주세요.');
+        return;
+    }
+
+    // Visual Feedback
+    const saveBtn = document.querySelector('#vocWriteModal button[onclick="saveVoc()"]');
+    const originalBtnText = saveBtn ? saveBtn.innerText : '저장';
+    if (saveBtn) {
+        saveBtn.innerText = '저장 중...';
+        saveBtn.disabled = true;
+    }
+
+    const now = new Date();
+    const dateStr = now.getFullYear() + '-' + 
+                    String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(now.getDate()).padStart(2, '0');
+
+    try {
+        if (window.db) { // Only check for window.db
+            console.log("Starting Firestore save...");
+            const collectionName = getCollectionName(category);
+            
+            // Firestore Save (Compat)
+            if (firestoreId) {
+                console.log("Updating existing doc:", firestoreId, "in", collectionName);
+                // Compat: db.collection().doc().update()
+                await withTimeout(window.db.collection(collectionName).doc(firestoreId).update({
+                    title: title,
+                    author: author,
+                    content: content,
+                    answer: answer,
+                }));
+            } else {
+                console.log("Adding new doc to", collectionName);
+                // Compat: db.collection().add()
+                const newId = Date.now(); 
+                
+                await withTimeout(window.db.collection(collectionName).add({
+                    id: newId,
+                    title: title,
+                    author: author,
+                    date: dateStr,
+                    content: content,
+                    answer: answer,
+                    category: category
+                }));
+            }
+            console.log("Firestore save complete");
+        } else {
+            console.warn("Firebase globals missing, falling back to local storage");
+            // Legacy LocalStorage Save
+            const list = await loadVocList(category);
+            if (id || firestoreId) { // Edit
+                const targetId = firestoreId || id;
+                const index = list.findIndex(i => (i.firestoreId === targetId) || (i.id == targetId));
+                if (index !== -1) {
+                    list[index].title = title;
+                    list[index].author = author;
+                    list[index].content = content;
+                    list[index].answer = answer;
+                }
+            } else { // New
+                const newId = list.length > 0 ? Math.max(...list.map(i => i.id)) + 1 : 1;
+                list.push({
+                    id: newId,
+                    title: title,
+                    author: author,
+                    date: dateStr,
+                    content: content,
+                    answer: answer,
+                    category: category
+                });
+            }
+            saveVocList(list);
+        }
+        
+        closeVocWriteModal();
+        renderVocList(category);
+
+    } catch (e) {
+        console.error("Firestore Save failed:", e);
+        
+        // Fallback to LocalStorage
+        try {
+            console.log("Falling back to LocalStorage...");
+            const list = await loadVocList(category);
+            
+            // Generate ID if needed
+            const newId = id || Date.now();
+            
+            const newItem = {
+                id: newId,
+                title: title,
+                author: author,
+                date: dateStr,
+                content: content,
+                answer: answer,
+                category: category,
+                firestoreId: firestoreId || null // Keep track if it had one
+            };
+
+            if (id || firestoreId) {
+                // Edit
+                const targetId = firestoreId || id;
+                const index = list.findIndex(i => (i.firestoreId === targetId) || (i.id == targetId));
+                if (index !== -1) {
+                    list[index] = { ...list[index], ...newItem };
+                } else {
+                    list.push(newItem);
+                }
+            } else {
+                // New
+                list.push(newItem);
+            }
+            
+            saveVocList(list);
+            alert("⚠️ Firebase 연결에 실패하여 '로컬 저장소'에 저장되었습니다.\n(인터넷 연결이나 방화벽 설정을 확인해주세요.)");
+            
+            closeVocWriteModal();
+            renderVocList(category);
+            
+        } catch (localError) {
+            console.error("Local Save failed:", localError);
+            alert("저장 실패 (로컬 저장소 오류): " + localError.message);
+        }
+    } finally {
+        if (saveBtn) {
+            saveBtn.innerText = originalBtnText;
+            saveBtn.disabled = false;
+        }
+    }
+}
+
+// Helper for timeout
+function withTimeout(promise, ms = 5000) {
+    return Promise.race([
+        promise,
+        new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out (5s)")), ms))
+    ]);
+}
+
+// Make functions globally available
+window.loadVocList = loadVocList;
+window.renderVocList = renderVocList;
+window.toggleVocContent = toggleVocContent;
+window.tryOpenVocWriteModal = tryOpenVocWriteModal;
+window.openVocWriteModal = openVocWriteModal;
+window.openVocEditModal = openVocEditModal;
+window.tryEditVoc = tryEditVoc;
+window.deleteVoc = deleteVoc;
+window.closeVocWriteModal = closeVocWriteModal;
+window.saveVoc = saveVoc;

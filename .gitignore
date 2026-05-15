@@ -1,2 +1,4 @@
+# 📌 [GitHub 업로드 제외 설정] 
+# 이 프로젝트를 깃허브에 올릴 때, node_modules와 같이 용량이 크거나 불필요한 파일을 제외하는 규칙입니다.
 node_modules/
 *copy*.html

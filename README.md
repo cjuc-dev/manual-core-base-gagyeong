@@ -1,113 +1,69 @@
-# manual
+# 📘 청주도시공사 체육시설 통합 매뉴얼 (관리자 가이드)
 
-open user settings.json
-
-{ "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }, "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }, "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }, "editor.formatOnSave": true, "editor.formatOnPaste": true, "editor.formatOnType": true, "prettier.singleQuote": true, "prettier.tabWidth": 2, "prettier.trailingComma": "es5", "prettier.semi": false, "editor.defaultFormatter": "esbenp.prettier-vscode", "git.confirmSync": false, "prettier.useTabs": true, "prettier.htmlWhitespaceSensitivity": "ignore", "prettier.tabWidth": 4, "prettier.semi": true, "prettier.singleQuote": true, "prettier.printWidth": 120, "prettier.singleAttributePerLine": false, "prettier.bracketSameLine": true, "prettier.proseWrap": "never" }
-
-# manual
-
-# manual
-
-매뉴얼 작성
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
--   [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
--   [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.com/cjsisul/manual.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
--   [ ] [Set up project integrations](https://gitlab.com/cjsisul/manual/-/settings/integrations)
-
-## Collaborate with your team
-
--   [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
--   [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
--   [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
--   [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
--   [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
--   [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
--   [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
--   [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
--   [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
--   [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+본 문서는 'Smart Operations Suite (SOS)' 프로젝트의 일환으로 구축된 **체육시설 통합 매뉴얼**의 운영 및 보안 관리 가이드입니다.
 
 ---
 
-# Editing this README
+## 📌 1. 시스템 개요 (Overview)
+본 시스템은 다수의 공공 체육시설 매뉴얼을 하나로 통합한 웹 대시보드입니다.
+- **로컬 서버 엔진**: 시스템 안정성과 공지사항 크롤링을 위해 Node.js 기반의 로컬 서버를 사용합니다.
+- **하이브리드 구조**: 백엔드 없이도 `index.html`을 통해 기본적인 매뉴얼 열람이 가능하며, 서버 가동 시 자동 데이터 업데이트 기능을 제공합니다.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+## 🏗️ 2. 시스템 아키텍처 및 폴더 구조
+최상위 루트를 간결하게 유지하고 기능을 모듈화하여 관리 편의성을 높였습니다.
 
-## Suggestions for a good README
+```text
+📦 체육시설 통합 매뉴얼
+ ┣ 📂 assets/        # 공통 정적 자원 (CSS, 이미지, 폰트)
+ ┣ 📂 core/          # 핵심 서버 엔진 (server_engine.js)
+ ┣ 📂 data/          # 매뉴얼 콘텐츠 (Markdown) 및 크롤링 데이터 (JSON)
+ ┣ 📂 docs/          # 개발 지침서, 작업 내역, 보안 가이드
+ ┣ 📂 pages/         # 보조 HTML 페이지 (약관, 개인정보처리방침 등)
+ ┣ 📂 scripts/       # 자동화 스크립트 (크롤러 등)
+ ┣ 📂 versions/      # 주요 버전 백업 폴더
+ ┣ 📜 index.html     # 메인 대시보드 (진입점)
+ ┣ 📜 start.bat      # 시스템 통합 실행기 (Windows용)
+ ┗ 📜 README.md      # 본 관리자 가이드
+```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## 🚀 3. 실행 방법 (How to Run)
+1. **Node.js 설치**: 시스템 가동을 위해 [Node.js](https://nodejs.org/)가 설치되어 있어야 합니다.
+2. **시스템 시작**: 폴더 내의 `start.bat` 파일을 더블 클릭합니다.
+3. **자동 접속**: 서버가 가동되면 자동으로 브라우저(`http://localhost:3000`)가 열립니다.
 
-## Name
+> **💡 기술적 참고 (Stability)**
+> 일부 윈도우 환경의 경로 인코딩 문제를 방지하기 위해, `start.bat`은 파이프(`type | node`) 방식을 사용하여 서버를 가동합니다. 이는 가장 안정적인 실행 방식입니다.
 
-Choose a self-explaining name for your project.
+## 🔒 4. 사이버보안 및 컴플라이언스 준수 (2026. 5. 1 기준)
+본 시스템은 「국가 사이버보안 기본지침」을 엄격하게 준수합니다.
 
-## Description
+1. **XSS 및 인젝션 방어**: 마크다운(.md) 파일이 렌더링될 때 `DOMPurify.sanitize()`를 강제 적용하여 악성 스크립트 실행을 원천 차단합니다.
+2. **데이터 마스킹**: 매뉴얼 내 개인정보(이름, 연락처 등)는 반드시 마스킹 처리된 포맷(예: 홍*동, 010-****-1234)으로 관리합니다.
+3. **웹 접근성 (KWCAG)**: 시맨틱 태그 및 `aria-*` 속성을 적용하여 고령자 및 시각 장애인의 이용 편의성을 보장합니다.
 
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## 🔐 5. 관리자 다중 인증 (MFA) 가이드
+외부 네트워크에서 시스템 소스나 설정에 접근할 경우 반드시 **다중 인증(MFA)**을 거쳐야 합니다.
+- **1차 인증**: 복잡도가 높은 관리자 비밀번호
+- **2차 인증**: 구글 OTP 또는 사전에 등록된 모바일 기기를 통한 토큰 검증
 
-## Badges
+## 📝 6. 매뉴얼 콘텐츠 업데이트 방법
+1. `data/` 폴더 내에 마크다운 파일(예: `행정_매뉴얼.md`)을 작성하거나 수정합니다.
+2. `index.html` 내의 `searchMetadata` 배열에 새 파일의 정보를 추가합니다.
+3. 로컬 서버를 재시작하거나 깃허브 저장소에 반영합니다.
 
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+> **⚠️ 주의 (변경 관리 지침)**
+> UI나 라우팅 구조를 수정할 때는 반드시 `docs/변경관리_및_UX개선_지침.md`를 숙지하고, `versions/` 폴더에 기존 `index.html`을 백업한 뒤 진행하십시오.
 
-## Visuals
+## 📁 7. 루트 설정 파일 가이드
+최상위 폴더에 존재하는 설정 파일들의 용도는 다음과 같습니다.
 
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+| 파일명 | 용도 | 설명 |
+| :--- | :--- | :--- |
+| `.gitignore` | 깃허브 제외 설정 | 불필요한 파일이 깃허브에 올라가지 않도록 방지 |
+| `.cursorrules` | AI 작업 지침 | AI(Cursor)가 한글 사용 및 규칙을 지키도록 명령 |
+| `.hintrc` | 코드 품질 설정 | 웹 표준 및 접근성 검사 규칙 정의 |
+| `package.json` | 프로젝트 명세서 | 시스템 이름, 버전 및 설치된 라이브러리 정보 관리 |
+| `start.bat` | 시스템 실행기 | 서버 가동 및 브라우저 자동 접속 (더블 클릭 실행) |
 
-## Installation
-
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-
-Show your appreciation to those who have contributed to the project.
-
-## License
-
-For open source projects, say how it is licensed.
-
-## Project status
-
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+---
+*Developed & Maintained for Smart Operations Suite.*

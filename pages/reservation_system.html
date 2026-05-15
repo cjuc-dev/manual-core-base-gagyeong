@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>체육시설 통합 예약관리 (1/2/3부)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        
+        .input-mini {
+            font-size: 0.85rem;
+            padding: 6px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            width: 100%;
+            margin-top: 4px;
+            transition: all 0.2s;
+        }
+        .input-mini:focus { 
+            border-color: #3b82f6; 
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+            outline: none; 
+        }
+        td { vertical-align: top; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 p-4 min-h-screen">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-4">
+                <div class="bg-indigo-600 text-white p-3 rounded-lg shadow-md">
+                    <i class="fas fa-calendar-check text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900">체육시설 이용 현황판</h1>
+                    <p class="text-sm text-slate-500 font-medium" id="dayTypeLabel">날짜를 선택해주세요</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3 bg-slate-50 p-2 rounded-lg border border-slate-200 shadow-inner">
+                <span class="text-sm font-bold text-slate-600 pl-2">날짜:</span>
+                <input type="date" id="dateInput" onchange="handleDateChange()" class="bg-white border border-slate-300 rounded px-3 py-1.5 text-sm font-bold cursor-pointer hover:border-blue-500 transition">
+                <span id="dayBadge" class="px-3 py-1.5 rounded text-xs font-bold bg-gray-200 text-gray-500 shadow-sm">-</span>
+            </div>
+
+            <button onclick="resetAll()" class="text-red-500 hover:bg-red-50 px-4 py-2 rounded-lg text-sm font-bold transition flex items-center border border-transparent hover:border-red-100">
+                <i class="fas fa-trash-alt mr-2"></i> 전체 초기화
+            </button>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <div class="lg:col-span-9 bg-white p-5 rounded-xl shadow-lg border border-slate-200">
+                <div class="flex space-x-3 mb-5">
+                    <button onclick="changeSport('table')" id="tab-table" class="flex-1 py-3 rounded-lg text-sm font-bold shadow-sm transition bg-blue-50 text-blue-700 border border-blue-200 ring-2 ring-blue-100">
+                        🏓 탁구 (5코트)
+                    </button>
+                    <button onclick="changeSport('badminton')" id="tab-badminton" class="flex-1 py-3 rounded-lg text-sm font-bold text-slate-500 hover:bg-slate-50 transition border border-transparent hover:border-slate-200">
+                        🏸 배드민턴 (2코트)
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto rounded-lg border border-slate-200">
+                    <table class="w-full text-center text-sm border-collapse">
+                        <thead>
+                            <tr id="gridHeader" class="bg-slate-50 text-slate-700 border-b border-slate-200">
+                                </tr>
+                        </thead>
+                        <tbody id="gridBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 space-y-4">
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-indigo-600 sticky top-4">
+                    <h2 class="text-lg font-bold mb-5 text-slate-800 border-b pb-3 flex items-center">
+                        <i class="fas fa-chart-pie mr-2 text-indigo-500"></i> 부별 집계 현황
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 rounded bg-orange-50 border border-orange-100">
+                            <div>
+                                <span class="block text-xs font-bold text-orange-500 mb-1">1부 (06:00~12:00)</span>
+                                <span class="font-bold text-orange-800 text-lg"><span id="part1Count">0</span>명</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center p-3 rounded bg-green-50 border border-green-100">
+                            <div>
+                                <span class="block text-xs font-bold text-green-500 mb-1">2부 (12:00~18:00)</span>
+                                <span class="font-bold text-green-800 text-lg"><span id="part2Count">0</span>명</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center p-3 rounded bg-indigo-50 border border-indigo-100">
+                            <div>
+                                <span class="block text-xs font-bold text-indigo-500 mb-1">3부 (18:00~22:00)</span>
+                                <span class="font-bold text-indigo-800 text-lg"><span id="part3Count">0</span>명</span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t-2 border-slate-100 pt-4 mt-2">
+                            <div class="flex justify-between items-end">
+                                <span class="font-bold text-slate-700">총 인원</span>
+                                <span class="text-3xl font-extrabold text-blue-600 leading-none"><span id="totalPeople">0</span><span class="text-base ml-1">명</span></span>
+                            </div>
+                            <div class="flex justify-between items-end mt-2">
+                                <span class="text-xs text-slate-400">총 코트 점유</span>
+                                <span class="text-sm font-bold text-slate-500"><span id="totalCourts">0</span>면</span>
+                            </div>
+                        </div>
+
+                        <button onclick="saveToExcelLike()" class="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg shadow-md hover:shadow-lg text-sm font-bold transition flex justify-center items-center">
+                            <i class="fas fa-file-csv mr-2"></i> 엑셀 내보내기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const config = {
+            table: { courts: 5, prefix: '탁구' },
+            badminton: { courts: 2, prefix: '배드민턴' }
+        };
+
+        // ★ 시간표 설정 (1부, 2부, 3부로 변경)
+        // part1: 1부, part2: 2부, part3: 3부
+        const schedules = {
+            weekday: [
+                { time: '06:00', type: 'part1', label: '1부' }, 
+                { time: '08:00', type: 'part1', label: '1부' }, 
+                { time: '10:00', type: 'part1', label: '1부' },
+                { time: '12:00', type: 'part2', label: '2부' }, 
+                { time: '14:00', type: 'part2', label: '2부' }, 
+                { time: '16:00', type: 'part2', label: '2부' },
+                { time: '18:00', type: 'part3', label: '3부' }, 
+                { time: '20:00', type: 'part3', label: '3부' }
+            ],
+            weekend: [
+                { time: '06:00', type: 'part1', label: '1부' }, 
+                { time: '08:00', type: 'part1', label: '1부' }, 
+                { time: '10:00', type: 'part1', label: '1부' },
+                { time: '12:00', type: 'part2', label: '2부' }, 
+                { time: '14:00', type: 'part2', label: '2부' }, 
+                { time: '16:00', type: 'part2', label: '2부' } 
+                // 주말은 3부 미운영 (필요시 추가 가능)
+            ]
+        };
+
+        let currentSport = 'table';
+        let isWeekend = false;
+        let reservationData = JSON.parse(localStorage.getItem('sports_reservation_v2')) || {};
+
+        document.getElementById('dateInput').valueAsDate = new Date();
+        handleDateChange(); 
+
+        function handleDateChange() {
+            const dateVal = document.getElementById('dateInput').value;
+            if (!dateVal) return;
+
+            const dayOfWeek = new Date(dateVal).getDay(); // 0:일, 6:토
+            const badge = document.getElementById('dayBadge');
+            const label = document.getElementById('dayTypeLabel');
+
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+                isWeekend = true;
+                badge.innerText = "주말";
+                badge.className = "px-3 py-1.5 rounded text-xs font-bold bg-red-100 text-red-600 border border-red-200 shadow-sm";
+                label.innerHTML = "<span class='text-red-500 font-bold'>주말 운영</span> (1부 ~ 2부)";
+            } else {
+                isWeekend = false;
+                badge.innerText = "평일";
+                badge.className = "px-3 py-1.5 rounded text-xs font-bold bg-blue-100 text-blue-600 border border-blue-200 shadow-sm";
+                label.innerHTML = "<span class='text-blue-600 font-bold'>평일 운영</span> (1부 ~ 3부)";
+            }
+            renderGrid();
+        }
+
+        function changeSport(sport) {
+            currentSport = sport;
+            const tabTable = document.getElementById('tab-table');
+            const tabBadminton = document.getElementById('tab-badminton');
+            
+            if (sport === 'table') {
+                tabTable.className = 'flex-1 py-3 rounded-lg text-sm font-bold shadow-sm transition bg-blue-50 text-blue-700 border border-blue-200 ring-2 ring-blue-100';
+                tabBadminton.className = 'flex-1 py-3 rounded-lg text-sm font-bold text-slate-500 hover:bg-slate-50 transition border border-transparent hover:border-slate-200';
+            } else {
+                tabTable.className = 'flex-1 py-3 rounded-lg text-sm font-bold text-slate-500 hover:bg-slate-50 transition border border-transparent hover:border-slate-200';
+                tabBadminton.className = 'flex-1 py-3 rounded-lg text-sm font-bold shadow-sm transition bg-green-50 text-green-700 border border-green-200 ring-2 ring-green-100';
+            }
+            renderGrid();
+        }
+
+        function autoHyphen(target) {
+            let value = target.value.replace(/[^0-9]/g, '');
+            if (value.length < 4) {
+                target.value = value;
+            } else if (value.length < 7) {
+                target.value = value.replace(/(\d{3})(\d{1,4})/, '$1-$2');
+            } else if (value.length < 11) {
+                target.value = value.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+            } else {
+                target.value = value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+            }
+            const key = target.getAttribute('data-key');
+            updateInfo(key, 'phone', target.value);
+        }
+
+        function renderGrid() {
+            const settings = config[currentSport];
+            const schedule = isWeekend ? schedules.weekend : schedules.weekday;
+            const thead = document.getElementById('gridHeader');
+            const tbody = document.getElementById('gridBody');
+            const dateKey = document.getElementById('dateInput').value;
+
+            // 헤더
+            let headerHTML = '<th class="p-3 border-r border-slate-200 bg-slate-100 w-24 font-bold text-slate-600">시간</th>';
+            for(let i=1; i<=settings.courts; i++) {
+                headerHTML += `<th class="p-3 border-r border-slate-200 font-bold text-slate-700">${i}코트</th>`;
+            }
+            thead.innerHTML = headerHTML;
+
+            // 본문
+            tbody.innerHTML = '';
+            let stats = { part1: 0, part2: 0, part3: 0, courts: 0 };
+
+            schedule.forEach((slot, tIdx) => {
+                let tr = document.createElement('tr');
+                tr.className = 'border-b border-slate-100 hover:bg-slate-50 transition-colors';
+                
+                // 시간 라벨 (색상 구분)
+                let timeClass = '';
+                if(slot.type === 'part1') timeClass = 'text-orange-600 bg-orange-50';
+                else if(slot.type === 'part2') timeClass = 'text-green-600 bg-green-50';
+                else timeClass = 'text-indigo-600 bg-indigo-50';
+
+                tr.innerHTML = `<td class="py-4 border-r border-slate-200 font-bold text-xs ${timeClass} align-middle">
+                    ${slot.time}<br><span class="opacity-70 text-[10px]">${slot.label}</span>
+                </td>`;
+
+                for(let cIdx=0; cIdx < settings.courts; cIdx++) {
+                    const uniqueKey = `${dateKey}_${currentSport}_${slot.time}_${cIdx}`;
+                    const data = reservationData[uniqueKey];
+                    
+                    let cellContent = '';
+                    
+                    if (!data) {
+                        cellContent = `
+                            <button onclick="activateCell('${uniqueKey}')" class="w-full h-full min-h-[100px] rounded-lg bg-white border-2 border-dashed border-slate-200 text-slate-400 text-xs hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50 transition flex flex-col items-center justify-center gap-2 group">
+                                <i class="fas fa-plus text-lg opacity-50 group-hover:opacity-100"></i>
+                                <span>예약</span>
+                            </button>
+                        `;
+                    } else {
+                        stats[slot.type] += data.count;
+                        stats.courts += 1;
+
+                        cellContent = `
+                            <div class="bg-blue-50 p-2.5 rounded-lg border border-blue-200 shadow-sm text-left relative group min-h-[100px]">
+                                <button onclick="deleteCell('${uniqueKey}')" class="absolute -top-2 -right-2 bg-white text-slate-400 hover:text-red-500 hover:bg-red-50 w-6 h-6 rounded-full shadow border border-slate-200 flex items-center justify-center transition z-10">
+                                    <i class="fas fa-times text-xs"></i>
+                                </button>
+                                
+                                <div class="flex items-center justify-between mb-2 bg-white rounded border border-blue-100 p-1">
+                                    <button onclick="updateCount('${uniqueKey}', -1)" class="w-6 h-6 flex items-center justify-center text-blue-600 hover:bg-blue-100 rounded text-sm font-bold">-</button>
+                                    <span class="font-bold text-sm text-blue-800">${data.count}명</span>
+                                    <button onclick="updateCount('${uniqueKey}', 1)" class="w-6 h-6 flex items-center justify-center text-blue-600 hover:bg-blue-100 rounded text-sm font-bold">+</button>
+                                </div>
+                                
+                                <input type="text" placeholder="이름" value="${data.name}" 
+                                    oninput="updateInfo('${uniqueKey}', 'name', this.value)" 
+                                    class="input-mini placeholder-slate-400 font-medium">
+                                    
+                                <input type="text" placeholder="010-0000-0000" value="${data.phone}" 
+                                    data-key="${uniqueKey}"
+                                    oninput="autoHyphen(this)" 
+                                    class="input-mini placeholder-slate-400 font-medium tracking-tight" maxlength="13">
+                            </div>
+                        `;
+                    }
+                    tr.innerHTML += `<td class="p-2 border-r border-slate-200 w-44 align-top">${cellContent}</td>`;
+                }
+                tbody.appendChild(tr);
+            });
+
+            // 통계 업데이트
+            document.getElementById('part1Count').innerText = stats.part1;
+            document.getElementById('part2Count').innerText = stats.part2;
+            document.getElementById('part3Count').innerText = stats.part3;
+            document.getElementById('totalPeople').innerText = stats.part1 + stats.part2 + stats.part3;
+            document.getElementById('totalCourts').innerText = stats.courts;
+        }
+
+        function activateCell(key) {
+            reservationData[key] = { count: 2, name: '', phone: '' };
+            saveData();
+            renderGrid();
+        }
+
+        function updateCount(key, delta) {
+            if (!reservationData[key]) return;
+            let newVal = reservationData[key].count + delta;
+            if (newVal <= 0) deleteCell(key);
+            else {
+                reservationData[key].count = newVal;
+                saveData();
+                renderGrid();
+            }
+        }
+
+        function updateInfo(key, field, value) {
+            if (reservationData[key]) {
+                reservationData[key][field] = value;
+                saveData();
+            }
+        }
+
+        function deleteCell(key) {
+            if (reservationData[key]) {
+                delete reservationData[key];
+                saveData();
+                renderGrid();
+            }
+        }
+
+        function resetAll() {
+            if(confirm('초기화하시겠습니까?')) {
+                reservationData = {};
+                saveData();
+                renderGrid();
+            }
+        }
+        
+        function saveData() {
+            localStorage.setItem('sports_reservation_v2', JSON.stringify(reservationData));
+        }
+
+        function saveToExcelLike() {
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+            csvContent += "날짜,종목,부,시간,코트,이름,연락처,인원수\r\n";
+            
+            const scheduleMap = {};
+            schedules.weekday.concat(schedules.weekend).forEach(s => scheduleMap[s.time] = s.label);
+
+            for (const [key, val] of Object.entries(reservationData)) {
+                const parts = key.split('_');
+                const timeLabel = scheduleMap[parts[2]] || '기타';
+                const row = `${parts[0]},${parts[1]},${timeLabel},${parts[2]},${parseInt(parts[3])+1}코트,${val.name},${val.phone},${val.count}`;
+                csvContent += row + "\r\n";
+            }
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `운영일지_${document.getElementById('dateInput').value}.csv`);
+            document.body.appendChild(link);
+            link.click();
+        }
+    </script>
+</body>
+</html>

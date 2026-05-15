@@ -1,0 +1,147 @@
+/* 📌 구분선(hr) 디자인 개선 - 비대칭 여백 적용 (사용자 요청 반영) */
+#content-area hr {
+    display: block !important;
+    border: none;
+    border-top: 1px solid rgba(156, 163, 175, 0.3);
+    margin-top: 3rem !important;    /* 이전 섹션 끝과의 간격은 넓게 (벌려줌) */
+    margin-bottom: 1rem !important; /* 다음 섹션 제목과의 간격은 좁게 (유지) */
+    opacity: 0.6;
+}
+/* 다크모드에서는 조금 더 은은하게 조정 */
+.dark #content-area hr {
+    border-top-color: rgba(156, 163, 175, 0.15);
+    opacity: 0.4;
+}
+#content-area {
+    color: #374151; /* gray-700 (라이트모드 가독성) */
+    line-height: 1.6;
+}
+.dark #content-area {
+    color: #e5e7eb; /* gray-200 (다크모드) */
+}
+#content-area h1, #content-area h2, #content-area h3 {
+    color: #10b981; /* emerald-500 */
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+#content-area table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0 !important;
+    color: inherit;
+    border-top: 1px solid rgba(156, 163, 175, 0.15); /* 매우 흐린 gray-400 (15% 투명도) */
+    border-bottom: 1px solid rgba(156, 163, 175, 0.15);
+}
+#content-area th, #content-area td {
+    border: none;
+    border-bottom: 1px solid rgba(156, 163, 175, 0.15);
+    padding: 0.75rem;
+}
+/* 📌 마지막 행의 구분선을 제거하여 표 하단 테두리와 겹치지 않게 함 */
+#content-area tr:last-child td {
+    border-bottom: none !important;
+}
+#content-area th {
+    background-color: transparent;
+    color: #10b981;
+    font-weight: 700;
+    text-align: left; /* 제목 정렬을 본문 내용과 일치시킴 */
+    border-bottom: 1px solid rgba(156, 163, 175, 0.15);
+}
+#content-area a {
+    color: #38bdf8;
+    text-decoration: underline;
+}
+
+/* 에러 상태 스타일 */
+.error-container {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(185, 28, 28, 0.05) 100%);
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+}
+
+.error-icon {
+    width: 4rem;
+    height: 4rem;
+    color: #ef4444;
+    margin: 0 auto 1rem;
+}
+
+.error-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #fca5a5;
+    margin-bottom: 0.5rem;
+}
+
+.error-message {
+    color: #d1d5db;
+    margin-bottom: 1.5rem;
+}
+
+.retry-button {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.retry-button:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    transform: translateY(-2px);
+}
+
+.retry-button:active {
+    transform: translateY(0);
+}
+
+/* 스켈레톤 로딩 애니메이션 */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.03) 25%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.03) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    border-radius: 8px;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.skeleton-line {
+    height: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.skeleton-line:last-child {
+    width: 60%;
+}
+
+.skeleton-header {
+    height: 2rem;
+    width: 40%;
+    margin-bottom: 1.5rem;
+}
+
+.skeleton-block {
+    height: 8rem;
+    margin-bottom: 1rem;
+}
