@@ -163,11 +163,11 @@
             </div>
             
             <div class="flex items-center gap-3">
-                <button onclick="toggleTheme()" class="w-10 h-10 grid place-items-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-amber-500 dark:text-yellow-400 transition-colors focus:outline-none" aria-label="다크/라이트 모드 전환">
-                    <!-- 라이트모드일때는 달 아이콘 표시 (다크로 가기 위해) -->
-                    <i class="ph ph-moon text-xl leading-none block dark:hidden" id="moonIcon" aria-hidden="true"></i>
-                    <!-- 다크모드일때는 해 아이콘 표시 (라이트로 가기 위해) -->
-                    <i class="ph ph-sun text-xl leading-none hidden dark:block" id="sunIcon" aria-hidden="true"></i>
+                <button onclick="toggleTheme()" class="relative w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-amber-500 dark:text-yellow-400 transition-colors focus:outline-none" aria-label="다크/라이트 모드 전환">
+                    <!-- 라이트모드일때는 달 아이콘 표시 -->
+                    <i class="ph ph-moon text-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 dark:hidden" id="moonIcon" aria-hidden="true"></i>
+                    <!-- 다크모드일때는 해 아이콘 표시 -->
+                    <i class="ph ph-sun text-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden dark:block" id="sunIcon" aria-hidden="true"></i>
                 </button>
             </div>
         </header>
