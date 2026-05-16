@@ -283,6 +283,13 @@
         </main>
     </div>
 
+    <!-- 🚀 [신규] 최상단으로 이동 (Back to Top) 버튼 -->
+    <button id="backToTop" onclick="scrollToTop()" 
+        class="fixed bottom-8 right-8 w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border border-gray-200 dark:border-gray-700 rounded-full shadow-2xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 hover:scale-110 active:scale-95 transition-all opacity-0 invisible z-50 group" 
+        aria-label="맨 위로 이동">
+        <i class="ph ph-arrow-up text-2xl font-bold group-hover:-translate-y-1 transition-transform" aria-hidden="true"></i>
+    </button>
+
     <!-- 스크립트 로직 -->
     <script>
         // 초기 테마 설정 확인
@@ -329,6 +336,28 @@
             } else {
                 htmlClasses.add('dark');
                 localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // [신규] 최상단 이동 로직
+        const scrollArea = document.getElementById('mainScrollArea');
+        const backToTopBtn = document.getElementById('backToTop');
+
+        if (scrollArea && backToTopBtn) {
+            scrollArea.addEventListener('scroll', () => {
+                if (scrollArea.scrollTop > 300) {
+                    backToTopBtn.classList.remove('opacity-0', 'invisible');
+                    backToTopBtn.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopBtn.classList.add('opacity-0', 'invisible');
+                    backToTopBtn.classList.remove('opacity-100', 'visible');
+                }
+            });
+        }
+
+        function scrollToTop() {
+            if (scrollArea) {
+                scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
