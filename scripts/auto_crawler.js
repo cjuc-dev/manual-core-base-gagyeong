@@ -43,7 +43,12 @@ async function runAutoCrawler() {
         
         try {
             const html = await new Promise((resolve, reject) => {
-                https.get(pageUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (res) => {
+                // SSL 인증서 오류 무시 및 실제 브라우저처럼 보이도록 User-Agent 강화
+                const options = {
+                    headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
+                    rejectUnauthorized: false 
+                };
+                https.get(pageUrl, options, (res) => {
                     let data = '';
                     res.on('data', chunk => data += chunk);
                     res.on('end', () => resolve(data));
