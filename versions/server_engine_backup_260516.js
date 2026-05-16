@@ -1,8 +1,7 @@
 // 🚀 [server_engine.js] 
-// 이 파일은 SOS 통합 매뉴얼 시스템의 '핵심 서버 엔진'입니다.
+// 해당 파일은 이 시스템의 '핵심 서버 엔진'입니다.
 // 관리자 안내: Node.js 기반의 웹 서버 역할을 하며, 파일 가동 시 3000번 포트를 사용합니다.
 // 윈도우 환경의 안정성을 위해 'type core\server_engine.js | node' 방식으로 실행하는 것을 권장합니다.
-
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -14,18 +13,22 @@ const ROOT_DIR = process.cwd();
 try {
     const runAutoCrawler = require(path.join(ROOT_DIR, 'scripts/auto_crawler.js'));
     console.log('[System] 🚀 공지사항 자동 수집 엔진을 가동합니다...');
+    
+    // 1. 즉시 실행
     runAutoCrawler().catch(e => console.error('[Crawler Error]', e));
+    
+    // 2. 주기적 실행 (1시간마다 업데이트)
     setInterval(() => {
         runAutoCrawler().catch(e => console.error('[Crawler Error]', e));
     }, 1000 * 60 * 60);
+    
 } catch (e) {
-    console.error('[System Warning] 크롤러 모듈을 찾을 수 없습니다.', e.message);
+    console.error('[System Warning] 크롤러 모듈을 찾을 수 없습니다. 자동 업데이트가 비활성화됩니다.', e.message);
 }
 
 const server = http.createServer((req, res) => {
-    // 📌 지능형 경로 처리: 쿼리 스트링 제거 및 인코딩 복원
-    const decodedUrl = decodeURIComponent(req.url.split('?')[0]);
-    const relativePath = decodedUrl === '/' ? 'index.html' : decodedUrl.slice(1);
+    const url = req.url.split('?')[0];
+    const relativePath = url === '/' ? 'index.html' : url.slice(1);
     const filePath = path.join(ROOT_DIR, relativePath);
     
     fs.readFile(filePath, (err, data) => {
@@ -40,13 +43,13 @@ const server = http.createServer((req, res) => {
                 }
             });
         } else {
+            // 파일 확장자에 따른 MIME 타입 설정
             const ext = path.extname(filePath).toLowerCase();
             const mimes = {
                 '.html': 'text/html; charset=utf-8',
                 '.js': 'text/javascript',
                 '.css': 'text/css',
                 '.json': 'application/json',
-                '.md': 'text/markdown; charset=utf-8', // 👈 필수 추가: 마크다운 지원
                 '.png': 'image/png',
                 '.jpg': 'image/jpeg',
                 '.gif': 'image/gif',
