@@ -27,9 +27,8 @@ try {
 }
 
 const server = http.createServer((req, res) => {
-    // URL 디코딩을 추가하여 한글 파일명 요청 처리 (시큐어 코딩: 경로 조작 방지 포함)
-    const decodedUrl = decodeURIComponent(req.url.split('?')[0]);
-    const relativePath = decodedUrl === '/' ? 'index.html' : decodedUrl.slice(1);
+    const url = req.url.split('?')[0];
+    const relativePath = url === '/' ? 'index.html' : url.slice(1);
     const filePath = path.join(ROOT_DIR, relativePath);
     
     fs.readFile(filePath, (err, data) => {

@@ -370,7 +370,6 @@
             document.getElementById('dashboardView').classList.add('hidden');
             document.getElementById('contentView').classList.remove('hidden');
             
-            // History API 연동 (뒤로가기 지원)
             if (!isPopState) {
                 history.pushState({ page: 'content', id: contentId, facility: facility }, '', '?doc=' + encodeURIComponent(contentId) + '&facility=' + encodeURIComponent(facility));
             }
@@ -380,10 +379,7 @@
             breadcrumbNav.classList.remove('hidden');
             breadcrumbNav.classList.add('flex');
             
-            // 보안 가이드라인: DOMPurify XSS 검증
             const safeId = DOMPurify.sanitize(contentId);
-            
-            // 한글 매뉴얼명 매핑
             const titleMap = {
                 '행정_매뉴얼': '행정 (Admin)',
                 '기술_매뉴얼': '기술 (Tech)',
@@ -394,8 +390,7 @@
                 'bokdae_sportscenter_guide': '복대국민체육센터',
                 'gagyeong_sportscenter_guide': '가경국민체육센터',
                 'sannam_sportscenter_guide': '산남국민체육센터',
-                'update': '업데이트 히스토리',
-                'notices': '공사 최신 공지사항', 'admin_dashboard': '사이버보안 관리자 대시보드'
+                'update': '업데이트 히스토리'
             };
             
             const docTitle = titleMap[safeId] || safeId;
@@ -404,208 +399,36 @@
 
             const contentArea = document.getElementById('content-area');
             
-            // 동적 탭(Tab) UI 생성 로직 (모바일 반응형 Grid + Pill 디자인 적용)
             let tabsHtml = '';
             if (hasTabs) {
                 const facilitiesList = ['공통', '청주수영장', '푸르미스포츠센터', '영운국민체육센터', '복대국민체육센터', '가경국민체육센터', '산남국민체육센터'];
-                // 모바일에서는 2열 그리드, PC에서는 flex-wrap
-                tabsHtml = '<div class="grid grid-cols-2 md:flex md:flex-wrap gap-2 mb-6" role="tablist" aria-label="시설 선택">';
+                tabsHtml = '<div class="flex flex-wrap gap-2 mb-6" role="tablist">';
                 for(let fac of facilitiesList) {
                     const isActive = (fac === facility);
-                    // 둥근 Pill 스타일 적용 (여러 줄로 래핑될 때 경계선(Border) 디자인보다 훨씬 깔끔함)
-                    const activeClass = isActive 
-                        ? 'bg-emerald-600 text-white dark:bg-emerald-500 font-bold shadow-md' 
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700';
-                    tabsHtml += `<button role="tab" aria-selected="${isActive}" onclick="loadContent('${safeId}', '${fac}')" class="px-3 py-2.5 rounded-lg text-sm sm:text-base transition-all focus:outline-none truncate ${activeClass}">${fac}</button>`;
+                    const activeClass = isActive ? 'bg-emerald-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300';
+                    tabsHtml += `<button onclick="loadContent('${safeId}', '${fac}')" class="px-4 py-2 rounded-lg text-sm transition-all ${activeClass}">${fac}</button>`;
                 }
                 tabsHtml += '</div>';
             }
             
-            // 로딩 스피너 (탭 UI는 유지하면서 내용물만 로딩 처리)
-            contentArea.innerHTML = tabsHtml + `
-                <div class="flex flex-col items-center justify-center h-full text-gray-400 dark:text-gray-500 py-20">
-                    <i class="ph ph-spinner-gap text-4xl animate-spin mb-4" aria-hidden="true"></i>
-                    <p>문서를 안전하게 불러오는 중입니다...</p>
-                </div>
-            `;
+            contentArea.innerHTML = tabsHtml + '<div class="py-20 text-center text-gray-400"><i class="ph ph-spinner-gap animate-spin text-4xl mb-4"></i><p>로딩 중...</p></div>';
             
-            if(safeId === 'admin_dashboard') {
-                contentArea.innerHTML = tabsHtml + `
-                    <div class='w-full h-[800px] border-0 rounded-3xl overflow-hidden shadow-inner bg-slate-50'>
-                        <iframe src='pages/admin_dashboard.html' class='w-full h-full border-0' title='관리자 대시보드'></iframe>
-                    </div>
-                `;
-            } else if(safeId === 'safety') {
-                contentArea.innerHTML = tabsHtml + `
-                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">🛡️ 체육시설 안전관리 표준매뉴얼</h2>
-                    <p class="mb-4 text-gray-600 dark:text-gray-400">아래 뷰어를 통해 원본을 확인하거나 다운로드할 수 있습니다.</p>
-                    <div class="w-full h-[600px] border border-gray-300 dark:border-gray-600 rounded bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
-                        <embed src="docs/체육시설 안전관리 표준매뉴얼.pdf" type="application/pdf" width="100%" height="100%" />
-                    </div>
-                `;
-            } else if(safeId === 'notices') {
-                try {
-                    const response = await fetch('data/notices.json');
-                    if (!response.ok) throw new Error('공지사항 데이터를 불러올 수 없습니다.');
-                    
-                    window.noticesData = await response.json();
-                    
-                    window.renderNoticePage = function(page) {
-                        window.currentNoticePage = page;
-                        const itemsPerPage = 10;
-                        const start = (page - 1) * itemsPerPage;
-                        const end = start + itemsPerPage;
-                        const currentNotices = window.noticesData.slice(start, end);
-                        const totalPages = Math.ceil(window.noticesData.length / itemsPerPage);
-                        
-                        let listHtml = `
-                            <div class="overflow-x-auto md:overflow-visible">
-                                <table class="w-full text-left md:border-t-2 border-gray-800 dark:border-gray-200">
-                                    <thead class="hidden md:table-header-group">
-                                        <tr class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                                            <th class="py-3 px-4 font-semibold text-gray-700 dark:text-gray-200 text-center w-16 whitespace-nowrap">번호</th>
-                                            <th class="py-3 px-4 font-semibold text-gray-700 dark:text-gray-200 text-center whitespace-nowrap">제목</th>
-                                            <th class="py-3 px-4 font-semibold text-gray-700 dark:text-gray-200 text-center w-24 whitespace-nowrap">작성자</th>
-                                            <th class="py-3 px-4 font-semibold text-gray-700 dark:text-gray-200 text-center w-28 whitespace-nowrap">등록일</th>
-                                            <th class="py-3 px-4 font-semibold text-gray-700 dark:text-gray-200 text-center w-20 whitespace-nowrap">조회</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-gray-100 md:divide-gray-200 dark:divide-gray-800 dark:md:divide-gray-700">
-                        `;
-                        
-                        currentNotices.forEach((notice, index) => {
-                            const isNotice = notice.title.includes('[공지]');
-                            const displayId = isNotice ? '<span class="inline-flex items-center justify-center w-5 h-5 rounded-sm bg-red-600 text-white text-xs font-bold">N</span>' : notice.id;
-                            const titleClass = 'font-bold text-gray-900 dark:text-white';
-                            
-                            // 모바일용 지그재그 배경색 (공식 사이트 모바일 래퍼런스)
-                            const mobileBgClass = (index % 2 === 0) ? 'bg-white dark:bg-gray-900' : 'bg-gray-50/50 dark:bg-gray-800/30';
-                            
-                            listHtml += `
-                                <tr class="group hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors block md:table-row ${mobileBgClass} md:bg-transparent py-2 md:py-0">
-                                    <td class="hidden md:table-cell py-4 px-4 text-center text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                                        ${displayId}
-                                    </td>
-                                    <td class="block md:table-cell py-0 px-0 w-full">
-                                        <button onclick="toggleNoticeAccordion(${notice.id})" class="w-full h-full text-left py-3 md:py-4 px-4 focus:outline-none flex flex-col justify-center">
-                                            <div class="flex items-start md:items-center justify-between w-full">
-                                                <div class="flex items-start gap-2 max-w-[90%]">
-                                                    <span class="md:hidden ${isNotice ? 'inline-flex mt-0.5' : 'hidden'} items-center justify-center w-5 h-5 rounded-sm bg-red-600 text-white text-xs font-bold flex-shrink-0">N</span>
-                                                    <span class="text-base ${titleClass} group-hover:text-emerald-600 dark:group-hover:text-emerald-400 break-keep">
-                                                        ${DOMPurify.sanitize(notice.title)}
-                                                    </span>
-                                                </div>
-                                                <i id="noticeIcon-${notice.id}" class="ph ph-caret-down text-gray-400 transition-transform duration-300 flex-shrink-0 mt-1 md:mt-0"></i>
-                                            </div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400 mt-2 md:hidden">
-                                                등 록 일 : ${DOMPurify.sanitize(notice.date || '최신')}
-                                            </div>
-                                        </button>
-                                    </td>
-                                    <td class="hidden md:table-cell py-4 px-4 text-center text-sm text-gray-600 dark:text-gray-400 truncate whitespace-nowrap">
-                                        ${DOMPurify.sanitize(notice.author || '체육사업부')}
-                                    </td>
-                                    <td class="hidden md:table-cell py-4 px-4 text-center text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                                        ${DOMPurify.sanitize(notice.date || '최신')}
-                                    </td>
-                                    <td class="hidden md:table-cell py-4 px-4 text-center text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                                        ${DOMPurify.sanitize(notice.views || Math.floor(Math.random() * 500) + 10)}
-                                    </td>
-                                </tr>
-                                <tr class="bg-gray-50 dark:bg-gray-800/50 block md:table-row">
-                                    <td colspan="5" class="p-0 border-0 block md:table-cell">
-                                        <div id="noticeContent-${notice.id}" class="overflow-hidden transition-all duration-300 max-h-0">
-                                            <div class="p-6 text-sm text-gray-700 dark:text-gray-300 border-t border-gray-100 dark:border-gray-700">
-                                                <div class="prose dark:prose-invert max-w-none prose-sm">
-                                                    ${DOMPurify.sanitize(notice.content || '<p>본문 내용이 없습니다.</p>', { ADD_ATTR: ['target'] })}
-                                                </div>
-                                                <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
-                                                    <a href="${DOMPurify.sanitize(notice.url)}" target="_blank" class="px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm flex items-center gap-2 transition-colors">
-                                                        공식 홈페이지 원문 보기 <i class="ph ph-arrow-square-out"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `;
-                        });
-                        listHtml += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        `;
-                        
-                        // Pagination UI
-                        let paginationHtml = '<div class="flex items-center justify-center gap-2 mt-8">';
-                        
-                        // Prev button
-                        paginationHtml += `
-                            <button onclick="if(window.currentNoticePage > 1) renderNoticePage(window.currentNoticePage - 1)" 
-                                    class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-700 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-30 disabled:hover:bg-transparent"
-                                    ${page === 1 ? 'disabled' : ''}>
-                                <i class="ph ph-caret-left"></i>
-                            </button>
-                        `;
-                        
-                        // Page numbers
-                        for(let i=1; i<=totalPages; i++) {
-                            if (i === page) {
-                                paginationHtml += `
-                                    <button class="w-8 h-8 flex items-center justify-center rounded-full bg-amber-600 text-white font-bold shadow-md">
-                                        ${i}
-                                    </button>
-                                `;
-                            } else {
-                                paginationHtml += `
-                                    <button onclick="renderNoticePage(${i})" class="w-8 h-8 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                        ${i}
-                                    </button>
-                                `;
-                            }
-                        }
-                        
-                        // Next button
-                        paginationHtml += `
-                            <button onclick="if(window.currentNoticePage < ${totalPages}) renderNoticePage(window.currentNoticePage + 1)" 
-                                    class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-700 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-30 disabled:hover:bg-transparent"
-                                    ${page === totalPages ? 'disabled' : ''}>
-                                <i class="ph ph-caret-right"></i>
-                            </button>
-                        `;
-                        paginationHtml += '</div>';
-                        
-                        const container = document.getElementById('notices-container');
-                        if(container) {
-                            container.innerHTML = listHtml + paginationHtml;
-                        }
-                    };
-                    
-                    // 전역 아코디언 토글 함수
-                    window.toggleNoticeAccordion = function(id) {
-                        const content = document.getElementById('noticeContent-' + id);
-                        const icon = document.getElementById('noticeIcon-' + id);
-                        
-                        // 다른 열려있는 모든 아코디언 닫기 (선택 사항: 원하면 주석 처리하여 다중 열림 허용)
-                        document.querySelectorAll('[id^="noticeContent-"]').forEach(el => {
-                            if(el.id !== 'noticeContent-' + id && el.style.maxHeight && el.style.maxHeight !== '0px') {
-                                el.style.maxHeight = '0px';
-                                const otherIcon = document.getElementById(el.id.replace('Content', 'Icon'));
-                                if(otherIcon) otherIcon.style.transform = 'rotate(0deg)';
-                            }
-                        });
-                        
-                        if (content.style.maxHeight && content.style.maxHeight !== '0px') {
-                            content.style.maxHeight = '0px';
-                            icon.style.transform = 'rotate(0deg)';
-                        } else {
-                            content.style.maxHeight = content.scrollHeight + 'px';
-                            icon.style.transform = 'rotate(180deg)';
-                        }
-                    };
+            if (safeId === 'admin_dashboard') {
+                contentArea.innerHTML = `<div class='w-full h-[800px] rounded-2xl overflow-hidden shadow-lg bg-white'><iframe src='pages/admin_dashboard.html' class='w-full h-full border-0'></iframe></div>`;
+                return;
+            }
+            if (safeId === 'safety') {
+                contentArea.innerHTML = `<div class="w-full h-[700px] rounded-lg overflow-hidden border border-gray-200"><embed src="docs/체육시설 안전관리 표준매뉴얼.pdf" type="application/pdf" width="100%" height="100%" /></div>`;
+                return;
+            }
 
-                    contentArea.innerHTML = `
-                        <div class="mb-6 flex items-center justify-between">
+            try {
+                const fetchPath = hasTabs ? 'data/' + safeId + '_' + facility + '.md' : 'data/' + safeId + '.md';
+                const response = await fetch(fetchPath);
+                if (!response.ok) throw new Error('파일을 찾을 수 없습니다.');
+                const markdownText = await response.text();
+                const rawHtml = marked.parse(markdownText);
+ <div class="mb-6 flex items-center justify-between">
                             <h2 class="text-2xl font-bold text-gray-800 dark:text-white">📢 청주도시공사 최신 공지사항</h2>
                         </div>
                         <div id="notices-container"></div>
