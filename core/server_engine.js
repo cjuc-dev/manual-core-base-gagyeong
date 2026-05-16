@@ -9,6 +9,23 @@ const path = require('path');
 const PORT = 3000;
 const ROOT_DIR = process.cwd();
 
+// [자동 업데이트] 서버 가동 시 공지사항 크롤러 실행
+try {
+    const runAutoCrawler = require(path.join(ROOT_DIR, 'scripts/auto_crawler.js'));
+    console.log('[System] 🚀 공지사항 자동 수집 엔진을 가동합니다...');
+    
+    // 1. 즉시 실행
+    runAutoCrawler().catch(e => console.error('[Crawler Error]', e));
+    
+    // 2. 주기적 실행 (1시간마다 업데이트)
+    setInterval(() => {
+        runAutoCrawler().catch(e => console.error('[Crawler Error]', e));
+    }, 1000 * 60 * 60);
+    
+} catch (e) {
+    console.error('[System Warning] 크롤러 모듈을 찾을 수 없습니다. 자동 업데이트가 비활성화됩니다.', e.message);
+}
+
 const server = http.createServer((req, res) => {
     const url = req.url.split('?')[0];
     const relativePath = url === '/' ? 'index.html' : url.slice(1);
