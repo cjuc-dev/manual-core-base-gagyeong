@@ -115,8 +115,8 @@ def fetch_notices():
             print(f"Error on page {page}: {e}")
             
     # Save to JSON
-    os.makedirs('../data', exist_ok=True)
-    with open('../data/notices.json', 'w', encoding='utf-8') as f:
+    os.makedirs('../data/system', exist_ok=True)
+    with open('../data/system/notices.json', 'w', encoding='utf-8') as f:
         json.dump(all_notices, f, ensure_ascii=False, indent=4)
         
     print(f"Successfully saved {len(all_notices)} notices to notices.json")

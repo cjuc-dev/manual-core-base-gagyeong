@@ -119,7 +119,7 @@ async function runAutoCrawler() {
 
     if (allNotices.length > 0) {
         // process.cwd()를 사용하여 실행 위치와 상관없이 절대 경로 확보
-        const dataPath = path.join(process.cwd(), 'data/notices.json');
+        const dataPath = path.join(process.cwd(), 'data/system/notices.json');
         fs.writeFileSync(dataPath, JSON.stringify(allNotices, null, 4), 'utf8');
         console.log(`[Crawler] 🎉 총 ${allNotices.length}개의 데이터 갱신 완료! (경로: ${dataPath})`);
     } else {
