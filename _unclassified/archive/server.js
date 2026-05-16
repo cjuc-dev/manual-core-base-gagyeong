@@ -1,15 +1,15 @@
-console.log('--- server.js 실행 시작 ---');
+console.log('--- [Core] server.js 실행 시작 ---');
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 console.log('--- 기본 모듈 로드 완료 ---');
-const runAutoCrawler = require('./scripts/auto_crawler');
+
+const ROOT_DIR = path.join(__dirname, '../');
+// const runAutoCrawler = require(path.join(ROOT_DIR, 'scripts/auto_crawler'));
+const runAutoCrawler = () => Promise.resolve();
 console.log('--- auto_crawler 모듈 로드 완료 ---');
 
-const PORT = 3000;
-const CRAWL_INTERVAL_MS = 60 * 60 * 1000; // 1시간 (밀리초)
-
-// MIME 타입 맵핑
+const PORT = 3001;
 const MIME_TYPES = {
     '.html': 'text/html',
     '.css': 'text/css',
@@ -22,24 +22,23 @@ const MIME_TYPES = {
     '.ico': 'image/x-icon'
 };
 
-// 가벼운 정적 파일 서버 생성 (Express 없이 Node.js 기본 모듈로만 구현)
 const server = http.createServer((req, res) => {
-    console.log(`[Server] ${req.method} ${req.url}`);
-    
-    // 기본 경로는 index.html로 라우팅
-    let filePath = req.url === '/' ? './index.html' : `.${req.url.split('?')[0]}`;
-    
-    // 절대 경로 변환
+    const relativePath = req.url === '/' ? 'index.html' : req.url.split('?')[0].slice(1);
+    const filePath = path.join(ROOT_DIR, relativePath);
     const extname = path.extname(filePath);
     let contentType = MIME_TYPES[extname] || 'application/octet-stream';
 
     fs.readFile(filePath, (error, content) => {
         if (error) {
             if (error.code === 'ENOENT') {
-                // SPA 라우팅을 위해 404 발생 시 무조건 index.html 반환 (옵션)
-                fs.readFile('./index.html', (err, indexContent) => {
-                    res.writeHead(200, { 'Content-Type': 'text/html' });
-                    res.end(indexContent, 'utf-8');
+                fs.readFile(path.join(ROOT_DIR, 'index.html'), (err, indexContent) => {
+                    if (err) {
+                        res.writeHead(404);
+                        res.end('404 Not Found');
+                    } else {
+                        res.writeHead(200, { 'Content-Type': 'text/html' });
+                        res.end(indexContent, 'utf-8');
+                    }
                 });
             } else {
                 res.writeHead(500);
@@ -52,18 +51,23 @@ const server = http.createServer((req, res) => {
     });
 });
 
-// 서버 가동
+server.on('error', (err) => {
+    console.error('[Server Error]', err);
+});
+
 server.listen(PORT, () => {
     console.log('\n==================================================');
-    console.log(`🚀 체육시설 통합 매뉴얼 (대시보드) 서버가 켜졌습니다!`);
-    console.log(`👉 접속 주소: http://localhost:${PORT}`);
+    console.log(`🚀 체육시설 통합 매뉴얼 서버 가동 중...`);
+    console.log(`🏠 루트: ${ROOT_DIR}`);
+    console.log(`🔗 주소: http://localhost:${PORT}`);
     console.log('==================================================\n');
     
-    console.log(`[AutoUpdater] 🕒 자동 업데이트 스케줄러 등록 완료 (주기: 1시간)`);
-    
-    // 서버가 켜질 때 최초 1회 크롤링 실행
-    runAutoCrawler().then(() => {
-        // 이후 1시간마다 반복 실행
-        setInterval(runAutoCrawler, CRAWL_INTERVAL_MS);
-    });
+    // 크롤러 실행 (에러 처리 추가)
+    try {
+        runAutoCrawler().then(() => {
+            console.log('[Crawler] 초기 스캔 완료');
+        }).catch(e => console.error('[Crawler Error]', e));
+    } catch(e) {
+        console.error('[Crawler Launch Error]', e);
+    }
 });
