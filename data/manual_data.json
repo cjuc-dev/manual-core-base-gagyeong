@@ -1,4 +1,5 @@
 {
+  "_comment": "🚀 [manual_data.json] 이 파일은 각 시설별 매뉴얼의 메타데이터(ID, 제목, 설명 등)를 관리합니다.",
   "searchData": {
     "admin": "행정 업무 매뉴얼",
     "tech": "기술 관련 매뉴얼",
