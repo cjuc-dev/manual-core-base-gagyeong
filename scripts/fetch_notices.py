@@ -1,3 +1,6 @@
+# 🚀 [fetch_notices.py] 
+# 해당 파일은 파이썬(Python) 기반의 공지사항 수집 로봇입니다.
+# 관리자 안내: 'auto_crawler.js'와 동일한 역할을 수행하며, 시스템 환경에 따라 선택적으로 사용됩니다.
 import urllib.request
 import urllib.error
 import re

@@ -1,3 +1,6 @@
+// 🔍 [build_search_index.js] 
+// 해당 파일은 '전역 검색 엔진'의 색인을 생성하는 핵심 스크립트입니다.
+// 관리자 안내: 'data/' 폴더 내의 마크다운 파일을 분석하여 'data/search_index.json'을 최신화합니다.
 const fs = require('fs');
 const path = require('path');
 
