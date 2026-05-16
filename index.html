@@ -163,11 +163,17 @@
             </div>
             
             <div class="flex items-center gap-3">
-                <button onclick="toggleTheme()" class="relative w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-amber-500 dark:text-yellow-400 transition-colors focus:outline-none" aria-label="다크/라이트 모드 전환">
-                    <!-- 라이트모드일때는 달 아이콘 표시 -->
-                    <i class="ph ph-moon text-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 dark:hidden" id="moonIcon" aria-hidden="true"></i>
-                    <!-- 다크모드일때는 해 아이콘 표시 -->
-                    <i class="ph ph-sun text-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden dark:block" id="sunIcon" aria-hidden="true"></i>
+                <button onclick="toggleTheme()" class="relative w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-amber-500 dark:text-yellow-400 transition-all focus:outline-none overflow-hidden" aria-label="다크/라이트 모드 전환">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <!-- 라이트모드일때는 달 (SVG) -->
+                        <svg id="moonIcon" class="w-6 h-6 block dark:hidden" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="currentColor" d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.11,104.11,0,1,0,129.8,129.8A8,8,0,0,0,233.54,142.23ZM128,216a88.13,88.13,0,0,1-78.82-127.28,104.08,104.08,0,0,0,128.1,128.1A87.76,87.76,0,0,1,128,216Z"></path>
+                        </svg>
+                        <!-- 다크모드일때는 해 (SVG) -->
+                        <svg id="sunIcon" class="w-6 h-6 hidden dark:block" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="currentColor" d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66a8,8,0,0,0,11.32-11.32l-16-16a8,8,0,0,0-11.32,11.32Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM197.66,69.66l16-16a8,8,0,0,0-11.32-11.32l-16,16a8,8,0,0,0,11.32,11.32ZM240,120H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16ZM40,120H16a8,8,0,0,0,0,16H40a8,8,0,0,0,0-16Zm157.66,66.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32Zm-77.66,29.66a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V224A8,8,0,0,0,120,216Z"></path>
+                        </svg>
+                    </div>
                 </button>
             </div>
         </header>
