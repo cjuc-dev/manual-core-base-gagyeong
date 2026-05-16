@@ -1,4 +1,5 @@
 // 🚀 [auto_crawler.js] 
+console.log('[Crawler] 모듈 파일 내부 진입 성공');
 // 해당 파일은 청주도시공사 홈페이지에서 실시간 공지사항을 수집하는 '크롤링 로봇'입니다.
 // 관리자 안내: 이 스크립트는 백그라운드에서 실행되며, 수집된 데이터는 'data/notices.json'에 자동으로 저장됩니다.
 const https = require('https');
@@ -120,8 +121,9 @@ async function runAutoCrawler() {
     if (allNotices.length > 0) {
         // process.cwd()를 사용하여 실행 위치와 상관없이 절대 경로 확보
         const dataPath = path.join(process.cwd(), 'data/system/notices.json');
+        console.log(`[Crawler] 데이터 저장 시도: ${dataPath}`);
         fs.writeFileSync(dataPath, JSON.stringify(allNotices, null, 4), 'utf8');
-        console.log(`[Crawler] 🎉 총 ${allNotices.length}개의 데이터 갱신 완료! (경로: ${dataPath})`);
+        console.log(`[Crawler] 🎉 총 ${allNotices.length}개의 데이터 갱신 완료!`);
     } else {
         console.log(`[Crawler] ⚠️ 수집된 데이터가 없어 갱신을 생략합니다.`);
     }
