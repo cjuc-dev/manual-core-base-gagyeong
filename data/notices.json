@@ -1,5 +1,13 @@
 [
     {
+        "id": 999,
+        "title": "[테스트] 시스템 연동 확인용 공지",
+        "author": "관리자",
+        "date": "2026-05-16",
+        "views": "0",
+        "content": "네트워크 연결 상태를 점검 중입니다."
+    },
+    {
         "id": 1,
         "title": "[공지]청주수영장 6월 강습접수 및 개인사물함 이용안내",
         "url": "https://www.cjuc.or.kr/home/sub?menukey=7401&mode=view&dsn=1778569296-831-555",
