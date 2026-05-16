@@ -23,14 +23,27 @@ try {
 }
 
 const server = http.createServer((req, res) => {
-    // 📌 지능형 경로 처리: 쿼리 스트링 제거 및 인코딩 복원
+    // 📌 지능형 경로 처리 및 로그 기록
     const decodedUrl = decodeURIComponent(req.url.split('?')[0]);
     const relativePath = decodedUrl === '/' ? 'index.html' : decodedUrl.slice(1);
     const filePath = path.join(ROOT_DIR, relativePath);
     
+    // [Debug] 서버가 접근하려는 실제 경로를 터미널에 출력
+    if (relativePath.startsWith('data/')) {
+        console.log(`[Request] ${decodedUrl} -> ${filePath}`);
+    }
+
     fs.readFile(filePath, (err, data) => {
         if (err) {
-            // 파일을 찾을 수 없는 경우 index.html로 리다이렉트 (SPA 지원)
+            // 마크다운 파일 요청인데 없는 경우는 404를 명확히 반환
+            if (relativePath.endsWith('.md')) {
+                console.error(`[Error 404] File Not Found: ${filePath}`);
+                res.writeHead(404, {'Content-Type': 'text/plain; charset=utf-8'});
+                res.end('File Not Found');
+                return;
+            }
+
+            // 그 외(페이지 이동 등)는 SPA 지원을 위해 index.html 반환
             fs.readFile(path.join(ROOT_DIR, 'index.html'), (err2, data2) => {
                 if (err2) {
                     res.writeHead(404); res.end('Not Found');
@@ -46,7 +59,7 @@ const server = http.createServer((req, res) => {
                 '.js': 'text/javascript',
                 '.css': 'text/css',
                 '.json': 'application/json',
-                '.md': 'text/markdown; charset=utf-8', // 👈 필수 추가: 마크다운 지원
+                '.md': 'text/markdown; charset=utf-8',
                 '.png': 'image/png',
                 '.jpg': 'image/jpeg',
                 '.gif': 'image/gif',
