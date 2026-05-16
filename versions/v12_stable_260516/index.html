@@ -286,33 +286,12 @@
         </main>
     </div>
 
-    <!-- 🚀 [궁극의 UX] 하단 고정형 스마트 네비게이션 바 -->
-    <div id="stickyNav" class="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 p-1.5 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-white/20 dark:border-gray-700/50 rounded-2xl shadow-2xl transition-all duration-500 opacity-0 invisible translate-y-10 z-50">
-        <!-- 대시보드 홈 -->
-        <button onclick="showDashboard()" 
-            class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition-all group">
-            <i class="ph ph-house text-xl transition-transform group-hover:scale-120"></i>
-            <span class="hidden sm:inline">대시보드</span>
-        </button>
-
-        <div class="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
-
-        <!-- 맨 위로 이동 -->
-        <button onclick="scrollToTop()" 
-            class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-xl transition-all group">
-            <i class="ph ph-arrow-up text-xl transition-transform group-hover:-translate-y-1"></i>
-            <span class="hidden sm:inline">맨 위로</span>
-        </button>
-
-        <div class="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
-
-        <!-- 문서 닫기 -->
-        <button onclick="showDashboard()" 
-            class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-all group">
-            <i class="ph ph-x-circle text-xl transition-transform group-hover:rotate-90"></i>
-            <span class="hidden sm:inline">닫기</span>
-        </button>
-    </div>
+    <!-- 🚀 [신규] 최상단으로 이동 (Back to Top) 버튼 -->
+    <button id="backToTop" onclick="scrollToTop()" 
+        class="fixed bottom-8 right-8 w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border border-gray-200 dark:border-gray-700 rounded-full shadow-2xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 hover:scale-110 active:scale-95 transition-all opacity-0 invisible z-50 group" 
+        aria-label="맨 위로 이동">
+        <i class="ph ph-arrow-up text-2xl font-bold group-hover:-translate-y-1 transition-transform" aria-hidden="true"></i>
+    </button>
 
     <!-- 스크립트 로직 -->
     <script>
@@ -362,15 +341,15 @@
         }
 
         const scrollArea = document.getElementById('mainScrollArea');
-        const stickyNav = document.getElementById('stickyNav');
-        if (scrollArea && stickyNav) {
+        const backToTopBtn = document.getElementById('backToTop');
+        if (scrollArea && backToTopBtn) {
             scrollArea.addEventListener('scroll', () => {
-                if (scrollArea.scrollTop > 100) {
-                    stickyNav.classList.remove('opacity-0', 'invisible', 'translate-y-10');
-                    stickyNav.classList.add('opacity-100', 'visible', 'translate-y-0');
+                if (scrollArea.scrollTop > 300) {
+                    backToTopBtn.classList.remove('opacity-0', 'invisible');
+                    backToTopBtn.classList.add('opacity-100', 'visible');
                 } else {
-                    stickyNav.classList.add('opacity-0', 'invisible', 'translate-y-10');
-                    stickyNav.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                    backToTopBtn.classList.add('opacity-0', 'invisible');
+                    backToTopBtn.classList.remove('opacity-100', 'visible');
                 }
             });
         }
@@ -471,31 +450,7 @@
                 });
                 
                 let safeHtml = DOMPurify.sanitize(tempTableDiv.innerHTML, { ADD_ATTR: ['rowspan', 'colspan', 'style'] });
-                
-                // 🔦 [검색 지원] 검색어 하이라이트 로직 복구
-                if (searchQuery && searchQuery.trim().length >= 2) {
-                    const regex = new RegExp(`(${searchQuery.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')})`, 'gi');
-                    safeHtml = safeHtml.replace(/(<[^>]+>)|([^<]+)/g, (match, g1, g2) => {
-                        if (g1) return g1;
-                        return g2.replace(regex, '<mark class="bg-yellow-200 dark:bg-yellow-800 text-gray-900 dark:text-white rounded px-0.5 font-bold search-match">$1</mark>');
-                    });
-                }
-
-                contentArea.innerHTML = tabsHtml + `
-                    <div id="markdown-body" class="prose dark:prose-invert max-w-none prose-emerald lg:prose-lg">
-                        ${safeHtml}
-                    </div>
-                `;
-
-                // 🚀 [검색 지원] 검색 결과 위치로 자동 스크롤
-                if (searchQuery) {
-                    setTimeout(() => {
-                        const firstMatch = document.querySelector('.search-match');
-                        if (firstMatch) {
-                            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    }, 300);
-                }
+                contentArea.innerHTML = tabsHtml + `<div id="markdown-body" class="prose dark:prose-invert max-w-none prose-emerald lg:prose-lg">${safeHtml}</div>`;
             } catch (err) {
                 contentArea.innerHTML = tabsHtml + `
                     <div class="text-center py-20 text-gray-500">
