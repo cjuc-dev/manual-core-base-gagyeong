@@ -1,0 +1,36 @@
+{
+  "_comment": "🚀 [manual_data.json] 이 파일은 각 시설별 매뉴얼의 메타데이터(ID, 제목, 설명 등)를 관리합니다.",
+  "searchData": {
+    "admin": "행정 업무 매뉴얼",
+    "tech": "기술 관련 매뉴얼",
+    "safety": "안전 프로토콜",
+    "voc": "고객의 소리",
+    "swim": "청주수영장",
+    "purmi": "푸르미스포츠센터",
+    "youngun": "영운국민체육센터",
+    "bokdae": "복대국민체육센터",
+    "gagyeong": "가경국민체육센터",
+    "sannam": "산남국민체육센터"
+  },
+  "contentData": {
+    "admin": "<div class=\"content-text\"><h3><i class=\"ph ph-clipboard-text\"></i> 행정 (Admin)</h3><p>행정 업무 매뉴얼입니다. 예산, 인사, 계약, 결재 등의 행정 절차를 안내합니다.</p></div>",
+    "tech": "<div class=\"content-text\"><h3><i class=\"ph ph-wrench\"></i> 기술 (Tech)</h3><p>시설 기술 관련 매뉴얼입니다. 설비 운영, 유지보수, 기술 지원에 관한 내용을 다룹니다.</p></div>",
+    "safety": "<div class=\"content-text\"><h3><i class=\"ph ph-shield-check\"></i> 안전 (Safety)</h3><p>안전 프로토콜 및 위험 관리입니다. 긴급 상황 대응, 안전 점검, 사고 예방 등을 포함합니다.</p></div>",
+    "voc": "<div class=\"content-text\"><h3><i class=\"ph ph-chat-circle-dots\"></i> VOC (고객의 소리)</h3><p>고객 피드백과 의견을 수집하고 관리합니다. 더 나은 서비스 개선을 위해 소중한 의견을 반영합니다.</p></div>",
+    "voc_swim": "<div class=\"content-text\"><h3><i class=\"ph ph-swimming-pool\"></i> 수영장 피드백</h3><p>수영장 이용객들의 의견과 건의사항입니다. 수질, 안전, 시설 등 다양한 분야의 피드백을 수집합니다.</p></div>",
+    "voc_gym": "<div class=\"content-text\"><h3><i class=\"ph ph-barbell\"></i> 다목적체육관 피드백</h3><p>다목적체육관 이용객들의 피드백입니다. 운영 시간, 프로그램, 편의시설 등의 의견을 반영합니다.</p></div>",
+    "voc_program": "<div class=\"content-text\"><h3><i class=\"ph ph-books\"></i> 프로그램실 피드백</h3><p>프로그램실 이용자들의 건의사항입니다. 프로그램 구성, 강사, 교육 방식 등의 개선 의견을 수집합니다.</p></div>",
+    "voc_other": "<div class=\"content-text\"><h3><i class=\"ph ph-note-pencil\"></i> 기타 피드백</h3><p>그 외 모든 분야의 고객 의견입니다. 시설 전반에 대한 개선 사항과 건의를 수용합니다.</p></div>",
+    "status": "<div class=\"content-text\"><h3><span style=\"display: flex; align-items: center; gap: 6px;\"><i class=\"ph ph-chart-bar\" style=\"font-size: 16px;\"></i> 현황</span></h3><p>시설의 최신 상태와 운영 현황을 한눈에 파악합니다. 실시간 정보 업데이트를 제공합니다.</p></div>",
+    "status_update": "<div class=\"content-text\"><h3><i class=\"ph ph-trend-up\"></i> 업데이트 현황</h3><p>최근 시설 업그레이드와 개선 사항입니다. 진행 중인 공사와 완료된 프로젝트를 확인하세요.</p></div>",
+    "status_facility": "<div class=\"content-text\"><h3><i class=\"ph ph-buildings\"></i> 시설 현황</h3><p>모든 관리 시설의 운영 상태입니다. 각 시설의 이용 현황과 예약 상황을 조회할 수 있습니다.</p></div>",
+    "inquiry": "<div class=\"content-text\"><h3><span style=\"display: flex; align-items: center; gap: 6px;\"><i class=\"ph ph-question\" style=\"font-size: 16px;\"></i> 시스템 문의</span></h3><p>시스템 이용 중 문제나 개선 사항을 신청할 수 있습니다. 기술 지원 팀이 빠르게 대응합니다.</p></div>",
+    "inquiry_support": "<div class=\"content-text\"><h3><i class=\"ph ph-lifebuoy\"></i> 시스템 이용 문의 및 개선 요청</h3><p>시스템 사용 중 어려운 점이나 개선 제안을 신청하세요. 저희 팀이 신속하게 지원하겠습니다.</p></div>",
+    "swim": "<div class=\"content-text\"><h3><i class=\"ph ph-bank\"></i> 청주수영장</h3><p>도시민들이 즐겨 찾는 공공 수영장입니다. 수질 관리, 안전 점검, 시설 유지보수가 정기적으로 이루어집니다.</p></div>",
+    "purmi": "<div class=\"content-text\"><h3><i class=\"ph ph-warehouse\"></i> 푸르미스포츠센터</h3><p>다양한 스포츠 시설을 갖춘 종합 센터입니다. 수영, 헬스, 요가, 탁구 등 다양한 프로그램을 운영합니다.</p></div>",
+    "youngun": "<div class=\"content-text\"><h3><i class=\"ph ph-warehouse\"></i> 영운국민체육센터</h3><p>지역 주민을 위한 체육 시설입니다. 다목적체육관, 헬스장, 수영장 등이 갖춰져 있습니다.</p></div>",
+    "bokdae": "<div class=\"content-text\"><h3><i class=\"ph ph-warehouse\"></i> 복대국민체육센터</h3><p>현대적 설비를 갖춘 체육 시설입니다. 최신 운동 기구와 편의 시설을 제공합니다.</p></div>",
+    "gagyeong": "<div class=\"content-text\"><h3><i class=\"ph ph-building\"></i> 가경국민체육센터</h3><p>수영장, 헬스장, 요가실 등 다양한 시설을 갖춘 종합 체육센터입니다. 안전 개선 사항이 진행 중입니다.</p></div>",
+    "sannam": "<div class=\"content-text\"><h3><i class=\"ph ph-building\"></i> 산남국민체육센터</h3><p>지역 주민들의 건강 증진을 위해 새롭게 추가된 다목적 체육시설입니다.</p></div>"
+  }
+}
