@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>청주도시공사 체육시설 통합 매뉴얼</title>
+    <!-- Phosphor Icons (세련된 아이콘 적용) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .container {
+            display: flex;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #ffffff;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 1px 0 3px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s;
+            position: relative;
+            z-index: 998;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            border-right: 1px solid #e8e8e8;
+        }
+
+        body.dark-mode .sidebar {
+            background: #252525;
+            color: #e0e0e0;
+            border-right-color: #404040;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 997;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+        }
+
+        .sidebar-header {
+            padding: 20px 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        body.dark-mode .sidebar-header {
+            border-bottom-color: #404040;
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        body.dark-mode .logo {
+            color: #e0e0e0;
+        }
+
+        .user-info {
+            font-size: 12px;
+            color: #999;
+            line-height: 1.5;
+        }
+
+        body.dark-mode .user-info {
+            color: #aaa;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            padding: 16px 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .sidebar-section {
+            margin-bottom: 0;
+        }
+
+        .sidebar-section-header {
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #333;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 44px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+
+        body.dark-mode .sidebar-section-header {
+            color: #e0e0e0;
+            border-bottom-color: #404040;
+        }
+
+        .sidebar-section-header:active {
+            background: #f5f5f5;
+        }
+
+        body.dark-mode .sidebar-section-header:active {
+            background: #2a2a2a;
+        }
+
+        .sidebar-section-header.open {
+            background: #fff3f0;
+            color: #FA8232;
+        }
+
+        body.dark-mode .sidebar-section-header.open {
+            background: #2a2a2a;
+        }
+
+        .sidebar-section-toggle {
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+
+        .sidebar-section-header.open .sidebar-section-toggle {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-items {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .sidebar-items.open {
+            max-height: 500px;
+        }
+
+        .facility-link {
+            padding: 10px 16px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 40px;
+            user-select: none;
+            border-left: 3px solid transparent;
+            color: #666;
+        }
+
+        body.dark-mode .facility-link {
+            color: #999;
+        }
+
+        .facility-link:active {
+            background: #f5f5f5;
+        }
+
+        body.dark-mode .facility-link:active {
+            background: #2a2a2a;
+        }
+
+        .facility-link.active {
+            background: #fff3f0;
+            border-left-color: #FA8232;
+            color: #333;
+            font-weight: 600;
+        }
+
+        body.dark-mode .facility-link.active {
+            background: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        .facility-icon {
+            font-size: 16px;
+        }
+
+        .menu-header {
+            padding: 8px 16px 8px 28px;
+            font-size: 12px;
+            color: #999;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 36px;
+            user-select: none;
+        }
+
+        body.dark-mode .menu-header {
+            color: #666;
+        }
+
+        .menu-header:active {
+            background: #f5f5f5;
+        }
+
+        body.dark-mode .menu-header:active {
+            background: #2a2a2a;
+        }
+
+        .menu-header.open {
+            background: #fff3f0;
+            color: #FA8232;
+            font-weight: 600;
+        }
+
+        body.dark-mode .menu-header.open {
+            background: #2a2a2a;
+        }
+
+        .menu-toggle {
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+
+        .menu-header.open .menu-toggle {
+            transform: rotate(180deg);
+        }
+
+        .menu-items {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .menu-items.open {
+            max-height: 300px;
+        }
+
+        .menu-subitem {
+            padding: 8px 16px 8px 40px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            color: #999;
+            border-left: 2px solid transparent;
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+        }
+
+        body.dark-mode .menu-subitem {
+            color: #666;
+        }
+
+        .menu-subitem:active {
+            background: #f5f5f5;
+            color: #FA8232;
+        }
+
+        body.dark-mode .menu-subitem:active {
+            background: #2a2a2a;
+            color: #FA8232;
+        }
+
+        .menu-subitem.active {
+            border-left-color: #FA8232;
+            color: #FA8232;
+            font-weight: 600;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f8f8f8;
+            transition: background-color 0.3s;
+            overflow: hidden;
+        }
+
+        body.dark-mode .main-content {
+            background: #1a1a1a;
+        }
+
+        .header {
+            background: white;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e8e8e8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s, border-color 0.3s;
+            gap: 12px;
+        }
+
+        body.dark-mode .header {
+            background: #262626;
+            border-bottom-color: #404040;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .menu-toggle-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        body.dark-mode .menu-toggle-btn {
+            color: #e0e0e0;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        body.dark-mode .header-title {
+            color: #e0e0e0;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle, .search-toggle {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s;
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .theme-toggle:active, .search-toggle:active {
+            color: #333;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: #666;
+        }
+
+        .search-container {
+            display: none;
+            width: 100%;
+            padding: 12px 16px;
+            background: white;
+            border-bottom: 1px solid #e8e8e8;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        body.dark-mode .search-container {
+            background: #262626;
+            border-bottom-color: #404040;
+        }
+
+        .search-container.active {
+            display: block;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            color: #333;
+            transition: border-color 0.2s;
+        }
+
+        body.dark-mode .search-input {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border-color: #404040;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #FA8232;
+        }
+
+        .search-results {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body.dark-mode .search-results {
+            background: #1a1a1a;
+            border-color: #404040;
+        }
+
+        .search-results.show {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 0.5px solid #e8e8e8;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 13px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        body.dark-mode .search-result-item {
+            border-bottom-color: #404040;
+        }
+
+        .search-result-item:active {
+            background: #f0f0f0;
+        }
+
+        body.dark-mode .search-result-item:active {
+            background: #2a2a2a;
+        }
+
+        .content {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .facility-panel {
+            background: white;
+            border: 0.5px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        body.dark-mode .facility-panel {
+            background: #2a2a2a;
+            border-color: #404040;
+        }
+
+        .panel-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #FA8232;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid #FA8232;
+            padding-bottom: 12px;
+        }
+
+        .facility-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .facility-item {
+            padding: 12px;
+            background: #f8f8f8;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            font-size: 13px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        body.dark-mode .facility-item {
+            background: #1a1a1a;
+        }
+
+        .facility-item:active {
+            background: #fff3f0;
+            color: #FA8232;
+            font-weight: 600;
+        }
+
+        body.dark-mode .facility-item:active {
+            background: #2a2a2a;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .module-card {
+            background: white;
+            border: 0.5px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.dark-mode .module-card {
+            background: #2a2a2a;
+            border-color: #404040;
+        }
+
+        .module-card:active {
+            background: #fff3f0;
+            border-color: #FA8232;
+        }
+
+        body.dark-mode .module-card:active {
+            background: #323232;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .module-header-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .module-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .module-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .module-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: #333;
+        }
+
+        body.dark-mode .module-title {
+            color: #e0e0e0;
+        }
+
+        .module-desc {
+            font-size: 12px;
+            color: #999;
+        }
+
+        body.dark-mode .module-desc {
+            color: #666;
+        }
+
+        .module-toggle {
+            background: none;
+            border: none;
+            color: #FA8232;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0;
+            min-width: 24px;
+            min-height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .module-toggle.expanded {
+            transform: rotate(180deg);
+        }
+
+        .module-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            border-top: 1px solid #e8e8e8;
+            margin-top: 12px;
+            padding-top: 12px;
+        }
+
+        body.dark-mode .module-content {
+            border-top-color: #404040;
+        }
+
+        .module-content.expanded {
+            max-height: 500px;
+        }
+
+        .module-item {
+            padding: 10px 0;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.2s, padding-left 0.2s;
+            border-radius: 4px;
+            padding-left: 0;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        body.dark-mode .module-item {
+            color: #999;
+        }
+
+        .module-item:active {
+            color: #FA8232;
+            font-weight: 600;
+            padding-left: 8px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #FA8232 0%, #E85D1C 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .content-view {
+            display: none;
+        }
+
+        .content-view.active {
+            display: block;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: #FA8232;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 44px;
+            padding: 0;
+            font-weight: 600;
+        }
+
+        .content-text {
+            background: white;
+            border: 0.5px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .content-text {
+            background: #2a2a2a;
+            border-color: #404040;
+            color: #e0e0e0;
+        }
+
+        .content-text h3 {
+            color: #FA8232;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100%;
+                transform: translateX(-100%);
+                width: 260px;
+                border-radius: 0;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .header {
+                padding: 10px 12px;
+            }
+
+            .header-title {
+                font-size: 14px;
+            }
+
+            .content {
+                padding: 12px;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+
+            .dashboard-grid {
+                gap: 12px;
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(0px, env(safe-area-inset-left));
+                padding-right: max(0px, env(safe-area-inset-right));
+                padding-bottom: max(0px, env(safe-area-inset-bottom));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">청주도시공사</div>
+                <div class="user-info">
+                    <div>박영규</div>
+                    <div>체육시설 관리</div>
+                </div>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-header" onclick="toggleSidebarSection(this)">
+                        시설
+                        <span class="sidebar-section-toggle"><i class="ph ph-caret-down"></i></span>
+                    </div>
+                    <div class="sidebar-items open">
+                        <div class="facility-link" onclick="loadFacility('swim'); closeSidebar()"><span class="facility-icon"><i class="ph ph-bank"></i></span>청주수영장</div>
+                        <div class="facility-link" onclick="loadFacility('purmi'); closeSidebar()"><span class="facility-icon"><i class="ph ph-warehouse"></i></span>푸르미스포츠센터</div>
+                        <div class="facility-link" onclick="loadFacility('youngun'); closeSidebar()"><span class="facility-icon"><i class="ph ph-warehouse"></i></span>영운국민체육센터</div>
+                        <div class="facility-link" onclick="loadFacility('bokdae'); closeSidebar()"><span class="facility-icon"><i class="ph ph-warehouse"></i></span>복대국민체육센터</div>
+                        <div class="facility-link" onclick="loadFacility('gagyeong'); closeSidebar()"><span class="facility-icon"><i class="ph ph-building"></i></span>가경국민체육센터</div>
+                        <div class="facility-link" onclick="loadFacility('sannam'); closeSidebar()"><span class="facility-icon"><i class="ph ph-building"></i></span>산남국민체육센터</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-header" onclick="toggleSidebarSection(this)">
+                        메뉴
+                        <span class="sidebar-section-toggle"><i class="ph ph-caret-down"></i></span>
+                    </div>
+                    <div class="sidebar-items open">
+                        <div class="menu-header" onclick="toggleMenuGroup(this)">
+                            <span style="display: flex; align-items: center; gap: 6px;"><i class="ph ph-clipboard-text" style="font-size: 16px;"></i> 매뉴얼</span>
+                            <span class="menu-toggle"><i class="ph ph-caret-down"></i></span>
+                        </div>
+                        <div class="menu-items">
+                            <div class="menu-subitem" onclick="loadContent('admin'); closeSidebar()">행정 (Admin)</div>
+                            <div class="menu-subitem" onclick="loadContent('tech'); closeSidebar()">기술 (Tech)</div>
+                            <div class="menu-subitem" onclick="loadContent('safety'); closeSidebar()">안전 (Safety)</div>
+                        </div>
+
+                        <div class="menu-header" onclick="toggleMenuGroup(this)">
+                            <span style="display: flex; align-items: center; gap: 6px;"><i class="ph ph-chat-circle-dots" style="font-size: 16px;"></i> 고객의 소리</span>
+                            <span class="menu-toggle"><i class="ph ph-caret-down"></i></span>
+                        </div>
+                        <div class="menu-items">
+                            <div class="menu-subitem" onclick="loadContent('voc_swim'); closeSidebar()">수영장</div>
+                            <div class="menu-subitem" onclick="loadContent('voc_gym'); closeSidebar()">다목적체육관</div>
+                            <div class="menu-subitem" onclick="loadContent('voc_program'); closeSidebar()">프로그램실</div>
+                            <div class="menu-subitem" onclick="loadContent('voc_other'); closeSidebar()">기타</div>
+                        </div>
+
+                        <div class="menu-header" onclick="toggleMenuGroup(this)">
+                            <span style="display: flex; align-items: center; gap: 6px;"><i class="ph ph-chart-bar" style="font-size: 16px;"></i> 현황</span>
+                            <span class="menu-toggle"><i class="ph ph-caret-down"></i></span>
+                        </div>
+                        <div class="menu-items">
+                            <div class="menu-subitem" onclick="loadContent('status_update'); closeSidebar()">업데이트 현황</div>
+                            <div class="menu-subitem" onclick="loadContent('status_facility'); closeSidebar()">시설 현황</div>
+                        </div>
+
+                        <div class="menu-header" onclick="toggleMenuGroup(this)">
+                            <span style="display: flex; align-items: center; gap: 6px;"><i class="ph ph-question" style="font-size: 16px;"></i> 시스템 문의</span>
+                            <span class="menu-toggle"><i class="ph ph-caret-down"></i></span>
+                        </div>
+                        <div class="menu-items">
+                            <div class="menu-subitem" onclick="loadContent('inquiry_support'); closeSidebar()">시스템 이용 문의 및 개선 요청</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" aria-label="메뉴"><i class="ph ph-list"></i></button>
+                    <div class="header-title" id="headerTitle">체육시설 통합 매뉴얼</div>
+                </div>
+                <div class="header-right">
+                    <button class="search-toggle" onclick="toggleSearch()" aria-label="검색"><i class="ph ph-magnifying-glass"></i></button>
+                    <button class="theme-toggle" onclick="toggleTheme()" aria-label="다크모드"><i class="ph ph-moon"></i></button>
+                </div>
+            </header>
+
+            <div class="search-container" id="searchContainer">
+                <div style="position: relative;">
+                    <input type="text" class="search-input" id="searchInput" placeholder="검색어 입력..." oninput="performSearch(this.value)">
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+            </div>
+
+            <div class="content">
+                <div id="dashboardView">
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">관리 시설</div>
+                            <div class="stat-value">5</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">안전 점검</div>
+                            <div class="stat-value">24</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">문서</div>
+                            <div class="stat-value">156</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">고객 문의</div>
+                            <div class="stat-value">12</div>
+                        </div>
+                    </div>
+
+                    <div class="main-grid">
+                        <div class="facility-panel">
+                            <div class="panel-title"><i class="ph ph-map-pin" style="margin-right: 6px;"></i> 시설 바로가기</div>
+                            <div class="facility-list">
+                                <div class="facility-item" onclick="loadContent('swim')"><i class="ph ph-bank" style="font-size: 16px; margin-right: 8px;"></i> 청주수영장</div>
+                                <div class="facility-item" onclick="loadContent('purmi')"><i class="ph ph-warehouse" style="font-size: 16px; margin-right: 8px;"></i> 푸르미스포츠센터</div>
+                                <div class="facility-item" onclick="loadContent('youngun')"><i class="ph ph-warehouse" style="font-size: 16px; margin-right: 8px;"></i> 영운국민체육센터</div>
+                                <div class="facility-item" onclick="loadContent('bokdae')"><i class="ph ph-warehouse" style="font-size: 16px; margin-right: 8px;"></i> 복대국민체육센터</div>
+                                <div class="facility-item" onclick="loadContent('gagyeong')"><i class="ph ph-building" style="font-size: 16px; margin-right: 8px;"></i> 가경국민체육센터</div>
+                                <div class="facility-item" onclick="loadContent('sannam')"><i class="ph ph-building" style="font-size: 16px; margin-right: 8px;"></i> 산남국민체육센터</div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-grid">
+                            <div class="module-card">
+                                <div class="module-header" onclick="toggleModule(event)">
+                                    <div class="module-header-content">
+                                        <div class="module-icon"><i class="ph ph-clipboard-text"></i></div>
+                                        <div class="module-info">
+                                            <div class="module-title">매뉴얼 (Manual)</div>
+                                            <div class="module-desc">Admin, Tech, Safety Protocols</div>
+                                        </div>
+                                    </div>
+                                    <button class="module-toggle"><i class="ph ph-caret-down"></i></button>
+                                </div>
+                                <div class="module-content">
+                                    <div class="module-item" onclick="loadContent('admin')">행정 (Admin)</div>
+                                    <div class="module-item" onclick="loadContent('tech')">기술 (Tech)</div>
+                                    <div class="module-item" onclick="loadContent('safety')">안전 (Safety)</div>
+                                </div>
+                            </div>
+
+                            <div class="module-card">
+                                <div class="module-header" onclick="toggleModule(event)">
+                                    <div class="module-header-content">
+                                        <div class="module-icon"><i class="ph ph-chat-circle-dots"></i></div>
+                                        <div class="module-info">
+                                            <div class="module-title">VOC (고객의 소리)</div>
+                                            <div class="module-desc">Customer Feedback & Q&A</div>
+                                        </div>
+                                    </div>
+                                    <button class="module-toggle"><i class="ph ph-caret-down"></i></button>
+                                </div>
+                                <div class="module-content">
+                                    <div class="module-item" onclick="loadContent('voc_swim')">수영장</div>
+                                    <div class="module-item" onclick="loadContent('voc_gym')">다목적체육관</div>
+                                    <div class="module-item" onclick="loadContent('voc_program')">프로그램실</div>
+                                    <div class="module-item" onclick="loadContent('voc_other')">기타</div>
+                                </div>
+                            </div>
+
+                            <div class="module-card">
+                                <div class="module-header" onclick="toggleModule(event)">
+                                    <div class="module-header-content">
+                                        <div class="module-icon"><i class="ph ph-chart-bar"></i></div>
+                                        <div class="module-info">
+                                            <div class="module-title">현황 (Status)</div>
+                                            <div class="module-desc">Updates & Facility Status</div>
+                                        </div>
+                                    </div>
+                                    <button class="module-toggle"><i class="ph ph-caret-down"></i></button>
+                                </div>
+                                <div class="module-content">
+                                    <div class="module-item" onclick="loadContent('status_update')">업데이트 현황</div>
+                                    <div class="module-item" onclick="loadContent('status_facility')">시설 현황</div>
+                                </div>
+                            </div>
+
+                            <div class="module-card">
+                                <div class="module-header" onclick="toggleModule(event)">
+                                    <div class="module-header-content">
+                                        <div class="module-icon"><i class="ph ph-question"></i></div>
+                                        <div class="module-info">
+                                            <div class="module-title">시스템 문의</div>
+                                            <div class="module-desc">Support & Request</div>
+                                        </div>
+                                    </div>
+                                    <button class="module-toggle"><i class="ph ph-caret-down"></i></button>
+                                </div>
+                                <div class="module-content">
+                                    <div class="module-item" onclick="loadContent('inquiry_support')">시스템 이용 문의 및 개선 요청</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contentView" class="content-view">
+                    <button class="back-button" onclick="backToDashboard()"><i class="ph ph-arrow-left" style="font-size: 16px; margin-right: 4px;"></i> 돌아가기</button>
+                    <div id="contentArea"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const searchData = {
+            'manual': '매뉴얼',
+            'admin': '행정',
+            'tech': '기술',
+            'safety': '안전',
+            'voc': '고객의 소리',
+            'voc_swim': '수영장',
+            'voc_gym': '다목적체육관',
+            'voc_program': '프로그램실',
+            'voc_other': '기타',
+            'status': '현황',
+            'status_update': '업데이트 현황',
+            'status_facility': '시설 현황',
+            'inquiry': '시스템 문의',
+            'inquiry_support': '시스템 이용 문의 및 개선 요청',
+            'swim': '청주수영장',
+            'purmi': '푸르미스포츠센터',
+            'youngun': '영운국민체육센터',
+            'bokdae': '복대국민체육센터',
+            'gagyeong': '가경국민체육센터',
+            'sannam': '산남국민체육센터'
+        };
+
+        const contentData = {
+            'manual': '<div class="content-text"><h3><span style="display: flex; align-items: center; gap: 6px;"><i class="ph ph-clipboard-text" style="font-size: 16px;"></i> 매뉴얼</span></h3><p>행정, 기술, 안전 관련 매뉴얼입니다. 시설 운영에 필요한 각종 문서와 절차를 확인할 수 있습니다.</p></div>',
+            'admin': '<div class="content-text"><h3><i class="ph ph-clipboard-text"></i> 행정 (Admin)</h3><p>행정 업무 매뉴얼입니다. 예산, 인사, 계약, 결재 등의 행정 절차를 안내합니다.</p></div>',
+            'tech': '<div class="content-text"><h3><i class="ph ph-wrench"></i> 기술 (Tech)</h3><p>시설 기술 관련 매뉴얼입니다. 설비 운영, 유지보수, 기술 지원에 관한 내용을 다룹니다.</p></div>',
+            'safety': '<div class="content-text"><h3><i class="ph ph-shield-check"></i> 안전 (Safety)</h3><p>안전 프로토콜 및 위험 관리입니다. 긴급 상황 대응, 안전 점검, 사고 예방 등을 포함합니다.</p></div>',
+            'voc': '<div class="content-text"><h3><i class="ph ph-chat-circle-dots"></i> VOC (고객의 소리)</h3><p>고객 피드백과 의견을 수집하고 관리합니다. 더 나은 서비스 개선을 위해 소중한 의견을 반영합니다.</p></div>',
+            'voc_swim': '<div class="content-text"><h3><i class="ph ph-swimming-pool"></i> 수영장 피드백</h3><p>수영장 이용객들의 의견과 건의사항입니다. 수질, 안전, 시설 등 다양한 분야의 피드백을 수집합니다.</p></div>',
+            'voc_gym': '<div class="content-text"><h3><i class="ph ph-barbell"></i> 다목적체육관 피드백</h3><p>다목적체육관 이용객들의 피드백입니다. 운영 시간, 프로그램, 편의시설 등의 의견을 반영합니다.</p></div>',
+            'voc_program': '<div class="content-text"><h3><i class="ph ph-books"></i> 프로그램실 피드백</h3><p>프로그램실 이용자들의 건의사항입니다. 프로그램 구성, 강사, 교육 방식 등의 개선 의견을 수집합니다.</p></div>',
+            'voc_other': '<div class="content-text"><h3><i class="ph ph-note-pencil"></i> 기타 피드백</h3><p>그 외 모든 분야의 고객 의견입니다. 시설 전반에 대한 개선 사항과 건의를 수용합니다.</p></div>',
+            'status': '<div class="content-text"><h3><span style="display: flex; align-items: center; gap: 6px;"><i class="ph ph-chart-bar" style="font-size: 16px;"></i> 현황</span></h3><p>시설의 최신 상태와 운영 현황을 한눈에 파악합니다. 실시간 정보 업데이트를 제공합니다.</p></div>',
+            'status_update': '<div class="content-text"><h3><i class="ph ph-trend-up"></i> 업데이트 현황</h3><p>최근 시설 업그레이드와 개선 사항입니다. 진행 중인 공사와 완료된 프로젝트를 확인하세요.</p></div>',
+            'status_facility': '<div class="content-text"><h3><i class="ph ph-buildings"></i> 시설 현황</h3><p>모든 관리 시설의 운영 상태입니다. 각 시설의 이용 현황과 예약 상황을 조회할 수 있습니다.</p></div>',
+            'inquiry': '<div class="content-text"><h3><span style="display: flex; align-items: center; gap: 6px;"><i class="ph ph-question" style="font-size: 16px;"></i> 시스템 문의</span></h3><p>시스템 이용 중 문제나 개선 사항을 신청할 수 있습니다. 기술 지원 팀이 빠르게 대응합니다.</p></div>',
+            'inquiry_support': '<div class="content-text"><h3><i class="ph ph-lifebuoy"></i> 시스템 이용 문의 및 개선 요청</h3><p>시스템 사용 중 어려운 점이나 개선 제안을 신청하세요. 저희 팀이 신속하게 지원하겠습니다.</p></div>',
+            'swim': '<div class="content-text"><h3><i class="ph ph-bank"></i> 청주수영장</h3><p>도시민들이 즐겨 찾는 공공 수영장입니다. 수질 관리, 안전 점검, 시설 유지보수가 정기적으로 이루어집니다.</p></div>',
+            'purmi': '<div class="content-text"><h3><i class="ph ph-warehouse"></i> 푸르미스포츠센터</h3><p>다양한 스포츠 시설을 갖춘 종합 센터입니다. 수영, 헬스, 요가, 탁구 등 다양한 프로그램을 운영합니다.</p></div>',
+            'youngun': '<div class="content-text"><h3><i class="ph ph-warehouse"></i> 영운국민체육센터</h3><p>지역 주민을 위한 체육 시설입니다. 다목적체육관, 헬스장, 수영장 등이 갖춰져 있습니다.</p></div>',
+            'bokdae': '<div class="content-text"><h3><i class="ph ph-warehouse"></i> 복대국민체육센터</h3><p>현대적 설비를 갖춘 체육 시설입니다. 최신 운동 기구와 편의 시설을 제공합니다.</p></div>',
+            'gagyeong': '<div class="content-text"><h3><i class="ph ph-building"></i> 가경국민체육센터</h3><p>수영장, 헬스장, 요가실 등 다양한 시설을 갖춘 종합 체육센터입니다. 안전 개선 사항이 진행 중입니다.</p></div>',
+            'sannam': '<div class="content-text"><h3><i class="ph ph-building"></i> 산남국민체육센터</h3><p>지역 주민들의 건강 증진을 위해 새롭게 추가된 다목적 체육시설입니다.</p></div>'
+        };
+
+        function toggleSidebarSection(element) {
+            element.classList.toggle('open');
+            element.nextElementSibling.classList.toggle('open');
+        }
+
+        function toggleMenuGroup(element) {
+            element.classList.toggle('open');
+            element.nextElementSibling.classList.toggle('open');
+        }
+
+        function toggleModule(event) {
+            event.stopPropagation();
+            const card = event.target.closest('.module-card');
+            const content = card.querySelector('.module-content');
+            const toggle = card.querySelector('.module-toggle');
+            
+            content.classList.toggle('expanded');
+            toggle.classList.toggle('expanded');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('show');
+            document.getElementById('sidebarOverlay').classList.remove('show');
+        }
+
+        function toggleSearch() {
+            document.getElementById('searchContainer').classList.toggle('active');
+            if (document.getElementById('searchContainer').classList.contains('active')) {
+                document.getElementById('searchInput').focus();
+            }
+        }
+
+        function performSearch(query) {
+            const results = document.getElementById('searchResults');
+            if (!query.trim()) {
+                results.classList.remove('show');
+                return;
+            }
+
+            const filtered = Object.entries(searchData)
+                .filter(([key, value]) => 
+                    value.toLowerCase().includes(query.toLowerCase())
+                )
+                .slice(0, 8);
+
+            if (filtered.length === 0) {
+                results.classList.remove('show');
+                return;
+            }
+
+            results.innerHTML = filtered
+                .map(([key, value]) => `
+                    <div class="search-result-item" onclick="loadContent('${key}'); closeSidebar(); toggleSearch();">
+                        ${value}
+                    </div>
+                `)
+                .join('');
+            
+            results.classList.add('show');
+        }
+
+        function loadContent(contentId) {
+            const content = contentData[contentId] || '<div class="content-text"><p>준비 중인 콘텐츠입니다.</p></div>';
+            const title = searchData[contentId] || '콘텐츠';
+            
+            document.getElementById('contentArea').innerHTML = content;
+            document.getElementById('headerTitle').textContent = title;
+            document.getElementById('dashboardView').classList.remove('active');
+            document.getElementById('contentView').classList.add('active');
+            closeSidebar();
+            document.getElementById('searchContainer').classList.remove('active');
+            window.scrollTo(0, 0);
+        }
+
+        function loadFacility(facilityId) {
+            loadContent(facilityId);
+        }
+
+        function backToDashboard() {
+            document.getElementById('dashboardView').classList.add('active');
+            document.getElementById('contentView').classList.remove('active');
+            document.getElementById('headerTitle').textContent = '체육시설 통합 매뉴얼';
+            window.scrollTo(0, 0);
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeButton();
+        }
+
+        function updateThemeButton() {
+            const btn = document.querySelector('.theme-toggle');
+            btn.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="ph ph-sun"></i>' : '<i class="ph ph-moon"></i>';
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            updateThemeButton();
+        }
+
+        document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
+
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                toggleSearch();
+            }
+        });
+
+        window.addEventListener('load', loadTheme);
+    </script>
+</body>
+</html>
