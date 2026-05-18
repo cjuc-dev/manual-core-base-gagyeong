@@ -3,9 +3,9 @@
   "version": "5.0.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cjuc-dev/manual-core-base-gagyeong.git"
+    "url": "git+https://github.com/cjuc-dev/manual.git"
   },
-  "homepage": "https://github.com/cjuc-dev/manual-core-base-gagyeong#readme",
+  "homepage": "https://github.com/cjuc-dev/manual#readme",
   "description": "📌 [package.json] 해당 파일은 시스템 이름, 버전 및 라이브러리 정보를 관리하는 핵심 파일입니다.",
   "dependencies": {
     "jimp": "^1.6.0"
