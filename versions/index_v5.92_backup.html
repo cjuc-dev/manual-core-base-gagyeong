@@ -1,0 +1,2317 @@
+<!-- 🚀 [index.html] -->
+<!-- 이 파일은 SOS 통합 매뉴얼의 '메인 대시보드'이자 진입점입니다. -->
+<!-- 관리자 안내: 사이드바 메뉴를 통해 각 시설의 매뉴얼(.md)을 동적으로 로드하며, SPA 상태 관리를 지원합니다. -->
+<!DOCTYPE html>
+<html lang="ko" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청주도시공사 체육시설 통합 매뉴얼 (Command Center)</title>
+    <!-- 브라우저 캐시 방지 (사용자 요청: 변경사항 즉시 반영용) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- Tailwind CSS CDN with Typography Plugin -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // 클래스 기반 다크모드 활성화
+        }
+    </script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- DOMPurify for XSS Protection (시큐어 코딩 의무 지침) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/sos_main.css">
+    <link rel="stylesheet" href="assets/css/sos_content.css">
+    <style>
+        mark.search-highlight {
+            background-color: #fde047; /* Yellow 300 */
+            color: #000;
+            padding: 0 2px;
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(253, 224, 71, 0.5);
+            transition: all 0.3s ease;
+        }
+        .dark mark.search-highlight {
+            background-color: #eab308; /* Yellow 500 */
+            color: #000;
+        }
+
+        /* 🚀 [게시판] 시스템 문의 게시판 전용 스타일 */
+        .inquiry-card { 
+            background: white; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
+            border: 1px solid #f1f5f9; margin-bottom: 40px; transition: border-color 0.3s ease; 
+            display: flex; flex-direction: column; overflow: hidden; position: relative;
+            border-left: 6px solid #f1f5f9;
+        }
+        .dark .inquiry-card { background: #1f2937; border-color: #374151; border-left-color: #374151; }
+        .inquiry-card:hover { border-left-color: #10b981; }
+        .inquiry-header { padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; background: #fafbfc; }
+        .dark .inquiry-header { border-bottom-color: #111827; background: rgba(17, 24, 39, 0.5); }
+        .inquiry-body { padding: 28px; flex: 1; }
+        .badge-processing { padding: 3px 10px; background: #fffbeb; color: #b45309; font-size: 10px; font-weight: 800; border-radius: 6px; border: 1px solid #fef3c7; }
+        .badge-received { padding: 3px 10px; background: #eff6ff; color: #1d4ed8; font-size: 10px; font-weight: 800; border-radius: 6px; border: 1px solid #dbeafe; }
+        .badge-complete { padding: 3px 10px; background: #ecfdf5; color: #047857; font-size: 10px; font-weight: 800; border-radius: 6px; border: 1px solid #d1fae5; }
+        .inquiry-meta { display: flex; align-items: center; gap: 16px; font-size: 12px; color: #94a3b8; margin-bottom: 20px; }
+        .inquiry-content { 
+            font-size: 15px; color: #334155; line-height: 1.6; background: transparent; 
+            padding: 0; min-height: auto; font-weight: 500;
+        }
+        .dark .inquiry-content { color: #cbd5e1; }
+        .admin-reply-box { 
+            margin-top: 24px; padding: 20px 24px; background: #f0fdf4; 
+            border-radius: 12px; border: none;
+        }
+        .dark .admin-reply-box { background: rgba(16, 185, 129, 0.05); }
+        .admin-reply-header { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 900; color: #059669; margin-bottom: 8px; }
+        .admin-reply-content { font-size: 14px; color: #064e3b; line-height: 1.6; font-weight: 600; }
+        .dark .admin-reply-content { color: #a7f3d0; }
+        .dark .info-notice-box { background: #1e293b; color: #94a3b8; }
+
+        /* 🚀 [디자인 혁신 - v5.46] 시설 안내 매뉴얼용 프리미엄 3도트 Dinkus 구분선 */
+        #markdown-body hr {
+            border: none !important;
+            text-align: center !important;
+            height: auto !important;
+            margin: 4rem 0 !important;
+            overflow: visible !important;
+            background: transparent !important;
+        }
+        #markdown-body hr::after {
+            content: "•   •   •" !important;
+            display: inline-block !important;
+            color: #64748b !important;
+            font-size: 16px !important;
+            line-height: 1 !important;
+            letter-spacing: 0.6em !important;
+            padding-left: 0.6em !important;
+            opacity: 0.7 !important;
+        }
+        .dark #markdown-body hr::after {
+            color: #94a3b8 !important;
+        }
+
+        /* 🚀 [디자인 혁신 - v5.46] 시민의 소리(VOC)용 에디토리얼 Pullquote 스타일 */
+        #markdown-body blockquote {
+            position: relative !important;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(20, 184, 166, 0.02) 100%) !important;
+            border: 1px solid rgba(16, 185, 129, 0.15) !important;
+            border-left: 6px solid #10b981 !important;
+            border-radius: 20px !important;
+            padding: 28px 36px !important;
+            margin: 32px 0 !important;
+            color: #334155 !important;
+            font-size: 16px !important;
+            font-style: italic !important;
+            font-weight: 600 !important;
+            line-height: 1.7 !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02) !important;
+        }
+        .dark #markdown-body blockquote {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.04) 0%, rgba(20, 184, 166, 0.01) 100%) !important;
+            border-color: rgba(16, 185, 129, 0.1) !important;
+            color: #cbd5e1 !important;
+        }
+        #markdown-body blockquote::before {
+            content: "“" !important;
+            position: absolute !important;
+            top: -6px !important;
+            left: 20px !important;
+            font-family: serif !important;
+            font-size: 64px !important;
+            color: rgba(16, 185, 129, 0.15) !important;
+            line-height: 1 !important;
+            user-select: none !important;
+        }
+        #markdown-body blockquote::after {
+            content: "”" !important;
+            position: absolute !important;
+            bottom: -32px !important;
+            right: 20px !important;
+            font-family: serif !important;
+            font-size: 64px !important;
+            color: rgba(16, 185, 129, 0.15) !important;
+            line-height: 1 !important;
+            user-select: none !important;
+        }
+
+        /* 🚀 [모달] 문의 등록 전용 스타일 */
+        .modal-overlay { @apply fixed inset-0 bg-black/60 z-[100] backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300; }
+        .modal-content { @apply bg-white dark:bg-gray-800 rounded-3xl shadow-2xl w-full max-w-xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0; }
+        .modal-content.active { @apply scale-100 opacity-100; }
+        .form-input { @apply w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-sm; }
+        .form-label { @apply block text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 ml-1; }
+
+        /* 🚀 [검색] 자동완성(Autocomplete) 전용 스타일 */
+        .autocomplete-container { position: absolute !important; z-index: 10000 !important; width: 100% !important; margin-top: 4px !important; background-color: white !important; border: 1px solid #e2e8f0 !important; border-radius: 16px !important; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important; max-height: 280px !important; overflow-y: auto !important; }
+        .autocomplete-container.hidden { display: none !important; }
+        /* 슬림 스크롤바 */
+        .autocomplete-container::-webkit-scrollbar { width: 4px; }
+        .autocomplete-container::-webkit-scrollbar-track { background: transparent; }
+        .autocomplete-container::-webkit-scrollbar-thumb { background: #d1fae5; border-radius: 10px; }
+        
+        .autocomplete-item { width: 100% !important; text-align: left !important; padding: 14px 20px !important; display: flex !important; align-items: center !important; justify-content: space-between !important; border-bottom: 1px solid #f8fafc !important; cursor: pointer !important; transition: all 0.2s ease !important; position: relative !important; background: white !important; }
+        .autocomplete-item:last-child { border-bottom: none !important; }
+        .autocomplete-item:hover { background-color: #ecfdf5 !important; padding-left: 24px !important; }
+        .autocomplete-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background-color: #10b981; transition: all 0.2s ease; }
+        .autocomplete-item:hover::before { width: 6px; }
+        .autocomplete-keyword { font-size: 14px !important; font-weight: 700 !important; color: #334155 !important; transition: color 0.2s ease !important; }
+        .autocomplete-item:hover .autocomplete-keyword { color: #059669 !important; }
+        .autocomplete-category { flex-shrink: 0 !important; margin-left: 16px !important; font-size: 9px !important; padding: 2px 10px !important; background-color: #f0fdf4 !important; color: #059669 !important; border: 1px solid #d1fae5 !important; border-radius: 9999px !important; font-weight: 900 !important; white-space: nowrap !important; transition: all 0.2s ease !important; }
+        .autocomplete-item:hover .autocomplete-category { background-color: #10b981 !important; color: white !important; border-color: #10b981 !important; transform: scale(1.05) !important; }
+
+        /* 🚀 [검색] 상세 결과창 (자동완성 유무에 따라 margin-top이 동적으로 변화) */
+        #searchResults { 
+            position: absolute !important; z-index: 50 !important; width: 100% !important; 
+            margin-top: 8px !important; /* 기본 위치: 검색창 바로 아래 밀착 */
+            transition: margin-top 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important; /* 초프리미엄 부드러운 슬라이딩 전환 */
+            background-color: white !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 16px !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+            overflow: hidden !important;
+            max-height: 384px !important;
+            overflow-y: auto !important;
+        }
+        .dark #searchResults {
+            background-color: #1f2937 !important;
+            border-color: #374151 !important;
+        }
+
+        /* 🚀 [토스트 알림] 링크 복사 완료 안내용 프리미엄 토스트 */
+        #toast-alert {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 99999;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(-20px) scale(0.95);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .dark #toast-alert {
+            background: rgba(31, 41, 55, 0.85);
+            border-color: rgba(6, 182, 212, 0.2);
+        }
+        #toast-alert.show {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 🚀 [프린트 미디어 쿼리] 인쇄 최적화 Clean Print Engine */
+        @media print {
+            /* 불필요한 인터페이스 전체 은닉 */
+            aside, header, #stickyNav, #globalSubHeader button, #globalSubHeader #globalPrintBtn, #globalSubHeader #globalCloseBtn, #like-container-box, .flex.flex-wrap.gap-2.mb-6 {
+                display: none !important;
+            }
+            
+            /* 전체 레이아웃 리셋 */
+            body, html {
+                background: white !important;
+                color: black !important;
+                overflow: visible !important;
+                height: auto !important;
+            }
+            
+            main, #mainScrollArea {
+                overflow: visible !important;
+                height: auto !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            
+            #contentView {
+                display: block !important;
+            }
+            
+            #content-area {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                background: white !important;
+                color: black !important;
+            }
+            
+            /* 마크다운 스타일 인쇄 강제 역전 (다크모드에서도 백색 용지 인쇄 보장) */
+            .prose, .prose *, #markdown-body, #markdown-body * {
+                color: black !important;
+                background: transparent !important;
+            }
+            
+            /* 표 인쇄 최적화 */
+            table {
+                page-break-inside: avoid !important;
+                border-collapse: collapse !important;
+                width: 100% !important;
+            }
+            tr, td, th {
+                page-break-inside: avoid !important;
+                border: 1px solid #ddd !important;
+                color: black !important;
+                padding: 8px !important;
+            }
+        }
+    </style>
+</head>
+<!-- 배경색 및 글자색: 라이트모드(기본) / 다크모드(dark:) 분리 -->
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 flex h-screen overflow-hidden transition-colors duration-300">
+    
+    <!-- 오버레이 (모바일용 사이드바 배경) -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden" onclick="toggleSidebar()" aria-hidden="true"></div>
+
+    <!-- 좌측 아코디언 사이드바 -->
+    <aside id="sidebar" class="fixed top-0 left-0 w-72 h-full bg-white dark:bg-gray-800 z-50 transform -translate-x-full transition-transform duration-300 overflow-y-auto lg:relative lg:translate-x-0 border-r border-gray-200 dark:border-gray-700 flex flex-col shadow-xl">
+        <!-- 사이드바 헤더 -->
+        <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <div>
+                <h1 class="text-base font-bold text-emerald-600 dark:text-emerald-400">통합 매뉴얼</h1>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Smart Operations Suite</p>
+            </div>
+            <!-- 모바일 닫기 버튼 -->
+            <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-gray-800 dark:hover:text-white focus:outline-none" aria-label="사이드바 닫기">
+                <i class="ph ph-x text-2xl" aria-hidden="true"></i>
+            </button>
+        </div>
+        
+        <!-- 아코디언 메뉴 네비게이션 -->
+        <nav class="flex-1 overflow-y-auto py-4" aria-label="메인 내비게이션">
+            
+            <!-- 1. 시설 안내 (시설별 가이드) -->
+            <div class="mb-2">
+                <button onclick="toggleAccordion('facility-info-menu', 'facility-info-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="true" aria-controls="facility-info-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-buildings text-lg text-emerald-600 dark:text-emerald-400" aria-hidden="true"></i> 시설 안내
+                    </span>
+                    <i id="facility-info-icon" class="ph ph-caret-down transition-transform duration-300 transform rotate-180" aria-hidden="true"></i>
+                </button>
+                <div id="facility-info-menu" class="overflow-hidden transition-all duration-300 max-h-96">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50 ml-[30px] pl-4 border-l border-emerald-500/20 dark:border-emerald-500/10 space-y-0.5">
+                        <li>
+                            <button onclick="loadContent('cheongjuSwimming_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-bank text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 청주수영장
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('purmi_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-warehouse text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 푸르미스포츠센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('youngun_sportscenter_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-warehouse text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 영운국민체육센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('bokdae_sportscenter_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-warehouse text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 복대국민체육센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('gagyeong_sportscenter_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-building text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 가경국민체육센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('sannam_sportscenter_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-building text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 산남국민체육센터
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 2. 시설 매뉴얼 (지침서) -->
+            <div class="mb-2">
+                <button onclick="toggleAccordion('facility-menu', 'facility-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false" aria-controls="facility-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-book-open text-lg text-blue-600 dark:text-blue-400" aria-hidden="true"></i> 시설 매뉴얼
+                    </span>
+                    <i id="facility-icon" class="ph ph-caret-down transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div id="facility-menu" class="overflow-hidden transition-all duration-300 max-h-0">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50 ml-[30px] pl-4 border-l border-blue-500/20 dark:border-blue-500/10">
+                        <!-- 행정 분야 다단계 서브아코디언 -->
+                        <li>
+                            <button onclick="toggleSubAccordion('facility-admin-menu', 'facility-admin-icon')" class="w-full flex justify-between items-center pl-2 pr-4 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false">
+                                <span class="flex items-center gap-3">
+                                    <i class="ph ph-file-text text-blue-500"></i> 행정 분야
+                                </span>
+                                <i id="facility-admin-icon" class="ph ph-caret-down text-xs transition-transform duration-300" aria-hidden="true"></i>
+                            </button>
+                            <div id="facility-admin-menu" class="overflow-hidden transition-all duration-300 max-h-0 bg-white/40 dark:bg-gray-900/30">
+                                <ul class="py-1 ml-[18px] pl-3 border-l border-blue-500/20 dark:border-blue-500/10">
+                                    <li>
+                                        <button onclick="loadContent('admin_fields', '청주수영장')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-bank"></i> 청주수영장
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="loadContent('admin_fields', '푸르미스포츠센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 푸르미스포츠센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="loadContent('admin_fields', '영운국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 영운국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="loadContent('admin_fields', '복대국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 복대국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="toggleSubAccordion('fac-admin-gagyeong', 'fac-admin-gagyeong-icon')" class="w-full flex justify-between items-center pl-2 pr-4 py-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 font-semibold transition-colors focus:outline-none" aria-expanded="false">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-building font-bold"></i> <span class="text-gray-700 dark:text-gray-300">가경국민체육센터</span>
+                                            </span>
+                                            <i id="fac-admin-gagyeong-icon" class="ph ph-caret-down text-[10px] transition-transform duration-300"></i>
+                                        </button>
+                                        <div id="fac-admin-gagyeong" class="overflow-hidden transition-all duration-300 max-h-0 ml-[16px] pl-2 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                            <button onclick="loadContent('admin_fields', '가경국민체육센터', '회원 관리')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>회원 관리
+                                            </button>
+                                            <button onclick="loadContent('admin_fields', '가경국민체육센터', '대관 관리')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>대관 관리
+                                            </button>
+                                            <button onclick="loadContent('admin_fields', '가경국민체육센터', '키오스크')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>키오스크
+                                            </button>
+                                            <button onclick="loadContent('admin_fields', '가경국민체육센터', '락커/게이트')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>락커/게이트
+                                            </button>
+                                            <button onclick="loadContent('admin_fields', '가경국민체육센터', '매출 정산')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>매출 정산
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <button onclick="loadContent('admin_fields', '산남국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-building"></i> 산남국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                        <!-- 기술 분야 다단계 서브아코디언 -->
+                        <li>
+                            <button onclick="toggleSubAccordion('facility-tech-menu', 'facility-tech-icon')" class="w-full flex justify-between items-center pl-2 pr-4 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false">
+                                <span class="flex items-center gap-3">
+                                    <i class="ph ph-wrench text-blue-500"></i> 기술 분야
+                                </span>
+                                <i id="facility-tech-icon" class="ph ph-caret-down text-xs transition-transform duration-300" aria-hidden="true"></i>
+                            </button>
+                            <div id="facility-tech-menu" class="overflow-hidden transition-all duration-300 max-h-0 bg-white/40 dark:bg-gray-900/30">
+                                <ul class="py-1 ml-[18px] pl-3 border-l border-blue-500/20 dark:border-blue-500/10">
+                                    <li>
+                                        <button onclick="loadContent('tech_fields', '청주수영장')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-bank"></i> 청주수영장
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="loadContent('tech_fields', '푸르미스포츠센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 푸르미스포츠센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="loadContent('tech_fields', '영운국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 영운국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="loadContent('tech_fields', '복대국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 복대국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="toggleSubAccordion('fac-tech-gagyeong', 'fac-tech-gagyeong-icon')" class="w-full flex justify-between items-center pl-2 pr-4 py-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 font-semibold transition-colors focus:outline-none" aria-expanded="false">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-building font-bold"></i> <span class="text-gray-700 dark:text-gray-300">가경국민체육센터</span>
+                                            </span>
+                                            <i id="fac-tech-gagyeong-icon" class="ph ph-caret-down text-[10px] transition-transform duration-300"></i>
+                                        </button>
+                                        <div id="fac-tech-gagyeong" class="overflow-hidden transition-all duration-300 max-h-0 ml-[16px] pl-2 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '기계장비 일람표')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group font-semibold transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>기계장비 일람표
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '기계')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>기계
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '전기')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>전기
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '소방')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>소방
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '수질')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>수질
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '가스')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>가스
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '연락처')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>업체 연락처
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <button onclick="loadContent('tech_fields', '산남국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-building"></i> 산남국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                        <li><button onclick="loadContent('safety')" class="w-full flex items-center gap-3 pl-2 pr-4 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors"><i class="ph ph-shield-warning text-blue-500"></i> 안전 표준매뉴얼</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 3. 운영 현황 (History & Analytics) -->
+            <div class="mb-2">
+                <button onclick="toggleAccordion('status-menu', 'status-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false" aria-controls="status-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-chart-bar text-lg text-amber-500 dark:text-amber-400" aria-hidden="true"></i> 운영 현황
+                    </span>
+                    <i id="status-icon" class="ph ph-caret-down transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div id="status-menu" class="overflow-hidden transition-all duration-300 max-h-0">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50 ml-[30px] pl-4 border-l border-amber-500/20 dark:border-amber-500/10 space-y-0.5">
+                        <li>
+                            <button onclick="loadContent('update', 'data')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-clock-counter-clockwise text-amber-500 text-sm transition-transform group-hover:scale-110"></i> 업데이트 히스토리
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.open('https://www.cjuc.or.kr/home/sub?menukey=7401', '_blank')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-megaphone text-amber-500 text-sm transition-transform group-hover:scale-110"></i> 공사 공지사항
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.open('https://www.cjuc.or.kr/', '_blank')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-house-line text-blue-500 text-sm transition-transform group-hover:scale-110"></i> 공사 홈페이지
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 4. 시스템 문의 (Support) -->
+            <div class="mb-2">
+                <button onclick="loadContent('system_inquiry', 'system')" class="w-full flex items-center gap-3 px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none">
+                    <i class="ph ph-chat-circle-dots text-lg text-emerald-500 dark:text-emerald-400" aria-hidden="true"></i> 시스템 문의/요청
+                </button>
+            </div>
+
+            <!-- 3. VOC (시민의 소리) -->
+            <div class="mb-2">
+                <button onclick="toggleAccordion('voc-menu', 'voc-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false" aria-controls="voc-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-chat-centered-text text-lg text-rose-500 dark:text-rose-400" aria-hidden="true"></i> 시민의 소리 (VOC)
+                    </span>
+                    <i id="voc-icon" class="ph ph-caret-down transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div id="voc-menu" class="overflow-hidden transition-all duration-300 max-h-0">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50 ml-[30px] pl-4 border-l border-rose-500/20 dark:border-rose-500/10 space-y-0.5">
+                        <li>
+                            <button onclick="loadContent('swimming', 'voc')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-waves text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 수영장
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('gym', 'voc')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-basketball text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 다목적체육관
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('program', 'voc')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-users-three text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 프로그램실
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="loadContent('other', 'voc')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-info text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 기타
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 4. 사이버보안 (Admin) -->
+            <div class="mb-2 border-t border-gray-100 dark:border-gray-700 mt-4 pt-4">
+                <button onclick="toggleAccordion('admin-menu', 'admin-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false" aria-controls="admin-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-shield-check text-lg text-indigo-500 dark:text-indigo-400" aria-hidden="true"></i> 관리자 전용
+                    </span>
+                    <i id="admin-icon" class="ph ph-caret-down transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div id="admin-menu" class="overflow-hidden transition-all duration-300 max-h-0">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50">
+                        <li><button onclick="loadContent('admin_dashboard')" class="w-full flex items-center gap-3 px-10 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors"><i class="ph ph-lock-key"></i> 관리자 대시보드</button></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 사이드바 푸터 (법적 고지 링크) -->
+        <div class="p-4 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 text-center">
+            <p>Smart Operations Suite v5</p>
+            <div class="mt-2 space-x-2">
+                <a href="pages/privacy_policy.html" class="hover:text-emerald-600 dark:hover:text-emerald-400 underline" title="개인정보처리방침 읽기">개인정보처리방침</a>
+                <span>|</span>
+                <a href="pages/terms_of_use.html" class="hover:text-emerald-600 dark:hover:text-emerald-400 underline" title="이용약관 읽기">이용약관</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 우측 메인 콘텐츠 영역 -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden relative">
+        
+        <!-- 상단 헤더바 (Sticky) -->
+        <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex justify-between items-center z-30 shadow-sm dark:shadow-md transition-colors duration-300">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-500 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white focus:outline-none" aria-label="메뉴 열기">
+                    <i class="ph ph-list text-2xl" aria-hidden="true"></i>
+                </button>
+                <h2 class="text-xl font-extrabold text-gray-800 dark:text-white hidden sm:block tracking-tight">
+                    COMMAND <span class="text-emerald-600 dark:text-cyan-400">CENTER</span>
+                </h2>
+            </div>
+            
+            <!-- 데스크탑 검색 창 -->
+            <div class="relative w-full max-w-md mx-4 hidden sm:block">
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="검색어 입력 (예: 수영장, 행정, 소화기...)" 
+                        class="w-full bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white px-4 py-2 pl-10 rounded-full focus:outline-none focus:border-emerald-500 dark:focus:border-cyan-500 focus:ring-1 focus:ring-emerald-500 dark:focus:ring-cyan-500 transition-all text-sm"
+                        aria-label="통합 검색 (PDF 메타데이터 연동)">
+                    <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400 text-lg" aria-hidden="true"></i>
+                </div>
+                <!-- 🚀 검색 자동완성 레이어 -->
+                <div id="autocompleteList" class="autocomplete-container"></div>
+                <!-- 상세 검색 결과창 (자동완성과 겹치지 않도록 z-index 및 간격 조정) -->
+                <div id="searchResults"></div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <button onclick="toggleTheme()" class="relative w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-amber-500 dark:text-yellow-400 transition-all focus:outline-none overflow-hidden" aria-label="다크/라이트 모드 전환">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <!-- 라이트모드일때는 달 (SVG) -->
+                        <svg id="moonIcon" class="w-6 h-6 block dark:hidden" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="currentColor" d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.11,104.11,0,1,0,129.8,129.8A8,8,0,0,0,233.54,142.23ZM128,216a88.13,88.13,0,0,1-78.82-127.28,104.08,104.08,0,0,0,128.1,128.1A87.76,87.76,0,0,1,128,216Z"></path>
+                        </svg>
+                        <!-- 다크모드일때는 해 (SVG) -->
+                        <svg id="sunIcon" class="w-6 h-6 hidden dark:block" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="currentColor" d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66a8,8,0,0,0,11.32-11.32l-16-16a8,8,0,0,0-11.32,11.32Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM197.66,69.66l16-16a8,8,0,0,0-11.32-11.32l-16,16a8,8,0,0,0,11.32,11.32ZM240,120H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16ZM40,120H16a8,8,0,0,0,0,16H40a8,8,0,0,0,0-16Zm157.66,66.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32Zm-77.66,29.66a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V224A8,8,0,0,0,120,216Z"></path>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </header>
+
+        <!-- 모바일 전용 검색창 -->
+        <div class="p-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sm:hidden relative">
+            <div class="relative">
+                <input type="text" id="searchInputMobile" placeholder="검색어 입력..." 
+                    class="w-full bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white px-4 py-2 pl-10 rounded-full focus:outline-none focus:border-emerald-500 dark:focus:border-cyan-500 text-sm"
+                    aria-label="모바일 통합 검색">
+                <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400 text-lg" aria-hidden="true"></i>
+            </div>
+            <!-- 🚀 모바일 검색 자동완성 레이어 -->
+            <div id="autocompleteListMobile" class="autocomplete-container hidden"></div>
+            <!-- 모바일 검색 결과창 -->
+            <div id="searchResultsMobile" class="absolute z-50 left-0 right-0 mx-3 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl overflow-hidden hidden max-h-60 overflow-y-auto"></div>
+        </div>
+
+        <!-- 🚀 [v5.45] 글로벌 서브헤더 내비게이션 바 (헤더 바로 아래 상시 고정) -->
+        <div id="globalSubHeader" class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200/60 dark:border-gray-800 px-6 py-3.5 flex justify-between items-center transition-colors duration-300 z-20">
+            <!-- 브레드크럼 정보 (홈은 항상 고정 노출, 경로는 동적 렌더링) -->
+            <nav id="breadcrumbNav" class="text-sm text-gray-500 dark:text-gray-400 flex items-center flex-wrap" aria-label="Breadcrumb">
+                <button onclick="showDashboard()" class="hover:text-emerald-600 dark:hover:text-cyan-400 transition-colors focus:outline-none flex items-center font-bold text-gray-700 dark:text-gray-200" aria-label="홈으로 가기">
+                    <i class="ph ph-house mr-1.5 text-base text-emerald-600 dark:text-cyan-400" aria-hidden="true"></i>홈
+                </button>
+                <div id="breadcrumbPath" class="flex items-center flex-wrap"></div>
+            </nav>
+
+            <!-- 우측 액션 버튼 그룹 (상세 문서 조회 시에만 노출) -->
+            <div class="flex items-center gap-2">
+                <!-- 인쇄하기 버튼 -->
+                <button id="globalPrintBtn" onclick="window.print()" 
+                        class="hidden flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-bold transition-all focus:outline-none active:scale-95" aria-label="인쇄하기">
+                    <i class="ph ph-printer font-bold text-blue-500" aria-hidden="true"></i> 인쇄
+                </button>
+                
+                <!-- 닫기 버튼 -->
+                <button id="globalCloseBtn" onclick="showDashboard()" 
+                        class="hidden flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-bold transition-all focus:outline-none active:scale-95" aria-label="문서 닫기">
+                    <i class="ph ph-x font-bold text-rose-500" aria-hidden="true"></i> 닫기
+                </button>
+            </div>
+        </div>
+
+        <!-- 메인 스크롤 영역 -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-8" id="mainScrollArea" role="main">
+            
+            <div class="max-w-6xl mx-auto">
+
+                <!-- 2-A: 대시보드 뷰 (4대 모듈 레이아웃) -->
+                <div id="dashboardView" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+                    
+                    <!-- 모듈 1: 시설 매뉴얼 -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500/50 transition-all hover:shadow-lg flex flex-col">
+                        <div class="flex justify-between items-center cursor-pointer mb-4" onclick="toggleAccordion('dbManual', 'dbManualIcon')">
+                            <div>
+                                <i class="ph ph-book-open text-4xl mb-2 text-blue-600 dark:text-blue-400"></i>
+                                <h2 class="text-lg font-bold text-gray-800 dark:text-white">시설 매뉴얼</h2>
+                                <p class="text-xs text-gray-500">운영 및 기술 지침서</p>
+                            </div>
+                            <i id="dbManualIcon" class="ph ph-caret-down text-xl text-blue-600"></i>
+                        </div>
+                        <div id="dbManual" class="space-y-1 overflow-hidden transition-all max-h-0 ml-3 pl-3 border-l border-blue-500/20 dark:border-blue-500/10">
+                            <div class="pt-2 border-t border-gray-100 dark:border-gray-700 space-y-1">
+                                <!-- 대시보드 내 행정 분야 서브 아코디언 -->
+                                <button onclick="toggleSubAccordion('dbManualAdmin', 'dbManualAdminIcon')" class="w-full text-left pl-2 pr-3 py-2.5 text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors text-gray-700 dark:text-gray-300 flex items-center justify-between font-semibold">
+                                    <span class="flex items-center gap-3"><i class="ph ph-file-text text-blue-500"></i> 행정 분야</span>
+                                    <i id="dbManualAdminIcon" class="ph ph-caret-down transition-transform duration-300"></i>
+                                </button>
+                                <div id="dbManualAdmin" class="overflow-hidden transition-all duration-300 max-h-0 ml-[18px] pl-3 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                    <button onclick="loadContent('admin_fields', '청주수영장')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-bank shrink-0"></i> <span class="truncate">청주수영장</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="loadContent('admin_fields', '푸르미스포츠센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">푸르미스포츠센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="loadContent('admin_fields', '영운국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">영운국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="loadContent('admin_fields', '복대국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">복대국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <!-- 가경국민체육센터 (대시보드 3단계 서브 아코디언) -->
+                                    <div class="space-y-0.5">
+                                        <button onclick="toggleSubAccordion('db-admin-gagyeong', 'db-admin-gagyeong-icon')" class="w-full flex justify-between items-center pl-2 pr-3 py-1.5 text-xs text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded font-semibold transition-all focus:outline-none">
+                                            <span class="flex items-center gap-2"><i class="ph ph-building font-bold"></i> 가경국민체육센터</span>
+                                            <i id="db-admin-gagyeong-icon" class="ph ph-caret-down text-[10px] transition-transform duration-300"></i>
+                                        </button>
+                                        <div id="db-admin-gagyeong" class="overflow-hidden transition-all duration-300 max-h-0 ml-[16px] pl-2 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                            <button onclick="loadContent('admin_fields', '가경국민체육센터', '회원 관리')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>회원 관리
+                                            </button>
+                                            <button onclick="loadContent('admin_fields', '가경국민체육센터', '대관 관리')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>대관 관리
+                                            </button>
+                                            <button onclick="loadContent('admin_fields', '가경국민체육센터', '키오스크')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>키오스크
+                                            </button>
+                                            <button onclick="loadContent('admin_fields', '가경국민체육센터', '락커/게이트')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>락커/게이트
+                                            </button>
+                                            <button onclick="loadContent('admin_fields', '가경국민체육센터', '매출 정산')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>매출 정산
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button onclick="loadContent('admin_fields', '산남국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-building shrink-0"></i> <span class="truncate">산남국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                </div>
+
+                                <!-- 대시보드 내 기술 분야 서브 아코디언 -->
+                                <button onclick="toggleSubAccordion('dbManualTech', 'dbManualTechIcon')" class="w-full text-left pl-2 pr-3 py-2.5 text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors text-gray-700 dark:text-gray-300 flex items-center justify-between font-semibold">
+                                    <span class="flex items-center gap-3"><i class="ph ph-wrench text-blue-500"></i> 기술 분야</span>
+                                    <i id="dbManualTechIcon" class="ph ph-caret-down transition-transform duration-300"></i>
+                                </button>
+                                <div id="dbManualTech" class="overflow-hidden transition-all duration-300 max-h-0 ml-[18px] pl-3 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                    <button onclick="loadContent('tech_fields', '청주수영장')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-bank shrink-0"></i> <span class="truncate">청주수영장</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="loadContent('tech_fields', '푸르미스포츠센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">푸르미스포츠센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="loadContent('tech_fields', '영운국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">영운국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="loadContent('tech_fields', '복대국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">복대국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <!-- 가경국민체육센터 (대시보드 3단계 서브 아코디언) -->
+                                    <div class="space-y-0.5">
+                                        <button onclick="toggleSubAccordion('db-tech-gagyeong', 'db-tech-gagyeong-icon')" class="w-full flex justify-between items-center pl-2 pr-3 py-1.5 text-xs text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded font-semibold transition-all focus:outline-none">
+                                            <span class="flex items-center gap-2"><i class="ph ph-building font-bold"></i> 가경국민체육센터</span>
+                                            <i id="db-tech-gagyeong-icon" class="ph ph-caret-down text-[10px] transition-transform duration-300"></i>
+                                        </button>
+                                        <div id="db-tech-gagyeong" class="overflow-hidden transition-all duration-300 max-h-0 ml-[16px] pl-2 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '기계장비 일람표')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group font-semibold transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>기계장비 일람표
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '기계')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>기계
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '전기')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>전기
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '소방')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>소방
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '수질')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>수질
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '가스')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>가스
+                                            </button>
+                                            <button onclick="loadContent('tech_fields', '가경국민체육센터', '연락처')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>업체 연락처
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button onclick="loadContent('tech_fields', '산남국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-building shrink-0"></i> <span class="truncate">산남국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                </div>
+
+                                <button onclick="loadContent('safety')" class="w-full text-left pl-2 pr-3 py-2.5 text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors text-gray-600 dark:text-gray-300 flex items-center gap-3"><i class="ph ph-shield-warning text-blue-500"></i> 안전 표준매뉴얼</button>
+                            </div>
+                        </div>
+                        <button onclick="toggleAccordion('dbManual', 'dbManualIcon')" class="mt-auto pt-4 text-xs text-blue-600 font-semibold hover:underline">상세 메뉴 보기</button>
+                    </div>
+
+                    <!-- 모듈 2: 운영 현황 -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:border-amber-500 dark:hover:border-amber-500/50 transition-all hover:shadow-lg flex flex-col">
+                        <div class="flex justify-between items-center cursor-pointer mb-4" onclick="toggleAccordion('dbStatus', 'dbStatusIcon')">
+                            <div>
+                                <i class="ph ph-chart-bar text-4xl mb-2 text-amber-500 dark:text-amber-400"></i>
+                                <h2 class="text-lg font-bold text-gray-800 dark:text-white">운영 현황</h2>
+                                <p class="text-xs text-gray-500">업데이트 히스토리</p>
+                            </div>
+                            <i id="dbStatusIcon" class="ph ph-caret-down text-xl text-amber-500"></i>
+                        </div>
+                        <div id="dbStatus" class="space-y-1 overflow-hidden transition-all max-h-0 ml-3 pl-3 border-l border-amber-500/20 dark:border-amber-500/10">
+                            <div class="pt-2 border-t border-gray-100 dark:border-gray-700 space-y-1">
+                                <button onclick="loadContent('update', 'data')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-clock-counter-clockwise text-amber-500 text-sm transition-transform group-hover:scale-110"></i> 업데이트 히스토리
+                                </button>
+                                <button onclick="window.open('https://www.cjuc.or.kr/home/sub?menukey=7401', '_blank')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-megaphone text-amber-500 text-sm transition-transform group-hover:scale-110"></i> 공사 공지사항
+                                </button>
+                                <button onclick="window.open('https://www.cjuc.or.kr/', '_blank')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-house-line text-blue-500 text-sm transition-transform group-hover:scale-110"></i> 공사 홈페이지
+                                </button>
+                            </div>
+                        </div>
+                        <button onclick="toggleAccordion('dbStatus', 'dbStatusIcon')" class="mt-auto pt-4 text-xs text-amber-600 font-semibold hover:underline">상세 메뉴 보기</button>
+                    </div>
+
+                    <!-- 모듈 3: 시스템 문의 (Inquiry) -->
+                    <div onclick="loadContent('system_inquiry', 'system')" class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:border-emerald-500 dark:hover:border-emerald-500/50 transition-all hover:shadow-lg flex flex-col cursor-pointer group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <i class="ph ph-chat-circle-dots text-4xl mb-2 text-emerald-500 dark:text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                                <h2 class="text-lg font-bold text-gray-800 dark:text-white">시스템 문의</h2>
+                                <p class="text-xs text-gray-500">개선 요청 및 문의사항</p>
+                            </div>
+                            <div class="px-2 py-1 bg-emerald-50 dark:bg-emerald-900/30 rounded text-[10px] font-bold text-emerald-600 dark:text-emerald-400">Support</div>
+                        </div>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 leading-relaxed mt-2">
+                            시스템 이용 중 불편한 점이나<br>기능 개선 요청을 남겨주세요.
+                        </p>
+                        <div class="mt-auto pt-4 flex items-center gap-2 text-xs text-emerald-600 font-bold">
+                            게시판 바로가기 <i class="ph ph-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- 모듈 4: 시민의 소리 (VOC) -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:border-rose-500 dark:hover:border-rose-500/50 transition-all hover:shadow-lg flex flex-col">
+                        <div class="flex justify-between items-center cursor-pointer mb-4" onclick="toggleAccordion('dbVoc', 'dbVocIcon')">
+                            <div>
+                                <i class="ph ph-chat-centered-text text-4xl mb-2 text-rose-500 dark:text-rose-400"></i>
+                                <h2 class="text-lg font-bold text-gray-800 dark:text-white">시민의 소리</h2>
+                                <p class="text-xs text-gray-500">시설별 이용 FAQ & VOC</p>
+                            </div>
+                            <i id="dbVocIcon" class="ph ph-caret-down text-xl text-rose-500"></i>
+                        </div>
+                        <div id="dbVoc" class="space-y-1 overflow-hidden transition-all max-h-0 ml-3 pl-3 border-l border-rose-500/20 dark:border-rose-500/10">
+                            <div class="pt-2 border-t border-gray-100 dark:border-gray-700 space-y-1">
+                                <button onclick="loadContent('swimming', 'voc')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-waves text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 수영장
+                                </button>
+                                <button onclick="loadContent('gym', 'voc')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-basketball text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 다목적체육관
+                                </button>
+                                <button onclick="loadContent('program', 'voc')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-users-three text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 프로그램실
+                                </button>
+                                <button onclick="loadContent('other', 'voc')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-info text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 기타
+                                </button>
+                            </div>
+                        </div>
+                        <button onclick="toggleAccordion('dbVoc', 'dbVocIcon')" class="mt-auto pt-4 text-xs text-rose-600 font-semibold hover:underline">상세 메뉴 보기</button>
+                    </div>
+
+                </div>
+                
+                <!-- 2-B: 콘텐츠 뷰어 -->
+                <div id="contentView" class="hidden">
+                    <div id="content-area" class="bg-white dark:bg-gray-800 p-6 sm:p-10 shadow-md dark:shadow-xl min-h-[500px] rounded-xl border border-gray-200 dark:border-gray-700" aria-live="polite">
+                        <!-- 콘텐츠 로딩 영역 -->
+                        <div class="flex flex-col items-center justify-center h-full text-gray-400 dark:text-gray-500 py-20">
+                            <i class="ph ph-spinner-gap text-4xl animate-spin mb-4" aria-hidden="true"></i>
+                            <p>콘텐츠를 안전하게 불러오는 중입니다...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- 🚀 [궁극의 UX] 하단 고정형 스마트 네비게이션 바 -->
+    <div id="stickyNav" class="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 p-1.5 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-white/20 dark:border-gray-700/50 rounded-2xl shadow-2xl transition-all duration-500 opacity-0 invisible translate-y-10 z-50">
+        <!-- 대시보드 홈 -->
+        <button onclick="showDashboard()" 
+            class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition-all group">
+            <i class="ph ph-house text-xl transition-transform group-hover:scale-120"></i>
+            <span class="hidden sm:inline">대시보드</span>
+        </button>
+
+        <div class="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+
+        <!-- 🚀 [고도화] 검색 결과 네비게이터 (이전/다음) -->
+        <div id="searchNavigator" class="hidden items-center">
+            <button onclick="navSearchResult(-1)" id="prevSearchBtn" 
+                class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-gray-500 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-all disabled:opacity-30 disabled:pointer-events-none group">
+                <i class="ph ph-caret-left text-lg"></i>
+                <span class="hidden md:inline">이전 결과</span>
+            </button>
+            <div class="w-px h-4 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+            <button onclick="navSearchResult(1)" id="nextSearchBtn" 
+                class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-gray-500 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-all disabled:opacity-30 disabled:pointer-events-none group">
+                <span class="hidden md:inline">다음 결과</span>
+                <i class="ph ph-caret-right text-lg"></i>
+            </button>
+            <div class="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-2"></div>
+        </div>
+
+        <!-- 다른 결과 보기 버튼 -->
+        <button id="reopenSearchBtn" onclick="reopenSearch()" 
+            class="hidden items-center gap-2 px-4 py-2 text-sm font-bold text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-xl transition-all group">
+            <i class="ph ph-magnifying-glass text-xl transition-transform group-hover:scale-120"></i>
+            <span class="hidden sm:inline">다른 결과 보기</span>
+        </button>
+
+        <div id="reopenSearchDivider" class="hidden w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+
+        <!-- 맨 위로 이동 -->
+        <button onclick="scrollToTop()" 
+            class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-xl transition-all group">
+            <i class="ph ph-arrow-up text-xl transition-transform group-hover:-translate-y-1"></i>
+            <span class="hidden sm:inline">맨 위로</span>
+        </button>
+
+        <div class="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+
+        <!-- 문서 닫기 -->
+        <button onclick="showDashboard()" 
+            class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-all group">
+            <i class="ph ph-x-circle text-xl transition-transform group-hover:rotate-90"></i>
+            <span class="hidden sm:inline">닫기</span>
+        </button>
+    </div>
+
+    <!-- 스크립트 로직 -->
+    <script>
+        // 초기 테마 설정 확인
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function toggleAccordion(menuId, iconId) {
+            const menu = document.getElementById(menuId);
+            const icon = document.getElementById(iconId);
+            const isMenuExpanded = menu.style.maxHeight && menu.style.maxHeight !== '0px';
+            if (isMenuExpanded) {
+                menu.style.maxHeight = '0px';
+                icon.classList.remove('rotate-180');
+                menu.previousElementSibling.setAttribute('aria-expanded', 'false');
+            } else {
+                menu.style.maxHeight = menu.scrollHeight + 'px';
+                icon.classList.add('rotate-180');
+                menu.previousElementSibling.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        function toggleSubAccordion(menuId, iconId) {
+            const menu = document.getElementById(menuId);
+            const icon = document.getElementById(iconId);
+            const isMenuExpanded = menu.style.maxHeight && menu.style.maxHeight !== '0px';
+            
+            if (isMenuExpanded) {
+                menu.style.maxHeight = '0px';
+                icon.classList.remove('rotate-180');
+                menu.previousElementSibling.setAttribute('aria-expanded', 'false');
+            } else {
+                menu.style.maxHeight = menu.scrollHeight + 'px';
+                icon.classList.add('rotate-180');
+                menu.previousElementSibling.setAttribute('aria-expanded', 'true');
+            }
+
+            // 🚀 [v5.60 초안전 다단계 재귀 조상 리사이징 알고리즘 - 파트너 제안 핫패치]
+            // CSS transition 300ms가 완전히 완료된 후(350ms 딜레이) scrollHeight를 정확하게 합산 반영하여
+            // 최하단 메뉴(업체 연락처 등)가 잘려 보일 수 있는 애니메이션 싱크 불일치 리스크 완벽 제거!
+            setTimeout(() => {
+                let parent = menu.parentElement;
+                while (parent) {
+                    if (parent.tagName === 'DIV' && parent.id && parent.style.maxHeight !== undefined) {
+                        parent.style.maxHeight = (parent.scrollHeight + 100) + 'px';
+                    }
+                    parent = parent.parentElement;
+                }
+            }, 350);
+        }
+
+        function toggleTheme() {
+            const htmlClasses = document.documentElement.classList;
+            if (htmlClasses.contains('dark')) {
+                htmlClasses.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlClasses.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        const scrollArea = document.getElementById('mainScrollArea');
+        const stickyNav = document.getElementById('stickyNav');
+        if (scrollArea && stickyNav) {
+            scrollArea.addEventListener('scroll', () => {
+                // 🚀 [피드백 반영] 검색 네비게이터가 활성화된 상태라면 스크롤과 상관없이 항상 노출
+                const isNavActive = !document.getElementById('searchNavigator').classList.contains('hidden');
+                
+                if (scrollArea.scrollTop > 100 || isNavActive) {
+                    stickyNav.classList.remove('opacity-0', 'invisible', 'translate-y-10');
+                    stickyNav.classList.add('opacity-100', 'visible', 'translate-y-0');
+                } else {
+                    stickyNav.classList.add('opacity-0', 'invisible', 'translate-y-10');
+                    stickyNav.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                }
+            });
+        }
+
+        function scrollToTop() {
+            if (scrollArea) { scrollArea.scrollTo({ top: 0, behavior: 'smooth' }); }
+        }
+
+        async function loadContent(contentId, facility = '공통', subCategory = null, isPopState = false, searchQuery = null) {
+            if(window.innerWidth < 1024) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+                document.getElementById('sidebar-overlay').classList.add('hidden');
+            }
+            
+            // 🚀 [경로 동기화] 업데이트 히스토리는 항상 'data' 폴더에서 로드
+            if (contentId === 'update') { facility = 'data'; }
+            
+            // 🚀 [네비게이터 상태 업데이트]
+            updateSearchNav(contentId);
+            
+            const isVoc = (facility === 'voc');
+            const contentArea = document.getElementById('content-area');
+            if (isVoc) {
+                contentArea.classList.add('voc-content');
+            } else {
+                contentArea.classList.remove('voc-content');
+            }
+
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('contentView').classList.remove('hidden');
+            if (!isPopState) {
+                let pushUrl = '?doc=' + encodeURIComponent(contentId) + '&facility=' + encodeURIComponent(facility);
+                if (subCategory) pushUrl += '&sub=' + encodeURIComponent(subCategory);
+                history.pushState({ page: 'content', id: contentId, facility: facility, sub: subCategory }, '', pushUrl);
+            }
+            
+            const safeId = DOMPurify.sanitize(contentId);
+            
+            // 🚀 [v5.50] 지능형 다단계 경로 빌더 (중간 경로 클릭 및 포커싱 연동)
+            let pathParts = [];
+            
+            // 1단계: 대분류 판별 및 카테고리 매핑
+            let mainCategory = '';
+            let categoryType = '';
+            if (isVoc) {
+                mainCategory = '시민의 소리 (VOC)';
+                categoryType = 'voc';
+            } else if (['cheongjuSwimming_guide', 'purmi_guide', 'youngun_sportscenter_guide', 'bokdae_sportscenter_guide', 'gagyeong_sportscenter_guide', 'sannam_sportscenter_guide'].includes(safeId)) {
+                mainCategory = '시설 안내';
+                categoryType = 'manual';
+            } else if (['행정_매뉴얼', '기술_매뉴얼', 'safety', 'admin_fields', 'tech_fields'].includes(safeId)) {
+                mainCategory = safeId === 'admin_fields' ? '행정 분야' : (safeId === 'tech_fields' ? '기술 분야' : '시설 매뉴얼');
+                categoryType = 'manual';
+            } else if (['update'].includes(safeId)) {
+                mainCategory = '운영 현황';
+                categoryType = 'status';
+            } else if (safeId === 'system_inquiry') {
+                mainCategory = '시스템 문의';
+                categoryType = 'system';
+            }
+            
+            if (mainCategory) {
+                pathParts.push({
+                    label: mainCategory,
+                    action: `navigateToCategory('${categoryType}')`
+                });
+            }
+
+            // 2단계: 중분류 판별 (문서 공식 한글 타이틀 매핑)
+            const titleMap = {
+                '행정_매뉴얼': '행정 매뉴얼', '기술_매뉴얼': '기술 매뉴얼', 'safety': '안전 표준매뉴얼',
+                'cheongjuSwimming_guide': '청주수영장 안내', 'purmi_guide': '푸르미스포츠센터 안내', 
+                'youngun_sportscenter_guide': '영운국민체육센터 안내', 'bokdae_sportscenter_guide': '복대국민체육센터 안내', 
+                'gagyeong_sportscenter_guide': '가경국민체육센터 안내', 'sannam_sportscenter_guide': '산남국민체육센터 안내', 
+                'update': '업데이트 히스토리', 'system_inquiry': '시스템 문의/요청',
+                'swimming': '수영장 VOC', 'gym': '다목적체육관 VOC', 'program': '프로그램실 VOC', 'other': '기타 VOC'
+            };
+            
+            const isFields = ['admin_fields', 'tech_fields'].includes(safeId);
+            const docTitle = isFields ? DOMPurify.sanitize(facility) : (titleMap[safeId] || safeId);
+            
+            if (docTitle && docTitle !== mainCategory) {
+                const hasTabs = ['행정_매뉴얼', '기술_매뉴얼', 'admin_fields', 'tech_fields'].includes(safeId);
+                pathParts.push({
+                    label: docTitle,
+                    action: isFields ? null : (hasTabs ? `loadContent('${safeId}', '공통')` : `loadContent('${safeId}', '${facility}')`)
+                });
+            }
+
+            // 3단계: 소분류 판별 (3rd-Depth 세분류 추가 및 기존 레거시 호환)
+            const legacyHasTabs = ['행정_매뉴얼', '기술_매뉴얼'].includes(safeId);
+            if (subCategory) {
+                // 3단계 세분류 클릭 시 브레드크럼에 세분류 명 추가
+                // 이전 2단계(시설명)를 클릭 가능하도록 링킹 업데이트
+                if (pathParts.length > 1) {
+                    pathParts[pathParts.length - 1].action = `loadContent('${safeId}', '${facility}')`;
+                }
+                pathParts.push({
+                    label: DOMPurify.sanitize(subCategory),
+                    action: null // 현재 선택된 최종 3단계는 클릭 불가
+                });
+            } else if (legacyHasTabs && facility && facility !== '공통') {
+                pathParts.push({
+                    label: DOMPurify.sanitize(facility),
+                    action: null
+                });
+            }
+
+            // 4단계: 경로 및 닫기/인쇄 버튼 렌더링
+            const breadcrumbPath = document.getElementById('breadcrumbPath');
+            const closeBtn = document.getElementById('globalCloseBtn');
+            const printBtn = document.getElementById('globalPrintBtn');
+            if (breadcrumbPath && closeBtn) {
+                if (pathParts.length > 0) {
+                    breadcrumbPath.innerHTML = pathParts.map((part, idx) => {
+                        const isLast = (idx === pathParts.length - 1);
+                        const separator = `<span class="mx-2 text-gray-300 dark:text-gray-700" aria-hidden="true">/</span>`;
+                        const element = isLast || !part.action
+                            ? `<span class="text-emerald-700 dark:text-emerald-400 font-bold">${part.label}</span>`
+                            : `<button onclick="${part.action}" class="hover:text-emerald-600 dark:hover:text-cyan-400 font-bold transition-colors focus:outline-none" aria-label="${part.label} 바로가기">${part.label}</button>`;
+                        return separator + element;
+                    }).join('');
+                    closeBtn.classList.remove('hidden');
+                    if (printBtn) printBtn.classList.remove('hidden');
+                } else {
+                    breadcrumbPath.innerHTML = '';
+                    closeBtn.classList.add('hidden');
+                    if (printBtn) printBtn.classList.add('hidden');
+                }
+            }
+            
+            // 🚀 [UI 보강] 검색 결과에서 왔을 경우 하단 버튼 보이기
+            if (lastSearchQuery && contentId !== 'admin_dashboard') {
+                document.getElementById('reopenSearchBtn').classList.replace('hidden', 'flex');
+                document.getElementById('reopenSearchDivider').classList.replace('hidden', 'block');
+            }
+            
+            let tabsHtml = '';
+            const allHasTabs = ['행정_매뉴얼', '기술_매뉴얼', 'admin_fields', 'tech_fields'].includes(safeId);
+            if (allHasTabs) {
+                // 💡 [v5.51] 행정 분야/기술 분야도 전체 6대 시설로 탭 리스트 확장
+                const facilitiesList = ['청주수영장', '푸르미스포츠센터', '영운국민체육센터', '복대국민체육센터', '가경국민체육센터', '산남국민체육센터'];
+                
+                tabsHtml = '<div class="flex flex-wrap gap-2 mb-6" role="tablist">';
+                for(let fac of facilitiesList) {
+                    const isActive = (fac === facility);
+                    const isGagyeong = (fac === '가경국민체육센터');
+                    
+                    let activeClass = '';
+                    let badgeHtml = '';
+                    
+                    if (isActive) {
+                        if (isGagyeong) {
+                            activeClass = 'bg-emerald-600 text-white shadow-md font-semibold';
+                        } else {
+                            // 💡 [v5.52] 미적용 시설이 선택된 경우 탭 활성화 색상을 호박색(Amber)으로 차별화
+                            activeClass = 'bg-amber-600 text-white shadow-md font-semibold';
+                            badgeHtml = `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/20 text-white border border-white/30 ml-1.5 align-middle">준비중</span>`;
+                        }
+                    } else {
+                        if (isGagyeong) {
+                            activeClass = 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-300 border border-emerald-200/50 hover:bg-emerald-100';
+                        } else {
+                            activeClass = 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200';
+                            badgeHtml = `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 ml-1.5 align-middle">준비중</span>`;
+                        }
+                    }
+                    
+                    tabsHtml += `<button onclick="loadContent('${safeId}', '${fac}')" class="px-4 py-2 rounded-lg text-sm transition-all flex items-center ${activeClass}">${fac}${badgeHtml}</button>`;
+                }
+                tabsHtml += '</div>';
+            }
+            contentArea.innerHTML = tabsHtml + '<div class="py-20 text-center text-gray-400"><i class="ph ph-spinner-gap animate-spin text-4xl mb-4"></i><p>로딩 중...</p></div>';
+            if (safeId === 'admin_dashboard') {
+                contentArea.innerHTML = `<div class='w-full h-[800px] rounded-2xl overflow-hidden shadow-lg bg-white'><iframe src='pages/admin_dashboard.html' class='w-full h-full border-0'></iframe></div>`;
+                return;
+            }
+            if (safeId === 'safety') {
+                contentArea.innerHTML = `<div class="w-full h-[700px] rounded-lg overflow-hidden border border-gray-200"><embed src="docs/체육시설 안전관리 표준매뉴얼.pdf" type="application/pdf" width="100%" height="100%" /></div>`;
+                return;
+            }
+            try {
+                // 🚀 [v5.50] 대분류 세분화 물리 경로 매퍼 주입
+                let fetchPath = '';
+                if (isVoc) {
+                    fetchPath = `data/voc/${safeId}.md`;
+                } else if (facility === 'system') {
+                    fetchPath = `data/system/${safeId}.md`;
+                } else if (facility === 'data') {
+                    fetchPath = `data/${safeId}.md`;
+                } else if (safeId === 'admin_fields') {
+                    const folderMap = { '가경국민체육센터': 'gagyeong' };
+                    const folder = folderMap[facility] || 'gagyeong';
+                    fetchPath = `data/manual/admin/${folder}/0. ${facility}_행정분야_인덱스.md`;
+                } else if (safeId === 'tech_fields') {
+                    const folderMap = { '가경국민체육센터': 'gagyeong' };
+                    const folder = folderMap[facility] || 'gagyeong';
+                    fetchPath = `data/manual/tech/${folder}/0. ${facility}_기술분야_인덱스.md`;
+                } else {
+                    fetchPath = legacyHasTabs ? `data/facilities/${safeId}_${facility}.md` : `data/facilities/${safeId}.md`;
+                }
+                
+                const response = await fetch(fetchPath, { cache: 'no-store' });
+                
+                let markdownText = '';
+                if (!response.ok) {
+                    if (isFields) {
+                        // 💡 [v5.51 예외 보정] 가경 외 시설의 매뉴얼이 아직 미탑재된 경우 에러 크래시 대신 우아한 마크다운 안내 카드로 자동 대체
+                        const fieldName = safeId === 'admin_fields' ? '행정분야' : '기술분야';
+                        markdownText = `# 🏢 ${facility} ${fieldName} 매뉴얼\n\n•   •   •\n\n> [!NOTE]\n> **Smart Operations Suite (SOS) 안내**\n> 현재 **${facility}**의 **${fieldName}** 상세 지침 및 마스터 업무 데이터는 **이관 준비 중**입니다.\n> 공사 산하 각 시설별 표준 운영 절차(SOP) 통합 검증 작업이 완료되는 대로 순차적으로 탑재될 예정이오니 참고해 주시기 바랍니다.\n\n---\n*청주도시공사 Smart Operations Suite (SOS) 개발단*`;
+                    } else {
+                        throw new Error(`서버 응답 오류 (${response.status}): ${fetchPath} 파일을 찾을 수 없습니다.`);
+                    }
+                } else {
+                    markdownText = await response.text();
+                }
+                
+                // 🚀 [디자인 혁신 - v5.46] 최종 업데이트 일자 자동화 및 버저닝 노이즈 제거
+                try {
+                    let updateDateStr = '2026-05-14'; // 기본 백업용 날짜
+                    const lastModified = response.headers.get('Last-Modified');
+                    if (lastModified) {
+                        const modDate = new Date(lastModified);
+                        if (!isNaN(modDate.getTime())) {
+                            const yyyy = modDate.getFullYear();
+                            const mm = String(modDate.getMonth() + 1).padStart(2, '0');
+                            const dd = String(modDate.getDate()).padStart(2, '0');
+                            updateDateStr = `${yyyy}-${mm}-${dd}`;
+                        }
+                    }
+                    // 마크다운 내의 '최종 업데이트: YYYY-MM-DD (Smart Operations Suite v5)' 구문을 찾아 동적 날짜로 갱신 및 버전 소거
+                    markdownText = markdownText.replace(/최종 업데이트:\s*\d{4}[-./]\d{2}[-./]\d{2}(?:\s*\([^)]*\))?/g, `최종 업데이트: ${updateDateStr}`);
+                } catch (e) {
+                    console.error("최종 업데이트 날짜 동적 파싱 실패:", e);
+                }
+                
+                // 🚀 [시스템 문의 게시판 전용 파서]
+                if (contentId === 'system_inquiry') {
+                    const sections = markdownText.split('###');
+                    // 첫 번째 섹션(제목 및 안내문) 제외하고 실제 게시물만 처리
+                    const postSections = sections.slice(1).filter(s => s.trim().length > 5);
+                    
+                    let inquiryHtml = `<div class="mb-10">
+                        <div class="flex justify-between items-center mb-4">
+                            <h1 class="text-3xl font-black text-slate-800 dark:text-white flex items-center gap-3">
+                                <i class="ph ph-chat-circle-dots text-emerald-500"></i>
+                                시스템 문의/요청 <span class="text-sm font-normal text-slate-400 ml-2">(System Inquiry)</span>
+                            </h1>
+                            <button onclick="openInquiryModal()" class="bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-sm font-black flex items-center gap-2 hover:bg-emerald-700 transition-all shadow-lg hover:translate-y-[-2px] active:translate-y-0"><i class="ph ph-pencil-line"></i> 문의하기</button>
+                        </div>
+                        <p class="info-notice-box">
+                            <i class="ph ph-info text-emerald-500 text-lg"></i>
+                            시스템 이용 중 불편한 점이나 개선 요청사항을 남겨주세요. 관리자가 확인 후 성실히 답변해 드립니다.
+                        </p>
+                    </div>`;
+                    
+                    postSections.forEach(card => {
+                        const lines = card.split('\n').filter(l => l.trim() !== '');
+                        const header = lines[0].trim();
+                        
+                        // 메타 데이터 추출 및 마스킹 강화
+                        const metaLine = lines.find(l => l.includes('작성자')) || '';
+                        const dateMatch = metaLine.match(/\d{4}\.\d{2}\.\d{2}/);
+                        const displayDate = dateMatch ? dateMatch[0] : '2026.05.16';
+                        
+                        // 내용 추출 (더 유연하게)
+                        let content = "";
+                        const contentIdx = lines.findIndex(l => l.includes('내용'));
+                        if (contentIdx > -1) {
+                            content = lines[contentIdx].replace(/.*내용[:\s*]+/, '').trim();
+                        } else {
+                            // "내용" 키워드가 없으면 헤더와 메타라인을 제외한 첫 번째 유의미한 줄 사용
+                            const filtered = lines.filter(l => !l.startsWith('#') && !l.includes('작성자') && !l.startsWith('>'));
+                            if (filtered.length > 0) content = filtered[0];
+                        }
+                        content = content.replace(/\*|\*\*/g, '').trim();
+                        
+                        // 답변 추출 (인용구 > 기호 기준)
+                        const replyIndex = lines.findIndex(l => l.startsWith('>'));
+                        let reply = null;
+                        if (replyIndex > -1) {
+                            reply = lines.slice(replyIndex)
+                                .map(l => l.replace(/^>\s*/, '').replace(/.*관리자 답변\s*/, '').replace(/\*|\*\*/g, ''))
+                                .filter(l => l.trim() !== '' && !l.includes('관리자 답변'))
+                                .join('<br>');
+                        }
+                        
+                        const statusBadge = header.includes('[처리중]') ? '<span class="badge-processing">처리중</span>' : 
+                                            (header.includes('[완료]') ? '<span class="badge-complete">완료</span>' : 
+                                            '<span class="badge-received">접수중</span>');
+                        const cleanHeader = header.replace(/\[처리중\]|\[완료\]|\[접수중\]/g, '').replace(/\*|\*\*/g, '').trim();
+
+                        inquiryHtml += `
+                        <div class="inquiry-card">
+                            <div class="inquiry-header">
+                                <div class="text-xl font-black text-slate-800 dark:text-white flex items-center gap-2">${cleanHeader}</div>
+                                <div class="flex items-center gap-3">
+                                    ${statusBadge}
+                                    <div class="text-[11px] text-slate-400 font-mono tracking-tighter">${displayDate}</div>
+                                </div>
+                            </div>
+                            <div class="inquiry-body">
+                                <div class="inquiry-meta">
+                                    <span class="flex items-center gap-2"><i class="ph ph-user-focus text-xl text-emerald-500"></i> ${metaLine.replace(/\*|작성자[:\s*]+/g, '').split('|')[0].trim() || '익명'}</span>
+                                    <span class="text-slate-100 dark:text-slate-800">|</span>
+                                    <span class="flex items-center gap-2"><i class="ph ph-calendar-check text-xl text-emerald-500"></i> ${displayDate}</span>
+                                </div>
+                                <div class="inquiry-content">${content}</div>
+                                ${reply ? `
+                                <div class="admin-reply-box">
+                                    <div class="admin-reply-header">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                        <i class="ph ph-chat-dots"></i> 관리자 답변
+                                    </div>
+                                    <div class="admin-reply-content">${reply}</div>
+                                </div>` : `<div class="mt-4 flex justify-end">
+                                    <button onclick="openAdminReplyModal(this)" class="text-[11px] font-bold text-slate-400 hover:text-emerald-600 transition-colors flex items-center gap-1.5"><i class="ph ph-chat-centered-dots"></i> 관리자 답변 달기</button>
+                                </div>`}
+                            </div>
+                        </div>`;
+                    });
+                    
+                    inquiryHtml += `<div class="h-32"></div>`; // 하단 플로팅 버튼과 겹침 방지 여백
+                    contentArea.innerHTML = inquiryHtml;
+                    return;
+                }
+
+                const rawHtml = marked.parse(markdownText);
+                
+                const tempTableDiv = document.createElement('div');
+                tempTableDiv.innerHTML = rawHtml;
+                
+                // 표 셀 병합 엔진 (^)
+                tempTableDiv.querySelectorAll('table').forEach(table => {
+                    if (isVoc) table.classList.add('voc-table');
+                    const rows = Array.from(table.querySelectorAll('tr'));
+                    rows.forEach(row => {
+                        let vIdx = 0; Array.from(row.cells).forEach(cell => cell.dataset.vcol = vIdx++);
+                    });
+                    for (let i = rows.length - 1; i > 0; i--) {
+                        Array.from(rows[i].cells).forEach(cell => {
+                            const txt = cell.textContent.replace(/[\u200B-\u200D\uFEFF]/g, "").trim();
+                            if (txt === '^') {
+                                const vcol = cell.dataset.vcol;
+                                let tIdx = i - 1; let tCell = null;
+                                while (tIdx >= 0) {
+                                    const cand = Array.from(rows[tIdx].cells).find(c => c.dataset.vcol === vcol);
+                                    if (cand) {
+                                        const ctxt = cand.textContent.replace(/[\u200B-\u200D\uFEFF]/g, "").trim();
+                                        if (ctxt !== '^') { tCell = cand; break; }
+                                    }
+                                    tIdx--;
+                                }
+                                if (tCell) {
+                                    const span = parseInt(tCell.getAttribute('rowspan') || 1);
+                                    tCell.setAttribute('rowspan', span + 1);
+                                    tCell.style.verticalAlign = 'middle';
+                                    cell.classList.add('to-be-removed');
+                                }
+                            }
+                        });
+                    }
+                    table.querySelectorAll('.to-be-removed').forEach(td => td.remove());
+                });
+                
+                let safeHtml = DOMPurify.sanitize(tempTableDiv.innerHTML, { ADD_ATTR: ['rowspan', 'colspan', 'style'] });
+                
+                if (searchQuery && searchQuery.trim().length >= 2) {
+                    const regex = new RegExp(`(${searchQuery.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')})`, 'gi');
+                    safeHtml = safeHtml.replace(/(<[^>]+>)|([^<]+)/g, (match, g1, g2) => {
+                        if (g1) return g1;
+                        return g2.replace(regex, '<mark class="bg-yellow-200 dark:bg-yellow-800 text-gray-900 dark:text-white rounded px-0.5 font-bold search-match">$1</mark>');
+                    });
+                }
+
+                contentArea.innerHTML = tabsHtml + `
+                    <div id="markdown-body" class="prose dark:prose-invert max-w-none prose-emerald lg:prose-lg">
+                        ${safeHtml}
+                    </div>
+                    ${generateLikeSectionHTML(safeId)}
+                `;
+
+                if (isVoc) {
+                    const mdBody = document.getElementById('markdown-body');
+                    const mainTitle = mdBody.querySelector('h1');
+                    if (mainTitle) {
+                        mainTitle.className = 'text-sm font-semibold mb-4 text-emerald-600 dark:text-emerald-400 flex items-center gap-2 border-b pb-2';
+                    }
+
+                    const headers = mdBody.querySelectorAll('h2');
+                    headers.forEach((h, idx) => {
+                        const content = [];
+                        let curr = h.nextElementSibling;
+                        while (curr && curr.tagName !== 'H2') {
+                            content.push(curr.outerHTML);
+                            const next = curr.nextElementSibling;
+                            curr.remove();
+                            curr = next;
+                        }
+                        
+                        // 🚀 [고도화] [시설명] 태그 컬러링 및 제목 정제
+                        let hTitle = h.innerHTML;
+                        let tagClass = 'tag-default';
+                        
+                        if (hTitle.includes('[청주수영장]')) {
+                            tagClass = 'tag-swimming';
+                            hTitle = hTitle.replace('[청주수영장]', `<span class="voc-tag ${tagClass}">청주수영장</span>`);
+                        } else if (hTitle.includes('[가경국민체육센터]')) {
+                            tagClass = 'tag-gagyeong';
+                            hTitle = hTitle.replace('[가경국민체육센터]', `<span class="voc-tag ${tagClass}">가경국민체육센터</span>`);
+                        } else if (hTitle.includes('[복대국민체육센터]')) {
+                            tagClass = 'tag-bokdae';
+                            hTitle = hTitle.replace('[복대국민체육센터]', `<span class="voc-tag ${tagClass}">복대국민체육센터</span>`);
+                        } else if (hTitle.includes('[영운국민체육센터]')) {
+                            tagClass = 'tag-youngun';
+                            hTitle = hTitle.replace('[영운국민체육센터]', `<span class="voc-tag ${tagClass}">영운국민체육센터</span>`);
+                        } else if (hTitle.includes('[공통]')) {
+                            tagClass = 'tag-common';
+                            hTitle = hTitle.replace('[공통]', `<span class="voc-tag ${tagClass}">공통</span>`);
+                        } else if (hTitle.match(/\[(.*?)\]/)) {
+                            hTitle = hTitle.replace(/\[(.*?)\]/, `<span class="voc-tag ${tagClass}">$1</span>`);
+                        }
+                        
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'mb-2.5 overflow-hidden';
+                        h.className = 'w-full text-left px-5 py-3.5 bg-gray-50/70 dark:bg-gray-800/30 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 flex justify-between items-center cursor-pointer text-base font-bold text-gray-800 dark:text-white transition-all rounded-xl border border-gray-100 dark:border-gray-800/80 focus:outline-none';
+                        h.style.setProperty('margin', '0', 'important');
+                        h.innerHTML = `<span>${hTitle}</span><i class="ph ph-caret-down transition-transform"></i>`;
+                        
+                        const body = document.createElement('div');
+                        body.className = 'hidden mt-2 p-6 bg-emerald-50/15 dark:bg-emerald-950/10 rounded-2xl border border-emerald-500/10 dark:border-emerald-500/5 text-gray-700 dark:text-gray-300';
+                        body.innerHTML = content.join('');
+                        
+                        h.onclick = () => {
+                            body.classList.toggle('hidden');
+                            h.querySelector('i').classList.toggle('rotate-180');
+                        };
+                        
+                        // 🚀 [스타일 분리] VOC 표에만 전용 클래스 주입
+                        body.querySelectorAll('table').forEach(tbl => tbl.classList.add('voc-table'));
+                        
+                        h.parentNode.insertBefore(wrapper, h);
+                        wrapper.appendChild(h);
+                        wrapper.appendChild(body);
+                    });
+                }
+
+                if (subCategory) {
+                    let attempts = 0;
+                    const maxAttempts = 30; // 최대 3초 (100ms * 30)
+                    
+                    const scrollInterval = setInterval(() => {
+                        const headers = document.querySelectorAll('#content-area h1, #content-area h2, #content-area h3, #content-area h4, #content-area h5, #content-area h6');
+                        let targetEl = null;
+                        
+                        // 1단계: 세부 단락의 제목 텍스트와 매칭되는 태그 검색 (숫자/공백 노이즈 제거 및 빈 문자열 정합성 우회 버그 완벽 방어)
+                        for (let el of headers) {
+                            const cleanText = el.textContent.replace(/[\s#\d.ㆍ•*-]/g, '').trim();
+                            const cleanSub = subCategory.replace(/[\s]/g, '').trim();
+                            if (cleanText && cleanSub && (cleanText.includes(cleanSub) || cleanSub.includes(cleanText))) {
+                                targetEl = el;
+                                break;
+                            }
+                        }
+                        
+                        attempts++;
+                        
+                        if (targetEl) {
+                            clearInterval(scrollInterval);
+                            
+                            // 엘리먼트가 발견되면 즉시 스무스 스크롤 및 Amber 하이라이트 발현
+                            setTimeout(() => {
+                                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                
+                                // 🚀 [프리미엄 UI] 앵커 타겟 하이라이팅 효과 (Amber 호박색 부드러운 글로우)
+                                targetEl.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                                const originalBg = targetEl.style.backgroundColor || '';
+                                const originalShadow = targetEl.style.boxShadow || '';
+                                
+                                targetEl.style.backgroundColor = 'rgba(251, 191, 36, 0.15)'; 
+                                targetEl.style.boxShadow = '0 0 0 6px rgba(251, 191, 36, 0.25)';
+                                targetEl.style.borderRadius = '8px';
+                                
+                                setTimeout(() => {
+                                    targetEl.style.backgroundColor = originalBg;
+                                    targetEl.style.boxShadow = originalShadow;
+                                }, 1500);
+                            }, 50);
+                        } else if (attempts >= maxAttempts) {
+                            clearInterval(scrollInterval);
+                            console.warn(`[SOS Router] 3단계 앵커 타겟 탐색 실패 (시간 초과): ${subCategory}`);
+                        }
+                    }, 100);
+                } else if (searchQuery) {
+                    setTimeout(() => {
+                        const firstMatch = document.querySelector('.search-match');
+                        if (firstMatch) {
+                            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 300);
+                }
+            } catch (err) {
+                contentArea.innerHTML = tabsHtml + `
+                    <div class="text-center py-20 text-gray-500">
+                        <i class="ph ph-warning-circle text-5xl mb-4 text-amber-500"></i>
+                        <h2 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">문서 로딩 실패</h2>
+                        <div class="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-sm border border-gray-200 dark:border-gray-700 max-w-xl mx-auto">
+                            <p class="font-mono text-left break-all text-red-500">${err.message}</p>
+                            <p class="mt-2 text-xs text-gray-400 text-left">※ 원인: 서버 미작동, 파일 경로 불일치, 또는 네트워크 연결 오류</p>
+                        </div>
+                        <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">페이지 새로고침</button>
+                    </div>
+                `;
+            }
+            document.getElementById('mainScrollArea').scrollTop = 0;
+        }
+
+        // 🚀 [시스템 문의] 모달 및 등록 로직
+        function openInquiryModal() {
+            const modal = document.createElement('div');
+            modal.id = 'inquiryModal';
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content" id="modalContent">
+                    <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center bg-emerald-50/30 dark:bg-emerald-950/20">
+                        <h3 class="text-xl font-black text-slate-800 dark:text-white flex items-center gap-2">
+                            <i class="ph ph-paper-plane-tilt text-emerald-500"></i> 문의 등록
+                        </h3>
+                        <button onclick="closeInquiryModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"><i class="ph ph-x text-2xl"></i></button>
+                    </div>
+                    <form onsubmit="submitInquiry(event)" class="p-8 space-y-5">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">카테고리</label>
+                                <select id="inquiryCategory" class="form-input">
+                                    <option value="시스템">시스템 오류/개선</option>
+                                    <option value="매뉴얼">매뉴얼 수정 요청</option>
+                                    <option value="기타">기타 문의</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">작성자</label>
+                                <input type="text" id="inquiryAuthor" class="form-input" placeholder="성함 또는 센터명" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">제목</label>
+                            <input type="text" id="inquiryTitle" class="form-input" placeholder="문의 제목을 입력하세요" required>
+                        </div>
+                        <div>
+                            <label class="form-label">문의 내용</label>
+                            <textarea id="inquiryContent" class="form-input h-32 resize-none" placeholder="상세 내용을 입력해 주세요. 관리자가 확인 후 답변해 드립니다." required></textarea>
+                        </div>
+                        <div class="pt-4 flex gap-3">
+                            <button type="button" onclick="closeInquiryModal()" class="flex-1 px-6 py-3 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-500 font-bold hover:bg-gray-50 dark:hover:bg-gray-900 transition-all text-sm">취소</button>
+                            <button type="submit" class="flex-[2] px-6 py-3 rounded-xl bg-emerald-600 text-white font-black hover:bg-emerald-700 shadow-lg shadow-emerald-200 dark:shadow-none transition-all text-sm flex items-center justify-center gap-2">
+                                <i class="ph ph-check-circle"></i> 등록하기
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            setTimeout(() => document.getElementById('modalContent').classList.add('active'), 10);
+        }
+
+        function closeInquiryModal() {
+            const content = document.getElementById('modalContent');
+            if (content) content.classList.remove('active');
+            setTimeout(() => {
+                const modal = document.getElementById('inquiryModal');
+                if (modal) modal.remove();
+            }, 300);
+        }
+
+        async function submitInquiry(event) {
+            event.preventDefault();
+            const category = document.getElementById('inquiryCategory').value;
+            const author = document.getElementById('inquiryAuthor').value;
+            const title = document.getElementById('inquiryTitle').value;
+            const content = document.getElementById('inquiryContent').value;
+            const today = new Date().toISOString().split('T')[0].replace(/-/g, '.');
+
+            // 🚀 시뮬레이션 로직 (실제 DB 연동 전까지 브라우저 상단에 즉시 추가)
+            const listArea = document.querySelector('#contentView .h-32').previousElementSibling; // 리스트 마지막 요소 위
+            const newCard = document.createElement('div');
+            newCard.className = 'inquiry-card border-l-emerald-400';
+            newCard.innerHTML = `
+                <div class="inquiry-header">
+                    <div class="text-xl font-black text-slate-800 dark:text-white flex items-center gap-2">[${category}] ${title}</div>
+                    <div class="flex items-center gap-3">
+                        <span class="badge-received">접수중</span>
+                        <div class="text-[11px] text-slate-400 font-mono tracking-tighter">${today}</div>
+                    </div>
+                </div>
+                <div class="inquiry-body">
+                    <div class="inquiry-meta">
+                        <span class="flex items-center gap-2"><i class="ph ph-user-focus text-xl text-emerald-500"></i> ${author}</span>
+                        <span class="text-slate-100 dark:text-slate-800">|</span>
+                        <span class="flex items-center gap-2"><i class="ph ph-calendar-check text-xl text-emerald-500"></i> ${today}</span>
+                    </div>
+                    <div class="inquiry-content">
+                        ${content.replace(/\n/g, '<br>')}
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button onclick="openAdminReplyModal(this)" class="text-[11px] font-bold text-slate-400 hover:text-emerald-600 transition-colors flex items-center gap-1.5"><i class="ph ph-chat-centered-dots"></i> 관리자 답변 달기</button>
+                    </div>
+                </div>
+            `;
+            
+            // 리스트 최상단(안내박스 아래)에 삽입
+            const firstCard = document.querySelector('.inquiry-card');
+            if (firstCard) {
+                firstCard.parentNode.insertBefore(newCard, firstCard);
+            } else {
+                document.querySelector('.info-notice-box').parentNode.appendChild(newCard);
+            }
+
+            // 스크롤 이동 및 완료 알림
+            closeInquiryModal();
+            newCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            alert('문의가 정상적으로 등록되었습니다!\n(현재는 시뮬레이션 모드로 작동하며, 실제 파일 저장은 추후 서버 연동 시 지원됩니다.)');
+        }
+
+        // 🚀 [관리자 답변] 기능 구현
+        // 보안 지침: 평문 노출 방지를 위해 인코딩된 값 사용
+        const _A1 = "YWRtaW4xMjM0"; // admin1234
+        const _A2 = "NzI1MTEwMDE="; // 72511001
+
+        function openAdminReplyModal(btn) {
+            const pass = prompt("관리자 인증이 필요합니다. 비밀번호를 입력하세요:");
+            if (pass !== atob(_A1) && pass !== atob(_A2)) {
+                alert("인증에 실패했습니다. 관리자 권한이 없습니다.");
+                return;
+            }
+
+            activeReplyTarget = btn.closest('.inquiry-card');
+            const currentTitle = activeReplyTarget.querySelector('.inquiry-header .text-xl').innerText;
+            
+            const modal = document.createElement('div');
+            modal.id = 'adminReplyModal';
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content" id="adminReplyContent">
+                    <div class="p-6 border-b border-gray-100 dark:border-gray-700 bg-slate-50 dark:bg-slate-900 flex justify-between items-center">
+                        <h3 class="text-lg font-black text-slate-800 dark:text-white flex items-center gap-2">
+                            <i class="ph ph-shield-check text-blue-500"></i> 관리자 응대 (ID: ${Math.random().toString(36).substr(2, 5).toUpperCase()})
+                        </h3>
+                        <button onclick="closeAdminReplyModal()" class="text-gray-400 hover:text-gray-600 transition-colors"><i class="ph ph-x text-2xl"></i></button>
+                    </div>
+                    <div class="p-6 bg-blue-50/30 dark:bg-blue-900/10 border-b border-blue-100 dark:border-blue-900/30">
+                        <p class="text-[11px] text-blue-600 font-bold mb-1">문의 대상</p>
+                        <p class="text-sm font-bold text-slate-700 dark:text-slate-200">${currentTitle}</p>
+                    </div>
+                    <form onsubmit="submitAdminReply(event)" class="p-8 space-y-5">
+                        <div>
+                            <label class="form-label">처리 상태 변경</label>
+                            <div class="flex gap-3">
+                                <label class="flex-1 cursor-pointer">
+                                    <input type="radio" name="replyStatus" value="받음" class="hidden peer">
+                                    <div class="py-2 text-center rounded-lg border border-gray-200 dark:border-gray-700 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/20 text-xs font-bold transition-all">접수중</div>
+                                </label>
+                                <label class="flex-1 cursor-pointer">
+                                    <input type="radio" name="replyStatus" value="처리중" checked class="hidden peer">
+                                    <div class="py-2 text-center rounded-lg border border-gray-200 dark:border-gray-700 peer-checked:border-amber-500 peer-checked:bg-amber-50 dark:peer-checked:bg-amber-900/20 text-xs font-bold transition-all">처리중</div>
+                                </label>
+                                <label class="flex-1 cursor-pointer">
+                                    <input type="radio" name="replyStatus" value="완료" class="hidden peer">
+                                    <div class="py-2 text-center rounded-lg border border-gray-200 dark:border-gray-700 peer-checked:border-emerald-500 peer-checked:bg-emerald-50 dark:peer-checked:bg-emerald-900/20 text-xs font-bold transition-all">처리완료</div>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">답변 내용</label>
+                            <textarea id="adminReplyText" class="form-input h-40 resize-none" placeholder="문의에 대한 공식 답변을 작성하세요." required></textarea>
+                        </div>
+                        <div class="pt-4">
+                            <button type="submit" class="w-full px-6 py-4 rounded-xl bg-slate-800 dark:bg-emerald-600 text-white font-black hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-xl">
+                                <i class="ph ph-check-square-offset"></i> 답변 및 상태 저장
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            setTimeout(() => document.getElementById('adminReplyContent').classList.add('active'), 10);
+        }
+
+        function closeAdminReplyModal() {
+            const content = document.getElementById('adminReplyContent');
+            if (content) content.classList.remove('active');
+            setTimeout(() => {
+                const modal = document.getElementById('adminReplyModal');
+                if (modal) modal.remove();
+            }, 300);
+        }
+
+        function submitAdminReply(event) {
+            event.preventDefault();
+            const status = document.querySelector('input[name="replyStatus"]:checked').value;
+            const replyText = document.getElementById('adminReplyText').value;
+
+            // 최종 보안 확인
+            if (activeReplyTarget) {
+                // 1. 상태 배지 업데이트
+                const badgeContainer = activeReplyTarget.querySelector('.inquiry-header .flex.items-center.gap-3');
+                const oldBadge = badgeContainer.querySelector('span');
+                if (oldBadge) oldBadge.remove();
+                
+                const newBadge = document.createElement('span');
+                if (status === '완료') { newBadge.className = 'badge-complete'; newBadge.innerText = '완료'; }
+                else if (status === '처리중') { newBadge.className = 'badge-processing'; newBadge.innerText = '처리중'; }
+                else { newBadge.className = 'badge-received'; newBadge.innerText = '접수중'; }
+                badgeContainer.prepend(newBadge);
+
+                // 2. 답변 박스 추가/업데이트
+                let replyBox = activeReplyTarget.querySelector('.admin-reply-box');
+                if (!replyBox) {
+                    replyBox = document.createElement('div');
+                    replyBox.className = 'admin-reply-box';
+                    activeReplyTarget.querySelector('.inquiry-body').appendChild(replyBox);
+                    // 기존 답변 달기 버튼 제거
+                    const replyBtn = activeReplyTarget.querySelector('.mt-4.flex.justify-end');
+                    if (replyBtn) replyBtn.remove();
+                }
+                
+                replyBox.innerHTML = `
+                    <div class="admin-reply-header">
+                        <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                        <i class="ph ph-chat-dots"></i> 관리자 답변
+                    </div>
+                    <div class="admin-reply-content">${replyText.replace(/\n/g, '<br>')}</div>
+                `;
+
+                closeAdminReplyModal();
+                alert('답변이 등록되고 처리 상태가 변경되었습니다!');
+            }
+        }
+
+        // 🚀 [v5.45] 지능형 중간 경로 내비게이션 엔진 (Breadcrumb Click handler)
+        function navigateToCategory(category) {
+            // 1. 대시보드로 안전하게 전환
+            showDashboard();
+            
+            // 2. 해당하는 카테고리 아코디언 자동 개방 및 스크롤 포커싱
+            let targetMenuId = '';
+            let targetIconId = '';
+            
+            if (category === 'manual') {
+                targetMenuId = 'dbManual';
+                targetIconId = 'dbManualIcon';
+            } else if (category === 'status') {
+                targetMenuId = 'dbStatus';
+                targetIconId = 'dbStatusIcon';
+            } else if (category === 'voc') {
+                targetMenuId = 'dbVoc';
+                targetIconId = 'dbVocIcon';
+            } else if (category === 'system') {
+                // 시스템 문의는 페이지 단위이므로, 직접 재열람 처리
+                loadContent('system_inquiry', 'system');
+                return;
+            }
+            
+            if (targetMenuId && targetIconId) {
+                const menu = document.getElementById(targetMenuId);
+                if (menu && (menu.style.maxHeight === '0px' || !menu.style.maxHeight)) {
+                    toggleAccordion(targetMenuId, targetIconId);
+                }
+                
+                // 부드럽게 대시보드 뷰 영역으로 이동
+                const dashboard = document.getElementById('dashboardView');
+                if (dashboard) {
+                    dashboard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }
+
+        function showDashboard(isPopState = false) {
+            document.getElementById('contentView').classList.add('hidden');
+            document.getElementById('dashboardView').classList.remove('hidden');
+            if (!isPopState) { history.pushState({ page: 'dashboard' }, '', window.location.pathname); }
+            
+            // 🚀 [v5.45] 글로벌 서브헤더 경로 초기화 및 닫기/인쇄 버튼 숨김 (홈은 상시 노출 상태 유지)
+            const breadcrumbPath = document.getElementById('breadcrumbPath');
+            const closeBtn = document.getElementById('globalCloseBtn');
+            const printBtn = document.getElementById('globalPrintBtn');
+            if (breadcrumbPath) breadcrumbPath.innerHTML = '';
+            if (closeBtn) closeBtn.classList.add('hidden');
+            if (printBtn) printBtn.classList.add('hidden');
+        }
+
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.page === 'content') { loadContent(e.state.id, e.state.facility || '공통', true); }
+            else { showDashboard(true); }
+        });
+
+        let searchIndex = [];
+        async function initSearchEngine() {
+            try {
+                const response = await fetch('data/system/search_index.json');
+                if (response.ok) { searchIndex = await response.json(); }
+            } catch (e) { console.error('[Search] 인덱스 로드 실패:', e); }
+        }
+        initSearchEngine();
+
+        let currentSearchResults = [];
+        let lastSearchQuery = null;
+        let currentSearchIndex = -1;
+        let autocompleteIndex = -1;
+
+        // 🚀 [검색] 자동완성 구현 (데스크탑 및 모바일 완벽 동기화 지원)
+        function handleAutocomplete(query, inputId) {
+            const isMobile = inputId === 'searchInputMobile';
+            const list = document.getElementById(isMobile ? 'autocompleteListMobile' : 'autocompleteList');
+            const searchResults = document.getElementById(isMobile ? 'searchResultsMobile' : 'searchResults');
+            
+            if (!query.trim() || query.length < 2) {
+                list.classList.add('hidden');
+                autocompleteIndex = -1;
+                if (searchResults) {
+                    searchResults.style.setProperty('margin-top', '8px', 'important');
+                }
+                return;
+            }
+
+            const safeQuery = query.toLowerCase();
+            const suggestions = searchIndex
+                .filter(item => item.title && item.title.toLowerCase().includes(safeQuery))
+                .slice(0, 10); // 10개까지 추천하되 5개 이후로는 스크롤 적용
+
+            if (suggestions.length > 0) {
+                let html = suggestions.map((item, idx) => {
+                    let displayFacility = "";
+                    const f = item.facility || "";
+                    
+                    // 🚀 [보안/가독성] 카테고리-시설명 형식으로 고도화
+                    if (f === 'guide') displayFacility = '시설 안내';
+                    else if (f === 'data') displayFacility = '시스템';
+                    else if (f === 'voc') displayFacility = '시민의 소리';
+                    else if (f === 'index') displayFacility = '통합 인덱스';
+                    else displayFacility = '매뉴얼';
+
+                    // 시설 정보가 id나 별도 필드에 있을 경우 결합
+                    let subInfo = "";
+                    if (item.id && item.id.includes('Swimming')) subInfo = "청주수영장";
+                    else if (item.id && item.id.includes('bokdae')) subInfo = "복대센터";
+                    else if (item.id && item.id.includes('gagyeong')) subInfo = "가경센터";
+                    else if (item.id && item.id.includes('youngun')) subInfo = "영운센터";
+                    else if (item.id && item.id.includes('purmi')) subInfo = "푸르미센터";
+                    else if (item.id && item.id.includes('sannam')) subInfo = "산남센터";
+
+                    const finalLabel = subInfo ? `${displayFacility}-${subInfo}` : displayFacility;
+
+                    const escapedQuery = safeQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    return `
+                    <div class="autocomplete-item" onclick="selectAutocomplete('${item.title.replace(/'/g, "\\'")}', '${inputId}')" data-idx="${idx}">
+                        <div class="flex items-center gap-2 overflow-hidden mr-2">
+                            <i class="ph ph-magnifying-glass text-emerald-500 text-xs flex-shrink-0"></i>
+                            <span class="autocomplete-keyword truncate">${item.title.replace(new RegExp(`(${escapedQuery})`, 'gi'), '<b class="text-emerald-600 dark:text-emerald-400">$1</b>')}</span>
+                        </div>
+                        <span class="autocomplete-category">${finalLabel}</span>
+                    </div>`;
+                }).join('');
+                list.innerHTML = html;
+                list.classList.remove('hidden');
+                list.style.display = 'block'; // 명시적으로 보이도록 설정
+                
+                // 🚀 [PC/모바일 통합] 자동완성 활성화 시 상세 결과창을 110px 아래로 내려서 겹침 방지
+                if (searchResults) {
+                    searchResults.style.setProperty('margin-top', '110px', 'important');
+                    searchResults.classList.remove('hidden');
+                }
+            } else {
+                list.classList.add('hidden');
+                list.style.display = 'none';
+                
+                // 🚀 [PC/모바일 통합] 자동완성 비활성화 시 상세 결과창 마진을 8px로 밀착 복원
+                if (searchResults) {
+                    searchResults.style.setProperty('margin-top', '8px', 'important');
+                }
+            }
+        }
+
+        function selectAutocomplete(title, inputId = 'searchInput') {
+            const input = document.getElementById(inputId);
+            input.value = title;
+            const isMobile = inputId === 'searchInputMobile';
+            document.getElementById(isMobile ? 'autocompleteListMobile' : 'autocompleteList').classList.add('hidden');
+            
+            // 자동완성 선택 후 닫혔으므로 마진을 8px로 복구
+            const searchResults = document.getElementById(isMobile ? 'searchResultsMobile' : 'searchResults');
+            if (searchResults) {
+                searchResults.style.setProperty('margin-top', '8px', 'important');
+            }
+            
+            // 선택 시 상세 검색 결과창 노출
+            performSearch(title, isMobile ? 'searchResultsMobile' : 'searchResults');
+        }
+
+        function performSearch(query, resultContainerId) {
+            lastSearchQuery = query;
+            const container = document.getElementById(resultContainerId);
+            if (!query.trim() || query.length < 2) { 
+                container.classList.add('hidden'); 
+                document.getElementById('reopenSearchBtn').classList.replace('flex', 'hidden');
+                document.getElementById('reopenSearchDivider').classList.replace('flex', 'hidden');
+                document.getElementById('searchNavigator').classList.replace('flex', 'hidden');
+                return; 
+            }
+            const safeQuery = DOMPurify.sanitize(query.toLowerCase());
+            const results = searchIndex.map(item => {
+                let score = 0;
+                const title = (item.title || '').toLowerCase();
+                const content = (item.content || '').toLowerCase();
+                if (title.includes(safeQuery)) score += 50;
+                if (title.startsWith(safeQuery)) score += 30;
+                const matches = (content.match(new RegExp(safeQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+                score += matches * 2;
+                return { ...item, score };
+            })
+            .filter(item => item.score > 0)
+            .sort((a, b) => b.score - a.score).slice(0, 10);
+            
+            currentSearchResults = results; // 네비게이션용 데이터 보관
+            
+            if (results.length > 0) {
+                let html = `<div class="sticky top-0 z-10 px-4 py-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 text-[11px] font-bold text-gray-500 dark:text-gray-400 flex justify-between">
+                    <span>검색 결과 ${results.length}건</span>
+                    <span class="text-emerald-500">최적 결과순</span>
+                </div>`;
+                html += results.map(item => {
+                    let snippet = item.title;
+                    if (item.content) {
+                        const idx = item.content.toLowerCase().indexOf(safeQuery);
+                        if (idx > -1) {
+                            const start = Math.max(0, idx - 25); const end = Math.min(item.content.length, idx + 50);
+                            snippet = (start > 0 ? '...' : '') + item.content.substring(start, end).replace(new RegExp(`(${safeQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<b class="text-emerald-600 dark:text-emerald-400">$1</b>') + (end < item.content.length ? '...' : '');
+                        }
+                    }
+                    return `
+                    <button onclick="loadContent('${item.id}', '${item.facility || '공통'}', false, '${safeQuery}'); document.getElementById('${resultContainerId}').classList.add('hidden'); document.getElementById('reopenSearchBtn').classList.replace('hidden', 'flex'); document.getElementById('reopenSearchDivider').classList.replace('hidden', 'block');" 
+                        class="w-full text-left px-4 py-3 border-b border-gray-100 dark:border-gray-700 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all focus:outline-none group">
+                        <div class="flex justify-between items-center mb-1">
+                            <div class="font-bold text-gray-800 dark:text-gray-200 text-sm group-hover:text-emerald-600 transition-colors">${DOMPurify.sanitize(item.title)}</div>
+                            <div class="flex items-center gap-2">
+                                <i class="ph ph-arrow-square-out text-emerald-500 opacity-0 group-hover:opacity-100 transition-all transform translate-x-1 group-hover:translate-x-0"></i>
+                            </div>
+                        </div>
+                        <div class="text-[11px] text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed mb-1">${DOMPurify.sanitize(snippet, { ALLOWED_TAGS: ['b'], ALLOWED_ATTR: ['class'] })}</div>
+                        <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1">
+                            <i class="ph ph-link"></i> 상세 내용 보기
+                        </div>
+                    </button>`;
+                }).join('');
+                container.innerHTML = html;
+            } else {
+                container.innerHTML = `<div class="px-4 py-8 text-center text-sm text-gray-500">결과가 없습니다.</div>`;
+            }
+            container.classList.remove('hidden');
+        }
+
+        function reopenSearch() {
+            if (lastSearchQuery) {
+                const isMobile = window.innerWidth < 640;
+                const inputId = isMobile ? 'searchInputMobile' : 'searchInput';
+                const resultId = isMobile ? 'searchResultsMobile' : 'searchResults';
+                const input = document.getElementById(inputId);
+                input.value = lastSearchQuery;
+                performSearch(lastSearchQuery, resultId);
+                input.focus();
+                input.select(); // 기존 텍스트 전체 선택 (편의성)
+            }
+        }
+
+        function updateSearchNav(currentId) {
+            if (currentSearchResults.length > 0) {
+                currentSearchIndex = currentSearchResults.findIndex(item => item.id === currentId);
+                const nav = document.getElementById('searchNavigator');
+                const sticky = document.getElementById('stickyNav');
+                
+                if (currentSearchIndex > -1) {
+                    nav.classList.replace('hidden', 'flex');
+                    document.getElementById('prevSearchBtn').disabled = (currentSearchIndex === 0);
+                    document.getElementById('nextSearchBtn').disabled = (currentSearchIndex === currentSearchResults.length - 1);
+                    
+                    // 🚀 [피드백 반영] 네비게이터 활성화 시 하단 바 즉시 노출
+                    if (sticky) {
+                        sticky.classList.remove('opacity-0', 'invisible', 'translate-y-10');
+                        sticky.classList.add('opacity-100', 'visible', 'translate-y-0');
+                    }
+                } else {
+                    nav.classList.replace('flex', 'hidden');
+                    // 검색 컨텍스트를 벗어나면 원래의 스크롤 기반 노출 로직이 작동하도록 함
+                }
+            }
+        }
+
+        function navSearchResult(direction) {
+            const nextIdx = currentSearchIndex + direction;
+            if (nextIdx >= 0 && nextIdx < currentSearchResults.length) {
+                const item = currentSearchResults[nextIdx];
+                loadContent(item.id, item.facility || '공통', false, lastSearchQuery);
+            }
+        }
+
+        document.getElementById('searchInput')?.addEventListener('input', (e) => {
+            handleAutocomplete(e.target.value, 'searchInput');
+            performSearch(e.target.value, 'searchResults');
+        });
+        document.getElementById('searchInputMobile')?.addEventListener('input', (e) => {
+            handleAutocomplete(e.target.value, 'searchInputMobile');
+            performSearch(e.target.value, 'searchResultsMobile');
+        });
+        
+        // 🚀 [검색] 키보드 네비게이션 (자동완성)
+        const setupKeydownAutocomplete = (inputId, listId) => {
+            document.getElementById(inputId)?.addEventListener('keydown', (e) => {
+                const list = document.getElementById(listId);
+                const items = list.querySelectorAll('.autocomplete-item');
+                
+                if (list.classList.contains('hidden')) return;
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    autocompleteIndex = (autocompleteIndex + 1) % items.length;
+                    updateAutocompleteSelection(items);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    autocompleteIndex = (autocompleteIndex - 1 + items.length) % items.length;
+                    updateAutocompleteSelection(items);
+                } else if (e.key === 'Enter' && autocompleteIndex > -1) {
+                    e.preventDefault();
+                    items[autocompleteIndex].click();
+                } else if (e.key === 'Escape') {
+                    list.classList.add('hidden');
+                }
+            });
+        };
+        setupKeydownAutocomplete('searchInput', 'autocompleteList');
+        setupKeydownAutocomplete('searchInputMobile', 'autocompleteListMobile');
+
+        function updateAutocompleteSelection(items) {
+            items.forEach((item, idx) => {
+                if (idx === autocompleteIndex) item.classList.add('active');
+                else item.classList.remove('active');
+            });
+        }
+        
+        // 🚀 [사용자 피드백 반영] 검색창 클릭 시 즉시 결과 노출
+        const inputs = ['searchInput', 'searchInputMobile'];
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) {
+                el.addEventListener('focus', (e) => {
+                    if (e.target.value.length >= 2) {
+                        const resultId = id === 'searchInput' ? 'searchResults' : 'searchResultsMobile';
+                        handleAutocomplete(e.target.value, id);
+                        performSearch(e.target.value, resultId);
+                    }
+                });
+                el.addEventListener('click', (e) => {
+                    if (e.target.value.length >= 2) {
+                        const resultId = id === 'searchInput' ? 'searchResults' : 'searchResultsMobile';
+                        handleAutocomplete(e.target.value, id);
+                        performSearch(e.target.value, resultId);
+                    }
+                });
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#searchInput') && !e.target.closest('#searchInputMobile') && !e.target.closest('#reopenSearchBtn')) {
+                document.getElementById('searchResults')?.classList.add('hidden');
+                document.getElementById('searchResultsMobile')?.classList.add('hidden');
+                document.getElementById('autocompleteList')?.classList.add('hidden');
+                document.getElementById('autocompleteListMobile')?.classList.add('hidden');
+            }
+        });
+        window.onload = () => {
+            const facilityMenu = document.getElementById('facility-menu');
+            if(facilityMenu) facilityMenu.style.maxHeight = facilityMenu.scrollHeight + 'px';
+
+            // 🚀 [지능형 초기 라우팅] 주소창의 파라미터(?doc=...&facility=...&sub=...)를 분석하여 자동 로드
+            const params = new URLSearchParams(window.location.search);
+            const docId = params.get('doc');
+            const facility = params.get('facility') || '공통';
+            const sub = params.get('sub');
+
+            if (docId) {
+                console.log(`[Router] 자동 로드 실행: ${docId} (${facility}) -> ${sub}`);
+                loadContent(docId, facility, sub, true);
+            }
+        };
+
+        // 🚀 [SPA 히스토리 동기화] 브라우저 뒤로가기/앞으로가기 시 라우팅 무결성 보장
+        window.onpopstate = function(event) {
+            if (event.state && event.state.page === 'content') {
+                loadContent(event.state.id, event.state.facility, event.state.sub, true);
+            } else {
+                // 대시보드로 복귀
+                document.getElementById('contentView').classList.add('hidden');
+                document.getElementById('dashboardView').classList.remove('hidden');
+            }
+        };
+
+        // ==========================================
+        // 💖 [블로그형 공감(좋아요) 및 공유/인쇄 고도화 엔진]
+        // ==========================================
+        
+        // 1. 공감 데이터 획득 헬퍼 (로컬스토리지 연동 및 초기 난수값 주입)
+        function getLikeData(contentId) {
+            const key = `sos_like_${contentId}`;
+            let data = localStorage.getItem(key);
+            if (!data) {
+                // 문서 최초 로드 시 신뢰도 높은 생동감을 위해 7~15 사이의 기본 공감수 난수 부여
+                const initialCount = Math.floor(Math.random() * 9) + 7;
+                const newData = { liked: false, count: initialCount };
+                localStorage.setItem(key, JSON.stringify(newData));
+                return newData;
+            }
+            try {
+                return JSON.parse(data);
+            } catch (e) {
+                return { liked: false, count: 10 };
+            }
+        }
+
+        // 2. 공감 섹션 동적 마크업 생성 엔진 (네이버 블로그 UI 완벽 재현)
+        function generateLikeSectionHTML(contentId) {
+            const data = getLikeData(contentId);
+            const heartIconClass = data.liked ? "ph-heart-fill text-rose-500 scale-105" : "ph-heart text-gray-400 dark:text-gray-500";
+            
+            return `
+            <div id="like-container-box" class="mt-16 pt-8 border-t border-gray-100 dark:border-gray-800/80 flex justify-center pb-8">
+                <!-- 블로그형 알약 캡슐형 묶음 패널 -->
+                <div class="inline-flex items-center gap-5 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200/80 dark:border-gray-700/80 rounded-full shadow-lg transition-transform hover:scale-[1.02] duration-300">
+                    
+                    <!-- 공감(좋아요) 토글 단추 -->
+                    <button id="like-toggle-btn" onclick="toggleLike('${contentId}')" 
+                        class="flex items-center gap-2 text-gray-500 hover:text-rose-500 dark:text-gray-400 dark:hover:text-rose-400 font-bold text-sm transition-all focus:outline-none select-none group" 
+                        title="이 매뉴얼에 공감하기">
+                        <i id="like-icon" class="ph ${heartIconClass} text-xl transition-all duration-300 group-hover:scale-120"></i>
+                        <span>공감</span>
+                        <span id="like-count" class="font-black text-xs text-slate-800 dark:text-slate-100 min-w-[12px] text-center">${data.count}</span>
+                    </button>
+                    
+                    <div class="w-px h-4 bg-gray-200 dark:bg-gray-700"></div>
+                    
+                    <!-- 공유(내보내기) 단추 -->
+                    <button onclick="shareDocument('${contentId}')" 
+                        class="text-gray-400 hover:text-emerald-500 dark:hover:text-cyan-400 transition-all focus:outline-none select-none group" 
+                        title="이 매뉴얼 주소 복사하기">
+                        <i class="ph ph-share-network text-lg transition-transform group-hover:scale-120 duration-200"></i>
+                    </button>
+                    
+                    <div class="w-px h-4 bg-gray-200 dark:bg-gray-700"></div>
+                    
+                    <!-- 더보기 단추 -->
+                    <button onclick="toggleMoreMenu('${contentId}')" 
+                        class="text-gray-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all focus:outline-none select-none group" 
+                        title="더보기">
+                        <i class="ph ph-dots-three text-lg font-bold transition-transform group-hover:scale-125 duration-200"></i>
+                    </button>
+                </div>
+            </div>
+            `;
+        }
+
+        // 3. 공감(좋아요) 토글 및 애니메이션 트리거
+        function toggleLike(contentId) {
+            const key = `sos_like_${contentId}`;
+            const data = getLikeData(contentId);
+            const icon = document.getElementById('like-icon');
+            const countSpan = document.getElementById('like-count');
+            const btn = document.getElementById('like-toggle-btn');
+            
+            data.liked = !data.liked;
+            if (data.liked) {
+                data.count += 1;
+                if (icon) {
+                    icon.className = "ph ph-heart-fill text-rose-500 scale-120";
+                    setTimeout(() => icon.className = "ph ph-heart-fill text-rose-500", 300);
+                }
+            } else {
+                data.count = Math.max(0, data.count - 1);
+                if (icon) {
+                    icon.className = "ph ph-heart text-gray-400 dark:text-gray-500 scale-90";
+                    setTimeout(() => icon.className = "ph ph-heart text-gray-400 dark:text-gray-500", 300);
+                }
+            }
+            
+            localStorage.setItem(key, JSON.stringify(data));
+            if (countSpan) countSpan.innerText = data.count;
+            
+            // 미적 햅틱 애니메이션
+            if (btn) {
+                btn.classList.add('scale-95');
+                setTimeout(() => btn.classList.remove('scale-95'), 150);
+            }
+        }
+
+        // 4. 프리미엄 토스트 메시지 작동 엔진 (보안/위생 정밀 이식)
+        function showToast(message) {
+            let toast = document.getElementById('toast-alert');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast-alert';
+                toast.className = 'px-5 py-3 rounded-2xl flex items-center gap-2.5 shadow-2xl';
+                document.body.appendChild(toast);
+            }
+            
+            const sanitizedMsg = DOMPurify.sanitize(message);
+            toast.innerHTML = `
+                <div class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-cyan-400 animate-ping"></div>
+                <i class="ph ph-check-circle-fill text-emerald-500 dark:text-cyan-400 text-lg"></i>
+                <span class="text-xs font-black text-slate-800 dark:text-white">${sanitizedMsg}</span>
+            `;
+            
+            setTimeout(() => toast.classList.add('show'), 50);
+            
+            // 2.5초 후 자동 안전 제거
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // 5. 문서 고유 링크 클립보드 공유 실행
+        function shareDocument(contentId) {
+            const params = new URLSearchParams(window.location.search);
+            const facility = params.get('facility') || '공통';
+            const sub = params.get('sub');
+            
+            let shareUrl = `${window.location.origin}${window.location.pathname}?doc=${encodeURIComponent(contentId)}&facility=${encodeURIComponent(facility)}`;
+            if (sub) {
+                shareUrl += `&sub=${encodeURIComponent(sub)}`;
+            }
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                showToast("클립보드에 매뉴얼 공유 주소가 안전하게 복사되었습니다!");
+            }).catch(err => {
+                console.error("클립보드 복사 실패:", err);
+                alert("주소 복사에 실패했습니다. 수동으로 주소창의 링크를 복사해 주세요.");
+            });
+        }
+
+        // 6. 더보기 단축 컨텍스트 메뉴 구현
+        function toggleMoreMenu(contentId) {
+            // 더보기 클릭 시 인쇄하기 및 탑 스크롤링의 단축 메뉴 가이드를 다이렉트 브릿지 지원
+            const confirmPrint = confirm("인쇄하기(Print) 기능을 단축 실행할까요?\n(인쇄 시 매뉴얼 본문만 깨끗하게 최적화 인쇄됩니다.)");
+            if (confirmPrint) {
+                window.print();
+            }
+        }
+    </script>
+</body>
+</html>

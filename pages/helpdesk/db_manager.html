@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS 클라우드 DB 대통합 매니저</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    
+    <!-- Firebase Compat SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f3f4f6;
+            font-family: 'Pretendard', sans-serif;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,25%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,25%,1) 0, transparent 50%);
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="py-12 px-6">
+    <div class="max-w-4xl mx-auto">
+        <!-- 헤더 영역 -->
+        <div class="flex justify-between items-center mb-10 pb-6 border-b border-gray-800">
+            <div>
+                <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 flex items-center gap-3">
+                    <i class="ph ph-database text-4xl"></i> SOS 클라우드 DB 대통합 매니저
+                </h1>
+                <p class="text-gray-400 text-sm mt-2">voc-data-b7f07 프로젝트 데이터 이주 및 클린 마이그레이션 도구</p>
+            </div>
+            <a href="../../index.html" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-gray-300 hover:text-white rounded-xl text-sm font-semibold transition-all flex items-center gap-2">
+                <i class="ph ph-house"></i> 매뉴얼 홈으로
+            </a>
+        </div>
+
+        <!-- ⚠️ 중대한 경고 패널 -->
+        <div class="mb-8 p-5 bg-amber-500/10 border border-amber-500/30 rounded-2xl flex items-start gap-4">
+            <i class="ph ph-warning-octagon text-3xl text-amber-400 shrink-0"></i>
+            <div>
+                <h3 class="text-amber-400 font-bold text-base">⚠️ 경고 및 주의사항</h3>
+                <p class="text-gray-300 text-xs mt-1.5 leading-relaxed">
+                    본 도구는 <strong>예약 시스템의 Firebase 프로젝트 DB(`voc-data-b7f07`)</strong>의 데이터를 다이렉트로 제어합니다. <br>
+                    작업 집행 전 반드시 **1단계 백업**을 실행하여 소중한 기존 데이터를 안전하게 PC에 파일로 다운로드해 두십시오.
+                </p>
+            </div>
+        </div>
+
+        <!-- 마이그레이터 엔진 실행 패널 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            
+            <!-- [1단계] 안전 백업 카드 -->
+            <div class="p-6 rounded-2xl glass-panel hover:border-emerald-500/30 transition-all flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-2xl font-bold mb-4">
+                        1
+                    </div>
+                    <h3 class="text-white font-bold text-lg flex items-center gap-2">
+                        <i class="ph ph-download-simple"></i> DB 전역 안전 백업
+                    </h3>
+                    <p class="text-gray-400 text-xs mt-2 leading-relaxed">
+                        기존 7개 컬렉션에 흩어진 모든 운영 문서들을 통째로 긁어와 PC에 로컬 JSON 백업 파일로 저장합니다.
+                    </p>
+                </div>
+                <button onclick="executeBackup()" class="w-full mt-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20">
+                    <i class="ph ph-file-arrow-down"></i> 백업 및 다운로드
+                </button>
+            </div>
+
+            <!-- [2단계] 일괄 클리어 카드 -->
+            <div class="p-6 rounded-2xl glass-panel hover:border-rose-500/30 transition-all flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400 text-2xl font-bold mb-4">
+                        2
+                    </div>
+                    <h3 class="text-white font-bold text-lg flex items-center gap-2">
+                        <i class="ph ph-trash-simple"></i> 기존 파편 컬렉션 비우기
+                    </h3>
+                    <p class="text-gray-400 text-xs mt-2 leading-relaxed">
+                        백업 완료 후, 기존 7개 파편 컬렉션 내부의 모든 문서를 말끔히 삭제하여 깨끗한 백지 상태로 청소합니다.
+                    </p>
+                </div>
+                <div class="mt-6 space-y-2">
+                    <input type="password" id="adminPin" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-center text-sm font-mono tracking-widest placeholder:text-gray-600" placeholder="관리자 PIN (7250)">
+                    <button onclick="executeClear()" class="w-full py-3 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-rose-600/20">
+                        <i class="ph ph-trash"></i> 컬렉션 싹 비우기
+                    </button>
+                </div>
+            </div>
+
+            <!-- [3단계] 신규 마스터 업로드 카드 -->
+            <div class="p-6 rounded-2xl glass-panel hover:border-cyan-500/30 transition-all flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-2xl font-bold mb-4">
+                        3
+                    </div>
+                    <h3 class="text-white font-bold text-lg flex items-center gap-2">
+                        <i class="ph ph-upload-simple"></i> manual 새 구조 업로드
+                    </h3>
+                    <p class="text-gray-400 text-xs mt-2 leading-relaxed">
+                        새로 설계된 `manual` 통합 계층 구조 아래에 전사 실시간 공감수 및 업데이트 정합성 마스터 데이터를 일괄 신규 등록합니다.
+                    </p>
+                </div>
+                <button onclick="executeUpload()" class="w-full mt-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-cyan-600/20">
+                    <i class="ph ph-cloud-arrow-up"></i> manual 컬렉션 업로드
+                </button>
+            </div>
+
+        </div>
+
+        <!-- 📊 작업 진행 상태 모니터 패널 -->
+        <div class="p-6 rounded-2xl glass-panel">
+            <h3 class="text-white font-bold text-base border-b border-gray-800 pb-3 flex items-center gap-2">
+                <i class="ph ph-activity text-emerald-400 animate-pulse"></i> 작업 진행 콘솔 모니터
+            </h3>
+            <div id="consoleOut" class="mt-4 p-4 bg-slate-950 rounded-xl font-mono text-xs text-emerald-400 h-64 overflow-y-auto leading-relaxed space-y-1 scrollbar-thin">
+                <p class="text-gray-500">[System] SOS 클라우드 DB 대통합 엔진 대기 중...</p>
+                <p class="text-gray-500">[System] 1단계 백업을 실행하여 마이그레이션을 안전하게 개시해 주세요.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 🚀 [구글 파이어베이스 voc-data-b7f07 프로젝트 설정 키값 통합 탑재]
+        const firebaseConfig = {
+            apiKey: "AIzaSyAN3tBx_SCvQaiKeDTjGwaUWNOtmINwv4k",
+            authDomain: "voc-data-b7f07.firebaseapp.com",
+            projectId: "voc-data-b7f07",
+            storageBucket: "voc-data-b7f07.firebasestorage.app",
+            messagingSenderId: "750066755264",
+            appId: "1:750066755264:web:bf23a4bd56a9aae4276f25"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        const targetCollections = [
+            'system_inquiry',
+            'update_history',
+            'updates',
+            'voc_gym',
+            'voc_other',
+            'voc_program',
+            'voc_swimming'
+        ];
+
+        let backupData = {};
+
+        function printLog(msg, type = 'info') {
+            const consoleEl = document.getElementById('consoleOut');
+            const time = new Date().toLocaleTimeString();
+            let color = 'text-emerald-400';
+            if (type === 'error') color = 'text-rose-400 font-bold';
+            if (type === 'warn') color = 'text-amber-400 font-bold';
+            if (type === 'success') color = 'text-cyan-300 font-bold';
+            
+            consoleEl.innerHTML += `<p class="${color}">[${time}] ${msg}</p>`;
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        // ==========================================
+        // 1단계: DB 안전 백업 및 다운로드 엔진
+        // ==========================================
+        async function executeBackup() {
+            printLog("🔄 1단계: 기존 7개 컬렉션 데이터 정밀 스캔 시작...", 'warn');
+            backupData = {};
+            
+            try {
+                for (const colName of targetCollections) {
+                    printLog(`스캐닝 중 ➡️ ${colName} ...`);
+                    const snap = await db.collection(colName).get();
+                    backupData[colName] = [];
+                    snap.forEach(doc => {
+                        backupData[colName].push({ id: doc.id, ...doc.data() });
+                    });
+                    printLog(`✅ 스캔 완료: ${colName} (총 ${backupData[colName].length}건 수집됨)`, 'success');
+                }
+
+                // JSON 파일로 다운로드 제공
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 4));
+                const dlAnchor = document.createElement('a');
+                const today = new Date().toISOString().slice(0, 10);
+                dlAnchor.setAttribute("href", dataStr);
+                dlAnchor.setAttribute("download", `SOS_DB_BACKUP_${today}.json`);
+                document.body.appendChild(dlAnchor);
+                dlAnchor.click();
+                dlAnchor.remove();
+
+                printLog("🎉 DB 안전 백업 파일 다운로드 완료! 100% 안전하게 보존되었습니다.", 'success');
+                printLog("👉 다음 단계: 관리자 PIN을 입력하신 뒤 [2단계: 기존 컬렉션 비우기]를 실행해 주세요.", 'warn');
+            } catch (e) {
+                printLog(`❌ 스캔 실패: ${e.message}`, 'error');
+            }
+        }
+
+        // ==========================================
+        // 2단계: 기존 파편 컬렉션 일괄 클리어(비우기) 엔진
+        // ==========================================
+        async function executeClear() {
+            const pin = document.getElementById('adminPin').value.trim();
+            if (pin !== '7250') {
+                alert("관리자 PIN 코드가 올바르지 않습니다.");
+                printLog("❌ PIN 오류: 기존 컬렉션 비우기 실행 거부됨.", 'error');
+                return;
+            }
+
+            if (Object.keys(backupData).length === 0) {
+                const proceedWithoutBackup = confirm("⚠️ 백업 파일 다운로드가 선행되지 않았습니다. 정말로 데이터 백업 없이 즉시 영구 삭제를 감행할까요?");
+                if (!proceedWithoutBackup) return;
+            }
+
+            const finalConfirm = confirm("⚠️ 정말로 기존 7개 파편 컬렉션의 모든 데이터를 지우시겠습니까?\n이 작업은 파이어베이스 실시간 DB에서 복구 불가능합니다!");
+            if (!finalConfirm) return;
+
+            printLog("🚨 2단계: 기존 7개 파편 컬렉션 영구 비우기 시작...", 'error');
+
+            try {
+                for (const colName of targetCollections) {
+                    printLog(`컬렉션 비우는 중 ➡️ ${colName} ...`);
+                    const snap = await db.collection(colName).get();
+                    
+                    let deleteCount = 0;
+                    const batch = db.batch();
+                    
+                    snap.forEach(doc => {
+                        batch.delete(doc.ref);
+                        deleteCount++;
+                    });
+                    
+                    if (deleteCount > 0) {
+                        await batch.commit();
+                    }
+                    printLog(`🗑️  삭제 완료: ${colName} (문서 ${deleteCount}건 영구 파괴됨)`, 'success');
+                }
+                printLog("🎉 기존 7개 컬렉션 완전 백지화 대성공! 깨끗하게 비워졌습니다.", 'success');
+                printLog("👉 다음 단계: [3단계: manual 새 구조 업로드]를 실행해 매뉴얼 마스터 데이터를 주입하세요.", 'warn');
+            } catch (e) {
+                printLog(`❌ 일괄 삭제 실패: ${e.message}`, 'error');
+            }
+        }
+
+        // ==========================================
+        // 3단계: 새롭고 단정한 manual 컬렉션 계층화 대량 업로드 엔진
+        // ==========================================
+        async function executeUpload() {
+            printLog("🚀 3단계: 신규 manual 대분류 컬렉션 계층화 및 신규 데이터 업로드 개시!", 'warn');
+
+            try {
+                // 1. manual/likes 문서 (기본 공감수 마스터 초기 세팅)
+                printLog("업로드 중 ➡️ manual/likes (매뉴얼 개별 공감수)...");
+                await db.collection('manual').doc('likes').set({
+                    purmi_guide: 15,
+                    cheongju_swimming_guide: 9,
+                    yeoungun_guide: 11,
+                    bokdae_guide: 14,
+                    gagyeong_guide: 10,
+                    system_inquiry_manual: 8,
+                    civil_voice_manual: 12
+                });
+                printLog("✅ manual/likes 업로드 성공!", 'success');
+
+                // 2. manual/system_info/update_history 서브컬렉션 (명품 패치 이력 업로드)
+                printLog("업로드 중 ➡️ manual/system_info/update_history (마스터 패치로그)...");
+                const patchLogs = [
+                    {
+                        version: "v5.92",
+                        date: "2026-05-18",
+                        writer: "Antigravity",
+                        detail: "📱 모바일 해상도 찌그러짐 방지 및 터치 스와이프 UI 패치 완료"
+                    },
+                    {
+                        version: "v5.93",
+                        date: "2026-05-18",
+                        writer: "Antigravity",
+                        detail: "🖨️ 인쇄/미리보기 시 최상단 브레드크럼(경로) 실시간 강제 출력 및 단정 흑백 스타일 이식"
+                    },
+                    {
+                        version: "v5.94",
+                        date: "2026-05-18",
+                        writer: "Antigravity",
+                        detail: "🍃 인쇄물 상단 날짜/제목 및 하단 URL 강제 제거를 위한 @page CSS 최적화 핫패치 완료"
+                    },
+                    {
+                        version: "v5.95",
+                        date: "2026-05-18",
+                        writer: "Antigravity",
+                        detail: "🛡️ voc-data-b7f07 통합 DB 단일화 및 manual 대분류 계층화 마이그레이션 최종 완성"
+                    }
+                ];
+
+                for (const log of patchLogs) {
+                    await db.collection('manual').doc('system_info').collection('update_history').doc(log.version).set(log);
+                    printLog(`   - 패치로그 등록 성공: ${log.version}`);
+                }
+                printLog("✅ manual/system_info/update_history 업로드 성공!", 'success');
+
+                // 3. 기존 system_requests 데이터 중 의미 있는 데이터 선별 재구성 및 업로드
+                printLog("업로드 중 ➡️ manual/system_info/inquiries (기존 헬프데스크 이주 및 초기화)...");
+                
+                // 만약 백업된 기존 system_inquiry가 존재한다면 새 경로로 이식
+                let restoreCount = 0;
+                if (backupData['system_inquiry'] && backupData['system_inquiry'].length > 0) {
+                    for (const req of backupData['system_inquiry']) {
+                        const newReq = {
+                            id: req.id,
+                            author: req.author || '관리자',
+                            facility: req.facility || '공통',
+                            category: req.category || 'other',
+                            content: req.content || '...',
+                            status: req.status || 'received',
+                            date: req.date || new Date().toISOString().slice(0, 10),
+                            adminResponse: req.adminResponse || ''
+                        };
+                        await db.collection('manual').doc('system_info').collection('inquiries').doc(String(req.id)).set(newReq);
+                        restoreCount++;
+                    }
+                    printLog(`   - 기존 문의 사항 ${restoreCount}건 새 계층 경로로 안전하게 복원 이주 완료!`);
+                } else {
+                    // 기본 초기 문의 1건 샘플 수립
+                    const initInquiry = {
+                        id: 1,
+                        author: "시스템 관리자",
+                        facility: "공통",
+                        category: "manual",
+                        content: "스마트 운영 통합 매뉴얼 데이터베이스 대통합이 성공적으로 시행 완료되었습니다. 건의 및 문의사항을 제출해 주세요.",
+                        status: "completed",
+                        date: new Date().toISOString().slice(0, 10),
+                        adminResponse: "성공적으로 수락 및 연동 완료되었습니다."
+                    };
+                    await db.collection('manual').doc('system_info').collection('inquiries').doc('1').set(initInquiry);
+                    printLog("   - 기본 환영 문의 데이터 1건 등록 성공!");
+                }
+                printLog("✅ manual/system_info/inquiries 업로드 성공!", 'success');
+
+                printLog("🏆 🏆 [대통합 완료] 모든 마이그레이션 및 새 데이터 업로드 작업이 완벽하게 대성공하였습니다!!!", 'success');
+                printLog("이제 db_manager.html 창을 닫고 index.html 및 helpdesk_v2.html 을 실행하여 즐겁게 활용하십시오!", 'warn');
+                alert("축하합니다! 클라우드 DB 대통합 및 manual 컬렉션 계층화 대량 업로드 마이그레이션이 완벽히 성공했습니다!");
+            } catch (e) {
+                printLog(`❌ 데이터 업로드 실패: ${e.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html>

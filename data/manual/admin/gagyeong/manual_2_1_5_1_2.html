@@ -1,0 +1,351 @@
+<!-- 상위 테이블 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>회원권 접수 등록</title>
+		<!-- ✅ 기본 글로벌 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
+		<!-- 🛠 전체적인 페이지 기본 스타일 (폰트, 여백, 색상 등) -->
+
+		<!-- ✅ 사이드바 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
+		<!-- 🛠 사이드바 UI 스타일 (메뉴, 토글 기능, 레이아웃 관련 스타일) -->
+
+		<!-- ✅ 테이블 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/table_styles.css" />
+		<!-- 🛠 테이블 디자인 및 정렬 스타일 (테두리, 배경색, 크기 조정 등) -->
+
+		<!-- ✅ 이미지 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_styles.css" />
+		<!-- 🛠 페이지 내 이미지 관련 스타일 (크기, 정렬, 여백 등) -->
+
+		<!-- ✅ 툴팁 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
+		<!-- 🛠 툴팁 UI 스타일 (호버 시 설명 표시, 애니메이션 효과 등) -->
+
+		<!-- ✅ 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
+		<!-- 🛠 팝업창 및 이미지 확대 표시 관련 스타일 -->
+
+		<!-- ✅ 기타 UI 스타일 (추가 필요 시) -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
+		<!-- 🛠 UI 구성 요소 스타일 (버튼, 레이아웃, 폰트 스타일 등) -->
+
+		<!-- ✅ 이미지 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_popup.css" />
+		<!-- 🛠 이미지 팝업 효과 적용 (클릭 시 확대 표시, 팝업 UI) -->
+	</head>
+	<body>
+		<table style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed">
+			<tr>
+				<style>
+					/* ✅ 개별 이미지 컨테이너 */
+					.image-wrapper {
+						position: relative; /* ✅ 자식 요소(.overlay-text)가 이미지 위에 배치됨 */
+						display: ; /* ✅ 한 줄에 나란히 배치 */
+						width: 800px; /* ✅ 가로 200px 고정 */
+						height: 500px; /* ✅ 세로 200px 고정 */
+						text-align: center; /* ✅ 텍스트 중앙 정렬 */
+						overflow: hidden; /* ✅ 넘치는 내용 감춤 */
+						border-radius: 5px; /* ✅ 모서리를 둥글게 */
+						margin-top: 10px; /* 필요에 따라 값을 조정하세요 */
+					}
+					p + .image-container {
+						margin-top: -15px; /* 이미지 컨테이너 간의 간격을 늘리기 */
+					}
+					.image-wrapper img {
+						width: 100%;
+						height: 100%;
+						object-fit: contain; /* ✅ 원본 비율을 유지하면서 조정 */
+					}
+				</style>
+				<td style="width: 90%; border: 1px solid #ccc; text-align: left; padding: 10px">
+					<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+						<table style="width: 100%; border-collapse: collapse">
+							<tr>
+								<ul style="list-style-type: none; padding-left: 0; margin: 0">
+									<li>
+										<h3>
+											<strong
+												onclick="toggleDiv('Register')"
+												style="cursor: pointer; color: rgb(0, 0, 0)">
+												1️⃣ 회원접수등록(자유수영)📋
+											</strong>
+										</h3>
+									</li>
+								</ul>
+								<div
+									id="Register"
+									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+										<li>
+											❗청주사랑카드, E그린카드 등 온라인 접수로 하지 못하는 것만 이 방법을
+											사용한다.
+										</li>
+										<li>통합회원정보시스템에서 통합회원을 선택한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_1.png"
+													class="popup-image"
+													alt="통합회원 들어가기기" />
+												<div class="overlay-text">통합회원 들어가기기</div>
+											</div>
+										</div>
+										<li>회원관리 선택 후 회원접수등록을 선택한다.</li>
+										<p>💡 혹은 즐겨찾기의 회원접수등록을 선택하여도 된다.</p>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_2.png"
+													class="popup-image"
+													alt="회원관리" />
+												<div class="overlay-text">회원관리</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_3.png"
+													class="popup-image"
+													alt="회원접수등록" />
+												<div class="overlay-text">회원접수등록</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_3-1.png"
+													class="popup-image"
+													alt="즐겨찾기" />
+												<div class="overlay-text">즐겨찾기</div>
+											</div>
+										</div>
+										<li>회원성명을 검색 후 생년월일, 연락처를 확인한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_4.png"
+													class="popup-image"
+													alt="성명검색" />
+												<div class="overlay-text">성명검색</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_5.png"
+													class="popup-image"
+													alt="생년월일, 연락처 확인" />
+												<div class="overlay-text">생년월일, 연락처 확인</div>
+											</div>
+										</div>
+										<li>매표구분에서 해당하는 이용자 구분을 선택 후 확인을 선택한다.</li>
+										<p>
+											⚠️ 이용자 구분이 같아도 매표구분에 따라 가격이 달라지므로 가격도 잘 확인해야
+											한다!
+										</p>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_6.png"
+													class="popup-image"
+													alt="이용자구분 선택" />
+												<div class="overlay-text">이용자구분 선택</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_7.png"
+													class="popup-image"
+													alt="확인 선택" />
+												<div class="overlay-text">확인 선택</div>
+											</div>
+										</div>
+										<li>카드결제를 진행한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_8.png"
+													class="popup-image"
+													alt="카드결제" />
+												<div class="overlay-text">카드결제</div>
+											</div>
+										</div>
+									</ul>
+								</div>
+								<ul style="list-style-type: none; padding-left: 0; margin: 0">
+									<li>
+										<h3>
+											<strong
+												onclick="toggleDiv('Register2')"
+												style="cursor: pointer; color: rgb(0, 0, 0)">
+												2️⃣ 회원접수등록(강습)📋
+											</strong>
+										</h3>
+									</li>
+								</ul>
+								<div
+									id="Register2"
+									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+										<li>
+											❗청주사랑카드, E그린카드 등 온라인 접수로 하지 못하는 것을 이 방법을
+											사용한다.
+										</li>
+										<li>통합회원정보시스템에서 통합회원을 선택한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_9.png"
+													class="popup-image"
+													alt="통합회원 들어가기기" />
+												<div class="overlay-text">통합회원 들어가기기</div>
+											</div>
+										</div>
+										<li>시설관리 선택 후 강습정보를 선택한다.</li>
+										<p>
+											💡 강습은 그 다음달을 신청을 받기 때문에 기준연월을 다음달로 바꾸어야 한다.
+										</p>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_10.png"
+													class="popup-image"
+													alt="시설관리 선택" />
+												<div class="overlay-text">시설관리 선택</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_11.png"
+													class="popup-image"
+													alt="강습정보 선택" />
+												<div class="overlay-text">강습정보 선택</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_12.png"
+													class="popup-image"
+													alt="기준연월" />
+												<div class="overlay-text">기준연월</div>
+											</div>
+										</div>
+										<li>고객의 신청한 강습의 정원을 온라인 1명을 줄이고 오프라인 1명을 늘린다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_13.png"
+													class="popup-image"
+													alt="수정 버튼" />
+												<div class="overlay-text">수정 버튼</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_14.png"
+													class="popup-image"
+													alt="강습정원 수정" />
+												<div class="overlay-text">강습정원 수정</div>
+											</div>
+										</div>
+										<li>고객이 결제한 강습을 취소를 진행한다.</li>
+										<p>💡 취소 방법은 1-1에 있는 취소 방법을 참고</p>
+										<p>
+											ℹ️ 고객의 결제 취소보다 정원을 먼저 수정하는 이유는 정원을 수정하는 사이
+											온라인으로 신청을 할 수 있기 때문
+										</p>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_15.png"
+													class="popup-image"
+													alt="결제 취소" />
+												<div class="overlay-text">결제 취소</div>
+											</div>
+										</div>
+										<li>회원관리 선택 후 회원접수등록을 선택한다.</li>
+										<p>💡 혹은 즐겨찾기의 회원접수등록을 선택하여도 된다.</p>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_16.png"
+													class="popup-image"
+													alt="회원관리" />
+												<div class="overlay-text">회원관리</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_17.png"
+													class="popup-image"
+													alt="회원접수등록" />
+												<div class="overlay-text">회원접수등록</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_18.png"
+													class="popup-image"
+													alt="즐겨찾기" />
+												<div class="overlay-text">즐겨찾기</div>
+											</div>
+										</div>
+										<li>회원성명을 검색 후 생년월일, 연락처를 확인한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_19.png"
+													class="popup-image"
+													alt="성명검색" />
+												<div class="overlay-text">성명검색</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_20.png"
+													class="popup-image"
+													alt="생년월일, 연락처 확인" />
+												<div class="overlay-text">생년월일, 연락처 확인</div>
+											</div>
+										</div>
+										<li>매표구분에서 해당하는 이용자 구분을 선택 후 확인을 선택한다.</li>
+										<p>
+											⚠️ 이용자 구분이 같아도 매표구분에 따라 가격이 달라지므로 가격도 잘 확인해야
+											한다!
+										</p>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_21.png"
+													class="popup-image"
+													alt="이용자구분 선택" />
+												<div class="overlay-text">이용자구분 선택</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_22.png"
+													class="popup-image"
+													alt="확인 선택" />
+												<div class="overlay-text">확인 선택</div>
+											</div>
+										</div>
+										<li>카드결제를 진행한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_1_2_23.png"
+													class="popup-image"
+													alt="카드결제" />
+												<div class="overlay-text">카드결제</div>
+											</div>
+										</div>
+									</ul>
+								</div>
+							</tr>
+						</table>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<!-- 팝업 이미지 -->
+		<!-- ✅ 기본적으로 팝업을 숨김 -->
+		<div id="popup" onclick="closePopup()" style="display: none; z-index: 9999">
+			<span>&times;</span>
+			<img id="popup-img" src="" alt="사진" />
+		</div>
+	</body>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
+</html>

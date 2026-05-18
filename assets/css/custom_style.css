@@ -1,0 +1,269 @@
+/**
+ * 파일명: custom_style.css
+ * 경로: assets/css/custom_style.css
+ * 기능 설명: 스마트 운영 통합 매뉴얼 메인 테마 및 게시판, 자동완성, 프린트 최적화 CSS 스타일 시트
+ * 작성 의도: index.html의 900줄에 달하던 스타일 코드를 완전 격리 분할하여 크레딧 소모 절감 및 브라우저 캐싱 효율 극대화
+ */
+
+mark.search-highlight {
+    background-color: #fde047; /* Yellow 300 */
+    color: #000;
+    padding: 0 2px;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(253, 224, 71, 0.5);
+    transition: all 0.3s ease;
+}
+.dark mark.search-highlight {
+    background-color: #eab308; /* Yellow 500 */
+    color: #000;
+}
+
+/* 🚀 [게시판] 시스템 문의 게시판 전용 스타일 */
+.inquiry-card { 
+    background: white; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
+    border: 1px solid #f1f5f9; margin-bottom: 40px; transition: border-color 0.3s ease; 
+    display: flex; flex-direction: column; overflow: hidden; position: relative;
+    border-left: 6px solid #f1f5f9;
+}
+.dark .inquiry-card { background: #1f2937; border-color: #374151; border-left-color: #374151; }
+.inquiry-card:hover { border-left-color: #10b981; }
+.inquiry-header { padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; background: #fafbfc; }
+.dark .inquiry-header { border-bottom-color: #111827; background: rgba(17, 24, 39, 0.5); }
+.inquiry-body { padding: 28px; flex: 1; }
+.badge-processing { padding: 3px 10px; background: #fffbeb; color: #b45309; font-size: 10px; font-weight: 800; border-radius: 6px; border: 1px solid #fef3c7; }
+.badge-received { padding: 3px 10px; background: #eff6ff; color: #1d4ed8; font-size: 10px; font-weight: 800; border-radius: 6px; border: 1px solid #dbeafe; }
+.badge-complete { padding: 3px 10px; background: #ecfdf5; color: #047857; font-size: 10px; font-weight: 800; border-radius: 6px; border: 1px solid #d1fae5; }
+.inquiry-meta { display: flex; align-items: center; gap: 16px; font-size: 12px; color: #94a3b8; margin-bottom: 20px; }
+.inquiry-content { 
+    font-size: 15px; color: #334155; line-height: 1.6; background: transparent; 
+    padding: 0; min-height: auto; font-weight: 500;
+}
+.dark .inquiry-content { color: #cbd5e1; }
+.admin-reply-box { 
+    margin-top: 24px; padding: 20px 24px; background: #f0fdf4; 
+    border-radius: 12px; border: none;
+}
+.dark .admin-reply-box { background: rgba(16, 185, 129, 0.05); }
+.admin-reply-header { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 900; color: #059669; margin-bottom: 8px; }
+.admin-reply-content { font-size: 14px; color: #064e3b; line-height: 1.6; font-weight: 600; }
+.dark .admin-reply-content { color: #a7f3d0; }
+.dark .info-notice-box { background: #1e293b; color: #94a3b8; }
+
+/* 🚀 [디자인 혁신 - v5.46] 시설 안내 매뉴얼용 프리미엄 3도트 Dinkus 구분선 */
+#markdown-body hr {
+    border: none !important;
+    text-align: center !important;
+    height: auto !important;
+    margin: 4rem 0 !important;
+    overflow: visible !important;
+    background: transparent !important;
+}
+#markdown-body hr::after {
+    content: "•   •   •" !important;
+    display: inline-block !important;
+    color: #64748b !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    letter-spacing: 0.6em !important;
+    padding-left: 0.6em !important;
+    opacity: 0.7 !important;
+}
+.dark #markdown-body hr::after {
+    color: #94a3b8 !important;
+}
+
+/* 🚀 [디자인 혁신 - v5.46] 시민의 소리(VOC)용 에디토리얼 Pullquote 스타일 */
+#markdown-body blockquote {
+    position: relative !important;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(20, 184, 166, 0.02) 100%) !important;
+    border: 1px solid rgba(16, 185, 129, 0.15) !important;
+    border-left: 6px solid #10b981 !important;
+    border-radius: 20px !important;
+    padding: 28px 36px !important;
+    margin: 32px 0 !important;
+    color: #334155 !important;
+    font-size: 16px !important;
+    font-style: italic !important;
+    font-weight: 600 !important;
+    line-height: 1.7 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02) !important;
+}
+.dark #markdown-body blockquote {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.04) 0%, rgba(20, 184, 166, 0.01) 100%) !important;
+    border-color: rgba(16, 185, 129, 0.1) !important;
+    color: #cbd5e1 !important;
+}
+#markdown-body blockquote::before {
+    content: "“" !important;
+    position: absolute !important;
+    top: -6px !important;
+    left: 20px !important;
+    font-family: serif !important;
+    font-size: 64px !important;
+    color: rgba(16, 185, 129, 0.15) !important;
+    line-height: 1 !important;
+    user-select: none !important;
+}
+#markdown-body blockquote::after {
+    content: "”" !important;
+    position: absolute !important;
+    bottom: -32px !important;
+    right: 20px !important;
+    font-family: serif !important;
+    font-size: 64px !important;
+    color: rgba(16, 185, 129, 0.15) !important;
+    line-height: 1 !important;
+    user-select: none !important;
+}
+
+/* 🚀 [모달] 문의 등록 전용 스타일 */
+.modal-overlay { @apply fixed inset-0 bg-black/60 z-[100] backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300; }
+.modal-content { @apply bg-white dark:bg-gray-800 rounded-3xl shadow-2xl w-full max-w-xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0; }
+.modal-content.active { @apply scale-100 opacity-100; }
+.form-input { @apply w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-sm; }
+.form-label { @apply block text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 ml-1; }
+
+/* 🚀 [검색] 자동완성(Autocomplete) 전용 스타일 */
+.autocomplete-container { position: absolute !important; z-index: 10000 !important; width: 100% !important; margin-top: 4px !important; background-color: white !important; border: 1px solid #e2e8f0 !important; border-radius: 16px !important; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important; max-height: 280px !important; overflow-y: auto !important; }
+.autocomplete-container.hidden { display: none !important; }
+/* 슬림 스크롤바 */
+.autocomplete-container::-webkit-scrollbar { width: 4px; }
+.autocomplete-container::-webkit-scrollbar-track { background: transparent; }
+.autocomplete-container::-webkit-scrollbar-thumb { background: #d1fae5; border-radius: 10px; }
+
+.autocomplete-item { width: 100% !important; text-align: left !important; padding: 14px 20px !important; display: flex !important; align-items: center !important; justify-content: space-between !important; border-bottom: 1px solid #f8fafc !important; cursor: pointer !important; transition: all 0.2s ease !important; position: relative !important; background: white !important; }
+.autocomplete-item:last-child { border-bottom: none !important; }
+.autocomplete-item:hover { background-color: #ecfdf5 !important; padding-left: 24px !important; }
+.autocomplete-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background-color: #10b981; transition: all 0.2s ease; }
+.autocomplete-item:hover::before { width: 6px; }
+.autocomplete-keyword { font-size: 14px !important; font-weight: 700 !important; color: #334155 !important; transition: color 0.2s ease !important; }
+.autocomplete-item:hover .autocomplete-keyword { color: #059669 !important; }
+.autocomplete-category { flex-shrink: 0 !important; margin-left: 16px !important; font-size: 9px !important; padding: 2px 10px !important; background-color: #f0fdf4 !important; color: #059669 !important; border: 1px solid #d1fae5 !important; border-radius: 9999px !important; font-weight: 900 !important; white-space: nowrap !important; transition: all 0.2s ease !important; }
+.autocomplete-item:hover .autocomplete-category { background-color: #10b981 !important; color: white !important; border-color: #10b981 !important; transform: scale(1.05) !important; }
+
+/* 🚀 [검색] 상세 결과창 (자동완성 유무에 따라 margin-top이 동적으로 변화) */
+#searchResults { 
+    position: absolute !important; z-index: 50 !important; width: 100% !important; 
+    margin-top: 8px !important; /* 기본 위치: 검색창 바로 아래 밀착 */
+    transition: margin-top 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important; /* 초프리미엄 부드러운 슬라이딩 전환 */
+    background-color: white !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+    overflow: hidden !important;
+    max-height: 384px !important;
+    overflow-y: auto !important;
+}
+.dark #searchResults {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+/* 🚀 [토스트 알림] 링크 복사 완료 안내용 프리미엄 토스트 */
+#toast-alert {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 99999;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(-20px) scale(0.95);
+    opacity: 0;
+    pointer-events: none;
+}
+.dark #toast-alert {
+    background: rgba(31, 41, 55, 0.85);
+    border-color: rgba(6, 182, 212, 0.2);
+}
+#toast-alert.show {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 🚀 [프린트 미디어 쿼리] 인쇄 최적화 Clean Print Engine */
+@media print {
+    /* 🚀 [머리글/바닥글 제거] 브라우저 기본 날짜, 웹페이지 제목, URL 주소 출력을 원천 차단하고 사방 15mm 정갈한 마진 확보 */
+    @page {
+        size: auto;
+        margin: 15mm;
+    }
+
+    /* 불필요한 인터페이스 전체 은닉 (브레드크럼의 홈, 1단계 이동용 버튼들은 지면 인쇄용으로 완전 보존) */
+    aside, header, #stickyNav, #globalSubHeader #globalPrintBtn, #globalSubHeader #globalCloseBtn, #like-container-box, .flex.flex-wrap.gap-2.mb-6 {
+        display: none !important;
+    }
+    
+    /* 글로벌 서브헤더(브레드크럼 영역) 잉크 절약 및 화이트 톤 인쇄용 보정 */
+    #globalSubHeader {
+        background: white !important;
+        border-bottom: 1px solid #e5e7eb !important;
+        padding: 8px 0 !important;
+        margin-bottom: 16px !important;
+    }
+    
+    /* 브레드크럼 글자 인쇄 시 기본 버튼 외형 제거 및 가독성 흑색 극대화 */
+    #breadcrumbNav, #breadcrumbNav *, #breadcrumbPath, #breadcrumbPath * {
+        color: black !important;
+        font-weight: bold !important;
+        background: transparent !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        text-decoration: none !important;
+    }
+    
+    /* 홈 아이콘도 차분하게 흑색 인쇄 보장 */
+    #breadcrumbNav i {
+        color: black !important;
+    }
+    
+    /* 전체 레이아웃 리셋 */
+    body, html {
+        background: white !important;
+        color: black !important;
+        overflow: visible !important;
+        height: auto !important;
+    }
+    
+    main, #mainScrollArea {
+        overflow: visible !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    #contentView {
+        display: block !important;
+    }
+    
+    #content-area {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        background: white !important;
+        color: black !important;
+    }
+    
+    /* 마크다운 스타일 인쇄 강제 역전 (다크모드에서도 백색 용지 인쇄 보장) */
+    .prose, .prose *, #markdown-body, #markdown-body * {
+        color: black !important;
+        background: transparent !important;
+    }
+    
+    /* 표 인쇄 최적화 */
+    table {
+        page-break-inside: avoid !important;
+        border-collapse: collapse !important;
+        width: 100% !important;
+    }
+    tr, td, th {
+        page-break-inside: avoid !important;
+        border: 1px solid #ddd !important;
+        color: black !important;
+        padding: 8px !important;
+    }
+}

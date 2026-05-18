@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>전기설비 구성</title>
+		<!-- ✅ 기본 글로벌 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
+		<!-- 🛠 전체적인 페이지 기본 스타일 (폰트, 여백, 색상 등) -->
+
+		<!-- ✅ 사이드바 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
+		<!-- 🛠 사이드바 UI 스타일 (메뉴, 토글 기능, 레이아웃 관련 스타일) -->
+
+		<!-- ✅ 테이블 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/table_styles.css" />
+		<!-- 🛠 테이블 디자인 및 정렬 스타일 (테두리, 배경색, 크기 조정 등) -->
+
+		<!-- ✅ 이미지 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_styles.css" />
+		<!-- 🛠 페이지 내 이미지 관련 스타일 (크기, 정렬, 여백 등) -->
+
+		<!-- ✅ 툴팁 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
+		<!-- 🛠 툴팁 UI 스타일 (호버 시 설명 표시, 애니메이션 효과 등) -->
+
+		<!-- ✅ 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
+		<!-- 🛠 팝업창 및 이미지 확대 표시 관련 스타일 -->
+
+		<!-- ✅ 기타 UI 스타일 (추가 필요 시) -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
+		<!-- 🛠 UI 구성 요소 스타일 (버튼, 레이아웃, 폰트 스타일 등) -->
+
+		<!-- ✅ 이미지 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_popup.css" />
+		<!-- 🛠 이미지 팝업 효과 적용 (클릭 시 확대 표시, 팝업 UI) -->
+	</head>
+	<body>
+		<h2>1. 수배전반 도면</h2>
+		<div class="image-container" style="margin-top: 10px; margin-bottom: 10px; margin-left: 28px">
+			<div class="image-wrapper">
+				<img
+					src="../../../assets/images/manual/tech/gagyeong/image_2_2_5_2_1_1.png"
+					class="popup-image"
+					alt=""
+					onclick="openPopup(this.src)" />
+				<div class="overlay-text">수배전반 도면</div>
+			</div>
+		</div>
+		<h2 style="margin: 20px 0">2. 전기설비 구성</h2>
+		<h4 style="margin: 10px 0 4px 10px">가. AISS(자동고장구간개폐기) 3P 25.8kV 200A</h4>
+
+		<!-- 📌 AISS 패널/조작부 이미지 블록 (들여쓰기: 28px) -->
+		<div class="image-container" style="margin: 10px 0 10px 28px">
+			<div class="image-wrapper">
+				<img
+					src="../../../assets/images/manual/tech/gagyeong/image_2_2_5_2_1_2.png"
+					class="popup-image"
+					alt="AISS 패널 전면"
+					onclick="openPopup(this.src)" />
+				<div class="overlay-text">AISS 패널 전면</div>
+			</div>
+			<div class="image-wrapper">
+				<img
+					src="../../../assets/images/manual/tech/gagyeong/image_2_2_5_2_1_3.png"
+					class="popup-image"
+					alt="AISS 조작부 기능 안내"
+					onclick="openPopup(this.src)" />
+				<div class="overlay-text">AISS 조작부 기능 안내</div>
+			</div>
+		</div>
+
+		<!-- ▼ 가. AISS 하위 들여쓰기 블록 (들여쓰기: 28px) -->
+		<div style="margin-left: 28px">
+			<!-- 핵심요약 -->
+			<h4 style="margin: 10px 0 6px">핵심요약</h4>
+			<div
+				role="note"
+				aria-label="핵심 요약"
+				style="
+					background: #f6fbff;
+					border-left: 6px solid #2d8cf0;
+					padding: 10px 16px 10px 22px;
+					border-radius: 6px;
+					margin: 10px 0 10px 8px;
+				">
+				<ul style="padding-left: 14px; margin: 8px 0">
+					<li>
+						<strong>정의</strong>
+						: Air-Insulated Auto Sectionalizing Switch — 고장 시
+						<b>해당 구간만 자동 분리</b>
+						하는 장치(주로 22.9&nbsp;kV 인입부).
+					</li>
+					<li>
+						<strong>위치</strong>
+						: 한전
+						<b>책임 분기점</b>
+						인근 수용가측
+						<b>AISS 패널</b>
+						.
+					</li>
+					<li>
+						<strong>운용</strong>
+						: 패널에서
+						<b>차단기 투입·개방</b>
+						및
+						<b>송전 상태 확인</b>
+						가능.
+					</li>
+				</ul>
+			</div>
+
+			<!-- 1) 개요 -->
+			<h4 style="margin: 14px 0 6px 8px">1) 개요</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>AISS</b>
+					는 고장 발생 시 상위 장치의 차단·재폐동을 감지해
+					<b>무전압 상태에서 개방</b>
+					하여 고장 구간만 분리.
+				</li>
+				<li>
+					패널 계기를 통해
+					<b>송전/무전압</b>
+					상태를 즉시 확인.
+				</li>
+			</ul>
+
+			<!-- 2) 역할·효과 -->
+			<h4 style="margin: 14px 0 6px 8px">2) 역할·효과</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>역할</b>
+					: 상위
+					<b>리클로저/차단기</b>
+					와 보호협조 → 상위 차단 후 AISS 개방 →
+					<b>사고 구간 격리</b>
+					, 건전 구간
+					<b>신속 재송전</b>
+					.
+				</li>
+				<li>
+					<b>효과</b>
+					: 정전 범위 최소화, 복구 시간 단축, 계통 안정성 향상.
+					<span title="운영상 기대효과">🚀</span>
+				</li>
+			</ul>
+
+			<!-- 3) 동작 원리(핵심) -->
+			<h4 style="margin: 14px 0 6px 8px">3) 동작 원리(핵심)</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>AISS는 차단기가 아님</b>
+					— 고장전류 직접 차단 X,
+					<b>무부하 개방</b>
+					으로 구간 분리.
+				</li>
+				<li>
+					상위 장치의
+					<b>차단/재폐동</b>
+					을 감지하여 동작.
+				</li>
+			</ul>
+
+			<!-- 4) 설치·적용 포인트 -->
+			<h4 style="margin: 14px 0 6px 8px">4) 설치·적용 포인트</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					수용가
+					<b>변전실 인입부</b>
+					적용. 부하 특성(일반/특수)과 보호철학에 맞게 선정.
+				</li>
+				<li>
+					문서 내 이미지는
+					<b>계통도 먼저 → 본문 → 단계별 사진</b>
+					순서로 배치.
+				</li>
+			</ul>
+
+			<!-- 5) 운전(기본) -->
+			<h4 style="margin: 14px 0 6px 8px">5) 운전(기본)</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>투입</b>
+					: 계통 이상 없음 확인 → 인터록·접지 해제 → 원격/현장
+					<b>투입</b>
+					.
+				</li>
+				<li>
+					<b>개방</b>
+					: 계획개방(점검/작업) 또는 고장 시 자동개방
+					<b>상태 확인</b>
+					.
+				</li>
+				<li>
+					<b>확인</b>
+					: 패널 전압·전류·상태등으로
+					<b>송전/무전압</b>
+					점검.
+				</li>
+			</ul>
+
+			<!-- 6) 안전 유의사항 -->
+			<h4 style="margin: 14px 0 6px 8px">6) 안전 유의사항</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					개폐 전
+					<b>무전압·무부하</b>
+					확인 및
+					<b>접지</b>
+					확인 필수.
+				</li>
+				<li>
+					리클로저
+					<b>재폐 횟수/설정</b>
+					임의 변경 금지, 변경 시 기록 유지.
+				</li>
+				<li>
+					<b>LOTO</b>
+					(잠금/표지) 준수, 감전·아크플래시
+					<b>PPE</b>
+					착용.
+				</li>
+			</ul>
+		</div>
+		<!-- 나. 고압용 전자식 전력량계(DM, VAR) -->
+		<h4 style="margin: 10px 0 4px 10px">나. 고압용 전자식 전력량계(DM, VAR)</h4>
+		<div class="image-container" style="margin: 10px 0 10px 28px">
+			<div class="image-wrapper">
+				<img
+					src="../../../assets/images/manual/tech/gagyeong/image_2_2_5_2_1_4.png"
+					class="popup-image"
+					alt="AISS 컨트롤러(VITZRO VIASS-M10) 전면"
+					onclick="openPopup(this.src)" />
+				<div class="overlay-text">AISS 컨트롤러 전면</div>
+			</div>
+			<div class="image-wrapper">
+				<img
+					src="../../../assets/images/manual/tech/gagyeong/image_2_2_5_2_1_5.png"
+					class="popup-image"
+					alt="고압용 전자식 전력량계 화면/항목 목록(예시)"
+					onclick="openPopup(this.src)" />
+				<div class="overlay-text">전자식 전력량계 항목(예시)</div>
+			</div>
+		</div>
+		<!-- ▼ 들여쓰기 블록 (AISS와 동일 규격) -->
+		<div style="margin-left: 28px">
+			<!-- 핵심요약 -->
+			<h4 style="margin: 10px 0 6px">핵심요약</h4>
+			<div
+				role="note"
+				aria-label="핵심 요약"
+				style="
+					background: #f6fbff;
+					border-left: 6px solid #2d8cf0;
+					padding: 10px 16px 10px 22px;
+					border-radius: 6px;
+					margin: 10px 0 10px 8px;
+				">
+				<ul style="padding-left: 14px; margin: 8px 0">
+					<li>
+						<strong>정의</strong>
+						: CT·PT 2차 신호를 디지털로 샘플링해
+						<b>kWh</b>
+						(유효전력량),
+						<b>kW(DM)</b>
+						(최대수요전력),
+						<b>kvarh(VAR)</b>
+						(무효전력량) 등을 계측·집계하는 고압용 전자식 계량기.
+					</li>
+					<li>
+						<strong>위치</strong>
+						: 수전 인입부 계량함 또는 수배전반 계량 패널(CT·PT 2차 근접).
+					</li>
+					<li>
+						<strong>운용</strong>
+						: 검침·요금정산, 수요전력 관리, 역률(PF) 개선 상태 확인, 원격 통신(예: RS-485/Modbus) 지원.
+					</li>
+				</ul>
+			</div>
+
+			<!-- 1) 개요 -->
+			<h4 style="margin: 14px 0 6px 8px">1) 개요</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					계량 항목: 전력량(
+					<b>kWh</b>
+					), 무효전력량(
+					<b>kvarh</b>
+					), 최대수요전력(
+					<b>kW DM</b>
+					), 전압/전류, 주파수, 역률(PF) 등.
+				</li>
+				<li>
+					표시·기록: LCD/LED 표시, 수요전력
+					<b>수집 간격(예: 15분)</b>
+					, 일/월 누계, 이벤트·경보 로그.
+				</li>
+			</ul>
+
+			<!-- 2) 기능·효과 -->
+			<h4 style="margin: 14px 0 6px 8px">2) 기능·효과</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>요금 정산 근거</b>
+					제공(kWh/DM/역률). 시간대별 사용량 분석 및 피크 억제에 활용.
+				</li>
+				<li>
+					<b>수요전력(DM) 관리</b>
+					: 피크 예경보로 부하 제어·운전계획 최적화 → 계약전력 초과 방지.
+				</li>
+				<li>
+					<b>역률 개선</b>
+					지표 제공(VAR, PF) → 콘덴서 운전 최적화로 벌과금 예방. 🚀
+				</li>
+			</ul>
+
+			<!-- 3) 동작 원리(핵심) -->
+			<h4 style="margin: 14px 0 6px 8px">3) 동작 원리(핵심)</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					CT·PT 2차 전압/전류를
+					<b>디지털 샘플링</b>
+					→ 순간 전력 계산 → 적산하여 kWh/kvarh 산출.
+				</li>
+				<li>
+					<b>DM(최대수요전력)</b>
+					: 설정 주기(예: 15분) 평균 kW 중 월 최대값 기록(Reset 주기 설정 가능).
+				</li>
+			</ul>
+
+			<!-- 4) 설치·배선 포인트 -->
+			<h4 style="margin: 14px 0 6px 8px">4) 설치·배선 포인트</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>CT/PM 변비 설정</b>
+					(예: CT 400/5A, PT 22.9kV/110V)을 계량기 파라미터에 정확 반영.
+				</li>
+				<li>
+					<b>극성·상순서</b>
+					준수(S1-K, S2-L 등) 및 2차 접지/퓨즈 확인, PT 2차 결선 오배선 방지.
+				</li>
+				<li>통신선(RS-485)은 전력선과 분리 포설, 종단저항·주소·통신속도 통일.</li>
+			</ul>
+
+			<!-- 5) 운전(기본) -->
+			<h4 style="margin: 14px 0 6px 8px">5) 운전(기본)</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>초기 설정</b>
+					: CT/PT 비, 수요간격(예: 15분), DM Reset 주기, 시간/캘린더 동기화.
+				</li>
+				<li>
+					<b>점검</b>
+					: 계측치(kW, PF)와 설비 운전 상태(부하, 콘덴서) 비교로 이상 유무 확인.
+				</li>
+				<li>
+					<b>데이터 연계</b>
+					: BEMS/원격검침과 연동(주소/프로토콜 일치) 및 월말 데이터 백업.
+				</li>
+			</ul>
+
+			<!-- 6) 안전 유의사항 -->
+			<h4 style="margin: 14px 0 6px 8px">6) 안전 유의사항</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>CT 2차 개방 금지</b>
+					(점검·탈거 전
+					<b>단락</b>
+					필수), PT 2차
+					<b>퓨즈</b>
+					·절연 확인.
+				</li>
+				<li>
+					결선·설정 변경 시
+					<b>LOTO</b>
+					준수, 감전·아크플래시
+					<b>PPE</b>
+					착용.
+				</li>
+				<li>검정·검침 규정 준수(봉인 훼손 금지), 파라미터 변경 이력 관리.</li>
+			</ul>
+		</div>
+		<!-- 다. TR, COS (몰드 변압기) -->
+		<h4 style="margin: 10px 0 4px 10px">다. TR, COS (몰드 변압기)</h4>
+
+		<!-- 사진: 6번 (들여쓰기 28px) -->
+		<div class="image-container" style="margin: 10px 0 10px 28px">
+			<div class="image-wrapper">
+				<img
+					src="../../../assets/images/manual/tech/gagyeong/image_2_2_5_2_1_6.png"
+					class="popup-image"
+					alt="몰드 변압기 및 COS 전면(예시)"
+					onclick="openPopup(this.src)" />
+				<div class="overlay-text">몰드 변압기/COS 전면</div>
+			</div>
+		</div>
+
+		<!-- ▼ 하위 들여쓰기 블록 (28px) -->
+		<div style="margin-left: 28px">
+			<!-- 핵심요약 -->
+			<h4 style="margin: 10px 0 6px">핵심요약</h4>
+			<div
+				role="note"
+				aria-label="핵심 요약"
+				style="
+					background: #f6fbff;
+					border-left: 6px solid #2d8cf0;
+					padding: 10px 16px 10px 22px;
+					border-radius: 6px;
+					margin: 10px 0 10px 8px;
+				">
+				<ul style="padding-left: 14px; margin: 8px 0">
+					<li>
+						<strong>정의</strong>
+						:
+						<b>TR</b>
+						(몰드 변압기, Cast Resin)은 특고압을 저압으로 변환하는 변압기,
+						<b>COS</b>
+						(Cut-Out Switch)는 변압기 1차측
+						<b>퓨즈 일체형 개폐기</b>
+						(보호/개방).
+					</li>
+					<li>
+						<strong>위치</strong>
+						: 한전 인입 → AISS/차단기 →
+						<b>COS(1차측)</b>
+						→
+						<b>변압기(TR)</b>
+						→ 저압배전반(2차측).
+					</li>
+					<li>
+						<strong>운용</strong>
+						: 변압기 온도/팬 상태 확인, COS 퓨즈 상태 점검, 무부하 확인 후 개폐 절차 준수.
+					</li>
+				</ul>
+			</div>
+
+			<!-- 1) 개요 -->
+			<h4 style="margin: 14px 0 6px 8px">1) 개요</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					몰드 변압기: 난연 수지로 권선을
+					<b>주입 성형</b>
+					해 절연·방습·내환경성을 높인 배전용 변압기.
+				</li>
+				<li>
+					<b>COS</b>
+					: 변압기 1차측
+					<b>과전류·단락 보호용 퓨즈</b>
+					와
+					<b>개폐 기능</b>
+					을 겸한 장치.
+				</li>
+			</ul>
+
+			<!-- 2) 기능·효과 -->
+			<h4 style="margin: 14px 0 6px 8px">2) 기능·효과</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>안전·신뢰성</b>
+					: COS 퓨즈가 변압기 1차측 보호, 몰드 구조로
+					<b>난연·저유지보수</b>
+					.
+				</li>
+				<li>
+					<b>운영 효율</b>
+					: 변압기 온도 감시로
+					<b>과부하/냉각</b>
+					관리, 고장 시
+					<b>구간 분리</b>
+					용이. 🚀
+				</li>
+			</ul>
+
+			<!-- 3) 설치·운전 포인트 -->
+			<h4 style="margin: 14px 0 6px 8px">3) 설치·운전 포인트</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>결선·정격</b>
+					: 1차/2차 결선(Y/Δ), 전압비·용량, %임피던스 확인.
+					<b>COS 퓨즈 정격</b>
+					은 변압기 정격전류·투입전류 고려.
+				</li>
+				<li>
+					<b>접지</b>
+					: 변압기 프레임/심선 접지, 2차측 중성점 접지 방식 확인.
+				</li>
+				<li>
+					<b>온도·냉각</b>
+					: 온도센서(예: PT100)·팬 동작, 알람/트립 설정값 문서화.
+				</li>
+				<li>
+					<b>개폐 절차</b>
+					: 저압차단기
+					<b>개방</b>
+					→ 무부하 확인 → 1차측
+					<b>COS 개방</b>
+					(투입 시 역순).
+				</li>
+			</ul>
+
+			<!-- 4) 안전 유의사항 -->
+			<h4 style="margin: 14px 0 6px 8px">4) 안전 유의사항</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>무전압·무부하</b>
+					확인,
+					<b>LOTO</b>
+					준수, 감전·아크플래시
+					<b>PPE</b>
+					착용.
+				</li>
+				<li>
+					여자 돌입전류·잔류자속 주의, COS 퓨즈 교체 시
+					<b>정격·극성</b>
+					확인.
+				</li>
+				<li>권선·단자부 이물/균열·과열 흔적 점검, 진동/소음 이상 시 운전 제한.</li>
+			</ul>
+		</div>
+		<!-- 라. GIMAC, ACB, 콘덴서 -->
+		<h4 style="margin: 10px 0 4px 10px">라. GIMAC, ACB, 콘덴서</h4>
+
+		<!-- 사진: 7번 (들여쓰기 28px) -->
+		<div class="image-container" style="margin: 10px 0 10px 28px">
+			<div class="image-wrapper">
+				<img
+					src="../../../assets/images/manual/tech/gagyeong/image_2_2_5_2_1_7.png"
+					class="popup-image"
+					alt="GIMAC(디지털 집중표시/제어), ACB, 콘덴서 뱅크 패널"
+					onclick="openPopup(this.src)" />
+				<div class="overlay-text">GIMAC / ACB / 콘덴서</div>
+			</div>
+		</div>
+
+		<!-- ▼ 하위 들여쓰기 블록 (28px) -->
+		<div style="margin-left: 28px">
+			<!-- 핵심요약 -->
+			<h4 style="margin: 10px 0 6px">핵심요약</h4>
+			<div
+				role="note"
+				aria-label="핵심 요약"
+				style="
+					background: #f6fbff;
+					border-left: 6px solid #2d8cf0;
+					padding: 10px 16px 10px 22px;
+					border-radius: 6px;
+					margin: 10px 0 10px 8px;
+				">
+				<ul style="padding-left: 14px; margin: 8px 0">
+					<li>
+						<strong>정의</strong>
+						:
+						<b>GIMAC</b>
+						은 각상 전압·전류·위상·역률 표시 및
+						<b>콘덴서 자동투입 설정</b>
+						이 가능한 통합 계측/제어 장치,
+						<b>ACB</b>
+						는 변압기
+						<b>후단 주차단기</b>
+						,
+						<b>콘덴서</b>
+						는
+						<b>역률 보상</b>
+						설비.
+					</li>
+					<li>
+						<strong>위치</strong>
+						: 변압기 2차측 ACB → 배전반 → GIMAC(표시/제어) 및
+						<b>콘덴서 뱅크</b>
+						.
+					</li>
+					<li>
+						<strong>운용</strong>
+						: GIMAC에서 역률 목표·단 투입 설정, ACB로 계통 개폐, 필요 시 콘덴서
+						<b>수동 투입/차단</b>
+						.
+					</li>
+				</ul>
+			</div>
+
+			<!-- 1) 개요 -->
+			<h4 style="margin: 14px 0 6px 8px">1) 개요</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>GIMAC</b>
+					: 각상 V/I, PF, 위상 등을 실시간 표시, 역률 목표값 설정에 따라 콘덴서 자동 제어.
+				</li>
+				<li>
+					<b>ACB</b>
+					: 변압기 후단 주차단기로, 한전 정전·계통 이상 시
+					<b>우선 Trip</b>
+					. 작업 시 레버로
+					<b>투입/개방</b>
+					가능.
+				</li>
+				<li>
+					<b>콘덴서</b>
+					: 설정 역률 미만 시 자동 투입되며, 필요 시 패널에서
+					<b>수동 조작</b>
+					가능.
+				</li>
+			</ul>
+
+			<!-- 2) 기능·효과 -->
+			<h4 style="margin: 14px 0 6px 8px">2) 기능·효과</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>역률개선</b>
+					으로 무효전력(kvar) 저감, 과금/손실 최소화.
+				</li>
+				<li>
+					<b>계통보호/운전</b>
+					: ACB로 안전한 분리·투입, GIMAC으로 상태 모니터링·자동 제어. 🚀
+				</li>
+			</ul>
+
+			<!-- 3) 설치·운전 포인트 -->
+			<h4 style="margin: 14px 0 6px 8px">3) 설치·운전 포인트</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>GIMAC 설정</b>
+					: 목표 역률, 단계별 투입용량/지연시간, 우선순위 설정.
+				</li>
+				<li>
+					<b>ACB</b>
+					: 정격·보호정정(LSIG) 확인, 시험(Trip/Close) 및 메카니즘 점검.
+				</li>
+				<li>
+					<b>콘덴서</b>
+					: 단계 용량·접촉기 정격, 방전저항·퓨즈 확인. 고조파 환경 시
+					<b>필터형</b>
+					검토.
+				</li>
+			</ul>
+
+			<!-- 4) 안전 유의사항 -->
+			<h4 style="margin: 14px 0 6px 8px">4) 안전 유의사항</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>무전압·무부하</b>
+					상태 확인 후 ACB 개폐,
+					<b>LOTO</b>
+					준수.
+				</li>
+				<li>
+					콘덴서
+					<b>잔류전하</b>
+					완전 방전 후 작업(방전저항 확인).
+				</li>
+				<li>GIMAC/콘덴서 설정 변경 시 변경이력 문서화, 과·부족보상 주의.</li>
+			</ul>
+		</div>
+		<!-- 마. MCCB(배선용차단기) -->
+		<h4 style="margin: 10px 0 4px 10px">마. MCCB(배선용차단기)</h4>
+
+		<!-- 사진: 7_1 (들여쓰기 28px) -->
+		<div class="image-container" style="margin: 10px 0 10px 28px">
+			<div class="image-wrapper">
+				<img
+					src="../../../assets/images/manual/tech/gagyeong/image_2_2_5_2_1_7_1.png"
+					class="popup-image"
+					alt="배전반 내 MCCB(배선용차단기) 분기 차단기"
+					onclick="openPopup(this.src)" />
+				<div class="overlay-text">MCCB 분기 차단기</div>
+			</div>
+		</div>
+
+		<!-- ▼ 하위 들여쓰기 블록 (28px) -->
+		<div style="margin-left: 28px">
+			<!-- 핵심요약 -->
+			<h4 style="margin: 10px 0 6px">핵심요약</h4>
+			<div
+				role="note"
+				aria-label="핵심 요약"
+				style="
+					background: #f6fbff;
+					border-left: 6px solid #2d8cf0;
+					padding: 10px 16px 10px 22px;
+					border-radius: 6px;
+					margin: 10px 0 10px 8px;
+				">
+				<ul style="padding-left: 14px; margin: 8px 0">
+					<li>
+						<strong>정의</strong>
+						: 변압기 2차측
+						<b>ACB</b>
+						이후, 각 층/주요 설비로 분기되는 회로에 설치된
+						<b>배선용 차단기</b>
+						(MCCB).
+					</li>
+					<li>
+						<strong>용도</strong>
+						: 특정 층 또는 특정 설비만
+						<b>개별 차단</b>
+						가능(국부 정전 대응).
+					</li>
+					<li>
+						<strong>운용</strong>
+						: 과부하·단락 보호 및 계획 정전/점검 시 회로
+						<b>개별 개폐</b>
+						.
+					</li>
+				</ul>
+			</div>
+
+			<!-- 1) 개요 -->
+			<h4 style="margin: 14px 0 6px 8px">1) 개요</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					MCCB는 프레임·정격 전류(예: 100/225AF 등)에 따라 분기회로를 보호/개폐하는
+					<b>주 분기 차단기</b>
+					입니다.
+				</li>
+				<li>
+					한전 정전과 무관하게
+					<b>특정 층만 정전</b>
+					인 경우, 해당 회로 MCCB 상태 점검/조작으로 대응합니다.
+				</li>
+			</ul>
+
+			<!-- 2) 기능·효과 -->
+			<h4 style="margin: 14px 0 6px 8px">2) 기능·효과</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>보호</b>
+					: 과부하/단락 시 자동 트립으로 배선·부하 보호.
+				</li>
+				<li>
+					<b>운전 편의</b>
+					: 층·구역별
+					<b>개별 차단</b>
+					가능 → 국부 정전/작업 구간 분리 용이.
+				</li>
+			</ul>
+
+			<!-- 3) 설치·운전 포인트 -->
+			<h4 style="margin: 14px 0 6px 8px">3) 설치·운전 포인트</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					<b>정격·정정</b>
+					: 프레임/정격전류, 트립 정정(LSI 등)과 배선 용량 일치 확인.
+				</li>
+				<li>
+					<b>접속</b>
+					: 단자 체결 토크, 버스바/케이블 발열·변색 여부 주기 점검.
+				</li>
+				<li>
+					<b>라벨링</b>
+					: 층/구역·부하명 표기, 회로도와 일치 관리.
+				</li>
+			</ul>
+
+			<!-- 4) 안전 유의사항 -->
+			<h4 style="margin: 14px 0 6px 8px">4) 안전 유의사항</h4>
+			<ul style="margin: 8px 0 8px 8px; padding-left: 34px">
+				<li>
+					조작 전
+					<b>무부하 확인</b>
+					, 필요 시 상위 ACB로 구간 분리 후 작업.
+					<b>LOTO</b>
+					및
+					<b>PPE</b>
+					필수.
+				</li>
+				<li>트립 원인(과부하/단락) 미확인 상태에서 임의 재투입 금지, 원인 분석 후 복구.</li>
+			</ul>
+		</div>
+
+		</ul>
+		<!-- 팝업 이미지 -->
+		<!-- ✅ 기본적으로 팝업을 숨김 -->
+		<div id="popup" onclick="closePopup()" style="display: none; z-index: 9999">
+			<span>&times;</span>
+			<img id="popup-img" src="" alt="사진" />
+		</div>
+	</body>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
+</html>

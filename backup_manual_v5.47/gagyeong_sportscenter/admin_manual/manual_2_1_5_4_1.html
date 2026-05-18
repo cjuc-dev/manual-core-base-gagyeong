@@ -1,0 +1,245 @@
+<!-- 상위 테이블 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>키오스크 관리</title>
+		<!-- ✅ 기본 글로벌 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
+		<!-- 🛠 전체적인 페이지 기본 스타일 (폰트, 여백, 색상 등) -->
+
+		<!-- ✅ 사이드바 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
+		<!-- 🛠 사이드바 UI 스타일 (메뉴, 토글 기능, 레이아웃 관련 스타일) -->
+
+		<!-- ✅ 테이블 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/table_styles.css" />
+		<!-- 🛠 테이블 디자인 및 정렬 스타일 (테두리, 배경색, 크기 조정 등) -->
+
+		<!-- ✅ 이미지 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_styles.css" />
+		<!-- 🛠 페이지 내 이미지 관련 스타일 (크기, 정렬, 여백 등) -->
+
+		<!-- ✅ 툴팁 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
+		<!-- 🛠 툴팁 UI 스타일 (호버 시 설명 표시, 애니메이션 효과 등) -->
+
+		<!-- ✅ 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
+		<!-- 🛠 팝업창 및 이미지 확대 표시 관련 스타일 -->
+
+		<!-- ✅ 기타 UI 스타일 (추가 필요 시) -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
+		<!-- 🛠 UI 구성 요소 스타일 (버튼, 레이아웃, 폰트 스타일 등) -->
+
+		<!-- ✅ 이미지 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_popup.css" />
+		<!-- 🛠 이미지 팝업 효과 적용 (클릭 시 확대 표시, 팝업 UI) -->
+	</head>
+	<body>
+		<table style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed">
+			<tr>
+				<style>
+					/* ✅ 개별 이미지 컨테이너 */
+					.image-wrapper {
+						position: relative; /* ✅ 자식 요소(.overlay-text)가 이미지 위에 배치됨 */
+						display: ; /* ✅ 한 줄에 나란히 배치 */
+						width: 800px; /* ✅ 가로 200px 고정 */
+						height: 500px; /* ✅ 세로 200px 고정 */
+						text-align: center; /* ✅ 텍스트 중앙 정렬 */
+						overflow: hidden; /* ✅ 넘치는 내용 감춤 */
+						border-radius: 5px; /* ✅ 모서리를 둥글게 */
+						margin-top: 10px; /* 필요에 따라 값을 조정하세요 */
+					}
+					p + .image-container {
+						margin-top: -15px; /* 이미지 컨테이너 간의 간격을 늘리기 */
+					}
+					.image-wrapper img {
+						width: 100%;
+						height: 100%;
+						object-fit: contain; /* ✅ 원본 비율을 유지하면서 조정 */
+					}
+				</style>
+				<td style="width: 90%; border: 1px solid #ccc; text-align: left; padding: 10px">
+					<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+						<table style="width: 100%; border-collapse: collapse">
+							<tr>
+								<ul style="list-style-type: none; padding-left: 0; margin: 0">
+									<li>
+										<h3>
+											<strong
+												onclick="toggleDiv('ticket')"
+												style="cursor: pointer; color: rgb(0, 0, 0)">
+												1️⃣ 일일 입장권 발행(일반)📋
+											</strong>
+										</h3>
+									</li>
+								</ul>
+								<div id="ticket" style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+										<li>일회사용권을 선택한다.</li>
+										<p>💡터치가 한손가락으로 살살해야 터치가 잘 된다.</p>
+										<li>일반(감면없음)을 선택한다.</li>
+										<li>해당하는 입장권을 선택한다.</li>
+										<p>💡유아는 초등학생 이하, 어린이는 초등학생, 청소년은 중고등학생이다.</p>
+										<li>카드결제를 진행을 해준다.</li>
+									</ul>
+								</div>
+								<ul style="list-style-type: none; padding-left: 0; margin: 0">
+									<li>
+										<h3>
+											<strong
+												onclick="toggleDiv('ticket2')"
+												style="cursor: pointer; color: rgb(0, 0, 0)">
+												2️⃣ 일일 입장권 발행(감면)📋
+											</strong>
+										</h3>
+									</li>
+								</ul>
+								<div id="ticket2" style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+										<li>일회사용권을 선택한다.</li>
+										<p>💡터치가 한손가락으로 살살해야 터치가 잘 된다.</p>
+										<li>해당하는 감면대상을 선택한다.</li>
+										<li>신분증스캐너에 신분증을 투입한다.</li>
+										<p>❗신분증은 주민등록증, 운전면허증이 가능하다.</p>
+										<p>
+											❗신분증을 누르지 않아도 자동으로 들어갔다 나온다. 누르면 신분증이 스캔이
+											되지 않는다!
+										</p>
+										<li>감면해택이 적용이 된 가격으로 결재를 진행한다.</li>
+									</ul>
+								</div>
+								<ul style="list-style-type: none; padding-left: 0; margin: 0">
+									<li>
+										<h3>
+											<strong
+												onclick="toggleDiv('ticket3')"
+												style="cursor: pointer; color: rgb(0, 0, 0)">
+												3️⃣ 정기 입장권 발행📋
+											</strong>
+										</h3>
+									</li>
+								</ul>
+								<div id="ticket3" style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+										<li>월/강습회원 입장권을 선택한다.</li>
+										<li>뒤 전화번호 4자리를 입력을 한다.</li>
+										<li>입장권이 선택한다.</li>
+									</ul>
+								</div>
+								<ul style="list-style-type: none; padding-left: 0; margin: 0">
+									<li>
+										<h3>
+											<strong
+												onclick="toggleDiv('Extension')"
+												style="cursor: pointer; color: rgb(0, 0, 0)">
+												4️⃣ 정기권 연장📋
+											</strong>
+										</h3>
+									</li>
+								</ul>
+								<div
+									id="Extension"
+									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+										<li>정기권 연장을 선택한다.</li>
+										<p>❗정기권이 끝나기 7일전에만 가능하다!</p>
+										<li>뒤 전화번호 4자리를 입력을 한다.</li>
+										<li>해당하는 자유수영 종류를 선택한다.</li>
+										<p>❗감면대상을 경우에는 신분증이 필요하다.</p>
+										<li>결제를 진행을 하면 자유수영이 연장이 된다.</li>
+									</ul>
+								</div>
+								<ul style="list-style-type: none; padding-left: 0; margin: 0">
+									<li>
+										<h3>
+											<strong
+												onclick="toggleDiv('paper')"
+												style="cursor: pointer; color: rgb(0, 0, 0)">
+												5️⃣ 감열지 교체📋
+											</strong>
+										</h3>
+									</li>
+								</ul>
+								<div id="paper" style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+										<li>키오스크 뒤 커버를 연다.</li>
+										<div class="image-container" style="margin: 10px 0 10px 28px">
+											<div class="image-wrapper">
+												<img
+													src="../../../assets/images/manual/admin/gagyeong/image_2_1_5_4_5_1.jpg"
+													class="popup-image"
+													alt="키오스크 감열지 교체1"
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">키오스크 커버 개방</div>
+											</div>
+										</div>
+										<li>키오스크 뒤 아래쪽에 위치한 버튼을 누른다.</li>
+										<div class="image-container" style="margin: 10px 0 10px 28px">
+											<div class="image-wrapper">
+												<img
+													src="../../../assets/images/manual/admin/gagyeong/image_2_1_5_4_5_2.jpg"
+													class="popup-image"
+													alt="키오스크 감열지 교체2"
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">아래쪽 버튼 누름</div>
+											</div>
+										</div>
+										<li>키오스크 전면의 감열지 커버가 개방이 된다.</li>
+										<div class="image-container" style="margin: 10px 0 10px 28px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image//image_2_1_5_4_5_3.jpg"
+													class="popup-image"
+													alt="키오스크 감열지 교체1"
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">키오스크 커버 개방</div>
+											</div>
+										</div>
+										<li>다 쓴 감열지 심을 빼고 새로운 감열지를 교체 한다.</li>
+										<div class="image-container" style="margin: 10px 0 10px 28px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image//image_2_1_5_4_5_4.jpg"
+													class="popup-image"
+													alt="키오스크 감열지 교체4"
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">감열지 교체</div>
+											</div>
+										</div>
+										<li>감열지를 조금 나온 상태로 커버를 닫는다.</li>
+										<div class="image-container" style="margin: 10px 0 10px 28px">
+											<div class="image-wrapper">
+												<img
+													src="https://manual-5d03dc.gitlab.io/manual_image//image_2_1_5_4_5_5.jpg"
+													class="popup-image"
+													alt="키오스크 감열지 교체5"
+													onclick="openPopup(this.src)" />
+												<div class="overlay-text">감열지 교체</div>
+											</div>
+										</div>
+										<li>
+											감열지 초기 부분은 절단된 후 정상적인 감열지 발권이 되고 상단의 녹색 점등
+											램프를 확인 할 수 있다.
+										</li>
+									</ul>
+								</div>
+							</tr>
+						</table>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<!-- 팝업 이미지 -->
+		<!-- ✅ 기본적으로 팝업을 숨김 -->
+		<div id="popup" onclick="closePopup()" style="display: none; z-index: 9999">
+			<span>&times;</span>
+			<img id="popup-img" src="" alt="사진" />
+		</div>
+	</body>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
+</html>

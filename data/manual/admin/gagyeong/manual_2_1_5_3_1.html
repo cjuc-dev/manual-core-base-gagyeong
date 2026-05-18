@@ -1,0 +1,271 @@
+<!-- 상위 테이블 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>대관예약</title>
+		<!-- ✅ 기본 글로벌 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
+		<!-- 🛠 전체적인 페이지 기본 스타일 (폰트, 여백, 색상 등) -->
+
+		<!-- ✅ 사이드바 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
+		<!-- 🛠 사이드바 UI 스타일 (메뉴, 토글 기능, 레이아웃 관련 스타일) -->
+
+		<!-- ✅ 테이블 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/table_styles.css" />
+		<!-- 🛠 테이블 디자인 및 정렬 스타일 (테두리, 배경색, 크기 조정 등) -->
+
+		<!-- ✅ 이미지 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_styles.css" />
+		<!-- 🛠 페이지 내 이미지 관련 스타일 (크기, 정렬, 여백 등) -->
+
+		<!-- ✅ 툴팁 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
+		<!-- 🛠 툴팁 UI 스타일 (호버 시 설명 표시, 애니메이션 효과 등) -->
+
+		<!-- ✅ 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
+		<!-- 🛠 팝업창 및 이미지 확대 표시 관련 스타일 -->
+
+		<!-- ✅ 기타 UI 스타일 (추가 필요 시) -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
+		<!-- 🛠 UI 구성 요소 스타일 (버튼, 레이아웃, 폰트 스타일 등) -->
+
+		<!-- ✅ 이미지 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_popup.css" />
+		<!-- 🛠 이미지 팝업 효과 적용 (클릭 시 확대 표시, 팝업 UI) -->
+	</head>
+	<body>
+		<table style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed">
+			<tr>
+				<style>
+					/* ✅ 개별 이미지 컨테이너 */
+					.image-wrapper {
+						position: relative; /* ✅ 자식 요소(.overlay-text)가 이미지 위에 배치됨 */
+						display: ; /* ✅ 한 줄에 나란히 배치 */
+						width: 800px; /* ✅ 가로 200px 고정 */
+						height: 500px; /* ✅ 세로 200px 고정 */
+						text-align: center; /* ✅ 텍스트 중앙 정렬 */
+						overflow: hidden; /* ✅ 넘치는 내용 감춤 */
+						border-radius: 5px; /* ✅ 모서리를 둥글게 */
+						margin-top: 10px; /* 필요에 따라 값을 조정하세요 */
+					}
+					p + .image-container {
+						margin-top: -15px; /* 이미지 컨테이너 간의 간격을 늘리기 */
+					}
+					.image-wrapper img {
+						width: 100%;
+						height: 100%;
+						object-fit: contain; /* ✅ 원본 비율을 유지하면서 조정 */
+					}
+				</style>
+				<td style="width: 90%; border: 1px solid #ccc; text-align: left; padding: 10px">
+					<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+						<table style="width: 100%; border-collapse: collapse">
+							<tr>
+								<ul style="list-style-type: none; padding-left: 0; margin: 0">
+									<li>
+										<h3>
+											<strong
+												onclick="toggleDiv('Register')"
+												style="cursor: pointer; color: rgb(0, 0, 0)">
+												1️⃣ 대관예약📋
+											</strong>
+										</h3>
+									</li>
+								</ul>
+								<div
+									id="Register"
+									style="display: none; flex: 1; padding-right: 20px; margin-top: 10px">
+									<ul style="list-style-type: disc; padding-left: 20px; margin: 0">
+										<li>❗대관예약은 전화로 매월 첫째주부터 20일까지 받고 있다.</li>
+										<li>❗가경국민체육센터는 대관을 토, 일, 월에만 받고 있다.</li>
+										<li>대관 문의 전화를 받을 경우 사용하는 날짜, 종목등을 물어본다.</li>
+										<p>⚠️</p>
+
+										<li>
+											대관예약이 가능할 경우 예약자의 성함, 전화번호, 이메일, 단체명을 물어본다.
+										</li>
+										<p>
+											⚠️ 대관을 하기 위해서 기본 안내를 해주어야 한다.
+											<br />
+											1. 대관료 안내
+											<br />
+											2. 부속사용료 별도
+											<br />
+											3. 실내용 운동화 착용
+											<br />
+											4. 음식물 반입 금지
+											<br />
+											5. 청소 및 원상복구 필수
+											<br />
+											6. 대관 우선순위(시청에서 하는 행사가 있을 경우 대관이 취소가 될 수 있음)
+											<br />
+											7. 주차공간 협소(33대)
+											<br />
+										</p>
+										<li>예약자 메일로 가경국민체육센터 사용허가신청서를 보내준다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_1.png"
+													class="popup-image"
+													alt="대관 예약1" />
+												<div class="overlay-text">사용허가 신청서 양식</div>
+											</div>
+										</div>
+										<li>
+											대관일정표에 이름, 단체명, 연락처, 메일, 종목 인원수등 신청 시간에 작성을
+											한다.
+										</li>
+										<p>💡 대관을 신청을 했을경우에는 검은색으로 작성</p>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_1-1.png"
+													class="popup-image"
+													alt="대관 예약2" />
+												<div class="overlay-text">대관 일정표 관리</div>
+											</div>
+										</div>
+										<li>사용허가 신청서를 작성한 것을 받으면 사용허가통보서 문서를 작성을 한다.</li>
+										<li>
+											작성한 문서가 결재가 나면 예약자에게 사용허가통보서와 결재문서를 메일을 보내
+											기한(7일)이내에 입금이 되도록 통보한다.
+										</li>
+										<li>통합회원에서 대관관리를 선택한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_2.png"
+													class="popup-image"
+													alt="통합회원" />
+												<div class="overlay-text">통합회원</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_3.png"
+													class="popup-image"
+													alt="대관 예약4" />
+												<div class="overlay-text">대관 관리</div>
+											</div>
+										</div>
+										<li>신규대관예약 등록을 선택을 한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_4.png"
+													class="popup-image"
+													alt="신규대관예약 등록" />
+												<div class="overlay-text">신규대관예약 등록</div>
+											</div>
+										</div>
+										<li>대관예약을 작성을 한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_5.png"
+													class="popup-image"
+													alt="대관예약 작성" />
+												<div class="overlay-text">대관예약 작성</div>
+											</div>
+										</div>
+										<li>입금은 확인은 NH기업뱅킹으로 들어간다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_5-1.png"
+													class="popup-image"
+													alt="NH기업뱅킹" />
+												<div class="overlay-text">NH기업뱅킹</div>
+											</div>
+										</div>
+										<li>로그인을 선택하고 공동인증서를 선택한다.</li>
+										<p>❗ 공동인증서는 가경국민체육센터로 할 것</p>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_5-2.png"
+													class="popup-image"
+													alt="로그인" />
+												<div class="overlay-text">로그인</div>
+											</div>
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_5-3.png"
+													class="popup-image"
+													alt="공동인증서" />
+												<div class="overlay-text">공동인증서</div>
+											</div>
+										</div>
+										<li>로그인을 한 후 조회/이체를 선택 후 입출금거래내역조회를 선택한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_5-4.png"
+													class="popup-image"
+													alt="입출금거래내역조회" />
+												<div class="overlay-text">입출금거래내역조회</div>
+											</div>
+										</div>
+										<li>계좌번호를 현금통장(301-0347-5920-51)을 선택한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_5-5.png"
+													class="popup-image"
+													alt="입출금거래내역조회" />
+												<div class="overlay-text">입출금거래내역조회</div>
+											</div>
+										</div>
+										<li>조회기간을 선택후 조회를 누른다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_5-6.png"
+													class="popup-image"
+													alt="조회" />
+												<div class="overlay-text">조회</div>
+											</div>
+										</div>
+										<li>입금이 완료되었을 경우 통합회원에서 대관예약에서 입금완료처리를 한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_6.png"
+													class="popup-image"
+													alt="입금완료" />
+												<div class="overlay-text">통합회원관리 입금완료</div>
+											</div>
+										</div>
+										<li>대관일정표에서도 글을 파란색으로 수정한다.</li>
+										<div class="image-container">
+											<div class="image-wrapper">
+												<img
+													src="../../../../../assets/images/manual/admin/gagyeong/image_2_1_5_3_1_7.png"
+													class="popup-image"
+													alt="입금완료" />
+												<div class="overlay-text">엑셀 대관관리 입금완료</div>
+											</div>
+										</div>
+									</ul>
+								</div>
+							</tr>
+						</table>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<!-- 팝업 이미지 -->
+		<!-- ✅ 기본적으로 팝업을 숨김 -->
+		<div id="popup" onclick="closePopup()" style="display: none; z-index: 9999">
+			<span>&times;</span>
+			<img id="popup-img" src="" alt="사진" />
+		</div>
+	</body>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/popup.js"></script>
+	<script src="https://manual-5d03dc.gitlab.io/javaScript/toggle.js"></script>
+</html>

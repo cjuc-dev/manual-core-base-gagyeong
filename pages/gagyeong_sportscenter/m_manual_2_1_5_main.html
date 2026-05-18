@@ -426,21 +426,21 @@
 			// [수정] 파일 경로 매핑 (함수 정의보다 먼저 선언)
 			const manualPaths = {
 				update: 'updatecontainer/updatecontainer_gagyeong_sportscenter_admin.html',
-				admin_manual_2_1_5_1_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_1_1.html',
-				admin_manual_2_1_5_1_2: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_1_2.html',
-				admin_manual_2_1_5_1_3: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_1_3.html',
-				admin_manual_2_1_5_2_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_2_1.html',
-				admin_manual_2_1_5_3_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_3_1.html',
-				admin_manual_2_1_5_3_2: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_3_2.html',
-				admin_manual_2_1_5_4_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_4_1.html',
-				admin_manual_2_1_5_5_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_5_1.html',
-				admin_manual_2_1_5_5_2: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_5_2.html',
-				admin_manual_2_1_5_6_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_6_1.html',
-				admin_manual_2_1_5_6_2: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_6_2.html',
-				admin_manual_2_1_5_7_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_7_1.html',
-				admin_manual_2_1_5_7_2: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_7_2.html',
-				admin_manual_2_1_5_7_3: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_7_3.html',
-				tech_manual_2_2_5_8_1: 'gagyeong_sportscenter/admin_manual/manual_2_1_5_8_1.html',
+				admin_manual_2_1_5_1_1: 'data/manual/admin/gagyeong/manual_2_1_5_1_1.html',
+				admin_manual_2_1_5_1_2: 'data/manual/admin/gagyeong/manual_2_1_5_1_2.html',
+				admin_manual_2_1_5_1_3: 'data/manual/admin/gagyeong/manual_2_1_5_1_3.html',
+				admin_manual_2_1_5_2_1: 'data/manual/admin/gagyeong/manual_2_1_5_2_1.html',
+				admin_manual_2_1_5_3_1: 'data/manual/admin/gagyeong/manual_2_1_5_3_1.html',
+				admin_manual_2_1_5_3_2: 'data/manual/admin/gagyeong/manual_2_1_5_3_2.html',
+				admin_manual_2_1_5_4_1: 'data/manual/admin/gagyeong/manual_2_1_5_4_1.html',
+				admin_manual_2_1_5_5_1: 'data/manual/admin/gagyeong/manual_2_1_5_5_1.html',
+				admin_manual_2_1_5_5_2: 'data/manual/admin/gagyeong/manual_2_1_5_5_2.html',
+				admin_manual_2_1_5_6_1: 'data/manual/admin/gagyeong/manual_2_1_5_6_1.html',
+				admin_manual_2_1_5_6_2: 'data/manual/admin/gagyeong/manual_2_1_5_6_2.html',
+				admin_manual_2_1_5_7_1: 'data/manual/admin/gagyeong/manual_2_1_5_7_1.html',
+				admin_manual_2_1_5_7_2: 'data/manual/admin/gagyeong/manual_2_1_5_7_2.html',
+				admin_manual_2_1_5_7_3: 'data/manual/admin/gagyeong/manual_2_1_5_7_3.html',
+				tech_manual_2_2_5_8_1: 'data/manual/admin/gagyeong/manual_2_1_5_8_1.html',
 			};
 
 			// [수정] 모든 서브 메뉴 데이터 통합 정의
@@ -563,7 +563,7 @@
 				// 4. 서브 메뉴 HTML 생성
 				const subMenuHTML = `
                 <div class="sub-menu-container w-full" id="${subMenuId}" style="grid-column: span 2;">
-                    <!-- Sub Card Grid (2열) -->
+                     <!-- Sub Card Grid (2열) -->
                     <div class="grid grid-cols-2 gap-3">
                         ${groupData.items
 							.map(
@@ -706,9 +706,12 @@
 				// 모든 열려있는 서브 메뉴 닫기
 				document.querySelectorAll('.sub-menu-container').forEach((el) => el.remove());
 
-				fetch(`https://manual-5d03dc.gitlab.io/${manualPaths[key]}`)
+				var fetchUrl = '../../' + manualPaths[key];
+				console.log(`Fetching local relative URL (mobile): ${fetchUrl}`);
+
+				fetch(fetchUrl)
 					.then((res) => {
-						if (!res.ok) throw new Error('Network error');
+						if (!res.ok) throw new Error('Local mobile fetch response was not ok');
 						return res.text();
 					})
 					.then((html) => {
@@ -730,7 +733,7 @@
 					})
 					.catch((err) => {
 						viewport.innerHTML =
-							'<div class="text-center py-10 text-red-500">내용을 불러오지 못했습니다.</div>';
+							'<div class="text-center py-10 text-red-500">내용을 불러오지 못했습니다 (로컬 이관 전 단계).</div>';
 					});
 			}
 
@@ -747,7 +750,7 @@
 			}
 
 			function goHome() {
-				window.location.href = 'https://manual-5d03dc.gitlab.io/index.html';
+				window.location.href = '../../index.html';
 			}
 
 			// 뒤로 가기 로직 수정

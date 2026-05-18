@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>수영장 수질 오염 대응 매뉴얼</title>
+		<!-- ✅ 기본 글로벌 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/global.css" />
+
+		<!-- ✅ 사이드바 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/sidebar_styles.css" />
+
+		<!-- ✅ 테이블 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/table_styles.css" />
+
+		<!-- ✅ 이미지 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/image_styles.css" />
+
+		<!-- ✅ 툴팁 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/tooltip_styles.css" />
+
+		<!-- ✅ 팝업 스타일 -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/popup_styles.css" />
+
+		<!-- ✅ 기타 UI 스타일 (추가 필요 시) -->
+		<link rel="stylesheet" href="https://manual-5d03dc.gitlab.io/css/ui_components.css" />
+		<style>
+			.container {
+				width: 70%;
+				margin: 0;
+				text-align: center;
+			}
+			.cover-title {
+				font-size: 2em;
+				font-weight: bold;
+				margin-bottom: 100px;
+			}
+			cover-image {
+				margin: 50px auto;
+				text-align: center;
+				display: block;
+			}
+			.cover-image img {
+				display: block;
+				margin: 0 auto;
+			}
+			.cover-department {
+				font-size: 1.5em;
+				margin-top: 100px;
+			}
+			th,
+			td {
+				border: 1px solid black;
+				padding: 10px;
+				text-align: center;
+			}
+			th {
+				background-color: #f0f0f0;
+			}
+			.table-title {
+				font-weight: bold;
+				margin-top: 40px;
+				margin-bottom: 20px;
+			}
+			.toc {
+				margin: 40px;
+				font-size: 1.2em;
+			}
+			.toc-title {
+				text-align: center;
+				font-weight: bold;
+				margin-bottom: 20px;
+			}
+			.toc-item {
+				margin: 5px 0;
+			}
+			h3 {
+				display: inline-block;
+				font-weight: bold;
+				text-align: left !important;
+				border-top: 1px solid black;
+				border-bottom: 1px solid black;
+				padding: 5px 0;
+				margin: 10px 0;
+			}
+			p {
+				text-align: left;
+			}
+			.left-align {
+				text-align: left !important;
+			}
+			.small-text {
+				font-size: 0.6em; /* 원하는 크기로 조정 */
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="cover-title">
+				수영장 수질 오염 대응 매뉴얼
+				<br />
+				<span class="small-text">(체육사업부-1711)</span>
+			</div>
+			<div class="cover-image">
+				<img src="https://manual-5d03dc.gitlab.io/manual_image/logo.png" alt="로고" />
+			</div>
+			<div class="cover-department"><strong>체육사업부</strong></div>
+			<div class="table-title">[매뉴얼 제 · 개정 이력]</div>
+			<table style="margin: 20px auto; width: 100%; border-collapse: collapse">
+				<tr>
+					<th rowspan="2">제 · 개정 일자</th>
+					<th rowspan="2">구분</th>
+					<th rowspan="2">사유</th>
+					<th colspan="2">관계자</th>
+					<th rowspan="2">비고</th>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<th>승인자</th>
+				</tr>
+				<tr>
+					<td>2025. 03. 12.</td>
+					<td>제정</td>
+					<td>수영장 수질 오염 대응 매뉴얼</td>
+					<td></td>
+					<td></td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>-</td>
+				</tr>
+				<!-- 추가 행을 원하시면 여기에 복사하여 붙여넣기 -->
+			</table>
+
+			<h2 style="text-align: center">- 목차 -</h2>
+		</div>
+		<table style="margin: 20px auto; width: 100%; border-collapse: collapse">
+			<tr>
+				<td style="width: 80%; text-align: left; border: none">1. 목적</td>
+			</tr>
+			<tr>
+				<td style="width: 80%; text-align: left; border: none">2. 적용 범위</td>
+			</tr>
+			<tr>
+				<td style="width: 80%; text-align: left; border: none">3. 수질 오염 사고 유형 및 단계별 구분</td>
+			</tr>
+			<tr>
+				<td style="width: 80%; text-align: left; border: none">
+					4-1. 수질 오염 발생 시 대응 절차(경미한 오염)
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 80%; text-align: left; border: none">
+					4-2. 수질 오염 발생 시 대응 절차(심각한 오염)
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 80%; text-align: left; border: none">5-2. 배수 및 염제 절차(가경국민체육센터)</td>
+			</tr>
+		</table>
+
+		<h3>1. 목적</h3>
+		<p>
+			본 매뉴얼은 체육사업부 내 수영장 시설에서 예기치 못한 수질 오염 발생 시 신속하고 체계적으로 대응하여
+			이용자의 안전을 확보하고, 수질을 복원하여 시설 운영을 재개하는 것을 목적으로 한다.
+		</p>
+		<h3>2. 적용 범위</h3>
+		<p>본 매뉴얼은 체육사업부 내 수영장 시설 직원 및 관리 담당자에게 적용됨.</p>
+		<h3>3. 수질 오염 사고 유형 및 단계별 구분</h3>
+		<div class="container">
+			<table>
+				<tr>
+					<th style="width: 10%">사고 유형</th>
+					<th style="width: 90%">내용</th>
+				</tr>
+				<tr>
+					<td style="width: 10%">이물질 혼입</td>
+					<td style="width: 90%; text-align: left">
+						이용자의 구토, 대변, 기타 이물질이 수영장에 혼입된 경우
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 10%">화학 물질 유출</td>
+					<td style="width: 90%; text-align: left">
+						소독제, pH 조절제 등 화학 물질이 과다하게 투입되거나 유출된 경우
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 10%">세균 발생</td>
+					<td style="width: 90%; text-align: left">
+						수영장 물의 소독 상태 불량으로 세균이 과다하게 번식한 경우
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 10%">기타 오염</td>
+					<td style="width: 90%; text-align: left">
+						외부 요인으로 수영장 수질이 오염된 경우 (예: 외부 오염 물질 유입, 자연적인 요인 등)
+					</td>
+				</tr>
+			</table>
+			<br />
+			<table>
+				<tr>
+					<th style="width: 10%">단계별 구분</th>
+					<th style="width: 90%">내용</th>
+				</tr>
+				<tr>
+					<td style="width: 10%; background-color: orange">1단계: 경미한 오염</td>
+					<td style="width: 90%; text-align: left">
+						- 육안으로 확인 가능한 이물질 (예: 머리카락, 작은 쓰레기 등)
+						<br />
+						- 약간의 탁도 증가
+						<br />
+						- 수질의 경미한 변화 (예: 수조 내 소량의 이끼 발생 등)
+						<br />
+						- 수질 관리 약품 설비의 문제가 발생하여, 약품이 과다 혹은 과소 투입 되었 지만, 법정 기준치 내에
+						있는 경우 및 신속하게 조치가 가능할 경우 등
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 10%; background-color: red">2단계: 심각한 오염</td>
+					<td style="width: 90%; text-align: left">
+						- 눈에 띄는 이물질 혼입(구토물, 대변 등)
+						<br />
+						- 현저한 탁도 증가
+						<br />
+						- 수영장 물에서 불쾌한 냄새가 나는 경우
+						<br />
+						- 다량의 오염 물질 혼입으로 인한 심각한 수질 악화
+						<br />
+						- 수영장 물의 색깔이 눈에 띄게 변색된 경우
+						<br />
+						- 수영장 물에서 심한 악취가 나는 경우
+						<br />
+						- 이용객에게 건강상의 이상 증세가 나타나는 경우 (피부 발진, 눈 따가움 등)
+						<br />
+						- 수질 관리 약품 설비의 문제가 발생하여, 약품이 과다 혹은 과소 투입 되어 법정 기준 허용치를
+						벗어난 경우 및 신속하게 조치가 불가할 경우 등
+					</td>
+				</tr>
+			</table>
+		</div>
+		<br />
+		<h3>
+			<span style="color: black">4-1.</span>
+			<span style="color: orange">수질 오염 사고 발생 시 대응 절차(경미한 오염)</span>
+		</h3>
+		<p>
+			<span style="display: block; margin-left: 5px; margin-bottom: 10px">1단계: 현장 대응(즉각적인 조치)</span>
+			<span style="display: block; margin-left: 10px; margin-bottom: 0">◦ 최초 접수자</span>
+			<span style="display: block; margin-left: 20px; margin-bottom: 0">
+				- 즉각적인 조치가 가능할 경우 시행한다.(예: 즉시 이물질을 제거함)
+				<br />
+				- 이용객에게 불편을 끼칠 수 있으므로, 상황을 주시하며 대응합니다.
+				<br />
+				- 수질오염 상황을 공단 소속 직원에게 알린다.
+				<br />
+				<span style="display: block; margin-left: 10px">
+					<strong>※ 담당자는 오염 상황을 파악하고, 적절한 대응을 취한다.</strong>
+				</span>
+			</span>
+		</p>
+		<h3>
+			<span style="color: black">4-2.</span>
+			<span style="color: red">수질 오염 사고 발생 시 대응 절차(심각한 오염)</span>
+		</h3>
+		<p>
+			<span style="display: block; margin-left: 5px; margin-bottom: 10px">
+				<strong>1단계: 현장 대응(즉각적인 조치)</strong>
+			</span>
+			<span style="display: block; margin-left: 10px; margin-bottom: 0">◦ 최초 접수자</span>
+			<span style="display: block; margin-left: 20px; margin-bottom: 0">
+				- 수질오염이 발생하면 즉시 공단 소속 직원에게 알림
+				<br />
+				- 오염 정도를 판단하기 어렵거나 심각한 상황이라고 판단될 경우, 즉시 상위 관리자에게 보고하고 지시를
+				따른다.
+				<br />
+				- 수질오염이 발생하면 즉시 공단 소속 직원에게 알림
+				<br />
+				- 오염 정도를 판단하기 어렵거나 심각한 상황이라고 판단될 경우, 즉시 상위 관리자에게 보고하고 지시를
+				따른다.
+			</span>
+		</p>
+		<p>
+			<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 현장 통제</span>
+			<span style="display: block; margin-left: 20px; margin-bottom: 0">
+				- 즉시 오염 발생 풀장 내 모든 이용객에게 퇴장을 안내하고, 안전 요원은 퇴장을 돕고 안전을 확보한다.
+				<br />
+				- 필요 시 확성기, 호루라기 등을 활용하여 신속하게 상황을 전달한다.
+				<br />
+				- 이용객 대피 경로를 확보하고, 혼란을 방지한다.
+				<br />
+				- 응급 상황 발생 시 즉시 응급 처치를 실시하고, 119에 신고한다.
+				<br />
+				- 현장 상황을 사진 또는 영상으로 기록하여 추후 원인 규명에 활용한다.
+			</span>
+		</p>
+		<p>
+			<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 긴급 휴장 안내</span>
+			<span style="display: block; margin-left: 20px; margin-bottom: 0">
+				- 현장 안내: 이용객들에게 상황을 설명하고, 대체 시설을 이용하도록 안내
+				<br />
+				- 매표소에 긴급 휴장 안내문을 게시한다.
+				<br />
+				- 등록된 이용자들에게 안내 문자를 발송하고, 홈페이지 및 SNS에 공지한다.
+				<br />
+				- 안내문에는 휴장 사유, 복구 예정일, 환불 절차 등을 명시한다.
+			</span>
+			<span style="display: block; margin-left: 20px; margin-bottom: 0">
+				- 안내문에는 휴장 사유, 복구 예정일, 환불 절차 등을 명시한다.
+			</span>
+			<span style="display: block; margin-left: 20px; margin-top: 10px; margin-bottom: 0; color: blue">
+				<strong style="color: blue">
+					※ 휴장 기간의 경우, 수질 복원에 필요한 시간을 고려하여 기술직 담당자와 상의하여 결정한다.
+				</strong>
+			</span>
+			<span style="display: block; margin-left: 20px; margin-top: 10px; margin-bottom: 0">
+				<strong>※ 안내 문자 (예시)</strong>
+			</span>
+		</p>
+		<div class="container">
+			<div
+				style="
+					border: 1px solid black;
+					padding: 10px;
+					margin-left: 20px;
+					margin-top: 10px;
+					color: blue;
+					text-align: left;
+				">
+				<span style="display: block; margin-bottom: 10px">안녕하십니까. OOOO체육센터 수영장입니다.</span>
+				<span style="display: block; margin-bottom: 10px">
+					2025년 0월 00일 (요일) 00시경, 저희 수영장에서 수질 오염 사고가 발생하여 부득이하게 긴급 휴장을
+					결정하게 되었습니다.
+				</span>
+				<span style="display: block; margin-bottom: 10px">1. 휴장 사유</span>
+				<span style="display: block; margin-bottom: 10px">(상세 원인 명시 - 예: 이물질 혼입 등)</span>
+				<span style="display: block; margin-bottom: 10px">2. 휴장 기간</span>
+				<span style="display: block; margin-bottom: 10px">
+					2025년 0월 00일 (요일) ~ 2025년 0월 00일 (요일) (총 OO일간)
+				</span>
+				<span style="display: block; margin-bottom: 10px">3. 환불 안내</span>
+				<span style="display: block; margin-bottom: 10px">당일 이용객: 전액 환불</span>
+				<span style="display: block; margin-bottom: 10px">
+					월 회원 (강습/자유): 남은 기간 전액 환불 또는 남은 기간 연장 (선택 가능)
+				</span>
+				<span style="display: block; margin-bottom: 10px">
+					환불 방법: 고객 계좌로 이체 또는 카드 환불 처리 (00일 이내)
+				</span>
+				<span style="display: block; margin-bottom: 10px">4. 문의</span>
+				<span style="display: block; margin-bottom: 10px">OOOO체육센터 고객센터 (전화번호)</span>
+				<span style="display: block; margin-bottom: 10px">
+					저희 OOOO체육센터는 이용객 여러분의 안전을 최우선으로 생각하며, 빠른 시일 내에 수질을 정상화하여
+					수영장을 재개장할 수 있도록 최선을 다하겠습니다.
+				</span>
+				<span style="display: block; margin-bottom: 10px">불편을 드려 대단히 죄송합니다.</span>
+			</div>
+			<p>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px; font-weight: bold">
+					2단계: 수질 복원 작업
+				</span>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 오염 물질 제거</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 고형 이물질의 경우 즉시 건져내어 제거하고, 오버플로우 및 수중청소기를 활용하여 추가 제거한다.
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 액체 이물질은 적절한 약품을 투입하여 확산을 방지한다.(예: 수질정화제)
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 제거한 오염물질은 적절하게 처리한다.
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 경우에 따라, 전문 업체에 의뢰하여 작업을 진행하는 것을 고려한다.
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 제거 작업 시 안전 장비를 착용하고, 안전 수칙을 준수한다.
+				</span>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 수영장 물 배출 및 청소</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 오염된 물을 완전히 배출하고, 수조 내부를 깨끗하게 청소 및 소독한다.
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					<strong style="color: blue">
+						※ 단, 시설별로 기술직 담당자의 판단에 따라 배출하는 물의 양을 조절하고, 여과장치를 활용하여 수질
+						복원을 진행할 수 있다.
+					</strong>
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 청소가 완료된 후 풀장에 청수(깨끗한물)를 담수한다.
+				</span>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 역세 작업</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 여과 설비가 오염될 수 있기 때문에, 충분한 역세 작업을 통하여 여과 설비 내 잔여 이물질이 없도록
+					한다.
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					<strong style="color: blue">
+						※ 역세 횟수 및 시간은 시설별로 기술직 담당자의 판단에 따라 정한다.
+					</strong>
+				</span>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 수영장수 수온 상승</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 수영장수 수온을 시설별 적정 수온으로 맞춘다.
+				</span>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 수질 검사</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 수질 복원 후 수질검사를 통해 안전성 확인
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 수질검사 결과는 추후에 이용객이 알 수 있도록 공지하여야 한다.
+				</span>
+			</p>
+			<p>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px; font-weight: bold">
+					3단계: 환불 조치
+				</span>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 환불 조치</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 환불 접수 시스템을 마련하여 신속하고 효율적인 환불 처리를 지원한다.
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 환불 방법 (계좌 이체, 카드 환불 등) 및 소요 기간 (예: 14일 이내)을 명확하게 안내한다.
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 환불 관련 문의처 (전화번호, 이메일 주소 등)를 안내하여 고객 편의를 도모한다.
+				</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					<strong style="color: blue">
+						※ 환불 대상이나 금액, 그 방법 등에 관해서는 시설별로 상이할 수 있으므로 시설별로 내부 회의를
+						통해 결정하여 진행한다.
+					</strong>
+				</span>
+			</p>
+			<p>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px; font-weight: bold">
+					4단계: 예방 조치
+				</span>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 정기 점검</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 정기적으로 수질 검사와 시설 점검 실시
+				</span>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 교육 및 훈련</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 직원들에게 수질오염 발생 시 대처 방법에 대한 교육과 훈련 실시
+				</span>
+				<span style="display: block; margin-left: 5px; margin-bottom: 10px">◦ 이용객 안내</span>
+				<span style="display: block; margin-left: 20px; margin-bottom: 10px">
+					- 이용객에게 풀장 이용 시 주의사항 안내
+				</span>
+			</p>
+		</div>
+		<h3>5-2. 시설별 수영장 물 배출 및 역세 절차(가경국민체육센터)</h3>
+		<p>
+			<span style="display: block; margin-left: 15px">
+				가경국민체육센터 배수 및 역세 운전 절차는 기술 매뉴얼의 가경국민체육센터 배수 및 역세 운전 절차는
+				<span style="color: blue; font-weight: bold">기술 매뉴얼</span>
+				의
+				<span style="color: red; font-weight: bold">수질 - 수영장 배수 및 담수</span>
+				와
+				<span style="color: red; font-weight: bold">기계 - 수영장 제어설비 - 역세 운전 절차(수동역세)</span>
+				매뉴얼을 참고한다.
+			</span>
+		</p>
+	</body>
+</html>

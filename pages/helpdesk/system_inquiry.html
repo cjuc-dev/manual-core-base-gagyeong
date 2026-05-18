@@ -1,80 +1,154 @@
 <div class="p-4 sm:p-6 animate-fade-in">
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 border-b border-gray-700/50 pb-6 gap-4">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 border-b border-gray-200/50 dark:border-gray-700/50 pb-6 gap-4">
         <div>
-            <h2 class="text-xl sm:text-3xl font-bold text-emerald-400 flex items-center gap-2 sm:gap-3">
-                시스템 문의/요청 <span class="text-gray-500 text-sm sm:text-lg font-normal whitespace-nowrap">(System Inquiry)</span>
+            <h2 class="text-xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2 sm:gap-3">
+                시스템 문의/요청 <span class="text-gray-400 dark:text-gray-500 text-sm sm:text-lg font-normal whitespace-nowrap">(System Inquiry)</span>
             </h2>
-            <p class="text-gray-400 mt-2 text-sm">시스템 이용 중 불편한 점이나 개선 요청사항을 남겨주세요.</p>
+            <p class="text-gray-550 dark:text-gray-450 mt-2 text-sm">시스템 이용 중 불편한 점이나 개선 요청사항을 남겨주세요.</p>
         </div>
-        <button onclick="openWriteForm()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-all shadow-lg shadow-emerald-900/20 flex items-center gap-2 font-medium group w-full sm:w-auto justify-center">
+        <button onclick="openWriteForm()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl transition-all shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 flex items-center gap-2 font-semibold group w-full sm:w-auto justify-center hover:-translate-y-0.5 active:scale-98">
             <i data-lucide="pen-tool" class="w-4 h-4 group-hover:scale-110 transition-transform"></i> 문의하기
         </button>
     </div>
 
     <!-- Password Modal -->
-    <div id="passwordModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-gray-800 border border-gray-700 rounded-xl p-6 w-full max-w-sm shadow-2xl transform transition-all scale-100">
-            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                <i data-lucide="shield-alert" class="w-5 h-5 text-emerald-400"></i> 관리자 인증
+    <div id="passwordModal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 w-full max-w-sm shadow-2xl transform transition-all scale-100">
+            <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+                <i data-lucide="shield-alert" class="w-5 h-5 text-emerald-600 dark:text-emerald-400"></i> 관리자 인증
             </h3>
-            <p class="text-gray-400 text-sm mb-4">관리자 권한(삭제/답변/상태변경)을 위해 비밀번호를 입력하세요.</p>
-            <input type="password" id="adminPassword" placeholder="비밀번호 입력" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition mb-4" onkeypress="handlePasswordEnter(event)">
+            <p class="text-gray-550 dark:text-gray-400 text-sm mb-4">관리자 권한(삭제/답변/상태변경)을 위해 비밀번호를 입력하세요.</p>
+            <input type="password" id="adminPassword" placeholder="비밀번호 입력" class="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-650 rounded-xl px-4 py-2.5 text-gray-800 dark:text-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition mb-4 font-medium" onkeypress="handlePasswordEnter(event)">
             <div class="flex justify-end gap-3">
-                <button onclick="closePasswordModal()" class="px-4 py-2 text-gray-400 hover:text-white transition">취소</button>
-                <button onclick="checkAdminPassword()" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium shadow-lg shadow-emerald-900/20 transition">확인</button>
+                <button onclick="closePasswordModal()" class="px-4 py-2 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white font-semibold transition text-sm">취소</button>
+                <button onclick="checkAdminPassword()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold shadow-lg shadow-emerald-500/10 transition text-sm">확인</button>
             </div>
         </div>
     </div>
 
-    <!-- Write Form -->
-    <div id="writeForm" class="hidden mb-8 bg-gray-800/50 p-6 rounded-xl border border-gray-700 backdrop-blur-sm shadow-xl transition-all duration-300">
-        <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <i data-lucide="pen-tool" class="w-4 h-4 text-emerald-400"></i> 문의 작성
-        </h3>
+    <!-- Image View Modal (🚀 [v5.70] 첨부 이미지 클릭 시 극세사 대화면 라이트박스 팝업) -->
+    <div id="imageViewModal" class="hidden fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex flex-col items-center justify-center p-4 cursor-zoom-out" onclick="closeImageViewModal()">
+        <div class="relative max-w-4xl max-h-[85vh] transition-transform transform scale-100 ease-out duration-300" onclick="event.stopPropagation()">
+            <button onclick="closeImageViewModal()" class="absolute -top-12 right-0 text-white hover:text-emerald-400 transition flex items-center gap-1 text-sm font-bold bg-white/10 px-3 py-1.5 rounded-full backdrop-blur">
+                <i data-lucide="x" class="w-4 h-4"></i> 닫기
+            </button>
+            <img id="modalFullImage" class="rounded-2xl max-w-full max-h-[80vh] object-contain shadow-2xl border border-white/10">
+        </div>
+    </div>
+
+    <!-- Write Form (🚀 [v5.70] 화이트/다크 완벽대응 프리미엄 리디자인 & 이미지 업로더 탑재) -->
+    <div id="writeForm" class="hidden mb-10 bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-3xl border border-gray-200/80 dark:border-gray-700/60 shadow-[0_20px_50px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_50px_rgba(16,185,129,0.06)] backdrop-blur-xl transition-all duration-300 ease-out">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100 dark:border-gray-700/60">
+            <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2.5">
+                <span class="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400">
+                    <i data-lucide="edit-3" class="w-5 h-5"></i>
+                </span>
+                <span id="formTitleText">문의 작성</span>
+            </h3>
+            <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-full">Secure SSL</span>
+        </div>
         <input type="hidden" id="editDocId">
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-            <div>
-                <label class="block text-xs text-gray-500 mb-1">작성자 (Author)</label>
-                <input type="text" id="inquiryAuthor" placeholder="이름을 입력하세요" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <!-- 작성자 인풋 -->
+            <div class="relative group">
+                <label class="block text-[11px] font-extrabold text-gray-400 dark:text-gray-500 mb-1.5 ml-1 uppercase tracking-wider">작성자 (Author)</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-455 dark:text-gray-500 group-focus-within:text-emerald-655 dark:group-focus-within:text-emerald-400 transition-colors">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                    </span>
+                    <input type="text" id="inquiryAuthor" placeholder="이름을 입력하세요" class="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl pl-11 pr-4 py-3 text-sm text-gray-855 dark:text-white focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all duration-300 font-medium">
+                </div>
             </div>
-            <div>
-                <label class="block text-xs text-gray-500 mb-1">시설 (Facility)</label>
-                <select id="inquiryFacility" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition appearance-none">
-                    <option value="" disabled selected>시설을 선택하세요</option>
-                    <option value="청주수영장">청주수영장</option>
-                    <option value="푸르미스포츠센터">푸르미스포츠센터</option>
-                    <option value="영운국민체육센터">영운국민체육센터</option>
-                    <option value="복대국민체육센터">복대국민체육센터</option>
-                    <option value="가경국민체육센터">가경국민체육센터</option>
-                </select>
+            <!-- 시설 선택 -->
+            <div class="relative group">
+                <label class="block text-[11px] font-extrabold text-gray-400 dark:text-gray-500 mb-1.5 ml-1 uppercase tracking-wider">대상 체육시설 (Facility)</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-455 dark:text-gray-500 group-focus-within:text-emerald-655 dark:group-focus-within:text-emerald-400 transition-colors">
+                        <i data-lucide="building-2" class="w-4 h-4"></i>
+                    </span>
+                    <select id="inquiryFacility" class="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl pl-11 pr-10 py-3 text-sm text-gray-855 dark:text-white focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all duration-300 font-medium appearance-none cursor-pointer">
+                        <option value="" disabled selected>시설을 선택하세요</option>
+                        <option value="청주수영장">청주수영장</option>
+                        <option value="푸르미스포츠센터">푸르미스포츠센터</option>
+                        <option value="영운국민체육센터">영운국민체육센터</option>
+                        <option value="복대국민체육센터">복대국민체육센터</option>
+                        <option value="가경국민체육센터">가경국민체육센터</option>
+                        <option value="산남국민체육센터">산남국민체육센터</option>
+                    </select>
+                    <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-455 pointer-events-none">
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </span>
+                </div>
             </div>
         </div>
 
-        <div class="mb-4">
-            <label class="block text-xs text-gray-500 mb-1">분야 (Category)</label>
-            <select id="inquiryCategory" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition appearance-none">
-                <option value="" disabled selected>분야를 선택하세요</option>
-                <option value="시스템">시스템 (System)</option>
-                <option value="매뉴얼">매뉴얼 (Manual)</option>
-                <option value="기타">기타 (Other)</option>
-            </select>
+        <!-- 분야 선택 -->
+        <div class="mb-5 relative group">
+            <label class="block text-[11px] font-extrabold text-gray-400 dark:text-gray-500 mb-1.5 ml-1 uppercase tracking-wider">요청 및 문의 분야 (Category)</label>
+            <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-455 dark:text-gray-500 group-focus-within:text-emerald-655 dark:group-focus-within:text-emerald-400 transition-colors">
+                    <i data-lucide="layers" class="w-4 h-4"></i>
+                </span>
+                <select id="inquiryCategory" class="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl pl-11 pr-10 py-3 text-sm text-gray-855 dark:text-white focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all duration-300 font-medium appearance-none cursor-pointer">
+                    <option value="" disabled selected>분야를 선택하세요</option>
+                    <option value="시스템">시스템 기능개선 (System)</option>
+                    <option value="매뉴얼">매뉴얼 지침수정 (Manual)</option>
+                    <option value="운영">시설 운영요청 (Operations)</option>
+                    <option value="기타">기타 요청사항 (Other)</option>
+                </select>
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-455 pointer-events-none">
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </span>
+            </div>
         </div>
         
-        <div class="mb-4">
-            <label class="block text-xs text-gray-500 mb-1">문의 내용</label>
-            <textarea id="inquiryContent" placeholder="문의하실 내용을 상세히 적어주세요." class="w-full h-48 bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition resize-none font-mono text-sm"></textarea>
+        <!-- 문의 내용 -->
+        <div class="mb-5 relative group">
+            <label class="block text-[11px] font-extrabold text-gray-400 dark:text-gray-500 mb-1.5 ml-1 uppercase tracking-wider">상세 내용 (Details)</label>
+            <div class="relative">
+                <span class="absolute left-4 top-4 text-gray-450 dark:text-gray-500 group-focus-within:text-emerald-650 dark:group-focus-within:text-emerald-400 transition-colors">
+                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                </span>
+                <textarea id="inquiryContent" placeholder="개선이 필요한 화면명, 현상, 요청 내용 등을 상세히 기술해 주세요." class="w-full h-40 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl pl-11 pr-4 py-3 text-sm text-gray-800 dark:text-white focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all duration-300 resize-none font-medium leading-relaxed"></textarea>
+            </div>
         </div>
 
-        <div class="flex justify-end gap-3">
-            <button onclick="closeWriteForm()" class="px-4 py-2 text-gray-400 hover:text-white transition">취소</button>
-            <button onclick="submitInquiry()" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium shadow-lg shadow-emerald-900/20 transition">등록하기</button>
+        <!-- 🚀 [v5.70] 이미지 첨부 및 Base64 자동 인코더 컴포넌트 -->
+        <div class="mb-6 relative">
+            <label class="block text-[11px] font-extrabold text-gray-400 dark:text-gray-500 mb-1.5 ml-1 uppercase tracking-wider">이미지 첨부 (Image Attachment)</label>
+            <div class="flex flex-wrap items-center gap-3">
+                <input type="file" id="inquiryImageFile" accept="image/*" class="hidden" onchange="handleImageAttach(event)">
+                <button type="button" onclick="document.getElementById('inquiryImageFile').click()" class="px-4 py-2.5 bg-gray-50 hover:bg-gray-150 dark:bg-gray-900 hover:dark:bg-gray-800 text-gray-750 dark:text-gray-300 rounded-xl transition border border-gray-200 dark:border-gray-700 text-xs font-bold flex items-center gap-2 shadow-sm hover:shadow active:scale-97">
+                    <i data-lucide="image" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i> 이미지 선택
+                </button>
+                <span id="attachedImageName" class="text-xs text-gray-400 max-w-[200px] truncate">선택된 파일 없음 (최대 2MB)</span>
+                <button type="button" id="removeImageBtn" onclick="removeAttachedImage()" class="hidden px-2.5 py-1.5 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/40 text-rose-650 dark:text-rose-400 rounded-lg text-xs font-extrabold transition">
+                    삭제
+                </button>
+            </div>
+            <!-- Base64 임시 버퍼 인풋 -->
+            <input type="hidden" id="attachedImageBase64">
+            
+            <!-- 첨부파일 미리보기 박스 -->
+            <div id="imagePreviewContainer" class="hidden mt-4 relative w-36 h-36 rounded-2xl overflow-hidden border border-gray-250 dark:border-gray-700 shadow-sm animate-scale-in">
+                <img id="imagePreview" class="w-full h-full object-cover">
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-3.5 pt-4 border-t border-gray-100 dark:border-gray-700/60">
+            <button onclick="closeWriteForm()" class="px-5 py-3 rounded-2xl border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-800 dark:hover:text-white font-semibold transition-all duration-200 text-xs">
+                취소
+            </button>
+            <button onclick="submitInquiry()" class="px-7 py-3 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white rounded-2xl font-bold shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 transform hover:-translate-y-0.5 active:scale-98 transition-all duration-200 text-xs flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4"></i> 등록하기
+            </button>
         </div>
     </div>
 
     <!-- List Container -->
-    <div id="inquiryList" class="space-y-4">
+    <div id="inquiryList" class="space-y-5">
         <!-- Firebase Data will be loaded here -->
     </div>
 </div>
@@ -84,6 +158,7 @@
     // Block scope to prevent global variable conflicts
     let pendingAction = null;
     let targetItemId = null; // For unlocking specific item admin controls
+    let attachedImageBase64 = ""; // Base64 파일 스토리지 임시 버퍼
 
     // Cleanup previous listeners
     const unsubscribes = [
@@ -102,6 +177,60 @@
             window[name] = null;
         }
     });
+
+    // --- 🚀 [v5.70] Base64 이미지 리더 및 처리 엔진 ---
+    window.handleImageAttach = function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // 2MB 크기 검증 수립
+        if (file.size > 2 * 1024 * 1024) {
+            alert("첨부 가능한 이미지 크기는 최대 2MB입니다. 용량을 줄여서 업로드해 주세요.");
+            event.target.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            attachedImageBase64 = e.target.result;
+            document.getElementById('attachedImageBase64').value = attachedImageBase64;
+            document.getElementById('attachedImageName').textContent = file.name;
+            document.getElementById('imagePreview').src = attachedImageBase64;
+            document.getElementById('imagePreviewContainer').classList.remove('hidden');
+            document.getElementById('removeImageBtn').classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+    };
+
+    window.removeAttachedImage = function() {
+        attachedImageBase64 = "";
+        document.getElementById('attachedImageBase64').value = "";
+        document.getElementById('inquiryImageFile').value = "";
+        document.getElementById('attachedImageName').textContent = "선택된 파일 없음 (최대 2MB)";
+        document.getElementById('imagePreviewContainer').classList.add('hidden');
+        document.getElementById('removeImageBtn').classList.add('hidden');
+    };
+
+    // --- 🚀 [v5.70] 이미지 팝업 모달 열기/닫기 ---
+    window.openImageModalDirect = function(imgSrc) {
+        const modal = document.getElementById('imageViewModal');
+        const img = document.getElementById('modalFullImage');
+        if (modal && img) {
+            img.src = imgSrc;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // 부모 스크롤 방지
+        }
+    };
+
+    window.closeImageViewModal = function() {
+        const modal = document.getElementById('imageViewModal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; // 스크롤 원복
+        }
+    };
 
     // --- Modal Logic ---
     window.openPasswordModal = function(actionCallback, itemId = null) {
@@ -124,7 +253,8 @@
 
     window.checkAdminPassword = function() {
         const password = document.getElementById('adminPassword').value;
-        if (password === 'admin') {
+        // 🚀 [보안 및 암호 정합성] 마스터 비밀번호(admin1234, 72511001) 체계와 동기화
+        if (password === 'admin1234' || password === '72511001' || password === 'admin') {
             const currentAction = pendingAction;
             const currentItemId = targetItemId;
             
@@ -155,6 +285,7 @@
     window.openWriteForm = function(docId = null) {
         const form = document.getElementById('writeForm');
         form.classList.remove('hidden');
+        removeAttachedImage(); // 리셋
         
         if (!docId) {
             // New Entry
@@ -163,7 +294,7 @@
             document.getElementById('inquiryFacility').value = ''; // Default to placeholder
             document.getElementById('inquiryCategory').value = ''; // Default to placeholder
             document.getElementById('inquiryContent').value = '';
-            document.querySelector('#writeForm h3').innerHTML = '<i data-lucide="pen-tool" class="w-4 h-4 text-emerald-400"></i> 문의 작성';
+            document.getElementById('formTitleText').textContent = '문의 작성';
         }
         document.getElementById('inquiryAuthor').focus();
     };
@@ -183,6 +314,7 @@
         const facility = document.getElementById('inquiryFacility').value;
         const category = document.getElementById('inquiryCategory').value;
         const content = document.getElementById('inquiryContent').value;
+        const base64Image = document.getElementById('attachedImageBase64').value; // Base64 추출
 
         if (!author || !content) {
             alert('작성자와 내용을 모두 입력해주세요.');
@@ -203,23 +335,32 @@
             category: category,
             content: content,
             status: '접수 중', // Default status
-            timestamp: new Date()
+            timestamp: new Date(),
+            image: base64Image || "" // 이미지 정보 추가
         };
 
+        // 🚀 [컬렉션 공식 통합] manual -> system_info -> inquiries 하위 컬렉션 연동
+        const ref = window.db.collection('manual').doc('system_info').collection('inquiries');
+
         if (docId) {
-            // Update (Only updates content fields, preserves status/reply)
-            window.db.collection('system_inquiry').doc(docId).update({
+            // Update (Only updates content fields, preserves status/reply, merges image if updated)
+            const updatePayload = {
                 author: author,
                 facility: facility,
                 category: category,
                 content: content
-            }).then(() => {
+            };
+            if (base64Image) {
+                updatePayload.image = base64Image;
+            }
+            
+            ref.doc(docId).update(updatePayload).then(() => {
                 alert('수정되었습니다.');
                 closeWriteForm();
             }).catch(err => alert('오류 발생: ' + err.message));
         } else {
             // Create
-            window.db.collection('system_inquiry').add(data)
+            ref.add(data)
             .then(() => {
                 alert('등록되었습니다.');
                 closeWriteForm();
@@ -229,14 +370,23 @@
 
     // --- Actions ---
     // Public Edit
-    window.editInquiry = function(id, author, facility, category, content) {
+    window.editInquiry = function(id, author, facility, category, content, existingImage = "") {
         openWriteForm(id);
         document.getElementById('editDocId').value = id;
         document.getElementById('inquiryAuthor').value = author;
         document.getElementById('inquiryFacility').value = facility;
         document.getElementById('inquiryCategory').value = category;
         document.getElementById('inquiryContent').value = content;
-        document.querySelector('#writeForm h3').innerHTML = '<i data-lucide="edit" class="w-4 h-4 text-emerald-400"></i> 문의 수정';
+        document.getElementById('formTitleText').textContent = '문의 수정';
+        
+        if (existingImage) {
+            attachedImageBase64 = existingImage;
+            document.getElementById('attachedImageBase64').value = existingImage;
+            document.getElementById('attachedImageName').textContent = "기존 첨부된 이미지";
+            document.getElementById('imagePreview').src = existingImage;
+            document.getElementById('imagePreviewContainer').classList.remove('hidden');
+            document.getElementById('removeImageBtn').classList.remove('hidden');
+        }
     };
 
     // Admin Auth Trigger
@@ -246,22 +396,22 @@
 
     // Admin Actions (Protected by UI visibility, but double check not strictly needed as UI is hidden)
     window.deleteInquiry = function(id) {
-        if (confirm('정말로 삭제하시겠습니까?')) {
-            window.db.collection('system_inquiry').doc(id).delete()
+        if (confirm('정말로 이 문의사항을 영구 삭제하시겠습니까?')) {
+            window.db.collection('manual').doc('system_info').collection('inquiries').doc(id).delete()
             .then(() => alert('삭제되었습니다.'))
             .catch(err => alert('오류 발생: ' + err.message));
         }
     };
 
     window.updateStatus = function(id, newStatus) {
-        window.db.collection('system_inquiry').doc(id).update({ status: newStatus })
+        window.db.collection('manual').doc('system_info').collection('inquiries').doc(id).update({ status: newStatus })
         .then(() => console.log('Status updated'))
         .catch(err => alert('상태 변경 오류: ' + err.message));
     };
 
     window.saveReply = function(id) {
         const replyContent = document.getElementById(`reply-${id}`).value;
-        window.db.collection('system_inquiry').doc(id).update({ 
+        window.db.collection('manual').doc('system_info').collection('inquiries').doc(id).update({ 
             adminReply: replyContent,
             replyTimestamp: new Date()
         })
@@ -272,80 +422,94 @@
     // --- Rendering ---
     function getStatusBadge(status) {
         const styles = {
-            '접수 중': 'bg-gray-700 text-gray-300 border-gray-600',
-            '처리중': 'bg-orange-900/30 text-orange-400 border-orange-500/30',
-            '완료': 'bg-emerald-900/30 text-emerald-400 border-emerald-500/30'
+            '접수 중': 'bg-gray-100 dark:bg-gray-700 text-gray-650 dark:text-gray-300 border-gray-200 dark:border-gray-600',
+            '접수': 'bg-gray-100 dark:bg-gray-700 text-gray-650 dark:text-gray-300 border-gray-200 dark:border-gray-600',
+            '처리중': 'bg-amber-50 dark:bg-orange-900/30 text-amber-750 dark:text-orange-400 border-amber-200/60 dark:border-orange-500/30',
+            '완료': 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-750 dark:text-emerald-400 border-emerald-200/60 dark:border-emerald-500/30'
         };
         const style = styles[status] || styles['접수 중'];
-        return `<span class="px-2 py-1 rounded text-xs border ${style}">${status}</span>`;
+        return `<span class="px-2 py-0.5 rounded text-[11px] font-bold border ${style}">${status}</span>`;
     }
 
     function createInquiryItemHtml(id, data) {
         const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : '';
-        const reply = data.adminReply || '';
+        const reply = data.adminReply || data.adminResponse || '';
         const hasReply = !!reply;
         
+        // 🚀 [v5.70] 이미지 첨부 렌더링 설계 (클릭 시 풀화면 보기 연동)
+        const imageAttachHtml = data.image ? `
+            <div class="mt-4 mb-3 overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 max-w-md shadow-sm group relative cursor-pointer" onclick="window.openImageModalDirect(\`${data.image}\`)">
+                <img src="${data.image}" alt="첨부 이미지" class="w-full h-auto object-cover max-h-64 transition-transform duration-500 group-hover:scale-103 animate-fade-in">
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white gap-2 font-bold text-xs">
+                    <i data-lucide="maximize-2" class="w-4 h-4"></i> 크게 보기
+                </div>
+            </div>
+        ` : '';
+
         return `
-            <div class="bg-gray-800/40 rounded-xl border border-gray-700/50 overflow-hidden animate-fade-in-up hover:border-emerald-500/30 transition-colors">
-                <div class="p-5">
-                    <div class="flex justify-between items-start mb-3">
-                        <div class="flex items-center gap-2">
+            <div class="bg-white dark:bg-gray-800/40 rounded-2xl border border-gray-200/80 dark:border-gray-700/50 overflow-hidden animate-fade-in-up hover:border-emerald-500/30 dark:hover:border-emerald-500/30 transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
+                <div class="p-5 sm:p-6">
+                    <div class="flex justify-between items-start mb-3.5">
+                        <div class="flex flex-wrap items-center gap-2">
                             ${getStatusBadge(data.status)}
-                            <span class="text-emerald-400 font-bold text-sm">[${data.category}]</span>
-                            <span class="text-gray-400 text-xs">${data.facility}</span>
+                            <span class="text-emerald-650 dark:text-emerald-400 font-extrabold text-xs sm:text-sm">[${data.category}]</span>
+                            <span class="text-gray-550 dark:text-gray-400 text-xs font-semibold">${data.facility}</span>
                         </div>
-                        <span class="text-gray-500 text-xs">${date}</span>
+                        <span class="text-gray-400 dark:text-gray-500 text-xs font-medium">${date || data.date || ''}</span>
                     </div>
                     
                     <div class="mb-4">
-                        <p class="text-gray-300 whitespace-pre-wrap leading-relaxed">${data.content}</p>
+                        <p class="text-gray-700 dark:text-gray-250 whitespace-pre-wrap leading-relaxed text-sm sm:text-base font-medium">${data.content}</p>
+                        ${imageAttachHtml}
                     </div>
                     
-                    <!-- Admin Reply Display (Visible to all if exists) -->
+                    <!-- Admin Reply Display -->
                     ${hasReply ? `
-                    <div class="mb-4 p-4 bg-indigo-900/20 border border-indigo-500/30 rounded-lg">
-                        <div class="flex items-center gap-2 mb-2">
-                            <i data-lucide="message-square" class="w-4 h-4 text-indigo-400"></i>
-                            <span class="text-sm font-bold text-indigo-300">관리자 답변</span>
+                    <div class="mb-4 p-5 bg-indigo-50/50 dark:bg-indigo-900/20 border border-indigo-200/60 dark:border-indigo-500/30 rounded-2xl animate-fade-in">
+                        <div class="flex items-center gap-2.5 mb-3 border-b border-indigo-100/55 dark:border-indigo-500/10 pb-2">
+                            <span class="p-1.5 rounded-lg bg-indigo-100/80 dark:bg-indigo-950/60 text-indigo-650 dark:text-indigo-400 flex items-center justify-center">
+                                <i data-lucide="message-square" class="w-4 h-4"></i>
+                            </span>
+                            <span class="text-xs sm:text-sm font-extrabold text-indigo-750 dark:text-indigo-300">관리자 답변</span>
                         </div>
-                        <p class="text-gray-300 text-sm whitespace-pre-wrap">${reply}</p>
+                        <p class="text-gray-750 dark:text-gray-300 text-sm whitespace-pre-wrap leading-relaxed font-medium pl-1.5">${reply}</p>
                     </div>
                     ` : ''}
 
-                    <div class="flex justify-between items-center border-t border-gray-700/50 pt-3 mt-3">
-                        <span class="text-gray-500 text-xs flex items-center gap-1">
-                            <i data-lucide="user" class="w-3 h-3"></i> ${data.author}
+                    <div class="flex justify-between items-center border-t border-gray-100 dark:border-gray-700/50 pt-5 mt-5">
+                        <span class="text-gray-550 dark:text-gray-400 text-xs font-bold flex items-center gap-1.5">
+                            <span class="p-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"><i data-lucide="user" class="w-3.5 h-3.5"></i></span> ${data.author}
                         </span>
                         <div class="flex gap-2">
                             <!-- Public Edit -->
-                            <button onclick="editInquiry('${id}', '${data.author}', '${data.facility}', '${data.category}', \`${data.content.replace(/`/g, '\\`')}\`)" class="text-xs px-3 py-1.5 rounded bg-gray-700 hover:bg-gray-600 text-gray-300 transition">수정</button>
+                            <button onclick="editInquiry('${id}', '${data.author}', '${data.facility}', '${data.category}', \`${data.content.replace(/`/g, '\\`')}\`, \`${data.image || ''}\`)" class="text-xs px-3.5 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-650 dark:text-gray-300 font-bold transition">수정</button>
                             <!-- Admin Trigger -->
-                            <button onclick="triggerAdminAuth('${id}')" class="text-xs px-2 py-1.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-emerald-400 transition border border-gray-600" title="관리자 메뉴">
+                            <button onclick="triggerAdminAuth('${id}')" class="text-xs px-2.5 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-455 hover:text-emerald-400 transition border border-gray-200 dark:border-gray-700" title="관리자 메뉴">
                                 <i data-lucide="shield" class="w-4 h-4"></i>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Admin Section (Hidden by default, revealed via password) -->
-                    <div id="admin-section-${id}" class="hidden mt-4 pt-4 border-t border-gray-700/30 bg-gray-900/30 -mx-5 -mb-5 p-5">
+                    <!-- Admin Section -->
+                    <div id="admin-section-${id}" class="hidden mt-4 pt-4 border-t border-gray-150 dark:border-gray-700/30 bg-gray-50/50 dark:bg-gray-900/30 -mx-6 -mb-6 p-6">
                         <div class="flex justify-between items-center mb-3">
                             <div class="flex items-center gap-2">
-                                <i data-lucide="settings" class="w-4 h-4 text-emerald-400"></i>
-                                <span class="text-sm font-semibold text-gray-300">관리자 제어</span>
+                                <i data-lucide="settings" class="w-4 h-4 text-emerald-650 dark:text-emerald-400"></i>
+                                <span class="text-xs sm:text-sm font-extrabold text-gray-650 dark:text-gray-300">관리자 제어</span>
                             </div>
-                            <button onclick="deleteInquiry('${id}')" class="text-xs px-3 py-1.5 rounded bg-red-900/30 hover:bg-red-900/50 text-red-400 transition border border-red-900/50">삭제</button>
+                            <button onclick="deleteInquiry('${id}')" class="text-xs px-3.5 py-2 rounded-xl bg-rose-50 dark:bg-rose-900/30 hover:bg-rose-100 dark:hover:bg-rose-900/50 text-rose-650 dark:text-rose-400 font-bold transition border border-rose-200 dark:border-rose-900/50">삭제</button>
                         </div>
                         
                         <!-- Status Control -->
                         <div class="flex gap-2 mb-3">
-                            <button onclick="updateStatus('${id}', '접수 중')" class="px-2 py-1 text-xs rounded border border-gray-600 ${data.status === '접수 중' ? 'bg-gray-700 text-white' : 'text-gray-500 hover:text-white'}">접수 중</button>
-                            <button onclick="updateStatus('${id}', '처리중')" class="px-2 py-1 text-xs rounded border border-orange-500/30 ${data.status === '처리중' ? 'bg-orange-900/50 text-orange-400' : 'text-gray-500 hover:text-orange-400'}">처리중</button>
-                            <button onclick="updateStatus('${id}', '완료')" class="px-2 py-1 text-xs rounded border border-emerald-500/30 ${data.status === '완료' ? 'bg-emerald-900/50 text-emerald-400' : 'text-gray-500 hover:text-emerald-400'}">완료</button>
+                            <button onclick="updateStatus('${id}', '접수 중')" class="px-2.5 py-1.5 text-xs font-bold rounded-lg border border-gray-250 dark:border-gray-600 ${data.status === '접수 중' ? 'bg-gray-200 dark:bg-gray-700 text-gray-850 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white'}">접수 중</button>
+                            <button onclick="updateStatus('${id}', '처리중')" class="px-2.5 py-1.5 text-xs font-bold rounded-lg border border-amber-350 dark:border-orange-500/30 ${data.status === '처리중' ? 'bg-amber-100 dark:bg-orange-900/50 text-amber-800 dark:text-orange-400' : 'text-gray-500 dark:text-gray-400 hover:text-amber-700 dark:hover:text-orange-450'}">처리중</button>
+                            <button onclick="updateStatus('${id}', '완료')" class="px-2.5 py-1.5 text-xs font-bold rounded-lg border border-emerald-350 dark:border-emerald-500/30 ${data.status === '완료' ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-400' : 'text-gray-500 dark:text-gray-400 hover:text-emerald-700 dark:hover:text-emerald-450'}">완료</button>
                         </div>
 
-                        <textarea id="reply-${id}" class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm text-white mb-2" placeholder="답변을 입력하세요...">${reply}</textarea>
+                        <textarea id="reply-${id}" class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-650 rounded-xl p-3 text-sm text-gray-800 dark:text-white mb-3 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition font-medium" placeholder="답변을 입력하세요...">${reply}</textarea>
                         <div class="flex justify-end">
-                            <button onclick="saveReply('${id}')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs rounded transition">답변 저장</button>
+                            <button onclick="saveReply('${id}')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl transition shadow-md shadow-indigo-500/10">답변 저장</button>
                         </div>
                     </div>
                 </div>
@@ -357,7 +521,8 @@
     function loadInquiries() {
         if (!window.db) return;
 
-        window.systemInquiryUnsubscribe = window.db.collection('system_inquiry').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
+        // 🚀 [컬렉션 공식 통합]
+        window.systemInquiryUnsubscribe = window.db.collection('manual').doc('system_info').collection('inquiries').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
             const list = document.getElementById('inquiryList');
             list.innerHTML = '';
             
@@ -365,11 +530,15 @@
                 const itemHtml = createInquiryItemHtml(doc.id, doc.data());
                 list.insertAdjacentHTML('beforeend', itemHtml);
             });
-            lucide.createIcons();
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+            }
         });
     }
 
     loadInquiries();
-    lucide.createIcons();
+    if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+    }
 }
 </script>

@@ -4,6 +4,18 @@
 
 ---
 
+### v5.92 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
+- **[시스템/UI] 매뉴얼 상세 화면의 인쇄 최적화 Clean Print 엔진 탑재 및 인쇄 전용 버튼 배치 완료**
+- **[시스템/UI] 문서 하단 네이버 블로그 스타일의 공감 캡슐 기능 구현 및 로컬 브라우저 상태 기억 시스템 구축**
+- **[시스템/UI] 매뉴얼 상세 주소 공유를 위한 클립보드 링크 복사 및 안내 메시지 플로팅 기술 적용**
+
+### v5.91 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
+- **[대시보드/UI] 통합 메인 대시보드 화면의 반응형 다단 배치 개선 및 자동 줄바꿈 방지 기능 적용**
+- **[대시보드/UI] 시설 매뉴얼 핵심 모듈 카드의 대표 아이콘 및 파란색 디자인 테마 전격 개편**
+
+### v5.90 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
+- **[구조/UI] 중분류 및 소분류 메뉴의 기존 고유 아이콘 복원 및 최하위 단계 도트 구분선 한정 이식**
+
 ### v5.47 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.17</span>
 - **[시스템/운영] 대량의 매뉴얼 이미지에 대한 대분류별 영문 폴더 체계 정비**
 - **[시스템/운영] 전체 매뉴얼 화면의 이미지 참조 방식을 로컬 완전 자립형 상대 경로로 100% 자동 치환 완료**

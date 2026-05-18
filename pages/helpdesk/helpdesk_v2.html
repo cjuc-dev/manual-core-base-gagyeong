@@ -15,19 +15,19 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <script>
-        // Firebase configuration
+        // Firebase configuration (예약 시스템 voc-data-b7f07 프로젝트 대통합 키값 탑재)
         const firebaseConfig = {
-            apiKey: "AIzaSyDqFfvKNPLIlOYdMQCJNJPcLdJYxvCLGkI",
-            authDomain: "manual-8-c9e9f.firebaseapp.com",
-            projectId: "manual-8-c9e9f",
-            storageBucket: "manual-8-c9e9f.firebasestorage.app",
-            messagingSenderId: "1050024652863",
-            appId: "1:1050024652863:web:4d5f2e1e8c7f0b8c9e9e9f"
+            apiKey: "AIzaSyAN3tBx_SCvQaiKeDTjGwaUWNOtmINwv4k",
+            authDomain: "voc-data-b7f07.firebaseapp.com",
+            projectId: "voc-data-b7f07",
+            storageBucket: "voc-data-b7f07.firebasestorage.app",
+            messagingSenderId: "750066755264",
+            appId: "1:750066755264:web:bf23a4bd56a9aae4276f25"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         window.db = firebase.firestore();
-        console.log("Firebase initialized in helpdesk_v2");
+        console.log("Firebase initialized in helpdesk_v2 (voc-data-b7f07 대통합)");
     </script>
     
     <style>
@@ -347,12 +347,12 @@
             console.log("loadVocList called");
             let list = [];
             
-            // 1. Try to load from Firestore (Compat)
+            // 1. Try to load from Firestore (Compat - manual 대통합 서브컬렉션 이식)
             try {
                 if (window.db) {
-                    console.log("Fetching system_requests from Firestore...");
-                    // Compat: db.collection().orderBy().get()
-                    const querySnapshot = await window.db.collection("system_requests").orderBy("id", "desc").get();
+                    console.log("Fetching inquiries from Firestore manual collection...");
+                    // Compat: db.collection().doc().collection().orderBy().get()
+                    const querySnapshot = await window.db.collection("manual").doc("system_info").collection("inquiries").orderBy("id", "desc").get();
                     
                     querySnapshot.forEach((doc) => {
                         list.push({ firestoreId: doc.id, ...doc.data() });
@@ -474,9 +474,9 @@
             
             try {
                 if (window.db) {
-                    console.log("Saving to Firebase...");
-                    // Compat: db.collection().add()
-                    await window.db.collection("system_requests").add({
+                    console.log("Saving to Firebase manual inquiries collection...");
+                    // Compat: db.collection().doc().collection().add()
+                    await window.db.collection("manual").doc("system_info").collection("inquiries").add({
                         ...newVoc,
                         id: Date.now() // Use timestamp as ID for Firestore
                     });
@@ -601,8 +601,8 @@
 
             try {
                 if (window.db && voc.firestoreId) {
-                    // Compat: db.collection().doc().update()
-                    await window.db.collection("system_requests").doc(voc.firestoreId).update({
+                    // Compat: db.collection().doc().collection().doc().update()
+                    await window.db.collection("manual").doc("system_info").collection("inquiries").doc(voc.firestoreId).update({
                         status: newStatus,
                         adminResponse: newResponse
                     });
@@ -638,8 +638,8 @@
                 
                 try {
                     if (window.db && voc && voc.firestoreId) {
-                        // Compat: db.collection().doc().delete()
-                        await window.db.collection("system_requests").doc(voc.firestoreId).delete();
+                        // Compat: db.collection().doc().collection().doc().delete()
+                        await window.db.collection("manual").doc("system_info").collection("inquiries").doc(voc.firestoreId).delete();
                     } else {
                         const newList = list.filter(v => Number(v.id) !== targetId);
                         saveVocList(newList);
