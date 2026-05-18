@@ -4,6 +4,10 @@
 
 ---
 
+### v5.93 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
+- **[시스템/UI] 문의게시판 답변 항목의 테두리 여백 개선 및 안내 수직 정렬 완료**
+- **[시스템/UI] 문의상자 구분선 하단 조작 단추들과의 충분한 이격 거리 확보**
+
 ### v5.92 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
 - **[시스템/UI] 매뉴얼 상세 화면의 인쇄 최적화 Clean Print 엔진 탑재 및 인쇄 전용 버튼 배치 완료**
 - **[시스템/UI] 문서 하단 네이버 블로그 스타일의 공감 캡슐 기능 구현 및 로컬 브라우저 상태 기억 시스템 구축**
