@@ -4,6 +4,10 @@
 
 ---
 
+### v5.94 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
+- **[시스템/기능] 관리자 화면 내 실시간 이용 통계 대시보드 3대 랭킹 보드 신설 완료**
+- **[시스템/기능] 개별 매뉴얼 조회수, 공감 만족도 지표 및 실시간 검색어 순위 집계 엔진 탑재**
+
 ### v5.93 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
 - **[시스템/UI] 문의게시판 답변 항목의 테두리 여백 개선 및 안내 수직 정렬 완료**
 - **[시스템/UI] 문의상자 구분선 하단 조작 단추들과의 충분한 이격 거리 확보**

@@ -199,6 +199,39 @@ window.performSearch = function(query, resultContainerId) {
         container.innerHTML = `<div class="px-4 py-8 text-center text-sm text-gray-500">결과가 없습니다.</div>`;
     }
     container.classList.remove('hidden');
+
+    // 🚀 [v5.93] 실시간 사용성 인텔리전스 분석 검색어(Keywords) 500ms 디바운스 수집 필터 탑재
+    if (window.db && query.trim().length >= 2) {
+        if (!window.searchAnalyticsTimer) { window.searchAnalyticsTimer = null; }
+        clearTimeout(window.searchAnalyticsTimer);
+        window.searchAnalyticsTimer = setTimeout(() => {
+            const cleanQuery = query.trim().toLowerCase();
+            const sessionSearchKey = `sos_search_logged_${cleanQuery}`;
+            
+            if (!sessionStorage.getItem(sessionSearchKey)) {
+                sessionStorage.setItem(sessionSearchKey, 'true');
+                const keywordRef = db.collection('manual').doc('system_info').collection('analytics_keywords').doc(cleanQuery);
+                
+                db.runTransaction(async (transaction) => {
+                    const sfDoc = await transaction.get(keywordRef);
+                    if (!sfDoc.exists) {
+                        transaction.set(keywordRef, {
+                            keyword: cleanQuery,
+                            searchCount: 1,
+                            lastSearched: new Date(),
+                            rankChange: 0
+                        });
+                    } else {
+                        const newCount = (sfDoc.data().searchCount || 0) + 1;
+                        transaction.update(keywordRef, {
+                            searchCount: newCount,
+                            lastSearched: new Date()
+                        });
+                    }
+                }).catch(err => console.warn("[Analytics] Keywords transaction failed:", err));
+            }
+        }, 500);
+    }
 };
 
 /**

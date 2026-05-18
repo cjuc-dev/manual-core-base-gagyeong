@@ -566,6 +566,43 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                 }
             }, 300);
         }
+
+        // 🚀 [v5.93] 실시간 사용성 인텔리전스 분석 조회수(Views) 수집 필터 탑재
+        if (window.db && safeId !== 'system_inquiry') {
+            try {
+                const today = new Date().toLocaleDateString();
+                const viewKey = `sos_view_${safeId}_${facility}`;
+                const lastViewedDate = localStorage.getItem(viewKey);
+                
+                if (lastViewedDate !== today) {
+                    localStorage.setItem(viewKey, today);
+                    const viewRef = window.db.collection('manual').doc('system_info').collection('analytics_views').doc(safeId);
+                    
+                    window.db.runTransaction(async (transaction) => {
+                        const sfDoc = await transaction.get(viewRef);
+                        const cleanTitle = docTitle || safeId;
+                        if (!sfDoc.exists) {
+                            transaction.set(viewRef, {
+                                contentId: safeId,
+                                title: cleanTitle,
+                                facility: facility,
+                                viewCount: 1,
+                                lastViewed: new Date()
+                            });
+                        } else {
+                            const newCount = (sfDoc.data().viewCount || 0) + 1;
+                            transaction.update(viewRef, {
+                                viewCount: newCount,
+                                lastViewed: new Date(),
+                                title: cleanTitle
+                            });
+                        }
+                    }).catch(err => console.warn("[Analytics] Views transaction failed:", err));
+                }
+            } catch (analyticsErr) {
+                console.warn("[Analytics] Views gathering error:", analyticsErr);
+            }
+        }
     } catch (err) {
         contentArea.innerHTML = tabsHtml + `
             <div class="text-center py-20 text-gray-500">

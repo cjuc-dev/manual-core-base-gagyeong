@@ -121,6 +121,30 @@ window.toggleLike = async function(contentId) {
             await db.collection('manual').doc('likes').update({
                 [contentId]: firebase.firestore.FieldValue.increment(incrementVal)
             });
+
+            // 🚀 [v5.93] 실시간 사용성 인텔리전스 분석 공감(Likes) 랭킹 컬렉션 동시 업데이트
+            const likeRef = db.collection('manual').doc('system_info').collection('analytics_likes').doc(contentId);
+            const titleEl = document.querySelector('#content-area h1') || document.querySelector('#markdown-body h1');
+            const cleanTitle = titleEl ? titleEl.textContent.trim() : contentId;
+            
+            db.runTransaction(async (transaction) => {
+                const sfDoc = await transaction.get(likeRef);
+                if (!sfDoc.exists) {
+                    transaction.set(likeRef, {
+                        contentId: contentId,
+                        title: cleanTitle,
+                        likeCount: Math.max(0, 10 + incrementVal),
+                        lastLiked: new Date()
+                    });
+                } else {
+                    const newCount = Math.max(0, (sfDoc.data().likeCount || 0) + incrementVal);
+                    transaction.update(likeRef, {
+                        likeCount: newCount,
+                        lastLiked: new Date(),
+                        title: cleanTitle
+                    });
+                }
+            }).catch(err => console.warn("[Analytics] Likes transaction failed:", err));
             
             // 상태 기록 확정
             localStorage.setItem(userLikeKey, String(nextLikedState));
