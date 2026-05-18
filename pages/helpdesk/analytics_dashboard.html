@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOS 실시간 사용성 인텔리전스 분석 대시보드</title>
+    <title>SOS 사용성 인텔리전스 분석 대시보드</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // 🚀 [v5.97] 테마 시스템 최적화: 테마 번쩍임(Flicker) 현상을 원천 방어하기 위해 헤드 영역에서 즉시 다크모드 주입
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <!-- Google Fonts -->
@@ -17,78 +26,91 @@
     
     <style>
         body {
-            background-color: #0f172a;
-            color: #f3f4f6;
             font-family: 'Pretendard', sans-serif;
             min-height: 100vh;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        /* 다크모드 백그라운드: 중후한 우주빛 다크 슬레이트 그라디언트 */
+        .dark body {
+            background-color: #0f172a;
             background-image: 
                 radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
                 radial-gradient(at 50% 0%, hsla(225,39%,25%,1) 0, transparent 50%), 
                 radial-gradient(at 100% 0%, hsla(339,49%,25%,1) 0, transparent 50%);
             background-attachment: fixed;
         }
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        /* 라이트모드 백그라운드: 맑고 정돈된 에메랄드 스치듯 지나가는 화이트 슬레이트 */
+        html:not(.dark) body {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(200,30%,94%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(160,30%,94%,1) 0, transparent 50%);
+            background-attachment: fixed;
         }
-        .glass-card {
-            background: rgba(15, 23, 42, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        /* 동적 글래스모피즘 패널 스타일 */
+        .glass-panel {
+            transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
         /* 스크롤바 디자인 슬림화 */
         ::-webkit-scrollbar {
             width: 6px;
         }
         ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.05);
+        }
+        .dark ::-webkit-scrollbar-track {
             background: rgba(15, 23, 42, 0.3);
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(52, 211, 153, 0.2);
+            background: rgba(16, 185, 129, 0.2);
             border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(52, 211, 153, 0.4);
+            background: rgba(16, 185, 129, 0.4);
         }
     </style>
 </head>
-<body class="py-10 px-6">
+<body class="py-10 px-6 text-slate-800 dark:text-gray-100">
     <div class="max-w-6xl mx-auto">
         <!-- 헤더 영역 -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-gray-800/80 gap-4">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-slate-200 dark:border-gray-800/80 gap-4">
             <div>
-                <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 flex items-center gap-3">
+                <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-cyan-600 dark:from-emerald-400 dark:to-cyan-400 flex items-center gap-3">
                     <i class="ph ph-chart-line-up text-4xl"></i> SOS 사용성 인텔리전스 대시보드
                 </h1>
-                <p class="text-gray-400 text-sm mt-2">매뉴얼 조회, 공감 만족도 및 실시간 검색어 패턴을 실시간 계측하는 고품격 분석 보드</p>
+                <p class="text-slate-500 dark:text-gray-400 text-sm mt-2">매뉴얼 조회, 공감 만족도 및 실시간 검색어 패턴을 실시간 계측하는 고품격 분석 보드</p>
             </div>
-            <div class="flex items-center gap-3 shrink-0">
-                <a href="../admin_dashboard.html" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-gray-300 hover:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 border border-slate-700">
+            
+            <div class="flex items-center gap-2.5 shrink-0">
+                <!-- 💡 [v5.97] 초프리미엄 테마 스위처 (실시간 화이트/다크 토글 지원) -->
+                <button onclick="toggleThemeSystem()" class="w-10 h-10 rounded-xl bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-amber-400 border border-slate-300 dark:border-slate-700 flex items-center justify-center transition-all active:scale-90" title="화면 테마 모드 전환">
+                    <i id="themeBtnIcon" class="ph ph-sun text-xl"></i>
+                </button>
+                <a href="../admin_dashboard.html" class="px-4 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 border border-slate-200 dark:border-slate-700 shadow-sm">
                     <i class="ph ph-arrow-left"></i> 관제실로
                 </a>
-                <a href="../../index.html" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-gray-300 hover:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 border border-slate-700">
+                <a href="../../index.html" class="px-4 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 border border-slate-200 dark:border-slate-700 shadow-sm">
                     <i class="ph ph-house"></i> 매뉴얼 홈
                 </a>
             </div>
         </div>
 
-        <!-- 🚀 [v5.95] 일간/월간/누적 TOP 스위칭 컨트롤 탭 신설 -->
-        <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/60 p-4 rounded-3xl border border-gray-800/60">
+        <!-- 🚀 일간/월간/누적 TOP 스위칭 컨트롤 탭 신설 -->
+        <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white/80 dark:bg-slate-900/60 p-4 rounded-3xl border border-slate-200 dark:border-gray-800/60 shadow-sm shadow-slate-100 dark:shadow-none">
             <div class="flex items-center gap-3">
-                <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></div>
-                <span class="text-xs text-emerald-400 font-extrabold tracking-wide uppercase">실시간 인텔리전스 스트림 가동 중</span>
-                <span id="syncTime" class="text-[10px] text-gray-500 font-mono">동기화 대기 중...</span>
+                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-ping"></div>
+                <span class="text-xs text-emerald-600 dark:text-emerald-400 font-extrabold tracking-wide uppercase">실시간 인텔리전스 스트림 가동 중</span>
+                <span id="syncTime" class="text-[10px] text-slate-400 dark:text-gray-500 font-mono">동기화 대기 중...</span>
             </div>
             
-            <div class="flex bg-slate-950/80 p-1 rounded-2xl border border-gray-800 shrink-0">
+            <div class="flex bg-slate-100 dark:bg-slate-950/80 p-1 rounded-2xl border border-slate-200 dark:border-gray-800 shrink-0">
                 <button onclick="switchTabFilter('total')" id="tabBtn_total" class="px-4 py-2 text-xs font-black rounded-xl transition-all bg-emerald-500 text-slate-950 shadow-md">
                     📊 누적 TOP
                 </button>
-                <button onclick="switchTabFilter('monthly')" id="tabBtn_monthly" class="px-4 py-2 text-xs font-extrabold rounded-xl transition-all text-gray-400 hover:text-white">
+                <button onclick="switchTabFilter('monthly')" id="tabBtn_monthly" class="px-4 py-2 text-xs font-extrabold rounded-xl transition-all text-slate-500 dark:text-gray-400 hover:text-slate-950 dark:hover:text-white">
                     📅 월간 TOP (30일)
                 </button>
-                <button onclick="switchTabFilter('daily')" id="tabBtn_daily" class="px-4 py-2 text-xs font-extrabold rounded-xl transition-all text-gray-400 hover:text-white">
+                <button onclick="switchTabFilter('daily')" id="tabBtn_daily" class="px-4 py-2 text-xs font-extrabold rounded-xl transition-all text-slate-500 dark:text-gray-400 hover:text-slate-950 dark:hover:text-white">
                     ⏰ 일간 TOP (오늘)
                 </button>
             </div>
@@ -98,37 +120,37 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             
             <!-- 🟢 인기 조회 매뉴얼 TOP 10 (Views) -->
-            <div class="p-6 rounded-3xl glass-panel hover:border-emerald-500/20 transition-all flex flex-col justify-between">
+            <div class="p-6 rounded-3xl glass-panel bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/5 shadow-xl shadow-slate-100 dark:shadow-none hover:border-emerald-500/20 dark:hover:border-emerald-500/20 transition-all flex flex-col justify-between">
                 <div>
-                    <h3 class="text-white font-black text-sm flex items-center gap-2 border-b border-gray-800/60 pb-3 mb-5">
-                        <i class="ph ph-eye text-emerald-400 text-lg"></i> 인기 조회 매뉴얼 TOP 10
+                    <h3 class="text-slate-900 dark:text-white font-black text-sm flex items-center gap-2 border-b border-slate-100 dark:border-gray-800/60 pb-3 mb-5">
+                        <i class="ph ph-eye text-emerald-600 dark:text-emerald-400 text-lg"></i> 인기 조회 매뉴얼 TOP 10
                     </h3>
                     <div id="viewsRankContainer" class="max-h-[460px] overflow-y-auto pr-1">
-                        <div class="py-12 text-center text-xs text-gray-500">통계 스캔 중...</div>
+                        <div class="py-12 text-center text-xs text-slate-400 dark:text-gray-500">통계 스캔 중...</div>
                     </div>
                 </div>
             </div>
 
             <!-- 💖 최다 공감 매뉴얼 TOP 10 (Likes) -->
-            <div class="p-6 rounded-3xl glass-panel hover:border-rose-500/20 transition-all flex flex-col justify-between">
+            <div class="p-6 rounded-3xl glass-panel bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/5 shadow-xl shadow-slate-100 dark:shadow-none hover:border-rose-500/20 dark:hover:border-rose-500/20 transition-all flex flex-col justify-between">
                 <div>
-                    <h3 class="text-white font-black text-sm flex items-center gap-2 border-b border-gray-800/60 pb-3 mb-5">
-                        <i class="ph ph-heart-fill text-rose-400 text-lg"></i> 최다 공감 매뉴얼 TOP 10
+                    <h3 class="text-slate-900 dark:text-white font-black text-sm flex items-center gap-2 border-b border-slate-100 dark:border-gray-800/60 pb-3 mb-5">
+                        <i class="ph ph-heart-fill text-rose-500 dark:text-rose-400 text-lg"></i> 최다 공감 매뉴얼 TOP 10
                     </h3>
                     <div id="likesRankContainer" class="max-h-[460px] overflow-y-auto pr-1">
-                        <div class="py-12 text-center text-xs text-gray-500">통계 스캔 중...</div>
+                        <div class="py-12 text-center text-xs text-slate-400 dark:text-gray-500">통계 스캔 중...</div>
                     </div>
                 </div>
             </div>
 
             <!-- 🔥 실시간 인기 검색어 TOP 10 (Keywords) -->
-            <div class="p-6 rounded-3xl glass-panel hover:border-cyan-500/20 transition-all flex flex-col justify-between">
+            <div class="p-6 rounded-3xl glass-panel bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/5 shadow-xl shadow-slate-100 dark:shadow-none hover:border-cyan-500/20 dark:hover:border-cyan-500/20 transition-all flex flex-col justify-between">
                 <div>
-                    <h3 class="text-white font-black text-sm flex items-center gap-2 border-b border-gray-800/60 pb-3 mb-5">
-                        <i class="ph ph-fire text-cyan-400 text-lg animate-pulse"></i> 실시간 인기 검색어 TOP 10
+                    <h3 class="text-slate-900 dark:text-white font-black text-sm flex items-center gap-2 border-b border-slate-100 dark:border-gray-800/60 pb-3 mb-5">
+                        <i class="ph ph-fire text-cyan-600 dark:text-cyan-400 text-lg animate-pulse"></i> 실시간 인기 검색어 TOP 10
                     </h3>
                     <div id="keywordsRankContainer" class="max-h-[460px] overflow-y-auto pr-1">
-                        <div class="py-12 text-center text-xs text-gray-500">통계 스캔 중...</div>
+                        <div class="py-12 text-center text-xs text-slate-400 dark:text-gray-500">통계 스캔 중...</div>
                     </div>
                 </div>
             </div>
@@ -136,19 +158,19 @@
         </div>
 
         <!-- 🚀 [v5.95] 추천 피처: 🚨 실시간 검색 실패 (No-Result) 키워드 관제 패널 추가 -->
-        <div class="p-8 rounded-3xl glass-panel hover:border-amber-500/20 transition-all">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-800/60 pb-4 mb-6 gap-3">
+        <div class="p-8 rounded-3xl glass-panel bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/5 shadow-xl shadow-slate-100 dark:shadow-none hover:border-amber-500/20 dark:hover:border-amber-500/20 transition-all">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-100 dark:border-gray-800/60 pb-4 mb-6 gap-3">
                 <div>
-                    <h3 class="text-white font-black text-base flex items-center gap-2">
-                        <i class="ph ph-warning-octagon text-amber-500 text-2xl animate-bounce"></i> 🚨 실시간 검색 실패 (정보 누락) 키워드 TOP 10
+                    <h3 class="text-slate-900 dark:text-white font-black text-base flex items-center gap-2">
+                        <i class="ph ph-warning-octagon text-amber-600 dark:text-amber-500 text-2xl animate-bounce"></i> 🚨 실시간 검색 실패 (정보 누락) 키워드 TOP 10
                     </h3>
-                    <p class="text-xs text-gray-400 mt-1">직원들이 검색했으나 검색 결과가 0건으로 매칭 실패한 단어들입니다. 관리자는 이 지표를 보고 누락된 매뉴얼을 선제 보강하십시오.</p>
+                    <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">직원들이 검색했으나 검색 결과가 0건으로 매칭 실패한 단어들입니다. 관리자는 이 지표를 보고 누락된 매뉴얼을 선제 보강하십시오.</p>
                 </div>
-                <span class="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-[10px] font-black text-amber-400 rounded-full shrink-0">실시간 경보 발동 중</span>
+                <span class="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-[10px] font-black text-amber-600 dark:text-amber-400 rounded-full shrink-0">실시간 경보 발동 중</span>
             </div>
             
             <div id="failedKeywordsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div class="col-span-full py-6 text-center text-xs text-gray-500">매칭 실패 로그 분석 중...</div>
+                <div class="col-span-full py-6 text-center text-xs text-slate-400 dark:text-gray-500">매칭 실패 로그 분석 중...</div>
             </div>
         </div>
     </div>
@@ -172,6 +194,36 @@
         let rawLikes = [];
         let rawKeywords = [];
         let currentTabFilter = 'total'; // 'total', 'monthly', 'daily'
+
+        // ==========================================
+        // 🚀 [v5.97] 초프리미엄 라이트/다크 테마 동적 토글 엔진
+        // ==========================================
+        function toggleThemeSystem() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateThemeSwitcherUI();
+        }
+
+        function updateThemeSwitcherUI() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const icon = document.getElementById('themeBtnIcon');
+            if (icon) {
+                if (isDark) {
+                    icon.className = "ph ph-sun text-xl text-amber-400"; // 다크모드일 때는 해 아이콘 표출
+                } else {
+                    icon.className = "ph ph-moon-stars text-xl text-slate-700"; // 라이트모드일 때는 달 아이콘 표출
+                }
+            }
+        }
+        
+        // 초기 UI 반영 로드
+        updateThemeSwitcherUI();
 
         // 🚀 [v5.95] 매뉴얼 아이디와 카테고리를 활용해 직관적인 "대분류-시설명" 라벨을 생성해주는 지능형 맵핑 엔진
         function formatManualCategory(contentId, title, facility) {
@@ -206,8 +258,8 @@
             
             return `
             <div class="flex flex-col gap-0.5 max-w-[195px] overflow-hidden">
-                <span class="text-[10px] font-black text-emerald-400 tracking-wider">${prefix}</span>
-                <span class="text-xs font-bold text-gray-200 truncate group-hover:text-white transition-colors" title="${title || contentId}">${title || contentId}</span>
+                <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 tracking-wider">${prefix}</span>
+                <span class="text-xs font-bold text-slate-800 dark:text-gray-200 truncate group-hover:text-emerald-600 dark:group-hover:text-white transition-colors" title="${title || contentId}">${title || contentId}</span>
             </div>`;
         }
 
@@ -217,18 +269,16 @@
         function switchTabFilter(filterType) {
             currentTabFilter = filterType;
             
-            // 버튼 액티브 스타일 초기화
             const btns = ['total', 'monthly', 'daily'];
             btns.forEach(btn => {
                 const el = document.getElementById(`tabBtn_${btn}`);
                 if (btn === filterType) {
                     el.className = "px-4 py-2 text-xs font-black rounded-xl transition-all bg-emerald-500 text-slate-950 shadow-md";
                 } else {
-                    el.className = "px-4 py-2 text-xs font-extrabold rounded-xl transition-all text-gray-400 hover:text-white";
+                    el.className = "px-4 py-2 text-xs font-extrabold rounded-xl transition-all text-slate-500 dark:text-gray-400 hover:text-slate-950 dark:hover:text-white";
                 }
             });
             
-            // 캐시 데이터 기준 즉시 화면 재렌더링 기동
             renderViews();
             renderLikes();
             renderKeywords();
@@ -242,16 +292,13 @@
             const now = new Date();
             
             if (currentTabFilter === 'daily') {
-                // 일간: 오늘 날짜인지 체크
                 return targetDate.toDateString() === now.toDateString();
             } else if (currentTabFilter === 'monthly') {
-                // 월간: 최근 30일 이내인지 체크
                 const diffTime = Math.abs(now - targetDate);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 return diffDays <= 30;
             }
             
-            // 누적(total)인 경우 필터링 통과
             return true;
         }
 
@@ -265,7 +312,7 @@
             const filtered = rawViews.filter(v => filterByTime(v.lastViewed));
             
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="py-24 text-center text-xs text-gray-500">지정된 기간(${currentTabFilter})의 조회 기록이 없습니다.</div>`;
+                container.innerHTML = `<div class="py-24 text-center text-xs text-slate-400 dark:text-gray-500">지정된 기간(${currentTabFilter})의 조회 기록이 없습니다.</div>`;
                 return;
             }
             
@@ -279,12 +326,12 @@
                 <div class="mb-4 group">
                     <div class="flex justify-between items-center text-[11px] mb-1.5">
                         <div class="flex items-center gap-2">
-                            <span class="font-mono text-gray-500 font-bold shrink-0">${idx + 1}.</span>
+                            <span class="font-mono text-slate-400 dark:text-gray-500 font-bold shrink-0">${idx + 1}.</span>
                             ${formattedTitle}
                         </div>
-                        <span class="font-mono text-emerald-400 font-black shrink-0 text-xs bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">${v.viewCount}회</span>
+                        <span class="font-mono text-emerald-600 dark:text-emerald-400 font-black shrink-0 text-xs bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">${v.viewCount}회</span>
                     </div>
-                    <div class="w-full bg-slate-900/60 rounded-full h-1.5 overflow-hidden border border-slate-800">
+                    <div class="w-full bg-slate-100 dark:bg-slate-900/60 rounded-full h-1.5 overflow-hidden border border-slate-200 dark:border-slate-800">
                         <div class="bg-gradient-to-r from-emerald-500 to-cyan-500 h-full rounded-full transition-all duration-1000" style="width: ${percent}%"></div>
                     </div>
                 </div>`;
@@ -302,21 +349,21 @@
             const filtered = rawLikes.filter(l => filterByTime(l.lastLiked));
             
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="py-24 text-center text-xs text-gray-500">지정된 기간(${currentTabFilter})의 공감 기록이 없습니다.</div>`;
+                container.innerHTML = `<div class="py-24 text-center text-xs text-slate-400 dark:text-gray-500">지정된 기간(${currentTabFilter})의 공감 기록이 없습니다.</div>`;
                 return;
             }
             
             let html = filtered.map((l, idx) => {
                 const formattedTitle = formatManualCategory(l.contentId, l.title, l.facility);
                 return `
-                <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-900/40 hover:bg-slate-900/70 border border-slate-800/40 transition-all mb-3.5 group">
+                <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900/70 border border-slate-200 dark:border-slate-800/40 transition-all mb-3.5 group">
                     <div class="flex items-center gap-2 overflow-hidden">
-                        <span class="font-mono text-gray-500 font-bold shrink-0">${idx + 1}.</span>
+                        <span class="font-mono text-slate-400 dark:text-gray-500 font-bold shrink-0">${idx + 1}.</span>
                         ${formattedTitle}
                     </div>
                     <div class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-rose-500/10 to-pink-500/10 border border-rose-500/20 group-hover:scale-105 transition-transform duration-200 shrink-0">
                         <i class="ph ph-heart-fill text-rose-500 text-xs"></i>
-                        <span class="text-xs font-black text-rose-400 font-mono">${l.likeCount}</span>
+                        <span class="text-xs font-black text-rose-500 dark:text-rose-400 font-mono">${l.likeCount}</span>
                     </div>
                 </div>`;
             }).join('');
@@ -333,29 +380,29 @@
             const filtered = rawKeywords.filter(k => filterByTime(k.lastSearched));
             
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="py-24 text-center text-xs text-gray-500">지정된 기간(${currentTabFilter})의 검색 기록이 없습니다.</div>`;
+                container.innerHTML = `<div class="py-24 text-center text-xs text-slate-400 dark:text-gray-500">지정된 기간(${currentTabFilter})의 검색 기록이 없습니다.</div>`;
                 return;
             }
             
             let html = filtered.map((k, idx) => {
-                let medal = `<span class="w-5 h-5 rounded-full bg-slate-800 text-[10px] text-gray-400 flex items-center justify-center font-bold font-mono">${idx + 1}</span>`;
+                let medal = `<span class="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] text-slate-500 dark:text-gray-400 flex items-center justify-center font-bold font-mono border border-slate-200 dark:border-none">${idx + 1}</span>`;
                 if (idx === 0) medal = `<span class="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px] shadow-lg shadow-amber-500/20">🥇</span>`;
                 if (idx === 1) medal = `<span class="w-5 h-5 rounded-full bg-slate-300 text-slate-800 flex items-center justify-center text-[10px] shadow-lg shadow-slate-300/20">🥈</span>`;
                 if (idx === 2) medal = `<span class="w-5 h-5 rounded-full bg-amber-700 text-white flex items-center justify-center text-[10px] shadow-lg shadow-amber-700/20">🥉</span>`;
                 
                 const rankChange = k.rankChange || 0;
-                let changeIcon = `<i class="ph ph-minus text-gray-600 text-xs"></i>`;
-                if (rankChange > 0) changeIcon = `<div class="flex items-center text-rose-400"><i class="ph ph-caret-up text-xs"></i><span class="text-[9px] font-mono font-bold">${rankChange}</span></div>`;
-                else if (rankChange < 0) changeIcon = `<div class="flex items-center text-cyan-400"><i class="ph ph-caret-down text-xs"></i><span class="text-[9px] font-mono font-bold">${Math.abs(rankChange)}</span></div>`;
+                let changeIcon = `<i class="ph ph-minus text-slate-300 dark:text-gray-600 text-xs"></i>`;
+                if (rankChange > 0) changeIcon = `<div class="flex items-center text-rose-500 dark:text-rose-400"><i class="ph ph-caret-up text-xs"></i><span class="text-[9px] font-mono font-bold">${rankChange}</span></div>`;
+                else if (rankChange < 0) changeIcon = `<div class="flex items-center text-cyan-600 dark:text-cyan-400"><i class="ph ph-caret-down text-xs"></i><span class="text-[9px] font-mono font-bold">${Math.abs(rankChange)}</span></div>`;
 
                 return `
-                <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-900/40 hover:bg-slate-900/70 border border-slate-800/40 transition-all mb-3.5">
+                <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900/70 border border-slate-200 dark:border-slate-800/40 transition-all mb-3.5">
                     <div class="flex items-center gap-2 overflow-hidden">
                         ${medal}
-                        <span class="text-xs font-bold text-gray-200 truncate">${k.keyword}</span>
+                        <span class="text-xs font-bold text-slate-800 dark:text-gray-200 truncate">${k.keyword}</span>
                     </div>
                     <div class="flex items-center gap-3 shrink-0">
-                        <span class="text-xs font-mono text-cyan-400 font-black">${k.searchCount}회</span>
+                        <span class="text-xs font-mono text-cyan-600 dark:text-cyan-400 font-black">${k.searchCount}회</span>
                         <div class="w-8 flex justify-end">${changeIcon}</div>
                     </div>
                 </div>`;
@@ -396,7 +443,7 @@
                         renderKeywords();
                     });
 
-                // 4. 🚨 [v5.95 신설 추천 피처] 검색 실패 키워드 실시간 구독
+                // 4. 🚨 검색 실패 키워드 실시간 구독
                 db.collection('manual').doc('system_info').collection('analytics_search_failed')
                     .orderBy('failCount', 'desc').limit(10)
                     .onSnapshot(snap => {
@@ -404,9 +451,9 @@
                         if (!container) return;
                         
                         if (snap.empty) {
-                            container.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-gray-500 flex flex-col items-center gap-2">
+                            container.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-slate-400 dark:text-gray-500 flex flex-col items-center gap-2">
                                 <i class="ph ph-check-circle text-emerald-500 text-2xl"></i>
-                                <span class="text-gray-400">매칭 실패한 검색어가 없습니다. 매뉴얼 정보 제공률 100%!</span>
+                                <span class="text-slate-500 dark:text-gray-400">매칭 실패한 검색어가 없습니다. 매뉴얼 정보 제공률 100%!</span>
                             </div>`;
                             return;
                         }
@@ -416,15 +463,15 @@
                         
                         let html = failed.map((f, idx) => {
                             return `
-                            <div class="p-4 rounded-2xl glass-card border border-amber-500/10 hover:border-amber-500/25 transition-all flex flex-col justify-between gap-3 group">
+                            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/35 border border-slate-200 dark:border-amber-500/10 hover:border-amber-500/30 dark:hover:border-amber-500/25 transition-all flex flex-col justify-between gap-3 group shadow-sm dark:shadow-none">
                                 <div class="flex justify-between items-start">
-                                    <span class="px-2 py-0.5 bg-amber-500/10 border border-amber-500/20 text-[9px] font-black text-amber-400 rounded-md">매칭 실패</span>
-                                    <span class="text-xs font-mono text-gray-500 font-bold">#0${idx + 1}</span>
+                                    <span class="px-2 py-0.5 bg-amber-100 dark:bg-amber-500/10 border border-amber-300 dark:border-amber-500/20 text-[9px] font-black text-amber-700 dark:text-amber-400 rounded-md">매칭 실패</span>
+                                    <span class="text-xs font-mono text-slate-400 dark:text-gray-500 font-bold">#0${idx + 1}</span>
                                 </div>
-                                <div class="text-sm font-extrabold text-gray-200 tracking-tight group-hover:text-white truncate">"${f.keyword}"</div>
-                                <div class="flex justify-between items-center mt-2 pt-2 border-t border-gray-800/40">
-                                    <span class="text-[10px] text-gray-500 font-mono">${new Date(f.lastSearched.toDate ? f.lastSearched.toDate() : f.lastSearched).toLocaleDateString()}</span>
-                                    <span class="text-xs font-black text-rose-400 font-mono flex items-center gap-0.5"><i class="ph ph-warning-circle"></i> ${f.failCount}회</span>
+                                <div class="text-sm font-extrabold text-slate-800 dark:text-gray-200 tracking-tight group-hover:text-emerald-600 dark:group-hover:text-white truncate">"${f.keyword}"</div>
+                                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-200 dark:border-gray-800/40">
+                                    <span class="text-[10px] text-slate-400 dark:text-gray-500 font-mono">${new Date(f.lastSearched.toDate ? f.lastSearched.toDate() : f.lastSearched).toLocaleDateString()}</span>
+                                    <span class="text-xs font-black text-rose-500 dark:text-rose-400 font-mono flex items-center gap-0.5"><i class="ph ph-warning-circle"></i> ${f.failCount}회</span>
                                 </div>
                             </div>`;
                         }).join('');

@@ -4,6 +4,10 @@
 
 ---
 
+### v5.97 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
+- **[시스템/UI] 실시간 통계 분석 대시보드 내 완벽한 화이트/다크 모드 하이브리드 자동 동기화 지원**
+- **[시스템/UI] 대시보드 상단 햅틱 인터랙티브 수동 테마 토글 스위치 및 깜빡임 방지 엔진 적용**
+
 ### v5.96 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
 - **[시스템/기능] 실시간 분석 대시보드 내 시간대별(일간/월간/누적) 3단계 인기 순위 필터 탭 시스템 구축**
 - **[시스템/기능] 직원 실시간 검색 실패(No-Result) 키워드 자동 감지 및 관리자 경보 관제 패널 추가 완료**
