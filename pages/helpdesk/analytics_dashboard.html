@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS 실시간 사용성 인텔리전스 분석 대시보드</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    
+    <!-- Firebase Compat SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f3f4f6;
+            font-family: 'Pretendard', sans-serif;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,25%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,25%,1) 0, transparent 50%);
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* 스크롤바 디자인 슬림화 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.3);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(52, 211, 153, 0.2);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(52, 211, 153, 0.4);
+        }
+    </style>
+</head>
+<body class="py-12 px-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- 헤더 영역 -->
+        <div class="flex justify-between items-center mb-10 pb-6 border-b border-gray-800">
+            <div>
+                <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 flex items-center gap-3">
+                    <i class="ph ph-chart-line-up text-4xl"></i> SOS 실시간 사용성 인텔리전스
+                </h1>
+                <p class="text-gray-400 text-sm mt-2">매뉴얼 조회, 공감 만족도 및 검색어 패턴을 실시간 계측하는 고품격 분석 보드</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="../admin_dashboard.html" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-gray-300 hover:text-white rounded-xl text-sm font-semibold transition-all flex items-center gap-2">
+                    <i class="ph ph-arrow-left"></i> 관제실로 돌아가기
+                </a>
+                <a href="../../index.html" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-gray-300 hover:text-white rounded-xl text-sm font-semibold transition-all flex items-center gap-2">
+                    <i class="ph ph-house"></i> 매뉴얼 홈으로
+                </a>
+            </div>
+        </div>
+
+        <!-- 📊 작업 진행 상태 콘솔 및 알림 -->
+        <div class="mb-8 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></div>
+                <span class="text-xs text-emerald-400 font-bold">실시간 인텔리전스 라이브 스트리밍 중</span>
+            </div>
+            <span id="syncTime" class="text-xs text-gray-500 font-mono">동기화 대기 중...</span>
+        </div>
+
+        <!-- 🚀 [v5.94] 실시간 사용성 인텔리전스 분석 (SOS Analytics Intelligence) TOP 10 3대 랭킹 보드 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- 🟢 인기 조회 매뉴얼 TOP 10 (Views) -->
+            <div class="p-6 rounded-3xl glass-panel hover:border-emerald-500/20 transition-all flex flex-col justify-between">
+                <div>
+                    <h3 class="text-white font-black text-sm flex items-center gap-2 border-b border-gray-800 pb-3 mb-5">
+                        <i class="ph ph-eye text-emerald-400 text-lg"></i> 인기 조회 매뉴얼 TOP 10
+                    </h3>
+                    <div id="viewsRankContainer" class="max-h-[500px] overflow-y-auto pr-1">
+                        <div class="py-12 text-center text-xs text-gray-500">통계 스캔 중...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 💖 최다 공감 매뉴얼 TOP 10 (Likes) -->
+            <div class="p-6 rounded-3xl glass-panel hover:border-rose-500/20 transition-all flex flex-col justify-between">
+                <div>
+                    <h3 class="text-white font-black text-sm flex items-center gap-2 border-b border-gray-800 pb-3 mb-5">
+                        <i class="ph ph-heart-fill text-rose-400 text-lg"></i> 최다 공감 매뉴얼 TOP 10
+                    </h3>
+                    <div id="likesRankContainer" class="max-h-[500px] overflow-y-auto pr-1">
+                        <div class="py-12 text-center text-xs text-gray-500">통계 스캔 중...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🔥 실시간 인기 검색어 TOP 10 (Keywords) -->
+            <div class="p-6 rounded-3xl glass-panel hover:border-cyan-500/20 transition-all flex flex-col justify-between">
+                <div>
+                    <h3 class="text-white font-black text-sm flex items-center gap-2 border-b border-gray-800 pb-3 mb-5">
+                        <i class="ph ph-fire text-cyan-400 text-lg animate-pulse"></i> 실시간 인기 검색어 TOP 10
+                    </h3>
+                    <div id="keywordsRankContainer" class="max-h-[500px] overflow-y-auto pr-1">
+                        <div class="py-12 text-center text-xs text-gray-500">통계 스캔 중...</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // 🚀 [구글 파이어베이스 voc-data-b7f07 프로젝트 설정 키값 통합 탑재]
+        const firebaseConfig = {
+            apiKey: "AIzaSyAN3tBx_SCvQaiKeDTjGwaUWNOtmINwv4k",
+            authDomain: "voc-data-b7f07.firebaseapp.com",
+            projectId: "voc-data-b7f07",
+            storageBucket: "voc-data-b7f07.firebasestorage.app",
+            messagingSenderId: "750066755264",
+            appId: "1:750066755264:web:bf23a4bd56a9aae4276f25"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // 🚀 [v5.94] 매뉴얼 아이디와 카테고리를 활용해 직관적인 "대분류-시설명" 라벨을 생성해주는 지능형 맵핑 엔진
+        function formatManualCategory(contentId, title, facility) {
+            let displayFacility = "";
+            const lowerId = (contentId || "").toLowerCase();
+            
+            // 1. 대분류 한국어 맵핑
+            if (facility === 'guide' || lowerId.includes('guide')) displayFacility = '시설안내';
+            else if (facility === 'data' || lowerId.includes('system') || lowerId.includes('inquiry')) displayFacility = '시스템';
+            else if (facility === 'voc' || lowerId.includes('voice') || lowerId.includes('voc')) displayFacility = '시민의소리';
+            else displayFacility = '매뉴얼';
+
+            // 2. 소분류(시설명) 한국어 맵핑 (시설 축약어 완전 배제 및 공식 전체 명칭 준수)
+            let subInfo = "";
+            if (lowerId.includes('swimming') || lowerId.includes('swimmingpool')) {
+                subInfo = "청주수영장";
+            } else if (lowerId.includes('bokdae')) {
+                subInfo = "복대국민체육센터";
+            } else if (lowerId.includes('gagyeong')) {
+                subInfo = "가경국민체육센터";
+            } else if (lowerId.includes('youngun') || lowerId.includes('yeoungun')) {
+                subInfo = "영운국민체육센터";
+            } else if (lowerId.includes('purmi')) {
+                subInfo = "푸르미스포츠센터";
+            } else if (lowerId.includes('sannam')) {
+                subInfo = "산남국민체육센터";
+            } else {
+                subInfo = "공통";
+            }
+
+            const prefix = `[${displayFacility}-${subInfo}]`;
+            
+            return `
+            <div class="flex flex-col gap-0.5 max-w-[195px] overflow-hidden">
+                <span class="text-[10px] font-black text-emerald-400 tracking-wider">${prefix}</span>
+                <span class="text-xs font-bold text-gray-200 truncate group-hover:text-white transition-colors" title="${title || contentId}">${title || contentId}</span>
+            </div>`;
+        }
+
+        // ==========================================
+        // 🚀 실시간 사용성 인텔리전스 분석 대시보드 로드 엔진
+        // ==========================================
+        async function loadAnalyticsDashboard() {
+            try {
+                // 1. 인기 조회 매뉴얼 TOP 10 (Views)
+                db.collection('manual').doc('system_info').collection('analytics_views')
+                    .orderBy('viewCount', 'desc').limit(10)
+                    .onSnapshot(snap => {
+                        const container = document.getElementById('viewsRankContainer');
+                        if (!container) return;
+                        
+                        document.getElementById('syncTime').innerText = "최근 동기화: " + new Date().toLocaleTimeString();
+                        
+                        if (snap.empty) {
+                            container.innerHTML = `<div class="py-12 text-center text-xs text-gray-500">집계된 조회 통계가 없습니다.</div>`;
+                            return;
+                        }
+                        
+                        let maxVal = 1;
+                        let views = [];
+                        snap.forEach(doc => {
+                            const d = doc.data();
+                            views.push(d);
+                            if (d.viewCount > maxVal) maxVal = d.viewCount;
+                        });
+                        
+                        let html = views.map((v, idx) => {
+                            const percent = Math.min(100, Math.round((v.viewCount / maxVal) * 100));
+                            const formattedTitle = formatManualCategory(v.contentId, v.title, v.facility);
+                            return `
+                            <div class="mb-4 group">
+                                <div class="flex justify-between items-center text-[11px] mb-1.5">
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-mono text-gray-500 font-bold shrink-0">${idx + 1}.</span>
+                                        ${formattedTitle}
+                                    </div>
+                                    <span class="font-mono text-emerald-400 font-black shrink-0 text-xs bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">${v.viewCount}회</span>
+                                </div>
+                                <div class="w-full bg-slate-900/60 rounded-full h-1.5 overflow-hidden border border-slate-800">
+                                    <div class="bg-gradient-to-r from-emerald-500 to-cyan-500 h-full rounded-full transition-all duration-1000" style="width: ${percent}%"></div>
+                                </div>
+                            </div>`;
+                        }).join('');
+                        container.innerHTML = html;
+                    });
+
+                // 2. 최다 공감 매뉴얼 TOP 10 (Likes)
+                db.collection('manual').doc('system_info').collection('analytics_likes')
+                    .orderBy('likeCount', 'desc').limit(10)
+                    .onSnapshot(snap => {
+                        const container = document.getElementById('likesRankContainer');
+                        if (!container) return;
+                        if (snap.empty) {
+                            container.innerHTML = `<div class="py-12 text-center text-xs text-gray-500">집계된 공감 통계가 없습니다.</div>`;
+                            return;
+                        }
+                        
+                        let likes = [];
+                        snap.forEach(doc => likes.push(doc.data()));
+                        
+                        let html = likes.map((l, idx) => {
+                            const formattedTitle = formatManualCategory(l.contentId, l.title, l.facility);
+                            return `
+                            <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-900/40 hover:bg-slate-900/70 border border-slate-800/40 transition-all mb-3.5 group">
+                                <div class="flex items-center gap-2 overflow-hidden">
+                                    <span class="font-mono text-gray-500 font-bold shrink-0">${idx + 1}.</span>
+                                    ${formattedTitle}
+                                </div>
+                                <div class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-rose-500/10 to-pink-500/10 border border-rose-500/20 group-hover:scale-105 transition-transform duration-200 shrink-0">
+                                    <i class="ph ph-heart-fill text-rose-500 text-xs"></i>
+                                    <span class="text-xs font-black text-rose-400 font-mono">${l.likeCount}</span>
+                                </div>
+                            </div>`;
+                        }).join('');
+                        container.innerHTML = html;
+                    });
+
+                // 3. 실시간 인기 검색어 랭킹 TOP 10 (Keywords)
+                db.collection('manual').doc('system_info').collection('analytics_keywords')
+                    .orderBy('searchCount', 'desc').limit(10)
+                    .onSnapshot(snap => {
+                        const container = document.getElementById('keywordsRankContainer');
+                        if (!container) return;
+                        if (snap.empty) {
+                            container.innerHTML = `<div class="py-12 text-center text-xs text-gray-500">집계된 검색어 통계가 없습니다.</div>`;
+                            return;
+                        }
+                        
+                        let keywords = [];
+                        snap.forEach(doc => keywords.push(doc.data()));
+                        
+                        let html = keywords.map((k, idx) => {
+                            let medal = `<span class="w-5 h-5 rounded-full bg-slate-800 text-[10px] text-gray-400 flex items-center justify-center font-bold font-mono">${idx + 1}</span>`;
+                            if (idx === 0) medal = `<span class="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px] shadow-lg shadow-amber-500/20">🥇</span>`;
+                            if (idx === 1) medal = `<span class="w-5 h-5 rounded-full bg-slate-300 text-slate-800 flex items-center justify-center text-[10px] shadow-lg shadow-slate-300/20">🥈</span>`;
+                            if (idx === 2) medal = `<span class="w-5 h-5 rounded-full bg-amber-700 text-white flex items-center justify-center text-[10px] shadow-lg shadow-amber-700/20">🥉</span>`;
+                            
+                            const rankChange = k.rankChange || 0;
+                            let changeIcon = `<i class="ph ph-minus text-gray-600 text-xs"></i>`;
+                            if (rankChange > 0) changeIcon = `<div class="flex items-center text-rose-400"><i class="ph ph-caret-up text-xs"></i><span class="text-[9px] font-mono font-bold">${rankChange}</span></div>`;
+                            else if (rankChange < 0) changeIcon = `<div class="flex items-center text-cyan-400"><i class="ph ph-caret-down text-xs"></i><span class="text-[9px] font-mono font-bold">${Math.abs(rankChange)}</span></div>`;
+
+                            return `
+                            <div class="flex justify-between items-center p-3 rounded-2xl bg-slate-900/40 hover:bg-slate-900/70 border border-slate-800/40 transition-all mb-3.5">
+                                <div class="flex items-center gap-2 overflow-hidden">
+                                    ${medal}
+                                    <span class="text-xs font-bold text-gray-200 truncate">${k.keyword}</span>
+                                </div>
+                                <div class="flex items-center gap-3 shrink-0">
+                                    <span class="text-xs font-mono text-cyan-400 font-black">${k.searchCount}회</span>
+                                    <div class="w-8 flex justify-end">${changeIcon}</div>
+                                </div>
+                            </div>`;
+                        }).join('');
+                        container.innerHTML = html;
+                    });
+            } catch (e) {
+                console.error("대시보드 실시간 리스너 로딩 에러:", e);
+            }
+        }
+        
+        loadAnalyticsDashboard();
+    </script>
+</body>
+</html>
