@@ -200,7 +200,7 @@ window.performSearch = function(query, resultContainerId) {
     }
     container.classList.remove('hidden');
 
-    // 🚀 [v5.93] 실시간 사용성 인텔리전스 분석 검색어(Keywords) 500ms 디바운스 수집 필터 탑재
+    // 🚀 [v5.95] 실시간 사용성 인텔리전스 분석 검색어(Keywords) 500ms 디바운스 수집 필터 탑재 (검색 실패 키워드 실시간 로깅 분류 수립)
     if (window.db && query.trim().length >= 2) {
         if (!window.searchAnalyticsTimer) { window.searchAnalyticsTimer = null; }
         clearTimeout(window.searchAnalyticsTimer);
@@ -210,23 +210,32 @@ window.performSearch = function(query, resultContainerId) {
             
             if (!sessionStorage.getItem(sessionSearchKey)) {
                 sessionStorage.setItem(sessionSearchKey, 'true');
-                const keywordRef = db.collection('manual').doc('system_info').collection('analytics_keywords').doc(cleanQuery);
+                
+                // 💡 [안심 설계] 검색 매칭 결과 건수(results.length)를 분석하여 성공어와 실패(No-Result)어를 물리적으로 분리 수집
+                const isFailed = (!results || results.length === 0);
+                const targetCol = isFailed ? 'analytics_search_failed' : 'analytics_keywords';
+                const countKey = isFailed ? 'failCount' : 'searchCount';
+                const keywordRef = db.collection('manual').doc('system_info').collection(targetCol).doc(cleanQuery);
                 
                 db.runTransaction(async (transaction) => {
                     const sfDoc = await transaction.get(keywordRef);
                     if (!sfDoc.exists) {
-                        transaction.set(keywordRef, {
+                        const initData = {
                             keyword: cleanQuery,
-                            searchCount: 1,
-                            lastSearched: new Date(),
-                            rankChange: 0
-                        });
-                    } else {
-                        const newCount = (sfDoc.data().searchCount || 0) + 1;
-                        transaction.update(keywordRef, {
-                            searchCount: newCount,
                             lastSearched: new Date()
-                        });
+                        };
+                        initData[countKey] = 1;
+                        if (!isFailed) initData.rankChange = 0;
+                        
+                        transaction.set(keywordRef, initData);
+                    } else {
+                        const newCount = (sfDoc.data()[countKey] || 0) + 1;
+                        const updateData = {
+                            lastSearched: new Date()
+                        };
+                        updateData[countKey] = newCount;
+                        
+                        transaction.update(keywordRef, updateData);
                     }
                 }).catch(err => console.warn("[Analytics] Keywords transaction failed:", err));
             }

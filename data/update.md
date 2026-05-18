@@ -4,6 +4,10 @@
 
 ---
 
+### v5.96 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
+- **[시스템/기능] 실시간 분석 대시보드 내 시간대별(일간/월간/누적) 3단계 인기 순위 필터 탭 시스템 구축**
+- **[시스템/기능] 직원 실시간 검색 실패(No-Result) 키워드 자동 감지 및 관리자 경보 관제 패널 추가 완료**
+
 ### v5.95 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
 - **[시스템/기능] 실시간 사용성 분석 대시보드와 데이터베이스 마이그레이션 관리 도구 물리적 완전 격리**
 - **[시스템/UI] 실시간 인기 매뉴얼 및 공감 지표에 대분류 및 시설 명칭(예: 시설안내-청주수영장) 연동 표기화**
