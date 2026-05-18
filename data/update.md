@@ -4,6 +4,10 @@
 
 ---
 
+### v5.99 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
+- **[시스템/UI] 사이버보안 관제실 제어 버튼들의 모바일/좁은 기기 강제 개행 결함 전면 완치**
+- **[시스템/UI] 대시보드 3대 인기 카드 내부의 max-h 제한 삭제로 이중 스크롤 중첩 현상 제거**
+
 ### v5.98 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
 - **[시스템/기능] 메인 시스템 테마(다크/라이트) 변경 시 대시보드 테마 실시간 양방향 100% 자동 동기화 실현**
 - **[시스템/UI] 다크모드 내 불필요하고 과장된 화이트 섀도 및 광택 테두리 전면 다이어트 정화**
