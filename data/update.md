@@ -4,6 +4,10 @@
 
 ---
 
+### v5.98 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
+- **[시스템/기능] 메인 시스템 테마(다크/라이트) 변경 시 대시보드 테마 실시간 양방향 100% 자동 동기화 실현**
+- **[시스템/UI] 다크모드 내 불필요하고 과장된 화이트 섀도 및 광택 테두리 전면 다이어트 정화**
+
 ### v5.97 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.18</span>
 - **[시스템/UI] 실시간 통계 분석 대시보드 내 완벽한 화이트/다크 모드 하이브리드 자동 동기화 지원**
 - **[시스템/UI] 대시보드 상단 햅틱 인터랙티브 수동 테마 토글 스위치 및 깜빡임 방지 엔진 적용**
