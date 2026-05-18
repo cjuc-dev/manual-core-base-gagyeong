@@ -19,35 +19,97 @@
 .dark #content-area {
     color: #e5e7eb; /* gray-200 (다크모드) */
 }
-#content-area h1, #content-area h2, #content-area h3 {
-    color: #10b981; /* emerald-500 */
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
+/* 📌 [일반 매뉴얼] 제목 스타일 */
+#content-area:not(.voc-content) h1 {
+    font-size: 1.5rem !important;
     font-weight: bold;
+    margin-top: 2rem;
 }
-#content-area table {
+#content-area:not(.voc-content) h2 {
+    font-size: 1.25rem !important;
+    font-weight: bold;
+    border-left: 4px solid #10b981;
+    padding-left: 1rem;
+}
+
+/* 🚀 [VOC 전용] 제목 스타일 (초슬림 디자인) */
+#content-area.voc-content h1 {
+    font-size: 1.125rem !important;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+#content-area.voc-content h2 {
+    font-size: 1rem !important;
+    font-weight: bold;
+    margin-top: 1.5rem;
+}
+/* 📌 [일반 매뉴얼] 기본 표 스타일 (구분선 유지) */
+#content-area table:not(.voc-table) {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 0 !important;
+    margin-bottom: 2rem !important;
     color: inherit;
-    border-top: 1px solid rgba(156, 163, 175, 0.15); /* 매우 흐린 gray-400 (15% 투명도) */
-    border-bottom: 1px solid rgba(156, 163, 175, 0.15);
+    border-top: 1px solid rgba(156, 163, 175, 0.2);
+    border-bottom: 1px solid rgba(156, 163, 175, 0.2);
 }
-#content-area th, #content-area td {
-    border: none;
+#content-area table:not(.voc-table) th, 
+#content-area table:not(.voc-table) td {
     border-bottom: 1px solid rgba(156, 163, 175, 0.15);
     padding: 0.75rem;
 }
-/* 📌 마지막 행의 구분선을 제거하여 표 하단 테두리와 겹치지 않게 함 */
-#content-area tr:last-child td {
-    border-bottom: none !important;
-}
-#content-area th {
-    background-color: transparent;
+#content-area table:not(.voc-table) th {
+    background-color: rgba(16, 185, 129, 0.05);
     color: #10b981;
     font-weight: 700;
-    text-align: left; /* 제목 정렬을 본문 내용과 일치시킴 */
-    border-bottom: 1px solid rgba(156, 163, 175, 0.15);
+}
+
+/* 🚀 [VOC 전용] 무선 표 스타일 (고도화: 스트라이프 적용) */
+#content-area .voc-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: none !important;
+    margin-bottom: 1.5rem !important;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    overflow: hidden;
+}
+#content-area .voc-table th, 
+#content-area .voc-table td {
+    border: none !important;
+    padding: 0.7rem 1rem;
+    transition: background 0.2s ease;
+}
+/* 짝수 행에 미세한 배경색 부여 (스트라이프) */
+#content-area .voc-table tr:nth-child(even) td {
+    background: rgba(156, 163, 175, 0.05);
+}
+.dark #content-area .voc-table tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.03);
+}
+#content-area .voc-table th {
+    color: #10b981;
+    font-weight: 700;
+    font-size: 0.9rem;
+    background: rgba(16, 185, 129, 0.03);
+}
+
+/* 🏷️ 시설별 태그 컬러 포인트 */
+.tag-swimming { background: rgba(56, 189, 248, 0.1) !important; color: #0ea5e9 !important; border: 1px solid rgba(56, 189, 248, 0.2); }
+.tag-gagyeong { background: rgba(245, 158, 11, 0.1) !important; color: #d97706 !important; border: 1px solid rgba(245, 158, 11, 0.2); }
+.tag-bokdae { background: rgba(139, 92, 246, 0.1) !important; color: #7c3aed !important; border: 1px solid rgba(139, 92, 246, 0.2); }
+.tag-youngun { background: rgba(16, 185, 129, 0.1) !important; color: #059669 !important; border: 1px solid rgba(16, 185, 129, 0.2); }
+.tag-common { background: rgba(107, 114, 128, 0.1) !important; color: #6b7280 !important; border: 1px solid rgba(107, 114, 128, 0.2); }
+.tag-default { background: rgba(156, 163, 175, 0.1) !important; color: #4b5563 !important; }
+
+.voc-tag {
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-right: 0.5rem;
+    vertical-align: middle;
 }
 #content-area a {
     color: #38bdf8;

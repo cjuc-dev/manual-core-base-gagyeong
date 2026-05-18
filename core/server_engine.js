@@ -136,7 +136,13 @@ const server = http.createServer((req, res) => {
                 '.json': 'application/json', '.md': 'text/markdown; charset=utf-8',
                 '.png': 'image/png', '.jpg': 'image/jpeg', '.pdf': 'application/pdf'
             };
-            res.writeHead(200, {'Content-Type': mimes[ext] || 'application/octet-stream'});
+            // 🚀 [캐시 방지] 모든 응답에 캐시 방지 헤더 추가 (변경사항 즉시 반영)
+            res.writeHead(200, {
+                'Content-Type': mimes[ext] || 'application/octet-stream',
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            });
             res.end(data);
         }
     });
@@ -146,7 +152,8 @@ server.listen(PORT, () => {
     console.log('--- SOS ALL-IN-ONE SERVER STARTED ---');
     console.log('URL: http://localhost:' + PORT);
     
-    // 초기 실행 및 주기적 수집 설정
-    runAutoCrawler().catch(e => console.error('[Crawler Error]', e));
-    setInterval(() => { runAutoCrawler().catch(e => console.error('[Crawler Error]', e)); }, 1000 * 60 * 60);
+    // 🚀 [사용자 요청] 크롤러 기능 일시 중지 (추후 필요 시 활성화)
+    console.log('[System] 크롤러 기능이 비활성화되었습니다. (순수 웹 서버 모드)');
+    // runAutoCrawler().catch(e => console.error('[Crawler Error]', e));
+    // setInterval(() => { runAutoCrawler().catch(e => console.error('[Crawler Error]', e)); }, 1000 * 60 * 60);
 });

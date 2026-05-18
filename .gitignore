@@ -2,3 +2,16 @@
 # 이 프로젝트를 깃허브에 올릴 때, node_modules와 같이 용량이 크거나 불필요한 파일을 제외하는 규칙입니다.
 node_modules/
 *copy*.html
+
+# 📝 [백업 및 임시 HTML 파일 제외]
+index_backup_*.html
+
+# 🪵 [서버 및 크롤러 로그/임시 텍스트 파일 제외]
+*.log
+crawler_err.txt
+crawler_out.txt
+output_test.txt
+
+# 📦 [대용량 이미지 백업 및 안정 버전 백업 폴더 제외]
+versions/backup_*/
+versions/*_stable*/
