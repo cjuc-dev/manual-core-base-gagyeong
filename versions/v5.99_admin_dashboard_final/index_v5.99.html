@@ -1,0 +1,867 @@
+<!-- 🚀 [index.html] -->
+<!-- 이 파일은 SOS 통합 매뉴얼의 '메인 대시보드'이자 진입점입니다. -->
+<!-- 관리자 안내: 사이드바 메뉴를 통해 각 시설의 매뉴얼(.md)을 동적으로 로드하며, SPA 상태 관리를 지원합니다. -->
+<!DOCTYPE html>
+<html lang="ko" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청주도시공사 체육시설 통합 매뉴얼 (Command Center)</title>
+    <!-- 브라우저 캐시 방지 (사용자 요청: 변경사항 즉시 반영용) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- Tailwind CSS CDN with Typography Plugin -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // 클래스 기반 다크모드 활성화
+        }
+    </script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- DOMPurify for XSS Protection (시큐어 코딩 의무 지침) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    <!-- Lucide Icons for Helpdesk Dashboard -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/sos_main.css">
+    <link rel="stylesheet" href="assets/css/sos_content.css">
+    <link rel="stylesheet" href="assets/css/custom_style.css">
+</head>
+<!-- 배경색 및 글자색: 라이트모드(기본) / 다크모드(dark:) 분리 -->
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 flex h-screen overflow-hidden transition-colors duration-300">
+    
+    <!-- 오버레이 (모바일용 사이드바 배경) -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden" onclick="toggleSidebar()" aria-hidden="true"></div>
+
+    <!-- 좌측 아코디언 사이드바 -->
+    <aside id="sidebar" class="fixed top-0 left-0 w-72 h-full bg-white dark:bg-gray-800 z-50 transform -translate-x-full transition-transform duration-300 overflow-y-auto lg:relative lg:translate-x-0 border-r border-gray-200 dark:border-gray-700 flex flex-col shadow-xl">
+        <!-- 사이드바 헤더 -->
+        <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <div>
+                <h1 class="text-base font-bold text-emerald-600 dark:text-emerald-400">통합 매뉴얼</h1>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Smart Operations Suite</p>
+            </div>
+            <!-- 모바일 닫기 버튼 -->
+            <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-gray-800 dark:hover:text-white focus:outline-none" aria-label="사이드바 닫기">
+                <i class="ph ph-x text-2xl" aria-hidden="true"></i>
+            </button>
+        </div>
+        
+        <!-- 아코디언 메뉴 네비게이션 -->
+        <nav class="flex-1 overflow-y-auto py-4" aria-label="메인 내비게이션">
+            
+            <!-- 1. 시설 안내 (시설별 가이드) -->
+            <div class="mb-2">
+                <button onclick="window.toggleAccordion('facility-info-menu', 'facility-info-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false" aria-controls="facility-info-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-buildings text-lg text-emerald-600 dark:text-emerald-400" aria-hidden="true"></i> 시설 안내
+                    </span>
+                    <i id="facility-info-icon" class="ph ph-caret-down transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div id="facility-info-menu" class="overflow-hidden transition-all duration-300 max-h-0">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50 ml-[30px] pl-4 border-l border-emerald-500/20 dark:border-emerald-500/10 space-y-0.5">
+                        <li>
+                            <button onclick="window.loadContent('cheongjuSwimming_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-bank text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 청주수영장
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.loadContent('purmi_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-warehouse text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 푸르미스포츠센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.loadContent('youngun_sportscenter_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-warehouse text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 영운국민체육센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.loadContent('bokdae_sportscenter_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-warehouse text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 복대국민체육센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.loadContent('gagyeong_sportscenter_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-building text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 가경국민체육센터
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.loadContent('sannam_sportscenter_guide')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-emerald-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-building text-emerald-500 text-sm transition-transform group-hover:scale-110"></i> 산남국민체육센터
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 2. 시설 매뉴얼 (지침서) -->
+            <div class="mb-2">
+                <button onclick="window.toggleAccordion('facility-menu', 'facility-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false" aria-controls="facility-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-book-open text-lg text-blue-600 dark:text-blue-400" aria-hidden="true"></i> 시설 매뉴얼
+                    </span>
+                    <i id="facility-icon" class="ph ph-caret-down transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div id="facility-menu" class="overflow-hidden transition-all duration-300 max-h-0">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50 ml-[30px] pl-4 border-l border-blue-500/20 dark:border-blue-500/10">
+                        <!-- 행정 분야 다단계 서브아코디언 -->
+                        <li>
+                            <button onclick="window.toggleSubAccordion('facility-admin-menu', 'facility-admin-icon')" class="w-full flex justify-between items-center pl-2 pr-4 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false">
+                                <span class="flex items-center gap-3">
+                                    <i class="ph ph-file-text text-blue-500"></i> 행정 분야
+                                </span>
+                                <i id="facility-admin-icon" class="ph ph-caret-down text-xs transition-transform duration-300" aria-hidden="true"></i>
+                            </button>
+                            <div id="facility-admin-menu" class="overflow-hidden transition-all duration-300 max-h-0 bg-white/40 dark:bg-gray-900/30">
+                                <ul class="py-1 ml-[18px] pl-3 border-l border-blue-500/20 dark:border-blue-500/10">
+                                    <li>
+                                        <button onclick="window.loadContent('admin_fields', '청주수영장')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-bank"></i> 청주수영장
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="window.loadContent('admin_fields', '푸르미스포츠센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 푸르미스포츠센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="window.loadContent('admin_fields', '영운국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 영운국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="window.loadContent('admin_fields', '복대국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 복대국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="window.toggleSubAccordion('fac-admin-gagyeong', 'fac-admin-gagyeong-icon')" class="w-full flex justify-between items-center pl-2 pr-4 py-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 font-semibold transition-colors focus:outline-none" aria-expanded="false">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-building font-bold"></i> <span class="text-gray-700 dark:text-gray-300">가경국민체육센터</span>
+                                            </span>
+                                            <i id="fac-admin-gagyeong-icon" class="ph ph-caret-down text-[10px] transition-transform duration-300"></i>
+                                        </button>
+                                        <div id="fac-admin-gagyeong" class="overflow-hidden transition-all duration-300 max-h-0 ml-[16px] pl-2 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                            <button onclick="window.loadContent('admin_fields', '가경국민체육센터', '회원 관리')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>회원 관리
+                                            </button>
+                                            <button onclick="window.loadContent('admin_fields', '가경국민체육센터', '대관 관리')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>대관 관리
+                                            </button>
+                                            <button onclick="window.loadContent('admin_fields', '가경국민체육센터', '키오스크')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>키오스크
+                                            </button>
+                                            <button onclick="window.loadContent('admin_fields', '가경국민체육센터', '락커/게이트')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>락커/게이트
+                                            </button>
+                                            <button onclick="window.loadContent('admin_fields', '가경국민체육센터', '매출 정산')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>매출 정산
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <button onclick="window.loadContent('admin_fields', '산남국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-building"></i> 산남국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                        <!-- 기술 분야 다단계 서브아코디언 -->
+                        <li>
+                            <button onclick="window.toggleSubAccordion('facility-tech-menu', 'facility-tech-icon')" class="w-full flex justify-between items-center pl-2 pr-4 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false">
+                                <span class="flex items-center gap-3">
+                                    <i class="ph ph-wrench text-blue-500"></i> 기술 분야
+                                </span>
+                                <i id="facility-tech-icon" class="ph ph-caret-down text-xs transition-transform duration-300" aria-hidden="true"></i>
+                            </button>
+                            <div id="facility-tech-menu" class="overflow-hidden transition-all duration-300 max-h-0 bg-white/40 dark:bg-gray-900/30">
+                                <ul class="py-1 ml-[18px] pl-3 border-l border-blue-500/20 dark:border-blue-500/10">
+                                    <li>
+                                        <button onclick="window.loadContent('tech_fields', '청주수영장')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-bank"></i> 청주수영장
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="window.loadContent('tech_fields', '푸르미스포츠센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 푸르미스포츠센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="window.loadContent('tech_fields', '영운국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 영운국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="window.loadContent('tech_fields', '복대국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-warehouse"></i> 복대국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="window.toggleSubAccordion('fac-tech-gagyeong', 'fac-tech-gagyeong-icon')" class="w-full flex justify-between items-center pl-2 pr-4 py-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 font-semibold transition-colors focus:outline-none" aria-expanded="false">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-building font-bold"></i> <span class="text-gray-700 dark:text-gray-300">가경국민체육센터</span>
+                                            </span>
+                                            <i id="fac-tech-gagyeong-icon" class="ph ph-caret-down text-[10px] transition-transform duration-300"></i>
+                                        </button>
+                                        <div id="fac-tech-gagyeong" class="overflow-hidden transition-all duration-300 max-h-0 ml-[16px] pl-2 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '기계장비 일람표')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group font-semibold transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>기계장비 일람표
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '기계')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>기계
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '전기')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>전기
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '소방')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>소방
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '수질')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>수질
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '가스')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>가스
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '연락처')" class="w-full text-left pl-2 pr-4 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>업체 연락처
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <button onclick="window.loadContent('tech_fields', '산남국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-blue-500 transition-colors">
+                                            <span class="flex items-center gap-2.5">
+                                                <i class="ph ph-building"></i> 산남국민체육센터
+                                            </span>
+                                            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20 scale-90 origin-right">준비중</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                        <li><button onclick="window.loadContent('safety')" class="w-full flex items-center gap-3 pl-2 pr-4 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors"><i class="ph ph-shield-warning text-blue-500"></i> 안전 표준매뉴얼</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 3. 운영 현황 (History & Analytics) -->
+            <div class="mb-2">
+                <button onclick="window.toggleAccordion('status-menu', 'status-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false" aria-controls="status-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-chart-bar text-lg text-amber-500 dark:text-amber-400" aria-hidden="true"></i> 운영 현황
+                    </span>
+                    <i id="status-icon" class="ph ph-caret-down transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div id="status-menu" class="overflow-hidden transition-all duration-300 max-h-0">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50 ml-[30px] pl-4 border-l border-amber-500/20 dark:border-amber-500/10 space-y-0.5">
+                        <li>
+                            <button onclick="window.loadContent('update', 'data')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-clock-counter-clockwise text-amber-500 text-sm transition-transform group-hover:scale-110"></i> 업데이트 히스토리
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.open('https://www.cjuc.or.kr/home/sub?menukey=7401', '_blank')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-megaphone text-amber-500 text-sm transition-transform group-hover:scale-110"></i> 공사 공지사항
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.open('https://www.cjuc.or.kr/', '_blank')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-house-line text-blue-500 text-sm transition-transform group-hover:scale-110"></i> 공사 홈페이지
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 4. 시스템 문의 (Support) -->
+            <div class="mb-2">
+                <button onclick="window.loadContent('system_inquiry', 'system')" class="w-full flex items-center gap-3 px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none">
+                    <i class="ph ph-chat-circle-dots text-lg text-emerald-500 dark:text-emerald-400" aria-hidden="true"></i> 시스템 문의/요청
+                </button>
+            </div>
+
+            <!-- 3. VOC (시민의 소리) -->
+            <div class="mb-2">
+                <button onclick="window.toggleAccordion('voc-menu', 'voc-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false" aria-controls="voc-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-chat-centered-text text-lg text-rose-500 dark:text-rose-400" aria-hidden="true"></i> 시민의 소리 (VOC)
+                    </span>
+                    <i id="voc-icon" class="ph ph-caret-down transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div id="voc-menu" class="overflow-hidden transition-all duration-300 max-h-0">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50 ml-[30px] pl-4 border-l border-rose-500/20 dark:border-rose-500/10 space-y-0.5">
+                        <li>
+                            <button onclick="window.loadContent('swimming', 'voc')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-waves text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 수영장
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.loadContent('gym', 'voc')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-basketball text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 다목적체육관
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.loadContent('program', 'voc')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-users-three text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 프로그램실
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="window.loadContent('other', 'voc')" class="w-full text-left pl-2 pr-4 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                <i class="ph ph-info text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 기타
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 4. 사이버보안 (Admin) -->
+            <div class="mb-2 border-t border-gray-100 dark:border-gray-700 mt-4 pt-4">
+                <button onclick="window.toggleAccordion('admin-menu', 'admin-icon')" class="w-full flex justify-between items-center px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none" aria-expanded="false" aria-controls="admin-menu">
+                    <span class="flex items-center gap-3">
+                        <i class="ph ph-shield-check text-lg text-indigo-500 dark:text-indigo-400" aria-hidden="true"></i> 관리자 전용
+                    </span>
+                    <i id="admin-icon" class="ph ph-caret-down transition-transform duration-300" aria-hidden="true"></i>
+                </button>
+                <div id="admin-menu" class="overflow-hidden transition-all duration-300 max-h-0">
+                    <ul class="py-1 bg-gray-50 dark:bg-gray-800/50">
+                        <li><button onclick="window.loadContent('admin_dashboard')" class="w-full flex items-center gap-3 px-10 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors"><i class="ph ph-lock-key"></i> 관리자 대시보드</button></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 사이드바 푸터 (법적 고지 링크) -->
+        <div class="p-4 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 text-center">
+            <p>Smart Operations Suite v5</p>
+            <div class="mt-2 space-x-2">
+                <a href="pages/privacy_policy.html" class="hover:text-emerald-600 dark:hover:text-emerald-400 underline" title="개인정보처리방침 읽기">개인정보처리방침</a>
+                <span>|</span>
+                <a href="pages/terms_of_use.html" class="hover:text-emerald-600 dark:hover:text-emerald-400 underline" title="이용약관 읽기">이용약관</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 우측 메인 콘텐츠 영역 -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden relative">
+        
+        <!-- 상단 헤더바 (Sticky) -->
+        <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex justify-between items-center z-30 shadow-sm dark:shadow-md transition-colors duration-300">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-500 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white focus:outline-none" aria-label="메뉴 열기">
+                    <i class="ph ph-list text-2xl" aria-hidden="true"></i>
+                </button>
+                <h2 class="text-xl font-extrabold text-gray-800 dark:text-white hidden sm:block tracking-tight">
+                    COMMAND <span class="text-emerald-600 dark:text-cyan-400">CENTER</span>
+                </h2>
+            </div>
+            
+            <!-- 데스크탑 검색 창 -->
+            <div class="relative w-full max-w-md mx-4 hidden sm:block">
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="검색어 입력 (예: 수영장, 행정, 소화기...)" 
+                        class="w-full bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white px-4 py-2 pl-10 rounded-full focus:outline-none focus:border-emerald-500 dark:focus:border-cyan-500 focus:ring-1 focus:ring-emerald-500 dark:focus:ring-cyan-500 transition-all text-sm"
+                        aria-label="통합 검색 (PDF 메타데이터 연동)">
+                    <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400 text-lg" aria-hidden="true"></i>
+                </div>
+                <!-- 🚀 검색 자동완성 레이어 -->
+                <div id="autocompleteList" class="autocomplete-container"></div>
+                <!-- 상세 검색 결과창 (자동완성과 겹치지 않도록 z-index 및 간격 조정) -->
+                <div id="searchResults"></div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <button onclick="toggleTheme()" class="relative w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-amber-500 dark:text-yellow-400 transition-all focus:outline-none overflow-hidden" aria-label="다크/라이트 모드 전환">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <!-- 라이트모드일때는 달 (SVG) -->
+                        <svg id="moonIcon" class="w-6 h-6 block dark:hidden" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="currentColor" d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.11,104.11,0,1,0,129.8,129.8A8,8,0,0,0,233.54,142.23ZM128,216a88.13,88.13,0,0,1-78.82-127.28,104.08,104.08,0,0,0,128.1,128.1A87.76,87.76,0,0,1,128,216Z"></path>
+                        </svg>
+                        <!-- 다크모드일때는 해 (SVG) -->
+                        <svg id="sunIcon" class="w-6 h-6 hidden dark:block" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="currentColor" d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66a8,8,0,0,0,11.32-11.32l-16-16a8,8,0,0,0-11.32,11.32Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM197.66,69.66l16-16a8,8,0,0,0-11.32-11.32l-16,16a8,8,0,0,0,11.32,11.32ZM240,120H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16ZM40,120H16a8,8,0,0,0,0,16H40a8,8,0,0,0,0-16Zm157.66,66.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32Zm-77.66,29.66a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V224A8,8,0,0,0,120,216Z"></path>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </header>
+
+        <!-- 모바일 전용 검색창 -->
+        <div class="p-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sm:hidden relative">
+            <div class="relative">
+                <input type="text" id="searchInputMobile" placeholder="검색어 입력..." 
+                    class="w-full bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white px-4 py-2 pl-10 rounded-full focus:outline-none focus:border-emerald-500 dark:focus:border-cyan-500 text-sm"
+                    aria-label="모바일 통합 검색">
+                <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400 text-lg" aria-hidden="true"></i>
+            </div>
+            <!-- 🚀 모바일 검색 자동완성 레이어 -->
+            <div id="autocompleteListMobile" class="autocomplete-container hidden"></div>
+            <!-- 모바일 검색 결과창 -->
+            <div id="searchResultsMobile" class="absolute z-50 left-0 right-0 mx-3 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl overflow-hidden hidden max-h-60 overflow-y-auto"></div>
+        </div>
+
+        <!-- 🚀 [v5.45] 글로벌 서브헤더 내비게이션 바 (헤더 바로 아래 상시 고정) -->
+        <div id="globalSubHeader" class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200/60 dark:border-gray-800 px-6 py-3.5 flex justify-between items-center transition-colors duration-300 z-20">
+            <!-- 브레드크럼 정보 (홈은 항상 고정 노출, 경로는 동적 렌더링) -->
+            <nav id="breadcrumbNav" class="text-sm text-gray-500 dark:text-gray-400 flex items-center flex-nowrap min-w-0 max-w-[65%] sm:max-w-none overflow-x-auto scrollbar-none whitespace-nowrap" aria-label="Breadcrumb">
+                <button onclick="window.showDashboard()" class="hover:text-emerald-600 dark:hover:text-cyan-400 transition-colors focus:outline-none flex items-center font-bold text-gray-700 dark:text-gray-200 shrink-0" aria-label="홈으로 가기">
+                    <i class="ph ph-house mr-1.5 text-base text-emerald-600 dark:text-cyan-400" aria-hidden="true"></i>홈
+                </button>
+                <div id="breadcrumbPath" class="flex items-center flex-nowrap shrink-0"></div>
+            </nav>
+
+            <!-- 우측 액션 버튼 그룹 (상세 문서 조회 시에만 노출) -->
+            <div class="flex items-center gap-2">
+                <!-- 인쇄하기 버튼 -->
+                <button id="globalPrintBtn" onclick="window.print()" 
+                        class="hidden flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-bold transition-all focus:outline-none active:scale-95" aria-label="인쇄하기">
+                    <i class="ph ph-printer font-bold text-blue-500" aria-hidden="true"></i> 인쇄
+                </button>
+                
+                <!-- 닫기 버튼 -->
+                <button id="globalCloseBtn" onclick="window.showDashboard()" 
+                        class="hidden flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-bold transition-all focus:outline-none active:scale-95" aria-label="문서 닫기">
+                    <i class="ph ph-x font-bold text-rose-500" aria-hidden="true"></i> 닫기
+                </button>
+            </div>
+        </div>
+
+        <!-- 메인 스크롤 영역 -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-8" id="mainScrollArea" role="main">
+            
+            <div class="max-w-6xl mx-auto">
+
+                <!-- 2-A: 대시보드 뷰 (4대 모듈 레이아웃) -->
+                <div id="dashboardView" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+                    
+                    <!-- 모듈 1: 시설 매뉴얼 -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500/50 transition-all hover:shadow-lg flex flex-col">
+                        <div class="flex justify-between items-center cursor-pointer mb-4" onclick="window.toggleAccordion('dbManual', 'dbManualIcon')">
+                            <div>
+                                <i class="ph ph-book-open text-4xl mb-2 text-blue-600 dark:text-blue-400"></i>
+                                <h2 class="text-lg font-bold text-gray-800 dark:text-white">시설 매뉴얼</h2>
+                                <p class="text-xs text-gray-500">운영 및 기술 지침서</p>
+                            </div>
+                            <i id="dbManualIcon" class="ph ph-caret-down text-xl text-blue-600"></i>
+                        </div>
+                        <div id="dbManual" class="space-y-1 overflow-hidden transition-all max-h-0 ml-3 pl-3 border-l border-blue-500/20 dark:border-blue-500/10">
+                            <div class="pt-2 border-t border-gray-100 dark:border-gray-700 space-y-1">
+                                <!-- 대시보드 내 행정 분야 서브 아코디언 -->
+                                <button onclick="window.toggleSubAccordion('dbManualAdmin', 'dbManualAdminIcon')" class="w-full text-left pl-2 pr-3 py-2.5 text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors text-gray-700 dark:text-gray-300 flex items-center justify-between font-semibold">
+                                    <span class="flex items-center gap-3"><i class="ph ph-file-text text-blue-500"></i> 행정 분야</span>
+                                    <i id="dbManualAdminIcon" class="ph ph-caret-down transition-transform duration-300"></i>
+                                </button>
+                                <div id="dbManualAdmin" class="overflow-hidden transition-all duration-300 max-h-0 ml-[18px] pl-3 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                    <button onclick="window.loadContent('admin_fields', '청주수영장')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-bank shrink-0"></i> <span class="truncate">청주수영장</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="window.loadContent('admin_fields', '푸르미스포츠센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">푸르미스포츠센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="window.loadContent('admin_fields', '영운국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">영운국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="window.loadContent('admin_fields', '복대국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">복대국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <!-- 가경국민체육센터 (대시보드 3단계 서브 아코디언) -->
+                                    <div class="space-y-0.5">
+                                        <button onclick="window.toggleSubAccordion('db-admin-gagyeong', 'db-admin-gagyeong-icon')" class="w-full flex justify-between items-center pl-2 pr-3 py-1.5 text-xs text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded font-semibold transition-all focus:outline-none">
+                                            <span class="flex items-center gap-2"><i class="ph ph-building font-bold"></i> 가경국민체육센터</span>
+                                            <i id="db-admin-gagyeong-icon" class="ph ph-caret-down text-[10px] transition-transform duration-300"></i>
+                                        </button>
+                                        <div id="db-admin-gagyeong" class="overflow-hidden transition-all duration-300 max-h-0 ml-[16px] pl-2 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                            <button onclick="window.loadContent('admin_fields', '가경국민체육센터', '회원 관리')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>회원 관리
+                                            </button>
+                                            <button onclick="window.loadContent('admin_fields', '가경국민체육센터', '대관 관리')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>대관 관리
+                                            </button>
+                                            <button onclick="window.loadContent('admin_fields', '가경국민체육센터', '키오스크')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>키오스크
+                                            </button>
+                                            <button onclick="window.loadContent('admin_fields', '가경국민체육센터', '락커/게이트')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>락커/게이트
+                                            </button>
+                                            <button onclick="window.loadContent('admin_fields', '가경국민체육센터', '매출 정산')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>매출 정산
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button onclick="window.loadContent('admin_fields', '산남국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-building shrink-0"></i> <span class="truncate">산남국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                </div>
+
+                                <!-- 대시보드 내 기술 분야 서브 아코디언 -->
+                                <button onclick="window.toggleSubAccordion('dbManualTech', 'dbManualTechIcon')" class="w-full text-left pl-2 pr-3 py-2.5 text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors text-gray-700 dark:text-gray-300 flex items-center justify-between font-semibold">
+                                    <span class="flex items-center gap-3"><i class="ph ph-wrench text-blue-500"></i> 기술 분야</span>
+                                    <i id="dbManualTechIcon" class="ph ph-caret-down transition-transform duration-300"></i>
+                                </button>
+                                <div id="dbManualTech" class="overflow-hidden transition-all duration-300 max-h-0 ml-[18px] pl-3 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                    <button onclick="window.loadContent('tech_fields', '청주수영장')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-bank shrink-0"></i> <span class="truncate">청주수영장</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="window.loadContent('tech_fields', '푸르미스포츠센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">푸르미스포츠센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="window.loadContent('tech_fields', '영운국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">영운국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <button onclick="window.loadContent('tech_fields', '복대국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-warehouse shrink-0"></i> <span class="truncate">복대국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                    <!-- 가경국민체육센터 (대시보드 3단계 서브 아코디언) -->
+                                    <div class="space-y-0.5">
+                                        <button onclick="window.toggleSubAccordion('db-tech-gagyeong', 'db-tech-gagyeong-icon')" class="w-full flex justify-between items-center pl-2 pr-3 py-1.5 text-xs text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded font-semibold transition-all focus:outline-none">
+                                            <span class="flex items-center gap-2"><i class="ph ph-building font-bold"></i> 가경국민체육센터</span>
+                                            <i id="db-tech-gagyeong-icon" class="ph ph-caret-down text-[10px] transition-transform duration-300"></i>
+                                        </button>
+                                        <div id="db-tech-gagyeong" class="overflow-hidden transition-all duration-300 max-h-0 ml-[16px] pl-2 border-l border-blue-500/20 dark:border-blue-500/10 space-y-0.5">
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '기계장비 일람표')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group font-semibold transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>기계장비 일람표
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '기계')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>기계
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '전기')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>전기
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '소방')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>소방
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '수질')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>수질
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '가스')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>가스
+                                            </button>
+                                            <button onclick="window.loadContent('tech_fields', '가경국민체육센터', '연락처')" class="w-full text-left pl-2 pr-3 py-1.5 text-[11px] text-gray-500 hover:text-blue-600 flex items-center group transition-colors focus:outline-none">
+                                                <span class="w-1 h-1 rounded-full bg-blue-500/60 mr-2 group-hover:bg-blue-600 transition-colors"></span>업체 연락처
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button onclick="window.loadContent('tech_fields', '산남국민체육센터')" class="w-full flex items-center justify-between pl-2 pr-3 py-1.5 text-xs hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded transition-colors text-gray-500">
+                                        <span class="flex items-center gap-2 min-w-0 truncate whitespace-nowrap"><i class="ph ph-building shrink-0"></i> <span class="truncate">산남국민체육센터</span></span>
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-200/40 dark:border-amber-900/20">준비중</span>
+                                    </button>
+                                </div>
+
+                                <button onclick="window.loadContent('safety')" class="w-full text-left pl-2 pr-3 py-2.5 text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors text-gray-600 dark:text-gray-300 flex items-center gap-3"><i class="ph ph-shield-warning text-blue-500"></i> 안전 표준매뉴얼</button>
+                            </div>
+                        </div>
+                        <button onclick="window.toggleAccordion('dbManual', 'dbManualIcon')" class="mt-auto pt-4 text-xs text-blue-600 font-semibold hover:underline">상세 메뉴 보기</button>
+                    </div>
+
+                    <!-- 모듈 2: 운영 현황 -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:border-amber-500 dark:hover:border-amber-500/50 transition-all hover:shadow-lg flex flex-col">
+                        <div class="flex justify-between items-center cursor-pointer mb-4" onclick="window.toggleAccordion('dbStatus', 'dbStatusIcon')">
+                            <div>
+                                <i class="ph ph-chart-bar text-4xl mb-2 text-amber-500 dark:text-amber-400"></i>
+                                <h2 class="text-lg font-bold text-gray-800 dark:text-white">운영 현황</h2>
+                                <p class="text-xs text-gray-500">업데이트 히스토리</p>
+                            </div>
+                            <i id="dbStatusIcon" class="ph ph-caret-down text-xl text-amber-500"></i>
+                        </div>
+                        <div id="dbStatus" class="space-y-1 overflow-hidden transition-all max-h-0 ml-3 pl-3 border-l border-amber-500/20 dark:border-amber-500/10">
+                            <div class="pt-2 border-t border-gray-100 dark:border-gray-700 space-y-1">
+                                <button onclick="window.loadContent('update', 'data')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-clock-counter-clockwise text-amber-500 text-sm transition-transform group-hover:scale-110"></i> 업데이트 히스토리
+                                </button>
+                                <button onclick="window.open('https://www.cjuc.or.kr/home/sub?menukey=7401', '_blank')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-megaphone text-amber-500 text-sm transition-transform group-hover:scale-110"></i> 공사 공지사항
+                                </button>
+                                <button onclick="window.open('https://www.cjuc.or.kr/', '_blank')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-amber-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-house-line text-blue-500 text-sm transition-transform group-hover:scale-110"></i> 공사 홈페이지
+                                </button>
+                            </div>
+                        </div>
+                        <button onclick="window.toggleAccordion('dbStatus', 'dbStatusIcon')" class="mt-auto pt-4 text-xs text-amber-600 font-semibold hover:underline">상세 메뉴 보기</button>
+                    </div>
+
+                    <!-- 모듈 3: 시스템 문의 (Inquiry) -->
+                    <div onclick="window.loadContent('system_inquiry', 'system')" class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:border-emerald-500 dark:hover:border-emerald-500/50 transition-all hover:shadow-lg flex flex-col cursor-pointer group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <i class="ph ph-chat-circle-dots text-4xl mb-2 text-emerald-500 dark:text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                                <h2 class="text-lg font-bold text-gray-800 dark:text-white">시스템 문의</h2>
+                                <p class="text-xs text-gray-500">개선 요청 및 문의사항</p>
+                            </div>
+                            <div class="px-2 py-1 bg-emerald-50 dark:bg-emerald-900/30 rounded text-[10px] font-bold text-emerald-600 dark:text-emerald-400">Support</div>
+                        </div>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 leading-relaxed mt-2">
+                            시스템 이용 중 불편한 점이나<br>기능 개선 요청을 남겨주세요.
+                        </p>
+                        <div class="mt-auto pt-4 flex items-center gap-2 text-xs text-emerald-600 font-bold">
+                            게시판 바로가기 <i class="ph ph-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- 모듈 4: 시민의 소리 (VOC) -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:border-rose-500 dark:hover:border-rose-500/50 transition-all hover:shadow-lg flex flex-col">
+                        <div class="flex justify-between items-center cursor-pointer mb-4" onclick="window.toggleAccordion('dbVoc', 'dbVocIcon')">
+                            <div>
+                                <i class="ph ph-chat-centered-text text-4xl mb-2 text-rose-500 dark:text-rose-400"></i>
+                                <h2 class="text-lg font-bold text-gray-800 dark:text-white">시민의 소리</h2>
+                                <p class="text-xs text-gray-500">시설별 이용 FAQ & VOC</p>
+                            </div>
+                            <i id="dbVocIcon" class="ph ph-caret-down text-xl text-rose-500"></i>
+                        </div>
+                        <div id="dbVoc" class="space-y-1 overflow-hidden transition-all max-h-0 ml-3 pl-3 border-l border-rose-500/20 dark:border-rose-500/10">
+                            <div class="pt-2 border-t border-gray-100 dark:border-gray-700 space-y-1">
+                                <button onclick="window.loadContent('swimming', 'voc')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-waves text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 수영장
+                                </button>
+                                <button onclick="window.loadContent('gym', 'voc')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-basketball text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 다목적체육관
+                                </button>
+                                <button onclick="window.loadContent('program', 'voc')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-users-three text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 프로그램실
+                                </button>
+                                <button onclick="window.loadContent('other', 'voc')" class="w-full text-left pl-2 pr-3 py-2 text-xs text-gray-500 hover:text-rose-600 flex items-center group transition-colors focus:outline-none gap-2">
+                                    <i class="ph ph-info text-rose-500 text-sm transition-transform group-hover:scale-110"></i> 기타
+                                </button>
+                            </div>
+                        </div>
+                        <button onclick="window.toggleAccordion('dbVoc', 'dbVocIcon')" class="mt-auto pt-4 text-xs text-rose-600 font-semibold hover:underline">상세 메뉴 보기</button>
+                    </div>
+
+                </div>
+                
+                <!-- 2-B: 콘텐츠 뷰어 -->
+                <div id="contentView" class="hidden">
+                    <div id="content-area" class="bg-white dark:bg-gray-800 p-6 sm:p-10 shadow-md dark:shadow-xl min-h-[500px] rounded-xl border border-gray-200 dark:border-gray-700" aria-live="polite">
+                        <!-- 콘텐츠 로딩 영역 -->
+                        <div class="flex flex-col items-center justify-center h-full text-gray-400 dark:text-gray-500 py-20">
+                            <i class="ph ph-spinner-gap text-4xl animate-spin mb-4" aria-hidden="true"></i>
+                            <p>콘텐츠를 안전하게 불러오는 중입니다...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- 🚀 [궁극의 UX] 하단 고정형 스마트 네비게이션 바 -->
+    <div id="stickyNav" class="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 p-1.5 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-white/20 dark:border-gray-700/50 rounded-2xl shadow-2xl transition-all duration-500 opacity-0 invisible translate-y-10 z-50">
+        <!-- 대시보드 홈 -->
+        <button onclick="window.showDashboard()" 
+            class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition-all group">
+            <i class="ph ph-house text-xl transition-transform group-hover:scale-120"></i>
+            <span class="hidden sm:inline">대시보드</span>
+        </button>
+
+        <div class="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+
+        <!-- 🚀 [고도화] 검색 결과 네비게이터 (이전/다음) -->
+        <div id="searchNavigator" class="hidden items-center">
+            <button onclick="navSearchResult(-1)" id="prevSearchBtn" 
+                class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-gray-500 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-all disabled:opacity-30 disabled:pointer-events-none group">
+                <i class="ph ph-caret-left text-lg"></i>
+                <span class="hidden md:inline">이전 결과</span>
+            </button>
+            <div class="w-px h-4 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+            <button onclick="navSearchResult(1)" id="nextSearchBtn" 
+                class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-gray-500 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-all disabled:opacity-30 disabled:pointer-events-none group">
+                <span class="hidden md:inline">다음 결과</span>
+                <i class="ph ph-caret-right text-lg"></i>
+            </button>
+            <div class="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-2"></div>
+        </div>
+
+        <!-- 다른 결과 보기 버튼 -->
+        <button id="reopenSearchBtn" onclick="reopenSearch()" 
+            class="hidden items-center gap-2 px-4 py-2 text-sm font-bold text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-xl transition-all group">
+            <i class="ph ph-magnifying-glass text-xl transition-transform group-hover:scale-120"></i>
+            <span class="hidden sm:inline">다른 결과 보기</span>
+        </button>
+
+        <div id="reopenSearchDivider" class="hidden w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+
+        <!-- 맨 위로 이동 -->
+        <button onclick="scrollToTop()" 
+            class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-xl transition-all group">
+            <i class="ph ph-arrow-up text-xl transition-transform group-hover:-translate-y-1"></i>
+            <span class="hidden sm:inline">맨 위로</span>
+        </button>
+
+        <div class="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+
+        <!-- 문서 닫기 -->
+        <button onclick="window.showDashboard()" 
+            class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-all group">
+            <i class="ph ph-x-circle text-xl transition-transform group-hover:rotate-90"></i>
+            <span class="hidden sm:inline">닫기</span>
+        </button>
+    </div>
+
+    <!-- 스크립트 로직 -->
+    <script src="core/sidebar_controller.js"></script>
+    <script src="core/markdown_parser.js"></script>
+    <script src="core/search_engine.js"></script>
+    <script src="core/helpdesk_manager.js"></script>
+    <script>
+
+
+        document.getElementById('searchInput')?.addEventListener('input', (e) => {
+            handleAutocomplete(e.target.value, 'searchInput');
+            performSearch(e.target.value, 'searchResults');
+        });
+        document.getElementById('searchInputMobile')?.addEventListener('input', (e) => {
+            handleAutocomplete(e.target.value, 'searchInputMobile');
+            performSearch(e.target.value, 'searchResultsMobile');
+        });
+        
+        // 🚀 [검색] 키보드 네비게이션 (자동완성)
+        const setupKeydownAutocomplete = (inputId, listId) => {
+            document.getElementById(inputId)?.addEventListener('keydown', (e) => {
+                const list = document.getElementById(listId);
+                const items = list.querySelectorAll('.autocomplete-item');
+                
+                if (list.classList.contains('hidden')) return;
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    autocompleteIndex = (autocompleteIndex + 1) % items.length;
+                    updateAutocompleteSelection(items);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    autocompleteIndex = (autocompleteIndex - 1 + items.length) % items.length;
+                    updateAutocompleteSelection(items);
+                } else if (e.key === 'Enter' && autocompleteIndex > -1) {
+                    e.preventDefault();
+                    items[autocompleteIndex].click();
+                } else if (e.key === 'Escape') {
+                    list.classList.add('hidden');
+                }
+            });
+        };
+        setupKeydownAutocomplete('searchInput', 'autocompleteList');
+        setupKeydownAutocomplete('searchInputMobile', 'autocompleteListMobile');
+
+        function updateAutocompleteSelection(items) {
+            items.forEach((item, idx) => {
+                if (idx === autocompleteIndex) item.classList.add('active');
+                else item.classList.remove('active');
+            });
+        }
+        
+        // 🚀 [사용자 피드백 반영] 검색창 클릭 시 즉시 결과 노출
+        const inputs = ['searchInput', 'searchInputMobile'];
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) {
+                el.addEventListener('focus', (e) => {
+                    if (e.target.value.length >= 2) {
+                        const resultId = id === 'searchInput' ? 'searchResults' : 'searchResultsMobile';
+                        handleAutocomplete(e.target.value, id);
+                        performSearch(e.target.value, resultId);
+                    }
+                });
+                el.addEventListener('click', (e) => {
+                    if (e.target.value.length >= 2) {
+                        const resultId = id === 'searchInput' ? 'searchResults' : 'searchResultsMobile';
+                        handleAutocomplete(e.target.value, id);
+                        performSearch(e.target.value, resultId);
+                    }
+                });
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#searchInput') && !e.target.closest('#searchInputMobile') && !e.target.closest('#reopenSearchBtn')) {
+                document.getElementById('searchResults')?.classList.add('hidden');
+                document.getElementById('searchResultsMobile')?.classList.add('hidden');
+                document.getElementById('autocompleteList')?.classList.add('hidden');
+                document.getElementById('autocompleteListMobile')?.classList.add('hidden');
+            }
+        });
+        window.onload = () => {
+            // 🚀 [지능형 초기 라우팅] 주소창의 파라미터(?doc=...&facility=...&sub=...)를 분석하여 자동 로드
+            const params = new URLSearchParams(window.location.search);
+            const docId = params.get('doc');
+            const facility = params.get('facility') || '공통';
+            const sub = params.get('sub');
+
+            if (docId) {
+                console.log(`[Router] 자동 로드 실행: ${docId} (${facility}) -> ${sub}`);
+                window.loadContent(docId, facility, sub, true);
+            }
+        };
+
+        // 🚀 [SPA 히스토리 동기화] 브라우저 뒤로가기/앞으로가기 시 라우팅 무결성 보장
+        window.onpopstate = function(event) {
+            if (event.state && event.state.page === 'content') {
+                window.loadContent(event.state.id, event.state.facility, event.state.sub, true);
+            } else {
+                // 대시보드로 복귀
+                document.getElementById('contentView').classList.add('hidden');
+                document.getElementById('dashboardView').classList.remove('hidden');
+            }
+        };
+    </script>
+
+    <!-- Firebase Compat SDK (예약 시스템 voc-data-b7f07 프로젝트 대통합 탑재) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAN3tBx_SCvQaiKeDTjGwaUWNOtmINwv4k",
+            authDomain: "voc-data-b7f07.firebaseapp.com",
+            projectId: "voc-data-b7f07",
+            storageBucket: "voc-data-b7f07.firebasestorage.app",
+            messagingSenderId: "750066755264",
+            appId: "1:750066755264:web:bf23a4bd56a9aae4276f25"
+        };
+        firebase.initializeApp(firebaseConfig);
+        window.db = firebase.firestore();
+        console.log("Firebase initialized in index.html (voc-data-b7f07 대통합)");
+    </script>
+
+    <script src="core/likes_manager.js"></script>
+
+</body>
+</html>

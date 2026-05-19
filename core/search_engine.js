@@ -180,7 +180,7 @@ window.performSearch = function(query, resultContainerId) {
                 }
             }
             return `
-            <button onclick="loadContent('${item.id}', '${item.facility || '공통'}', false, '${safeQuery}'); document.getElementById('${resultContainerId}').classList.add('hidden'); document.getElementById('reopenSearchBtn').classList.replace('hidden', 'flex'); document.getElementById('reopenSearchDivider').classList.replace('hidden', 'block');" 
+            <button onclick="loadContent('${item.id}', '${item.facility || '공통'}', null, false, '${safeQuery}'); document.getElementById('${resultContainerId}').classList.add('hidden'); document.getElementById('reopenSearchBtn').classList.replace('hidden', 'flex'); document.getElementById('reopenSearchDivider').classList.replace('hidden', 'block');" 
                 class="w-full text-left px-4 py-3 border-b border-gray-100 dark:border-gray-700 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all focus:outline-none group">
                 <div class="flex justify-between items-center mb-1">
                     <div class="font-bold text-gray-800 dark:text-gray-200 text-sm group-hover:text-emerald-600 transition-colors">${DOMPurify.sanitize(item.title)}</div>
@@ -291,6 +291,6 @@ window.navSearchResult = function(direction) {
     const nextIdx = window.currentSearchIndex + direction;
     if (nextIdx >= 0 && nextIdx < window.currentSearchResults.length) {
         const item = window.currentSearchResults[nextIdx];
-        window.loadContent(item.id, item.facility || '공통', false, window.lastSearchQuery);
+        window.loadContent(item.id, item.facility || '공통', null, false, window.lastSearchQuery);
     }
 };
