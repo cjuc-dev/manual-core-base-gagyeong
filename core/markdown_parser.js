@@ -273,7 +273,65 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
         return;
     }
     if (safeId === 'safety') {
-        contentArea.innerHTML = `<div class="w-full h-[700px] rounded-lg overflow-hidden border border-gray-200"><embed src="data/manual/sports/sports_facility_safety_standards_manual.pdf" type="application/pdf" width="100%" height="100%" /></div>`;
+        contentArea.innerHTML = `
+        <div class="flex flex-col items-center justify-center p-8 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-900 dark:to-emerald-950/20 rounded-2xl border border-emerald-100 dark:border-emerald-900/30 shadow-xl max-w-2xl mx-auto my-8 transition-all hover:shadow-2xl">
+            <!-- PDF 아이콘 애니메이션 헤더 -->
+            <div class="relative w-20 h-20 mb-6 flex items-center justify-center bg-emerald-100 dark:bg-emerald-900/50 rounded-2xl text-emerald-600 dark:text-emerald-400 group">
+                <i class="ph ph-file-pdf text-5xl transition-transform group-hover:scale-110 animate-pulse"></i>
+                <div class="absolute -top-1 -right-1 flex h-4 w-4">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
+                </div>
+            </div>
+            
+            <!-- 타이틀 & 메타데이터 -->
+            <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">체육시설 안전관리 표준매뉴얼 (PDF)</h3>
+            <p class="text-xs text-slate-400 dark:text-slate-500 mb-6 flex gap-3">
+                <span>파일 크기: 19.1 MB</span>
+                <span>|</span>
+                <span>형식: PDF Document</span>
+                <span>|</span>
+                <span>권장 사항: 새 창 열람</span>
+            </p>
+            
+            <!-- 프리미엄 안내 텍스트 -->
+            <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur border border-slate-100 dark:border-slate-700 rounded-xl p-5 mb-6 text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-center shadow-inner">
+                본 매뉴얼은 <strong>대용량 공식 행정 문서</strong>로, 사용하시는 브라우저(Microsoft Edge 등)의 보안 및 차단 정책에 따라 화면 내 뷰어가 원활히 열리지 않을 수 있습니다. 
+                <br>
+                <span class="text-emerald-600 dark:text-emerald-400 font-semibold mt-1 inline-block">아래의 프리미엄 버튼을 사용해 안전하고 신속하게 열람하세요.</span>
+            </div>
+            
+            <!-- 조작 버튼 그룹 -->
+            <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                <!-- 새 창에서 바로보기 -->
+                <a href="data/manual/sports/sports_facility_safety_standards_manual.pdf" target="_blank"
+                    class="flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto">
+                    <i class="ph ph-arrow-square-out text-xl"></i>
+                    <span>새 창에서 바로 읽기 (추천)</span>
+                </a>
+                
+                <!-- 즉시 다운로드 -->
+                <a href="data/manual/sports/sports_facility_safety_standards_manual.pdf" download="체육시설_안전관리_표준매뉴얼.pdf"
+                    class="flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 rounded-xl shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto">
+                    <i class="ph ph-download-simple text-xl"></i>
+                    <span>PC에 다운로드 받기</span>
+                </a>
+            </div>
+            
+            <!-- 인라인 뷰어 접기/열기 토글 -->
+            <button onclick="window.toggleInlinePDFViewer()" 
+                class="mt-8 text-xs font-semibold text-slate-400 dark:text-slate-500 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors flex items-center gap-1">
+                <i class="ph ph-eye-closed text-sm" id="inlinePDFToggleIcon"></i>
+                <span id="inlinePDFToggleText">브라우저 내장 뷰어로 화면 내에서 보기 (비권장)</span>
+            </button>
+            
+            <!-- 숨겨진 인라인 embed 영역 -->
+            <div id="inlinePDFContainer" class="hidden w-full mt-6 transition-all duration-300">
+                <div class="w-full h-[600px] rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-inner">
+                    <embed src="data/manual/sports/sports_facility_safety_standards_manual.pdf" type="application/pdf" width="100%" height="100%" />
+                </div>
+            </div>
+        </div>`;
         return;
     }
     
@@ -654,3 +712,19 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
     }
     document.getElementById('mainScrollArea').scrollTop = 0;
 }
+
+// 🚀 [v6.00] 대용량 PDF 문서 브라우저 보안 우회 토글러 함수
+window.toggleInlinePDFViewer = function() {
+    const container = document.getElementById('inlinePDFContainer');
+    const text = document.getElementById('inlinePDFToggleText');
+    const icon = document.getElementById('inlinePDFToggleIcon');
+    if (container.classList.contains('hidden')) {
+        container.classList.remove('hidden');
+        text.innerText = '인라인 뷰어 접기';
+        icon.className = 'ph ph-eye text-sm';
+    } else {
+        container.classList.add('hidden');
+        text.innerText = '브라우저 내장 뷰어로 화면 내에서 보기 (비권장)';
+        icon.className = 'ph ph-eye-closed text-sm';
+    }
+};
