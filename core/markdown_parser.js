@@ -321,14 +321,40 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
             <!-- 인라인 뷰어 접기/열기 토글 -->
             <button onclick="window.toggleInlinePDFViewer()" 
                 class="mt-8 text-xs font-semibold text-slate-400 dark:text-slate-500 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors flex items-center gap-1">
-                <i class="ph ph-eye-closed text-sm" id="inlinePDFToggleIcon"></i>
-                <span id="inlinePDFToggleText">브라우저 내장 뷰어로 화면 내에서 보기 (비권장)</span>
+                <i class="ph ph-eye text-sm" id="inlinePDFToggleIcon"></i>
+                <span id="inlinePDFToggleText">이 페이지 안에서 바로 보기 (브라우저 설정 무관 우회 뷰어)</span>
             </button>
             
-            <!-- 숨겨진 인라인 embed 영역 -->
+            <!-- 숨겨진 인라인 Canvas 렌더러 영역 -->
             <div id="inlinePDFContainer" class="hidden w-full mt-6 transition-all duration-300">
-                <div class="w-full h-[600px] rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-inner">
-                    <embed src="data/manual/sports/sports_facility_safety_standards_manual.pdf" type="application/pdf" width="100%" height="100%" />
+                <div class="flex flex-col items-center bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800/80 w-full mt-4">
+                    <!-- PDF 컨트롤러 -->
+                    <div class="flex items-center justify-between w-full mb-3 px-4">
+                        <div class="flex items-center gap-3">
+                            <button id="prevPageBtn" onclick="window.pdfViewerPrevPage()" class="p-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
+                                <i class="ph ph-caret-left font-bold text-slate-700 dark:text-slate-200"></i>
+                            </button>
+                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                                <span id="pdfCurrentPage" class="text-emerald-600 dark:text-emerald-400 font-bold">1</span> / <span id="pdfTotalPages" class="text-slate-400 dark:text-slate-500">--</span> 페이지
+                            </span>
+                            <button id="nextPageBtn" onclick="window.pdfViewerNextPage()" class="p-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
+                                <i class="ph ph-caret-right font-bold text-slate-700 dark:text-slate-200"></i>
+                            </button>
+                        </div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-1">
+                            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
+                            브라우저 보안 우회 JS 스마트 엔진 기동 중
+                        </div>
+                    </div>
+                    <!-- PDF 캔버스 렌더링 영역 (로딩바 포함) -->
+                    <div class="relative w-full overflow-auto bg-slate-100 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800/80 flex justify-center p-4 shadow-inner" style="max-height: 750px; min-height: 500px;">
+                        <div id="pdfViewerLoading" class="absolute inset-0 flex flex-col items-center justify-center bg-white/90 dark:bg-slate-900/90 backdrop-blur z-10">
+                            <i class="ph ph-spinner-gap animate-spin text-4xl text-emerald-500 mb-2"></i>
+                            <p class="text-sm font-bold text-slate-600 dark:text-slate-300">PDF.js 스마트 렌더러 로딩 및 캔버스 드로잉 중...</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">대용량 파일이므로 최초 기동 시 2~3초 가량 소요될 수 있습니다.</p>
+                        </div>
+                        <canvas id="pdfViewerCanvas" class="shadow-xl max-w-full rounded border border-slate-300 dark:border-slate-800"></canvas>
+                    </div>
                 </div>
             </div>
         </div>`;
@@ -713,7 +739,7 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
     document.getElementById('mainScrollArea').scrollTop = 0;
 }
 
-// 🚀 [v6.00] 대용량 PDF 문서 브라우저 보안 우회 토글러 함수
+// 🚀 [v6.00] 대용량 PDF 문서 브라우저 보안 우회 토글러 및 JS 엔진 구동부
 window.toggleInlinePDFViewer = function() {
     const container = document.getElementById('inlinePDFContainer');
     const text = document.getElementById('inlinePDFToggleText');
@@ -721,10 +747,116 @@ window.toggleInlinePDFViewer = function() {
     if (container.classList.contains('hidden')) {
         container.classList.remove('hidden');
         text.innerText = '인라인 뷰어 접기';
-        icon.className = 'ph ph-eye text-sm';
+        icon.className = 'ph ph-eye-closed text-sm';
+        
+        // PDF.js 캔버스 뷰어 초기화 작동
+        window.initPDFJSViewer();
     } else {
         container.classList.add('hidden');
-        text.innerText = '브라우저 내장 뷰어로 화면 내에서 보기 (비권장)';
-        icon.className = 'ph ph-eye-closed text-sm';
+        text.innerText = '이 페이지 안에서 바로 보기 (브라우저 설정 무관 우회 뷰어)';
+        icon.className = 'ph ph-eye text-sm';
     }
+};
+
+let pdfDoc = null;
+let pageNum = 1;
+let pageRendering = false;
+let pageNumPending = null;
+const scale = 1.3; // 고해상도 렌더링 배율
+
+window.initPDFJSViewer = function() {
+    const url = 'data/manual/sports/sports_facility_safety_standards_manual.pdf';
+    
+    // 1. PDF.js 라이브러리 및 워커 동적 로딩
+    if (!window.pdfjsLib) {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js';
+        script.onload = () => {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+            window.loadPDFDocument(url);
+        };
+        script.onerror = () => {
+            document.getElementById('pdfViewerLoading').innerHTML = `
+                <i class="ph ph-warning-circle text-4xl text-red-500 mb-2"></i>
+                <p class="text-sm text-red-500 font-bold">인라인 뷰어 로드 실패 (CDN 연결 오류)</p>
+                <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">네트워크가 끊겼거나 방화벽에 의해 스크립트가 차단되었습니다. 상단 [새 창에서 바로 읽기] 버튼을 사용하십시오.</p>
+            `;
+        };
+        document.head.appendChild(script);
+    } else {
+        window.loadPDFDocument(url);
+    }
+};
+
+window.loadPDFDocument = function(url) {
+    const loadingEl = document.getElementById('pdfViewerLoading');
+    if (loadingEl) loadingEl.classList.remove('hidden');
+    
+    pdfjsLib.getDocument(url).promise.then(pdf => {
+        pdfDoc = pdf;
+        document.getElementById('pdfTotalPages').innerText = pdf.numPages;
+        
+        // 페이지 렌더링 시작
+        pageNum = 1;
+        window.renderPDFPage(pageNum);
+    }).catch(err => {
+        console.error("PDF.js load failed:", err);
+        if (loadingEl) {
+            loadingEl.innerHTML = `
+                <i class="ph ph-warning-circle text-4xl text-red-500 mb-2"></i>
+                <p class="text-sm text-red-500 font-bold">PDF 파일 로드 오류</p>
+                <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">${err.message}</p>
+            `;
+        }
+    });
+};
+
+window.renderPDFPage = function(num) {
+    pageRendering = true;
+    const loadingEl = document.getElementById('pdfViewerLoading');
+    if (loadingEl) loadingEl.classList.remove('hidden');
+    document.getElementById('pdfCurrentPage').innerText = num;
+    
+    pdfDoc.getPage(num).then(page => {
+        const canvas = document.getElementById('pdfViewerCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        
+        const viewport = page.getViewport({ scale: scale });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        
+        const renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+        };
+        
+        const renderTask = page.render(renderContext);
+        
+        renderTask.promise.then(() => {
+            pageRendering = false;
+            if (loadingEl) loadingEl.classList.add('hidden');
+            
+            // 버튼 활성화/비활성화
+            document.getElementById('prevPageBtn').disabled = (num <= 1);
+            document.getElementById('nextPageBtn').disabled = (num >= pdfDoc.numPages);
+            
+            if (pageNumPending !== null) {
+                window.renderPDFPage(pageNumPending);
+                pageNumPending = null;
+            }
+        });
+    });
+};
+
+window.pdfViewerPrevPage = function() {
+    if (pageNum <= 1 || pageRendering) return;
+    pageNum--;
+    window.renderPDFPage(pageNum);
+};
+
+window.pdfViewerNextPage = function() {
+    if (pageNum >= pdfDoc.numPages || pageRendering) return;
+    pageNum++;
+    window.renderPDFPage(pageNum);
 };
