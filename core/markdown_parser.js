@@ -273,7 +273,7 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
         return;
     }
     if (safeId === 'safety') {
-        contentArea.innerHTML = `<div class="w-full h-[700px] rounded-lg overflow-hidden border border-gray-200"><embed src="docs/체육시설 안전관리 표준매뉴얼.pdf" type="application/pdf" width="100%" height="100%" /></div>`;
+        contentArea.innerHTML = `<div class="w-full h-[700px] rounded-lg overflow-hidden border border-gray-200"><embed src="data/manual/sports/sports_facility_safety_standards_manual.pdf" type="application/pdf" width="100%" height="100%" /></div>`;
         return;
     }
     

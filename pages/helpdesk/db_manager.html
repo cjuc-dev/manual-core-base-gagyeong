@@ -263,16 +263,17 @@
             printLog("🚀 3단계: 신규 manual 대분류 컬렉션 계층화 및 신규 데이터 업로드 개시!", 'warn');
 
             try {
-                // 1. manual/likes 문서 (기본 공감수 마스터 초기 세팅)
+                // 1. manual/likes 문서 (기본 공감수 마스터 초기 세팅 - 실운영 개시를 위해 0부터 수집 시작)
                 printLog("업로드 중 ➡️ manual/likes (매뉴얼 개별 공감수)...");
                 await db.collection('manual').doc('likes').set({
-                    purmi_guide: 15,
-                    cheongju_swimming_guide: 9,
-                    yeoungun_guide: 11,
-                    bokdae_guide: 14,
-                    gagyeong_guide: 10,
-                    system_inquiry_manual: 8,
-                    civil_voice_manual: 12
+                    purmi_guide: 0,
+                    cheongju_swimming_guide: 0,
+                    youngun_sportscenter_guide: 0,
+                    yeoungun_guide: 0,
+                    bokdae_guide: 0,
+                    gagyeong_guide: 0,
+                    system_inquiry_manual: 0,
+                    civil_voice_manual: 0
                 });
                 printLog("✅ manual/likes 업로드 성공!", 'success');
 

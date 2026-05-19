@@ -4,6 +4,9 @@
 
 ---
 
+### v6.00 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.19</span>
+- **[기능/UI] 안전관리 표준매뉴얼 영문 단일 규격화 및 전용 분류 보관소 구축**
+
 ### v5.99 <span style="float: right; font-size: 0.6em; font-weight: normal; color: #888; margin-top: 5px;">2026.05.19</span>
 - **[기능/UI] 통계 안내 카드 및 보안 감사 기록 구현**
 - **[기능/보안] 통계 정보 일괄 초기셋업 관리용 보안 리셋 시스템 및 동적 감사 자동 기입 기능 이식**

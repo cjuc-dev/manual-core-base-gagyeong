@@ -9,7 +9,7 @@ const DATA_DIR = path.join(process.cwd(), 'data/facilities');
 const OUTPUT_FILE = path.join(process.cwd(), 'data/system/search_index.json');
 
 const manualMetadata = [
-    { id: 'safety', title: '안전관리 표준매뉴얼 (PDF)', file: 'docs/체육시설 안전관리 표준매뉴얼.pdf', type: 'pdf' }
+    { id: 'safety', title: '안전관리 표준매뉴얼 (PDF)', file: 'data/manual/sports/sports_facility_safety_standards_manual.pdf', type: 'pdf' }
 ];
 
 function cleanText(text) {

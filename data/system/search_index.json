@@ -2,7 +2,7 @@
   {
     "id": "safety",
     "title": "안전관리 표준매뉴얼 (PDF)",
-    "file": "docs/체육시설 안전관리 표준매뉴얼.pdf",
+    "file": "data/manual/sports/sports_facility_safety_standards_manual.pdf",
     "type": "pdf"
   },
   {
@@ -54,59 +54,11 @@
     "type": "markdown"
   },
   {
-    "id": "update",
-    "facility": "data",
-    "title": "업데이트 히스토리",
-    "file": "data/update.md",
-    "content": "📋 통합 업데이트 히스토리 Integrated History Master > **Smart Operations Suite SOS ** 통합 매뉴얼 시스템의 전 과정이 버전 및 카테고리별로 기록된 마스터 로그입니다. v5.02 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2026.05.16</span> ** 데이터 ** 매뉴얼 저장소 단일화 및 구조 최적화 루트 중복 파일 제거 및 `data/facilities/` 통합 ** 안내 ** **`0. facility_index.md`** 신규 구축 및 통합 인덱스 기능 제공 ** 시스템 ** 전역 검색 엔진의 색인 대상 경로를 `data/facilities/`로 최적화 및 인덱서 업데이트 v5.01 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2026.05.16</span> ** 시스템 ** All in One 서버 엔진 통합 보안 환경 최적화 및 공지 수집 로직 내장 ** 대시보드 ** 스마트 네비게이션 도입 가로형 스티키 바 대시보드, 탑, 닫기 구현 ** 기능 ** 검색 기능 고도화 하이라이트 및 자동 스크롤 복구 ** 데이터 ** 시설 매뉴얼 `facilities/` 및 시스템 설정 `system/` 폴더 분리 및 계층화 ** 문서 ** 통합 마스터 히스토리 구축 및 자동 동기화 지침 수립 v5.00 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2026.05.14</span> ** 기능 ** 전역 전문 검색 엔진 Full text Search 구축 및 인덱스 고도화 ** 데이터 ** 가경국민체육센터, 청주수영장 매뉴얼 마크다운 전환 및 이미지 4:3 최적화 ** 대시보드 ** 관리자 대시보드 신규 레이아웃 및 검색 키워드 최적화 ** 시스템 ** Google Authenticator MFA 연동 기반 마련 및 보안 문서 체계 수립 v4.90 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2026.05.13</span> ** 시스템 ** Manual 8 모놀리식 구조 탈피 및 SPA 기반 GitHub Pages 마이그레이션 ** 대시보드 ** Tailwind CSS 도입으로 반응형 레이아웃 및 다크/라이트 모드 자동 감지 구축 ** 기능 ** marked.js 기반 비동기 마크다운 렌더링 및 하이브리드 검색 엔진 탑재 ** 시스템 ** XSS 방지 DOMPurify 적용 및 사이버보안 준수 기준 명시 v3.1 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.11.30</span> ** 대시보드 ** 메인 리뉴얼 구현 완료 v3.0 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.11.28</span> ** 대시보드 ** 통합 매뉴얼 리뉴얼 모바일 반응형 포함 ** 기능 ** voc 시민의 소리 업데이트 현황 고도화 시스템 요청 기능 추가 웹 데이터베이스 구축 ** 가경 행정 ** 주차장관리 외 행정 매뉴얼 완료 v2.1 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.11.22</span> ** 대시보드 ** 모바일 메인 페이지 구현 ** 기능 ** 업데이트 시설안내 매뉴얼 VOC 등 구현 완료 v2.0 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.10.15</span> ** 대시보드 ** 행정 매뉴얼 구현 완료 ** 가경 행정 ** 주차장관리 외 행정 매뉴얼 완료 v1.15 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.10.14</span> ** 대시보드 ** 기술 매뉴얼 구현 완료 ** 가경 기술 ** v1.3 기술 분야 image file 용량 전체 축소 기술 분야 매뉴얼 완료 v1.23 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.10.01</span> ** 가경 기술 ** 수질 분야 매뉴얼 업데이트 v1.22 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.09.30</span> ** 가경 기술 ** MSDS 최신화 v1.21 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.08.13</span> ** 가경 기술 ** 정압기실 기록지 교체 구성 완료 v1.20 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.07.25</span> ** 가경 기술 ** 전기설비 구성 완료 정전 및 복전 완료 v1.14 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.07.16</span> ** 대시보드 ** 체육 매뉴얼 구현 완료 v1.19 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.04.25</span> ** 가경 기술 ** 소방 매뉴얼 작성 완료 v1.18 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.04.18</span> ** 가경 기술 ** 소방 매뉴얼 부분 수정 비화재보 및 화재발생 대응 v1.17 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.04.16</span> ** 가경 기술 ** 소방 매뉴얼 부분 수정 v1.16 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.03.25</span> ** 가경 기술 ** 소방 매뉴얼 부분 수정 v1.05 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.02.28</span> ** 가경 행정 ** manual_2_1_5_3_1, manual_2_1_5_3_2 작성완료 목차 수정 및 추가 manual_2_1_5_2_1 설명 작성 완료 v1.15 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.02.25</span> ** 가경 기술 ** 수영장 염소 측정 매뉴얼 2_2_5_4_2 완료 v1.04 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.02.23</span> ** 가경 행정 ** manual_2_1_5_1_2 작성완료 manual_2_1_5_1_3 작성 사진미첨부 manual_2_1_5_3_1 작성중 v1.13 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.02.13</span> ** 기능 ** VOC 구현 수영장, 다목적체육관, 프로그램실, 기타 v1.12 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.02.12</span> ** 기능 ** 헬프데스크 구현 ** 가경 기술 ** v1.14 소방 매뉴얼 추가 v1.13 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.02.08</span> ** 가경 기술 ** 장비일람표 추가 및 테이블 구성 msds pdf 서버 업로드 및 다운로드 구현 v1.12 <span style=\"float: right; font size: 0.6em; font weight: normal; color: 888; margin top: 5px;\">2025.02.07</span> ** 가경 기술 ** 각 매뉴얼 항목별 펼침 구현 가능 표시 📋아이콘 추가 번호 부여 v1.11 <span style=\"float: right; font size: 0.",
-    "type": "markdown"
-  },
-  {
     "id": "youngun_sportscenter_guide",
     "facility": "guide",
     "title": "영운국민체육센터 시설 안내",
     "file": "data/facilities/youngun_sportscenter_guide.md",
     "content": "< 🚀 youngun_sportscenter_guide.md > < 이 파일은 '영운국민체육센터'의 운영 매뉴얼 콘텐츠입니다. > < 관리자 안내: 영운센터의 시설 정보 및 운영 시간을 포함합니다. > 영운국민체육센터 영운국민체육센터는 지역 주민의 건강 증진을 위해 수영장, 다목적체육관 등 최신 설비를 갖춘 공공 체육 시설입니다. <hr> ⚡ 핵심 요약 Quick Info 🕒 운영 시간 🗓️ 정기 휴장 📞 안내 데스크 : : : **평일 화~금 ** 06:00 ~ 21:30 **매주 월요일**<br>**법정공휴일 휴장** **043 270 8591** **주말 토~일 ** 06:00 ~ 16:30 ^ 대관 문의: 043 270 8593 <hr> 🏢 1. 시설 개요 * **시설명**: 영운국민체육센터 * **주요 시설**: 수영장 25m × 7레인 , 다목적체육관, 프로그램실 등 * **특징**: 무장애 설계 적용 및 태양광 발전 시스템을 갖춘 친환경 시설 <div style=\"display: grid; grid template columns: 1fr 1fr 1fr; gap: 15px; text align: left;\"> <div> <div style=\"font weight: bold; margin bottom: 8px; font size: 0.9em;\">시설 전경</div> <img src=\"assets/images/sports/youngun_sportscenter_facility1.jpg\" style=\"width: 100%; aspect ratio: 4/3; object fit: cover; border radius: 4px;\"> </div> <div> <div style=\"font weight: bold; margin bottom: 8px; font size: 0.9em;\">안내데스크</div> <img src=\"assets/images/sports/youngun_sportscenter_facility2.jpg\" style=\"width: 100%; aspect ratio: 4/3; object fit: cover; border radius: 4px;\"> </div> <div> <div style=\"font weight: bold; margin bottom: 8px; font size: 0.9em;\">로비</div> <img src=\"assets/images/sports/youngun_sportscenter_facility3.jpg\" style=\"width: 100%; aspect ratio: 4/3; object fit: cover; border radius: 4px;\"> </div> <div> <div style=\"font weight: bold; margin top: 10px; margin bottom: 8px; font size: 0.9em;\">수영장</div> <img src=\"assets/images/sports/youngun_sportscenter_facility4.jpg\" style=\"width: 100%; aspect ratio: 4/3; object fit: cover; border radius: 4px;\"> </div> <div> <div style=\"font weight: bold; margin top: 10px; margin bottom: 8px; font size: 0.9em;\">다목적체육관</div> <img src=\"assets/images/sports/youngun_sportscenter_facility5.jpg\" style=\"width: 100%; aspect ratio: 4/3; object fit: cover; border radius: 4px;\"> </div> <div> <div style=\"font weight: bold; margin top: 10px; margin bottom: 8px; font size: 0.9em;\">프로그램실</div> <img src=\"assets/images/sports/youngun_sportscenter_facility6.jpg\" style=\"width: 100%; aspect ratio: 4/3; object fit: cover; border radius: 4px;\"> </div> </div> <hr> 📋 2. 시설 상세 현황 🚿 샤워 및 탈의실 * **샤워 시설**: 남/여 샤워실 완비 비누 등 기본 세면도구 구비여부 확인 필요 * **락커 시설**: 개인 물품 보관을 위한 전용 락커 제공 🅿️ 주차장 현황 구분 대수 비고 : : : 일반 **54** 장애인 **4** 전기차 **3** 급속 1, 완속 2 **총계** **61** 🚿 상세 시설 수량 시설 구분 수량 비고 : : : 샤워장 남/여 각 1개소 락커 남/여 확인 중 **정수기** **총 6대** **승강기** **1대** <hr> 🏊 3. 수영장 이용 안내 > **운영 및 이용 기준** > * 수영장 이용객의 샤워 및 마감을 위하여 평일 21:30, 주말 16:30 퇴수 > * 수영장 퇴수 전 30분 평일 21:00, 주말 16:00 까지 입장 가능 > * 1일 1회 2시간 기준 자유수영 이용 가능 ⏰ 수영장 운영 시간표 구분 부 이용 시간 비고 : : : : **평일** 1부 06:00 ~ 11:50 ^ **클리닝** **11:50 ~ 13:30** **입장 불가** ^ 2부 13:30 ~ 17:30 ^ **클리닝** **17:30 ~ 18:30** **입장 불가** ^ 3부 18:30 ~ 21:30 21시까지 입장 **주말** 1부 06:00 ~ 11:50 ^ **클리닝** **11:50 ~ 13:30** **입장 불가** ^ 2부 13:30 ~ 16:30 16시까지 입장 <hr> 🏀 4. 다목적체육관 운영 안내 ⏰ 체육관 운영 시간표 구분 부 이용 시간 용도 : : : : **평일** 1부 08:00 ~ 12:00 복합운영 탁구/배드민턴 ^ **클리닝** **12:00 ~ 13:30** **코트 정비** ^ 2부 13:30 ~ 17:30 복합운영 탁구/배드민턴 ^ **클리닝** **17:30 ~ 17:50** **코트 정비** ^ 3부 17:50 ~ 21:50 복합운영 탁구/배드민턴 **주말** 1부 08:00 ~ 12:00 복합운영 탁구/배드민턴 ^ **클리닝** **12:00 ~ 12:50** **코트 정비** ^ 2부 12:50 ~ 16:50 복합운영 탁구/배드민턴 <hr> 💰 5. 이용 요금 체계 🏷️ 수영장 강습 요금 월 구분 강습A 화,수,목 강습B 토,일 : : : **일반** 60,000원 56,000원 **군인·청소년** 45,000원 41,000원 **어린이·경로** 40,000원 36,000원 **장애인, 수급자** 10,000원 6,000원 🏷️ 자유수영 요금 대상 구분 일일 입장 월 회원권 : : : **일반** 3,000원 50,000원 **여성할인** 3,000원 45,000원 **장애인, 수급자** **무료** **무료** <hr> 🚨 이용 시 유의사항 1. **복장**: 실내수영복, 수모 필수 면 재질 불가 2. **안전**: 반드시 샤워 후 입수, 음주자 입장 불가 3. **접수**: 매월 넷째 주 화요일 ~ 말일 온라인 선착순 4. **환불**: 결제 당일 100%, 이후 조례에 따른 공제 후 환불 <hr> *최종 업데이트: 2026 05 14 Smart Operations Suite v5 *",
-    "type": "markdown"
-  },
-  {
-    "id": "swimming",
-    "facility": "voc",
-    "title": "수영장 VOC 및 이용 FAQ",
-    "file": "data/voc/swimming.md",
-    "content": "## 수영장 수온 관련 문의 * 답변: 항상 28-29℃ 적정온도 유지. ## 수영장 내 래쉬가드 착용 안내 * 답변: 래쉬가드 착용 허용. ## [가경국민체육센터] 헬스장 운영 여부 * 답변: 헬스장 없음. ## [가경국민체육센터] 매점 위치 * 답변: 3층. ## [복대국민체육센터] 개인 사물함 이용 * 답변: 개인사물함 없음. 키오스크 배정 사물함 이용. ## [복대국민체육센터] 주차정산 * 답변: 3시간(강습), 5시간(대관) 무료. ## [청주수영장] 강습 신청 * 답변: 매월 21일~말일. ## [청주수영장] 위치 및 주차 * 답변: 예술의전당 옆, 최대 3시간 무료주차. ## [청주수영장] 체력단련실 * 답변: 실내운동화 지참 시 이용 가능. ## [청주수영장] 시설 규격 * 답변: 50m 레인, 수심 2m 및 1.2~1.4m.",
-    "type": "markdown"
-  },
-  {
-    "id": "gym",
-    "facility": "voc",
-    "title": "체육관 VOC (시민의 소리)",
-    "file": "data/voc/gym.md",
-    "content": "## 가경국민체육센터 다목적체육관 예약방법 개선 요청 * 작성자: 이*객 | 작성일: 2025-02-14 * 문의내용: 탁구를 매일 치고 있는데 당일 직접 방문 예약을 해야 해서 너무 비효율적이고 시간이 많이 낭비됩니다. 인터넷/모바일 예약이 가능하도록 개선해 주세요. * 답변: 현재 일일 예약 방식은 공평한 기회를 위한 것이며, 인터넷 예약 시스템 도입을 검토 중입니다.",
-    "type": "markdown"
-  },
-  {
-    "id": "program",
-    "facility": "voc",
-    "title": "프로그램 VOC (시민의 소리)",
-    "file": "data/voc/program.md",
-    "content": "## 요가 수업 증설 문의 * 작성자: 직*인 | 작성일: 2025-02-15 * 문의내용: 저녁 시간대 요가 수업을 늘려주실 수 있나요? 대기자가 너무 많습니다. ## 프로그램실 강습 시간 조정 부탁드립니다. * 작성자: 회* | 작성일: 2025-02-17 * 문의내용: 프로그램 간 간격이 너무 짧아 매우 혼잡할 것으로 보입니다. 최소 30분 이상 보장해 주세요.",
-    "type": "markdown"
-  },
-  {
-    "id": "other",
-    "facility": "voc",
-    "title": "기타 VOC (시민의 소리)",
-    "file": "data/voc/other.md",
-    "content": "## 주차장 이용 시간 문의 * 작성자: 방*객 | 작성일: 2025-02-16 * 문의내용: 주말 주차장 이용 시간이 어떻게 되나요? * 답변: 주말 주차장은 09:00부터 18:00까지 무료로 개방됩니다. ## 저출산 시대에 다자녀 가정의 혜택은 없나요? * 작성자: 시* | 작성일: 2025-02-17 * 답변: 다자녀 가정 사용료 감면 혜택이 반영될 수 있도록 조례 개정 관련 의견 수렴 예정입니다.",
-    "type": "markdown"
-  },
-  {
-    "id": "system_inquiry",
-    "facility": "system",
-    "title": "시스템 문의 및 요청 (System Inquiry)",
-    "file": "data/system/system_inquiry.md",
-    "content": "### [처리중] [매뉴얼] 복대국민체육센터 리뉴얼 요청 건. 작성자: test. 관리자 답변: 수정중. ### [완료] [시스템] 가경국민체육센터 리뉴얼 요청합니다. 작성자: 박영규. 관리자 답변: 현재 리뉴얼 중입니다. ### [완료] [시스템] 시스템 속도 개선 관련. 작성자: 관리자. 마크다운 기반 전환 후 속도 향상. 관리자 답변: MD 전환을 통해 검색 및 로딩 속도를 비약적으로 향상시켰습니다.",
     "type": "markdown"
   }
 ]

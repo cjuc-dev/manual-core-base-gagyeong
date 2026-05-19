@@ -158,3 +158,8 @@ if (scrollArea && stickyNav) {
 window.scrollToTop = function() {
     if (scrollArea) { scrollArea.scrollTo({ top: 0, behavior: 'smooth' }); }
 }
+
+// 8. 하단 부드러운 스크롤 이동
+window.scrollToBottom = function() {
+    if (scrollArea) { scrollArea.scrollTo({ top: scrollArea.scrollHeight, behavior: 'smooth' }); }
+}
