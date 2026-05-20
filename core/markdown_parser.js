@@ -281,7 +281,7 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                     <!-- PDF 컨트롤러 및 본문 검색 통합 바 (Sticky 고정형, -mx-4 -mt-4 및 rounded-t-xl로 패딩 영역 완벽 커버) -->
                     <div class="sticky top-0 z-20 flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 -mx-4 -mt-4 p-4 rounded-t-xl bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur shadow-sm transition-all duration-300">
                         <!-- 1. 페이지 탐색 및 넓게 보기 컨트롤 -->
-                        <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex flex-wrap lg:flex-nowrap items-center gap-3 lg:h-10">
                             <button id="prevPageBtn" onclick="window.pdfViewerPrevPage()" class="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
                                 <i class="ph ph-caret-left font-bold text-slate-700 dark:text-slate-200"></i>
                             </button>
