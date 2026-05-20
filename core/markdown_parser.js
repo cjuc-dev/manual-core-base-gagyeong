@@ -278,42 +278,42 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
             <!-- 1. 숨겨진 인라인 Canvas 및 검색 통합 영역 (이제 위쪽에 전면 배치되어 즉시 읽기 가능) -->
             <div id="inlinePDFContainer" class="hidden w-full transition-all duration-300">
                 <div class="flex flex-col bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800/80 w-full gap-4">
-                    <!-- PDF 컨트롤러 및 본문 검색 통합 바 -->
-                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 pb-4">
+                    <!-- PDF 컨트롤러 및 본문 검색 통합 바 (Sticky 고정형, -mx-4 -mt-4 및 rounded-t-xl로 패딩 영역 완벽 커버) -->
+                    <div class="sticky top-0 z-20 flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 -mx-4 -mt-4 p-4 rounded-t-xl bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur shadow-sm transition-all duration-300">
                         <!-- 1. 페이지 탐색 및 넓게 보기 컨트롤 -->
                         <div class="flex flex-wrap items-center gap-3">
-                            <button id="prevPageBtn" onclick="window.pdfViewerPrevPage()" class="p-2.5 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
+                            <button id="prevPageBtn" onclick="window.pdfViewerPrevPage()" class="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
                                 <i class="ph ph-caret-left font-bold text-slate-700 dark:text-slate-200"></i>
                             </button>
                             <span class="text-sm font-semibold text-slate-700 dark:text-slate-200 shrink-0">
                                 <span id="pdfCurrentPage" class="text-emerald-600 dark:text-emerald-400 font-bold">1</span> / <span id="pdfTotalPages" class="text-slate-400 dark:text-slate-500">--</span> 페이지
                             </span>
-                            <button id="nextPageBtn" onclick="window.pdfViewerNextPage()" class="p-2.5 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
+                            <button id="nextPageBtn" onclick="window.pdfViewerNextPage()" class="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
                                 <i class="ph ph-caret-right font-bold text-slate-700 dark:text-slate-200"></i>
                             </button>
 
                             <!-- ↔ 넓은 화면으로 보기 토글 버튼 -->
-                            <button onclick="window.togglePDFWideMode()" id="pdfWideModeBtn" class="flex items-center gap-1.5 px-3 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-all whitespace-nowrap">
+                            <button onclick="window.togglePDFWideMode()" id="pdfWideModeBtn" class="h-10 px-4 flex items-center gap-1.5 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-all whitespace-nowrap">
                                 <i class="ph ph-arrows-out-line text-sm" id="pdfWideModeBtnIcon"></i>
                                 <span id="pdfWideModeBtnText" class="whitespace-nowrap">넓은 화면으로 보기</span>
                             </button>
 
                             <!-- ❌ 뷰어 닫기 버튼 (사용자 편의성 향상) -->
-                            <button onclick="window.toggleInlinePDFViewer()" class="flex items-center gap-1.5 px-3 py-2 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/40 text-xs font-bold text-rose-600 dark:text-rose-400 rounded-lg shadow-sm border border-rose-200 dark:border-rose-900/50 transition-all whitespace-nowrap">
+                            <button onclick="window.toggleInlinePDFViewer()" class="h-10 px-4 flex items-center gap-1.5 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/40 text-xs font-bold text-rose-600 dark:text-rose-400 rounded-xl shadow-sm border border-rose-200 dark:border-rose-900/50 transition-all whitespace-nowrap">
                                 <i class="ph ph-x-circle text-sm"></i>
                                 <span class="whitespace-nowrap">뷰어 닫기</span>
                             </button>
                         </div>
                         
-                        <!-- 2. 실시간 초고속 본문 검색창 -->
+                        <!-- 2. 실시간 초고속 본문 검색창 (인풋박스와 버튼 높이를 h-10으로 동일하게 설계하여 수평 완벽 일치) -->
                         <div class="flex items-center gap-2 flex-1 max-w-md w-full">
                             <div class="relative w-full">
                                 <input type="text" id="pdfSearchInput" placeholder="매뉴얼 전체 210페이지 본문 검색..." 
-                                    class="w-full pl-10 pr-4 py-2.5 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                                    class="w-full h-10 pl-10 pr-4 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                                     onkeypress="if(event.key === 'Enter') window.searchPDFText()">
-                                <i class="ph ph-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 dark:text-slate-500"></i>
+                                <i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500"></i>
                             </div>
-                            <button onclick="window.searchPDFText()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md hover:shadow-emerald-600/10 transition-all shrink-0 whitespace-nowrap">
+                            <button onclick="window.searchPDFText()" class="h-10 px-5 flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md hover:shadow-emerald-600/10 transition-all shrink-0 whitespace-nowrap">
                                 검색
                             </button>
                         </div>
@@ -331,14 +331,14 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                         <div id="pdfSearchResultsList" class="flex flex-col gap-2"></div>
                     </div>
 
-                    <!-- 4. PDF 캔버스 렌더링 영역 (로딩바 포함) -->
-                    <div class="relative w-full overflow-auto bg-slate-100 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800/80 flex justify-center p-4 shadow-inner" style="max-height: 750px; min-height: 500px;">
+                    <!-- 4. PDF 캔버스 렌더링 영역 (로딩바 포함, items-start 추가로 캔버스가 수직으로 늘어나는 현상 방지) -->
+                    <div class="relative w-full overflow-auto bg-slate-100 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800/80 flex justify-center items-start p-4 shadow-inner" style="max-height: 800px; min-height: 500px;">
                         <div id="pdfViewerLoading" class="absolute inset-0 flex flex-col items-center justify-center bg-white/90 dark:bg-slate-900/90 backdrop-blur z-10">
                             <i class="ph ph-spinner-gap animate-spin text-4xl text-emerald-500 mb-2"></i>
                             <p id="pdfViewerLoadingText" class="text-sm font-bold text-slate-600 dark:text-slate-300">PDF.js 스마트 렌더러 로딩 및 캔버스 드로잉 중...</p>
                             <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">대용량 파일이므로 최초 기동 시 2~3초 가량 소요될 수 있습니다.</p>
                         </div>
-                        <canvas id="pdfViewerCanvas" class="shadow-xl max-w-full rounded border border-slate-300 dark:border-slate-800"></canvas>
+                        <canvas id="pdfViewerCanvas" class="shadow-xl max-w-full h-auto rounded border border-slate-300 dark:border-slate-800" style="height: auto !important;"></canvas>
                     </div>
                 </div>
             </div>
@@ -946,6 +946,8 @@ window.renderPDFPage = function(num) {
         const viewport = page.getViewport({ scale: window.pdfViewerScale });
         canvas.height = viewport.height;
         canvas.width = viewport.width;
+        canvas.style.width = viewport.width + 'px';
+        canvas.style.height = viewport.height + 'px';
         
         const renderContext = {
             canvasContext: ctx,
