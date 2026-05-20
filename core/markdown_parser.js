@@ -274,60 +274,10 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
     }
     if (safeId === 'safety') {
         contentArea.innerHTML = `
-        <div class="flex flex-col items-center justify-center p-8 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-900 dark:to-emerald-950/20 rounded-2xl border border-emerald-100 dark:border-emerald-900/30 shadow-xl max-w-2xl mx-auto my-8 transition-all hover:shadow-2xl">
-            <!-- PDF 아이콘 애니메이션 헤더 -->
-            <div class="relative w-20 h-20 mb-6 flex items-center justify-center bg-emerald-100 dark:bg-emerald-900/50 rounded-2xl text-emerald-600 dark:text-emerald-400 group">
-                <i class="ph ph-file-pdf text-5xl transition-transform group-hover:scale-110 animate-pulse"></i>
-                <div class="absolute -top-1 -right-1 flex h-4 w-4">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
-                </div>
-            </div>
-            
-            <!-- 타이틀 & 메타데이터 -->
-            <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">체육시설 안전관리 표준매뉴얼 (PDF)</h3>
-            <p class="text-xs text-slate-400 dark:text-slate-500 mb-6 flex gap-3">
-                <span>파일 크기: 19.1 MB</span>
-                <span>|</span>
-                <span>형식: PDF Document</span>
-                <span>|</span>
-                <span>권장 사항: 새 창 열람</span>
-            </p>
-            
-            <!-- 프리미엄 안내 텍스트 -->
-            <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur border border-slate-100 dark:border-slate-700 rounded-xl p-5 mb-6 text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-center shadow-inner">
-                본 매뉴얼은 <strong>대용량 공식 행정 문서</strong>로, 사용하시는 브라우저(Microsoft Edge 등)의 보안 및 차단 정책에 따라 화면 내 뷰어가 원활히 열리지 않을 수 있습니다. 
-                <br>
-                <span class="text-emerald-600 dark:text-emerald-400 font-semibold mt-1 inline-block">아래의 프리미엄 버튼을 사용해 안전하고 신속하게 열람하세요.</span>
-            </div>
-            
-            <!-- 조작 버튼 그룹 (프리미엄 3-버튼 배치 전환) -->
-            <div class="flex flex-col md:flex-row gap-3.5 w-full justify-center px-4">
-                <!-- 새 창에서 바로보기 -->
-                <a href="data/manual/sports/sports_facility_safety_standards_manual.pdf" target="_blank"
-                    class="flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0 text-center flex-1">
-                    <i class="ph ph-arrow-square-out text-lg"></i>
-                    <span>새 창에서 열기 (추천)</span>
-                </a>
-                
-                <!-- 이 페이지 안에서 바로 보기 -->
-                <button onclick="window.toggleInlinePDFViewer()" id="mainTogglePDFBtn"
-                    class="flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold text-white bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 rounded-xl shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0 text-center flex-1">
-                    <i class="ph ph-book-open text-lg" id="mainTogglePDFBtnIcon"></i>
-                    <span id="mainTogglePDFBtnText">화면 내에서 바로 읽기</span>
-                </button>
-
-                <!-- 즉시 다운로드 -->
-                <a href="data/manual/sports/sports_facility_safety_standards_manual.pdf" download="체육시설_안전관리_표준매뉴얼.pdf"
-                    class="flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0 text-center flex-1">
-                    <i class="ph ph-download-simple text-lg"></i>
-                    <span>다운로드 받기</span>
-                </a>
-            </div>
-            
-            <!-- 숨겨진 인라인 Canvas 및 검색 통합 영역 -->
-            <div id="inlinePDFContainer" class="hidden w-full mt-6 transition-all duration-300">
-                <div class="flex flex-col bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800/80 w-full mt-4 gap-4">
+        <div class="w-full flex flex-col gap-6 my-4">
+            <!-- 1. 숨겨진 인라인 Canvas 및 검색 통합 영역 (이제 위쪽에 전면 배치되어 즉시 읽기 가능) -->
+            <div id="inlinePDFContainer" class="hidden w-full transition-all duration-300">
+                <div class="flex flex-col bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800/80 w-full gap-4">
                     <!-- PDF 컨트롤러 및 본문 검색 통합 바 -->
                     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 pb-4">
                         <!-- 1. 페이지 탐색 및 넓게 보기 컨트롤 -->
@@ -343,9 +293,15 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                             </button>
 
                             <!-- ↔ 넓은 화면으로 보기 토글 버튼 -->
-                            <button onclick="window.togglePDFWideMode()" id="pdfWideModeBtn" class="flex items-center gap-1.5 px-3 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-all">
+                            <button onclick="window.togglePDFWideMode()" id="pdfWideModeBtn" class="flex items-center gap-1.5 px-3 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-all whitespace-nowrap">
                                 <i class="ph ph-arrows-out-line text-sm" id="pdfWideModeBtnIcon"></i>
-                                <span id="pdfWideModeBtnText">넓은 화면으로 보기</span>
+                                <span id="pdfWideModeBtnText" class="whitespace-nowrap">넓은 화면으로 보기</span>
+                            </button>
+
+                            <!-- ❌ 뷰어 닫기 버튼 (사용자 편의성 향상) -->
+                            <button onclick="window.toggleInlinePDFViewer()" class="flex items-center gap-1.5 px-3 py-2 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/40 text-xs font-bold text-rose-600 dark:text-rose-400 rounded-lg shadow-sm border border-rose-200 dark:border-rose-900/50 transition-all whitespace-nowrap">
+                                <i class="ph ph-x-circle text-sm"></i>
+                                <span class="whitespace-nowrap">뷰어 닫기</span>
                             </button>
                         </div>
                         
@@ -357,7 +313,7 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                                     onkeypress="if(event.key === 'Enter') window.searchPDFText()">
                                 <i class="ph ph-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 dark:text-slate-500"></i>
                             </div>
-                            <button onclick="window.searchPDFText()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md hover:shadow-emerald-600/10 transition-all shrink-0">
+                            <button onclick="window.searchPDFText()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md hover:shadow-emerald-600/10 transition-all shrink-0 whitespace-nowrap">
                                 검색
                             </button>
                         </div>
@@ -370,7 +326,7 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                                 <i class="ph ph-list-bullets text-sm"></i>
                                 본문 검색 결과 (<span id="pdfSearchCount" class="text-emerald-600 dark:text-emerald-400 font-black">0</span>건)
                             </h4>
-                            <button onclick="window.closePDFSearchResults()" class="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-semibold">결과 닫기</button>
+                            <button onclick="window.closePDFSearchResults()" class="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-semibold whitespace-nowrap">결과 닫기</button>
                         </div>
                         <div id="pdfSearchResultsList" class="flex flex-col gap-2"></div>
                     </div>
@@ -386,6 +342,58 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                     </div>
                 </div>
             </div>
+
+            <!-- 2. 프리미엄 메인 안내 및 조작 카드 (w-full로 확장하여 주황색 영역 가득 채움) -->
+            <div class="flex flex-col items-center justify-center p-8 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-900 dark:to-emerald-950/20 rounded-2xl border border-emerald-100 dark:border-emerald-900/30 shadow-xl w-full transition-all hover:shadow-2xl">
+                <!-- PDF 아이콘 애니메이션 헤더 -->
+                <div class="relative w-20 h-20 mb-6 flex items-center justify-center bg-emerald-100 dark:bg-emerald-900/50 rounded-2xl text-emerald-600 dark:text-emerald-400 group">
+                    <i class="ph ph-file-pdf text-5xl transition-transform group-hover:scale-110 animate-pulse"></i>
+                    <div class="absolute -top-1 -right-1 flex h-4 w-4">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
+                    </div>
+                </div>
+                
+                <!-- 타이틀 & 메타데이터 -->
+                <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">체육시설 안전관리 표준매뉴얼 (PDF)</h3>
+                <p class="text-xs text-slate-400 dark:text-slate-500 mb-6 flex gap-3">
+                    <span>파일 크기: 19.1 MB</span>
+                    <span>|</span>
+                    <span>형식: PDF Document</span>
+                    <span>|</span>
+                    <span>권장 사항: 새 창 열람</span>
+                </p>
+                
+                <!-- 프리미엄 안내 텍스트 -->
+                <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur border border-slate-100 dark:border-slate-700 rounded-xl p-5 mb-6 text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-center shadow-inner">
+                    본 매뉴얼은 <strong>대용량 공식 행정 문서</strong>로, 사용하시는 브라우저(Microsoft Edge 등)의 보안 및 차단 정책에 따라 화면 내 뷰어가 원활히 열리지 않을 수 있습니다. 
+                    <br>
+                    <span class="text-emerald-600 dark:text-emerald-400 font-semibold mt-1 inline-block">아래의 프리미엄 버튼을 사용해 안전하고 신속하게 열람하세요.</span>
+                </div>
+                
+                <!-- 조작 버튼 그룹 (프리미엄 3-버튼 배치 전환, whitespace-nowrap 추가로 한 줄 정렬 보장) -->
+                <div class="flex flex-col md:flex-row gap-3.5 w-full justify-center px-4">
+                    <!-- 새 창에서 바로보기 -->
+                    <a href="data/manual/sports/sports_facility_safety_standards_manual.pdf" target="_blank"
+                        class="flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0 text-center flex-1 whitespace-nowrap">
+                        <i class="ph ph-arrow-square-out text-lg"></i>
+                        <span class="whitespace-nowrap">새 창에서 열기 (추천)</span>
+                    </a>
+                    
+                    <!-- 이 페이지 안에서 바로 보기 -->
+                    <button onclick="window.toggleInlinePDFViewer()" id="mainTogglePDFBtn"
+                        class="flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold text-white bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 rounded-xl shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0 text-center flex-1 whitespace-nowrap">
+                        <i class="ph ph-book-open text-lg" id="mainTogglePDFBtnIcon"></i>
+                        <span id="mainTogglePDFBtnText" class="whitespace-nowrap">화면 내에서 바로 읽기</span>
+                    </button>
+
+                    <!-- 즉시 다운로드 -->
+                    <a href="data/manual/sports/sports_facility_safety_standards_manual.pdf" download="체육시설_안전관리_표준매뉴얼.pdf"
+                        class="flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0 text-center flex-1 whitespace-nowrap">
+                        <i class="ph ph-download-simple text-lg"></i>
+                        <span class="whitespace-nowrap">다운로드 받기</span>
+                    </a>
+                </div>
         </div>`;
         return;
     }
