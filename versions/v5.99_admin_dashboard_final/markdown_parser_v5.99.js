@@ -325,32 +325,55 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                 <span id="inlinePDFToggleText">이 페이지 안에서 바로 보기 (브라우저 설정 무관 우회 뷰어)</span>
             </button>
             
-            <!-- 숨겨진 인라인 Canvas 렌더러 영역 -->
+            <!-- 숨겨진 인라인 Canvas 및 검색 통합 영역 -->
             <div id="inlinePDFContainer" class="hidden w-full mt-6 transition-all duration-300">
-                <div class="flex flex-col items-center bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800/80 w-full mt-4">
-                    <!-- PDF 컨트롤러 -->
-                    <div class="flex items-center justify-between w-full mb-3 px-4">
+                <div class="flex flex-col bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800/80 w-full mt-4 gap-4">
+                    <!-- PDF 컨트롤러 및 본문 검색 통합 바 -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 pb-4">
+                        <!-- 1. 페이지 탐색 -->
                         <div class="flex items-center gap-3">
-                            <button id="prevPageBtn" onclick="window.pdfViewerPrevPage()" class="p-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
+                            <button id="prevPageBtn" onclick="window.pdfViewerPrevPage()" class="p-2.5 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
                                 <i class="ph ph-caret-left font-bold text-slate-700 dark:text-slate-200"></i>
                             </button>
-                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200 shrink-0">
                                 <span id="pdfCurrentPage" class="text-emerald-600 dark:text-emerald-400 font-bold">1</span> / <span id="pdfTotalPages" class="text-slate-400 dark:text-slate-500">--</span> 페이지
                             </span>
-                            <button id="nextPageBtn" onclick="window.pdfViewerNextPage()" class="p-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
+                            <button id="nextPageBtn" onclick="window.pdfViewerNextPage()" class="p-2.5 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
                                 <i class="ph ph-caret-right font-bold text-slate-700 dark:text-slate-200"></i>
                             </button>
                         </div>
-                        <div class="text-xs text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-1">
-                            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
-                            브라우저 보안 우회 JS 스마트 엔진 기동 중
+                        
+                        <!-- 2. 실시간 초고속 본문 검색창 -->
+                        <div class="flex items-center gap-2 flex-1 max-w-md">
+                            <div class="relative w-full">
+                                <input type="text" id="pdfSearchInput" placeholder="매뉴얼 전체 210페이지 본문 검색..." 
+                                    class="w-full pl-10 pr-4 py-2.5 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                                    onkeypress="if(event.key === 'Enter') window.searchPDFText()">
+                                <i class="ph ph-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 dark:text-slate-500"></i>
+                            </div>
+                            <button onclick="window.searchPDFText()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md hover:shadow-emerald-600/10 transition-all shrink-0">
+                                검색
+                            </button>
                         </div>
                     </div>
-                    <!-- PDF 캔버스 렌더링 영역 (로딩바 포함) -->
+
+                    <!-- 3. 검색 결과 영역 (기본 숨김) -->
+                    <div id="pdfSearchResultsArea" class="hidden bg-white dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800/80 max-h-[250px] overflow-y-auto">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                <i class="ph ph-list-bullets text-sm"></i>
+                                본문 검색 결과 (<span id="pdfSearchCount" class="text-emerald-600 dark:text-emerald-400 font-black">0</span>건)
+                            </h4>
+                            <button onclick="window.closePDFSearchResults()" class="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-semibold">결과 닫기</button>
+                        </div>
+                        <div id="pdfSearchResultsList" class="flex flex-col gap-2"></div>
+                    </div>
+
+                    <!-- 4. PDF 캔버스 렌더링 영역 (로딩바 포함) -->
                     <div class="relative w-full overflow-auto bg-slate-100 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800/80 flex justify-center p-4 shadow-inner" style="max-height: 750px; min-height: 500px;">
                         <div id="pdfViewerLoading" class="absolute inset-0 flex flex-col items-center justify-center bg-white/90 dark:bg-slate-900/90 backdrop-blur z-10">
                             <i class="ph ph-spinner-gap animate-spin text-4xl text-emerald-500 mb-2"></i>
-                            <p class="text-sm font-bold text-slate-600 dark:text-slate-300">PDF.js 스마트 렌더러 로딩 및 캔버스 드로잉 중...</p>
+                            <p id="pdfViewerLoadingText" class="text-sm font-bold text-slate-600 dark:text-slate-300">PDF.js 스마트 렌더러 로딩 및 캔버스 드로잉 중...</p>
                             <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">대용량 파일이므로 최초 기동 시 2~3초 가량 소요될 수 있습니다.</p>
                         </div>
                         <canvas id="pdfViewerCanvas" class="shadow-xl max-w-full rounded border border-slate-300 dark:border-slate-800"></canvas>
@@ -858,5 +881,83 @@ window.pdfViewerPrevPage = function() {
 window.pdfViewerNextPage = function() {
     if (pageNum >= pdfDoc.numPages || pageRendering) return;
     pageNum++;
+    window.renderPDFPage(pageNum);
+};
+
+// 🔍 🚀 [v6.00] 초고속 PDF 병렬 본문 검색 엔진 구현
+window.searchPDFText = async function() {
+    const input = document.getElementById('pdfSearchInput');
+    const query = input.value.trim();
+    if (!query) {
+        alert('검색어를 입력해 주세요.');
+        return;
+    }
+    
+    const resultsArea = document.getElementById('pdfSearchResultsArea');
+    const resultsList = document.getElementById('pdfSearchResultsList');
+    const countEl = document.getElementById('pdfSearchCount');
+    
+    resultsArea.classList.remove('hidden');
+    resultsList.innerHTML = `<div class="py-4 text-center text-sm text-slate-400 dark:text-slate-500"><i class="ph ph-spinner-gap animate-spin text-xl mr-2 inline-block align-middle"></i>전체 ${pdfDoc.numPages}페이지 본문 초고속 검색 중...</div>`;
+    
+    try {
+        let results = [];
+        const promises = [];
+        
+        // 병렬 비동기 본문 텍스트 마이닝 기법 적용
+        for (let i = 1; i <= pdfDoc.numPages; i++) {
+            promises.push(
+                pdfDoc.getPage(i).then(async (page) => {
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    
+                    if (pageText.toLowerCase().includes(query.toLowerCase())) {
+                        const idx = pageText.toLowerCase().indexOf(query.toLowerCase());
+                        let snippet = pageText.substring(Math.max(0, idx - 45), Math.min(pageText.length, idx + 45)).trim();
+                        // 안전한 HTML 이스케이프 및 하이라이팅 마크 주입
+                        snippet = snippet.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                        const escapedQuery = query.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+                        snippet = snippet.replace(new RegExp(`(${escapedQuery})`, 'gi'), '<mark class="bg-yellow-200 dark:bg-amber-800 text-slate-900 dark:text-white px-0.5 rounded font-bold">$1</mark>');
+                        
+                        return {
+                            pageNum: i,
+                            snippet: snippet
+                        };
+                    }
+                    return null;
+                })
+            );
+        }
+        
+        const allResults = await Promise.all(promises);
+        results = allResults.filter(r => r !== null);
+        
+        countEl.innerText = results.length;
+        
+        if (results.length === 0) {
+            resultsList.innerHTML = `<div class="py-4 text-center text-sm text-slate-400 dark:text-slate-500">검색 결과가 없습니다.</div>`;
+        } else {
+            resultsList.innerHTML = results.map(r => `
+                <button onclick="window.gotoPDFPageAndHighlight(${r.pageNum})" 
+                    class="w-full text-left p-3 hover:bg-emerald-50 dark:hover:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800/80 transition-all flex items-start gap-4">
+                    <span class="px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 text-xs font-black rounded-md shrink-0">${r.pageNum}페이지</span>
+                    <span class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">${r.snippet}</span>
+                </button>
+            `).join('');
+        }
+    } catch (err) {
+        console.error("PDF Search failed:", err);
+        resultsList.innerHTML = `<div class="py-4 text-center text-sm text-red-500 font-bold">검색 중 오류가 발생했습니다: ${err.message}</div>`;
+    }
+};
+
+window.closePDFSearchResults = function() {
+    document.getElementById('pdfSearchResultsArea').classList.add('hidden');
+};
+
+window.gotoPDFPageAndHighlight = function(pageNum) {
+    pageNum = parseInt(pageNum);
+    if (isNaN(pageNum)) return;
+    pageNum = Math.max(1, Math.min(pageNum, pdfDoc.numPages));
     window.renderPDFPage(pageNum);
 };
