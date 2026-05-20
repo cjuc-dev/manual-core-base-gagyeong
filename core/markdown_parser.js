@@ -306,10 +306,10 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                         </div>
                         
                         <!-- 2. 실시간 초고속 본문 검색창 (인풋박스와 버튼 높이를 h-10으로 동일하게 설계하여 수평 완벽 일치) -->
-                        <div class="flex items-center gap-2 flex-1 max-w-md w-full">
-                            <div class="relative w-full">
+                        <div class="flex items-center gap-2 flex-1 max-w-md w-full h-10">
+                            <div class="relative w-full h-10 flex items-center">
                                 <input type="text" id="pdfSearchInput" placeholder="매뉴얼 전체 210페이지 본문 검색..." 
-                                    class="w-full h-10 pl-10 pr-4 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                                    class="block w-full h-full pl-10 pr-4 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                                     onkeypress="if(event.key === 'Enter') window.searchPDFText()">
                                 <i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500"></i>
                             </div>
