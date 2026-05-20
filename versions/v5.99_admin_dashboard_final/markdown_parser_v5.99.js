@@ -279,9 +279,9 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
             <div id="inlinePDFContainer" class="hidden w-full transition-all duration-300">
                 <div class="flex flex-col bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800/80 w-full gap-4">
                     <!-- PDF 컨트롤러 및 본문 검색 통합 바 (Sticky 고정형, -mx-4 -mt-4 및 rounded-t-xl로 패딩 영역 완벽 커버) -->
-                    <div class="sticky top-0 z-20 flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 -mx-4 -mt-4 p-4 rounded-t-xl bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur shadow-sm transition-all duration-300">
+                    <div class="sticky top-0 z-20 flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 -mx-4 -mt-4 p-4 rounded-t-xl bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur shadow-sm transition-all duration-300 !mb-0">
                         <!-- 1. 페이지 탐색 및 넓게 보기 컨트롤 -->
-                        <div class="flex flex-wrap lg:flex-nowrap items-center gap-3 lg:h-10">
+                        <div class="flex flex-wrap lg:flex-nowrap items-center gap-3 lg:h-10 !mb-0">
                             <button id="prevPageBtn" onclick="window.pdfViewerPrevPage()" class="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
                                 <i class="ph ph-caret-left font-bold text-slate-700 dark:text-slate-200"></i>
                             </button>
@@ -306,8 +306,8 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                         </div>
                         
                         <!-- 2. 실시간 초고속 본문 검색창 (인풋박스와 버튼 높이를 h-10으로 동일하게 설계하여 수평 완벽 일치) -->
-                        <div class="flex items-center gap-2 flex-1 max-w-md w-full h-10">
-                            <div class="relative w-full h-10 flex items-center">
+                        <div class="flex items-center gap-2 flex-1 max-w-md w-full h-10 !mb-0">
+                            <div class="relative w-full h-10 flex items-center !mb-0">
                                 <input type="text" id="pdfSearchInput" placeholder="매뉴얼 전체 210페이지 본문 검색..." 
                                     class="block w-full h-full pl-10 pr-4 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                                     onkeypress="if(event.key === 'Enter') window.searchPDFText()">
