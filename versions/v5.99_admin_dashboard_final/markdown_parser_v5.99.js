@@ -301,37 +301,37 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                 <span class="text-emerald-600 dark:text-emerald-400 font-semibold mt-1 inline-block">아래의 프리미엄 버튼을 사용해 안전하고 신속하게 열람하세요.</span>
             </div>
             
-            <!-- 조작 버튼 그룹 -->
-            <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+            <!-- 조작 버튼 그룹 (프리미엄 3-버튼 배치 전환) -->
+            <div class="flex flex-col md:flex-row gap-3.5 w-full justify-center px-4">
                 <!-- 새 창에서 바로보기 -->
                 <a href="data/manual/sports/sports_facility_safety_standards_manual.pdf" target="_blank"
-                    class="flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto">
-                    <i class="ph ph-arrow-square-out text-xl"></i>
-                    <span>새 창에서 바로 읽기 (추천)</span>
+                    class="flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0 text-center flex-1">
+                    <i class="ph ph-arrow-square-out text-lg"></i>
+                    <span>새 창에서 열기 (추천)</span>
                 </a>
                 
+                <!-- 이 페이지 안에서 바로 보기 -->
+                <button onclick="window.toggleInlinePDFViewer()" id="mainTogglePDFBtn"
+                    class="flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold text-white bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 rounded-xl shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0 text-center flex-1">
+                    <i class="ph ph-book-open text-lg" id="mainTogglePDFBtnIcon"></i>
+                    <span id="mainTogglePDFBtnText">화면 내에서 바로 읽기</span>
+                </button>
+
                 <!-- 즉시 다운로드 -->
                 <a href="data/manual/sports/sports_facility_safety_standards_manual.pdf" download="체육시설_안전관리_표준매뉴얼.pdf"
-                    class="flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 rounded-xl shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto">
-                    <i class="ph ph-download-simple text-xl"></i>
-                    <span>PC에 다운로드 받기</span>
+                    class="flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0 text-center flex-1">
+                    <i class="ph ph-download-simple text-lg"></i>
+                    <span>다운로드 받기</span>
                 </a>
             </div>
-            
-            <!-- 인라인 뷰어 접기/열기 토글 -->
-            <button onclick="window.toggleInlinePDFViewer()" 
-                class="mt-8 text-xs font-semibold text-slate-400 dark:text-slate-500 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors flex items-center gap-1">
-                <i class="ph ph-eye text-sm" id="inlinePDFToggleIcon"></i>
-                <span id="inlinePDFToggleText">이 페이지 안에서 바로 보기 (브라우저 설정 무관 우회 뷰어)</span>
-            </button>
             
             <!-- 숨겨진 인라인 Canvas 및 검색 통합 영역 -->
             <div id="inlinePDFContainer" class="hidden w-full mt-6 transition-all duration-300">
                 <div class="flex flex-col bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800/80 w-full mt-4 gap-4">
                     <!-- PDF 컨트롤러 및 본문 검색 통합 바 -->
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 pb-4">
-                        <!-- 1. 페이지 탐색 -->
-                        <div class="flex items-center gap-3">
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 pb-4">
+                        <!-- 1. 페이지 탐색 및 넓게 보기 컨트롤 -->
+                        <div class="flex flex-wrap items-center gap-3">
                             <button id="prevPageBtn" onclick="window.pdfViewerPrevPage()" class="p-2.5 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
                                 <i class="ph ph-caret-left font-bold text-slate-700 dark:text-slate-200"></i>
                             </button>
@@ -341,10 +341,16 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
                             <button id="nextPageBtn" onclick="window.pdfViewerNextPage()" class="p-2.5 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-colors disabled:opacity-50" disabled>
                                 <i class="ph ph-caret-right font-bold text-slate-700 dark:text-slate-200"></i>
                             </button>
+
+                            <!-- ↔ 넓은 화면으로 보기 토글 버튼 -->
+                            <button onclick="window.togglePDFWideMode()" id="pdfWideModeBtn" class="flex items-center gap-1.5 px-3 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition-all">
+                                <i class="ph ph-arrows-out-line text-sm" id="pdfWideModeBtnIcon"></i>
+                                <span id="pdfWideModeBtnText">넓은 화면으로 보기</span>
+                            </button>
                         </div>
                         
                         <!-- 2. 실시간 초고속 본문 검색창 -->
-                        <div class="flex items-center gap-2 flex-1 max-w-md">
+                        <div class="flex items-center gap-2 flex-1 max-w-md w-full">
                             <div class="relative w-full">
                                 <input type="text" id="pdfSearchInput" placeholder="매뉴얼 전체 210페이지 본문 검색..." 
                                     class="w-full pl-10 pr-4 py-2.5 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
@@ -763,21 +769,38 @@ window.loadContent = async function(contentId, facility = '공통', subCategory 
 }
 
 // 🚀 [v6.00] 대용량 PDF 문서 브라우저 보안 우회 토글러 및 JS 엔진 구동부
+window.pdfViewerScale = 1.3; // 전역 스케일 설정 (넓은 화면 토글 대응)
+
 window.toggleInlinePDFViewer = function() {
     const container = document.getElementById('inlinePDFContainer');
-    const text = document.getElementById('inlinePDFToggleText');
-    const icon = document.getElementById('inlinePDFToggleIcon');
+    const mainBtnText = document.getElementById('mainTogglePDFBtnText');
+    const mainBtnIcon = document.getElementById('mainTogglePDFBtnIcon');
+    const mainBtn = document.getElementById('mainTogglePDFBtn');
+    
     if (container.classList.contains('hidden')) {
         container.classList.remove('hidden');
-        text.innerText = '인라인 뷰어 접기';
-        icon.className = 'ph ph-eye-closed text-sm';
+        if (mainBtnText) mainBtnText.innerText = '인라인 뷰어 접기';
+        if (mainBtnIcon) mainBtnIcon.className = 'ph ph-eye-closed text-lg';
+        if (mainBtn) {
+            mainBtn.classList.remove('from-slate-700', 'to-slate-800', 'hover:from-slate-600', 'hover:to-slate-700');
+            mainBtn.classList.add('from-rose-600', 'to-rose-700', 'hover:from-rose-500', 'hover:to-rose-600');
+        }
         
         // PDF.js 캔버스 뷰어 초기화 작동
         window.initPDFJSViewer();
+        
+        // 스무스 스크롤 이동
+        setTimeout(() => {
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
     } else {
         container.classList.add('hidden');
-        text.innerText = '이 페이지 안에서 바로 보기 (브라우저 설정 무관 우회 뷰어)';
-        icon.className = 'ph ph-eye text-sm';
+        if (mainBtnText) mainBtnText.innerText = '화면 내에서 바로 읽기';
+        if (mainBtnIcon) mainBtnIcon.className = 'ph ph-book-open text-lg';
+        if (mainBtn) {
+            mainBtn.classList.remove('from-rose-600', 'to-rose-700', 'hover:from-rose-500', 'hover:to-rose-600');
+            mainBtn.classList.add('from-slate-700', 'to-slate-800', 'hover:from-slate-600', 'hover:to-slate-700');
+        }
     }
 };
 
@@ -785,7 +808,74 @@ let pdfDoc = null;
 let pageNum = 1;
 let pageRendering = false;
 let pageNumPending = null;
-const scale = 1.3; // 고해상도 렌더링 배율
+
+// ↔ 🚀 [v6.00] 넓은 화면 Breakout 모드 토글러 및 고해상도 리스케일링 제어
+window.togglePDFWideMode = function() {
+    const container = document.getElementById('inlinePDFContainer');
+    const inner = container.querySelector('.flex.flex-col');
+    const btn = document.getElementById('pdfWideModeBtn');
+    const btnText = document.getElementById('pdfWideModeBtnText');
+    const btnIcon = document.getElementById('pdfWideModeBtnIcon');
+    
+    if (inner.classList.contains('breakout-wide')) {
+        // 기본 뷰로 축소
+        inner.classList.remove('breakout-wide');
+        inner.style.width = '';
+        inner.style.maxWidth = '';
+        inner.style.position = '';
+        inner.style.left = '';
+        inner.style.right = '';
+        inner.style.transform = '';
+        
+        if (btnText) btnText.innerText = '넓은 화면으로 보기';
+        if (btnIcon) btnIcon.className = 'ph ph-arrows-out-line text-sm';
+        
+        window.pdfViewerScale = 1.3; // 기본 배율
+        if (pdfDoc) window.renderPDFPage(pageNum);
+    } else {
+        // 와이드 뷰 확장 (CSS Breakout 기법 적용)
+        inner.classList.add('breakout-wide');
+        inner.style.width = '95vw';
+        inner.style.maxWidth = '1420px';
+        inner.style.position = 'relative';
+        inner.style.left = '50%';
+        inner.style.right = '50%';
+        inner.style.transform = 'translateX(-50%)';
+        
+        if (btnText) btnText.innerText = '기본 화면으로 보기';
+        if (btnIcon) btnIcon.className = 'ph ph-arrows-in-line text-sm';
+        
+        window.pdfViewerScale = 1.85; // 와이드 배율 (초고해상도 메이저 증가)
+        if (pdfDoc) window.renderPDFPage(pageNum);
+    }
+};
+
+// 🔍 [v6.00] HWP 변환 PDF 한글 자모 깨짐 복구 필터 엔진
+window.cleanKoreanPDFText = function(text) {
+    if (!text) return "";
+    return text
+        // 깨진 특정 명사 단어 복구
+        .replace(/체육[bp]설/g, "체육시설")
+        .replace(/체육[eè]시설/g, "체육시설")
+        .replace(/체[eè]시설/g, "체육시설")
+        .replace(/체[eè]관광부/g, "체육관광부")
+        .replace(/체[eè]육/g, "체육")
+        .replace(/소[çc]자/g, "소유자")
+        .replace(/관[bp]자/g, "관리자")
+        
+        // 캐릭터 단위 복합 교정
+        .replace(/ç/g, "유")
+        .replace(/è/g, "육")
+        .replace(/[bp]설/g, "시설")
+        .replace(/체e/g, "체육")
+        .replace(/관p/g, "관리")
+        
+        // HWP 변환 깨진 특수 한자(중국어 글자) 제거
+        .replace(/[毅毂贴縿絿]/g, "")
+        // 자음 단독 분리 오류 보정 (문맥상 어색한 ㄷ, ㄹ 단독 노출 제거)
+        .replace(/\s*[ㄷㄹd]\s*/g, " ")
+        .trim();
+};
 
 window.initPDFJSViewer = function() {
     const url = 'data/manual/sports/sports_facility_safety_standards_manual.pdf';
@@ -845,7 +935,7 @@ window.renderPDFPage = function(num) {
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         
-        const viewport = page.getViewport({ scale: scale });
+        const viewport = page.getViewport({ scale: window.pdfViewerScale });
         canvas.height = viewport.height;
         canvas.width = viewport.width;
         
@@ -884,7 +974,7 @@ window.pdfViewerNextPage = function() {
     window.renderPDFPage(pageNum);
 };
 
-// 🔍 🚀 [v6.00] 초고속 PDF 병렬 본문 검색 엔진 구현
+// 🔍 🚀 [v6.00] 초고속 PDF 병렬 본문 검색 엔진 구현 + 자동 글자 깨짐 보정 스캔
 window.searchPDFText = async function() {
     const input = document.getElementById('pdfSearchInput');
     const query = input.value.trim();
@@ -898,7 +988,7 @@ window.searchPDFText = async function() {
     const countEl = document.getElementById('pdfSearchCount');
     
     resultsArea.classList.remove('hidden');
-    resultsList.innerHTML = `<div class="py-4 text-center text-sm text-slate-400 dark:text-slate-500"><i class="ph ph-spinner-gap animate-spin text-xl mr-2 inline-block align-middle"></i>전체 ${pdfDoc.numPages}페이지 본문 초고속 검색 중...</div>`;
+    resultsList.innerHTML = `<div class="py-4 text-center text-sm text-slate-400 dark:text-slate-500"><i class="ph ph-spinner-gap animate-spin text-xl mr-2 inline-block align-middle"></i>전체 ${pdfDoc.numPages}페이지 본문 초고속 검색 및 깨짐 보정 중...</div>`;
     
     try {
         let results = [];
@@ -909,11 +999,15 @@ window.searchPDFText = async function() {
             promises.push(
                 pdfDoc.getPage(i).then(async (page) => {
                     const textContent = await page.getTextContent();
-                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    const rawPageText = textContent.items.map(item => item.str).join(' ');
+                    
+                    // 1. 원본 텍스트에 한글 깨짐 복구 필터 주입
+                    const pageText = window.cleanKoreanPDFText(rawPageText);
                     
                     if (pageText.toLowerCase().includes(query.toLowerCase())) {
                         const idx = pageText.toLowerCase().indexOf(query.toLowerCase());
                         let snippet = pageText.substring(Math.max(0, idx - 45), Math.min(pageText.length, idx + 45)).trim();
+                        
                         // 안전한 HTML 이스케이프 및 하이라이팅 마크 주입
                         snippet = snippet.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
                         const escapedQuery = query.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
